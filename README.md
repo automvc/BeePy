@@ -5,6 +5,9 @@ ORM Bee with Python!
 BeePy是基于Python的ORM工具;  
 BeePy是Python版的ORM工具(Java版的是Bee).  
 
+## 环境要求  
+#### Python 3.x(建议3.12+)   
+
 ## 主要功能
 ### **V1.0**
 框架使用统一的API操作DB；  
