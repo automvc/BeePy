@@ -18,7 +18,8 @@ class HoneyContext:
         conn = factory.get_connection()
         if conn is not None:
         #     conn.ping(reconnect=True)  #重新获取，要重连。  只是mysql?
-            return conn
+            if HoneyContext.is_active_conn(conn):
+                return conn
         
         honeyConfig = HoneyConfig()
         config = honeyConfig.get_db_config_dict()    
@@ -53,3 +54,23 @@ class HoneyContext:
             
         
         #还要有set的方法，或在配置文件中设置  TODO
+
+
+    @staticmethod
+    def is_active_conn(conn):
+        
+        honeyConfig=HoneyConfig()
+        dbName=honeyConfig.get_dbName().lower()
+        
+        if dbName is None:
+            return False
+        elif dbName == DatabaseConst.MYSQL.lower():
+            try:
+                conn.ping(reconnect=True)
+                return True
+            except Exception:
+                return False
+        #TODO support other DB    
+            
+        return False    
+            
