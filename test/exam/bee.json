@@ -1,0 +1,5 @@
+ {
+ "dbName": "SQLite",  
+ "database": "bee.db", 
+ "dbModuleName":"sqlite3"
+ }
