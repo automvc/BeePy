@@ -133,3 +133,8 @@ class HoneyUtil:
             setattr(obj, column_names[i], row[i])  # 像时间等类型，是否也可以自动设置？？？   TODO
         return obj
     
+    @staticmethod  
+    def is_sql_key_word_upper():  
+        # 你可以根据需要修改这个方法来决定是使用大写还是小写  
+        # return True  # 示例：返回True表示使用大写  TODO
+        return False
