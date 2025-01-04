@@ -1,0 +1,3 @@
+from bee.exception.BeeException import BeeException
+
+class SqlBeeException(BeeException): ...
