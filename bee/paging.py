@@ -1,5 +1,6 @@
 from bee.config import HoneyConfig
 from bee.osql.const import DatabaseConst
+from bee.osql.sqlkeyword import K
 
 
 class Paging:
@@ -16,10 +17,10 @@ class Paging:
             return self.__toLimitOffsetPaging(sql, start, size)
         
     def __toPageSqlForMySql(self, sql, start, size): 
-        limitStament = " " + "limit" + " " + str(start) + ", " + str(size)
+        limitStament = " " + K.limit() + " " + str(start) + ", " + str(size)
         sql += limitStament
         return sql
     
     def __toLimitOffsetPaging(self, sql, offset, size): 
-        return sql + " " + "limit" + " " + str(size) + " " + "offset" + " " + str(offset)
+        return sql + " " + K.limit() + " " + str(size) + " " + K.offset() + " " + str(offset)
            

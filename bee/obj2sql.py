@@ -2,62 +2,18 @@ from bee.config import HoneyConfig
 from bee.context import HoneyContext
 from bee.key import Key
 from bee.osql.const import DatabaseConst
+from bee.osql.sqlkeyword import K
 from bee.paging import Paging
 from bee.util import HoneyUtil
 
 
 class ObjToSQL:
 
-    # def toSelectSQL(self, entity):
-    #     cls=type(entity)
-    #     classField = HoneyUtil.get_class_field(cls)  # list
-    #     fieldAndValue = HoneyUtil.get_obj_field_value(entity)  # dict
-    #
-    #     classFieldAndValue = HoneyUtil.get_class_field_value(cls)
-    #
-    #     table_name=HoneyUtil.get_table_name(entity)
-    #     if not fieldAndValue: 
-    #         return f"SELECT {', '.join(classField)} FROM {table_name}", None
-    #
-    #     # objKey = fieldAndValue.keys()
-    #     # 获取去掉前缀的键  
-    #     # objKey = [key.lstrip('_') for key in fieldAndValue.keys()]  
-    #     fieldAndValue = {key.lstrip('_'): value for key, value in fieldAndValue.items()} 
-    #     objKey = fieldAndValue.keys()
-    #     set1 = set(classField)
-    #     set2 = set(objKey)  # list转set 顺序会乱了
-    #     setExt = set2 - set1
-    #
-    #     # 默认删除动态加的属性
-    #     for k in setExt:
-    #         fieldAndValue.pop(k, None)
-    #
-    #     #若对象的属性的值是None，则使用类级别的
-    #     for name, value in fieldAndValue.items():
-    #         if value is None:
-    #             fieldAndValue[name]=classFieldAndValue[name]
-    #
-    #     print(fieldAndValue)
-    #
-    #     # 提取条件的键值对  
-    #     condition_list = []
-    #     value_list=[] 
-    #     ph=self.__getPlaceholder()
-    #     for key, value in fieldAndValue.items(): 
-    #         if value is not None:    
-    #             condition_list.append(f"{key} = {ph}")
-    #             value_list.append(value)
-    #
-    #     where_clause = " AND ".join(condition_list)  
-    #     if where_clause is not None and where_clause != '' :
-    #         sql = f"SELECT {', '.join(classField)} FROM {table_name} WHERE {where_clause}"  
-    #     else:
-    #         sql = f"SELECT {', '.join(classField)} FROM {table_name}"
-    #
-    #     return sql, value_list   #如何将值放入上下文 TODO
-    
-
-    
+    def toSelectSQL(self, entity):
+        fieldAndValue, classField = self.__getKeyValue_classField(entity)
+        
+        table_name = HoneyUtil.get_table_name(entity)
+        return self.__build_select_sql(table_name, classField, fieldAndValue);
     
     def toSelectSQLWithPaging(self, entity, start, size):
         sql, params = self.toSelectSQL(entity)
@@ -66,12 +22,6 @@ class ObjToSQL:
         sql = paging.to_page_sql(sql, start, size)
         return sql, params
     
-    def toSelectSQL(self, entity):
-        fieldAndValue, classField = self.__getKeyValue_classField(entity)
-        
-        table_name = HoneyUtil.get_table_name(entity)
-        return self.__build_select_sql(table_name, classField, fieldAndValue);
-        
     def toUpdateSQL(self, entity):
         fieldAndValue = self.__getKeyValue(entity)
         pk = HoneyUtil.get_pk(entity)
@@ -113,17 +63,13 @@ class ObjToSQL:
         cls=type(entity)
         classField = HoneyUtil.get_class_field(cls)  # list
         fieldAndValue = HoneyUtil.get_obj_field_value(entity)  # dict
-        # print(fieldAndValue) 
         
         classFieldAndValue = HoneyUtil.get_class_field_value(cls)
-        # print("aaaaa------------")
-        # print(classFieldAndValue)
         
         # 获取去掉前缀的键    TODO __ ??
         # fieldAndValue = {key.lstrip('_'): value for key, value in fieldAndValue.items()} 
         
         fieldAndValue = HoneyUtil.remove_prefix(fieldAndValue)
-          
         
         objKey = fieldAndValue.keys()
         
@@ -159,12 +105,13 @@ class ObjToSQL:
         ph=self.__getPlaceholder()
         if self.__getPlaceholderType() == 3:
             updateSet = ', '.join(f"{key} = {ph}{key}" for key in set_dict.keys())
-            condition_str = " AND ".join(f"{key} = {ph}{key}" for key in conditions.keys())
+            condition_str = f" {K.and_()} ".join(f"{key} = {ph}{key}" for key in conditions.keys())
         else:
             updateSet = ', '.join(f"{key} = {ph}" for key in set_dict.keys())
-            condition_str = " AND ".join(f"{key} = {ph}" for key in conditions.keys())
+            condition_str = f" {K.and_()} ".join(f"{key} = {ph}" for key in conditions.keys())
         
-        sql = f"UPDATE {table_name} SET {updateSet} WHERE {condition_str}"
+        # sql = f"UPDATE {table_name} SET {updateSet} WHERE {condition_str}"
+        sql = f"{K.update()} {table_name} {K.set()} {updateSet} {K.where()} {condition_str}"
         params = list(set_dict.values()) + list(conditions.values())
         return sql, params
     
@@ -176,37 +123,38 @@ class ObjToSQL:
             placeholders = ', '.join(f" {ph}{key}" for key in data.keys())
         else:
             placeholders = ', '.join(f"{ph}" for _ in data)
-        sql = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
+        sql = f"{K.insert()} {K.into()} {table_name} ({columns}) {K.values()} ({placeholders})"
         return sql, list(data.values())
 
     def __build_where_condition(self, conditions):
         ph=self.__getPlaceholder()
         if self.__getPlaceholderType() == 3:
-            condition_str = " AND ".join(f"{key} = {ph}{key}" for key in conditions.keys())
+            condition_str = f" {K.and_()} ".join(f"{key} = {ph}{key}" for key in conditions.keys())
         else:
-            condition_str = " AND ".join(f"{key} = {ph}" for key in conditions.keys())
+            condition_str = f" {K.and_()} ".join(f"{key} = {ph}" for key in conditions.keys())
         return condition_str
     
     def __build_select_sql(self, table_name, classField, conditions=None):
         # sql = f"SELECT * FROM {table_name}"
-        sql = f"SELECT {', '.join(classField)} FROM {table_name}"
+        # sql = f"SELECT {', '.join(classField)} FROM {table_name}"
+        sql = f"{K.select()} {', '.join(classField)} {K.from_()} {table_name}"
         
         #where part
         params = []
         if conditions:
             condition_str=self.__build_where_condition(conditions)
-            sql += f" WHERE {condition_str}"
+            sql += f" {K.where()} {condition_str}"
             params = list(conditions.values())
         return sql, params
     
 
     def __build_delete_sql(self, table_name, conditions):
 
-        sql = f"DELETE FROM {table_name}"
+        sql = f"{K.delete()} {K.from_()} {table_name}"
         params = []
         if conditions:
             condition_str=self.__build_where_condition(conditions)
-            sql += f" WHERE {condition_str}"
+            sql += f" {K.where()} {condition_str}"
             params = list(conditions.values())
         return sql, params
     
