@@ -47,3 +47,7 @@ class DatabaseConst:
 
     MongoDB = "MongoDB"
     CouchDB = "CouchDB"
+    
+class StrConst:
+    LOG_PREFIX="[BeePy]========= "
+    LOG_SQL_PREFIX="[BeePy] sql>>> "
