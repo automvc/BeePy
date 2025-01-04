@@ -1,5 +1,7 @@
 from bee.context import HoneyContext
+from bee.osql.logger import Logger
 from bee.util import HoneyUtil
+
 
 class BeeSql:
 
@@ -27,7 +29,7 @@ class BeeSql:
                 rs_list.append(target_obj) 
     
         except Exception as err:  # TODO 异常处理
-            print(f"Error: {err}")  
+            Logger.error(f"Error: {err}")  
         finally: 
             # 清理资源  
             if conn is not None:
@@ -47,7 +49,7 @@ class BeeSql:
             conn.commit() 
             return cursor.rowcount  # 返回受影响的行数
         except Exception as e: 
-            print(f"Error in modify: {e}")  
+            Logger.error(f"Error in modify: {e}")  
             conn.rollback()
             return 0
         finally: 

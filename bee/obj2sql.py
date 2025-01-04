@@ -2,6 +2,7 @@ from bee.config import HoneyConfig
 from bee.context import HoneyContext
 from bee.key import Key
 from bee.osql.const import DatabaseConst
+from bee.osql.logger import Logger
 from bee.osql.sqlkeyword import K
 from bee.paging import Paging
 from bee.util import HoneyUtil
@@ -28,11 +29,11 @@ class ObjToSQL:
         if pk is None:
             if not Key.id in fieldAndValue:
             # if not "id" in fieldAndValue:
-                print("update by id,bean has id field or need set the pk field name with __pk__")  # TODO throw exception    
+                Logger.info("update by id,bean has id field or need set the pk field name with __pk__")  # TODO throw exception    
             else:
                 idvalue = fieldAndValue.get(Key.id, None)
                 if idvalue is None:
-                    print("the id value can not be None")
+                    Logger.info("the id value can not be None")
                 else:
                     pk = Key.id
             
