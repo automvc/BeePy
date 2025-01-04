@@ -9,6 +9,12 @@ from bee.util import HoneyUtil
 
 class ObjToSQL:
 
+    def toSelectSQL(self, entity):
+        fieldAndValue, classField = self.__getKeyValue_classField(entity)
+        
+        table_name = HoneyUtil.get_table_name(entity)
+        return self.__build_select_sql(table_name, classField, fieldAndValue);
+    
     def toSelectSQLWithPaging(self, entity, start, size):
         sql, params = self.toSelectSQL(entity)
         
@@ -16,12 +22,6 @@ class ObjToSQL:
         sql = paging.to_page_sql(sql, start, size)
         return sql, params
     
-    def toSelectSQL(self, entity):
-        fieldAndValue, classField = self.__getKeyValue_classField(entity)
-        
-        table_name = HoneyUtil.get_table_name(entity)
-        return self.__build_select_sql(table_name, classField, fieldAndValue);
-        
     def toUpdateSQL(self, entity):
         fieldAndValue = self.__getKeyValue(entity)
         pk = HoneyUtil.get_pk(entity)
