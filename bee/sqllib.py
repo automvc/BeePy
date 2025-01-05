@@ -55,6 +55,23 @@ class BeeSql:
         finally: 
             if conn is not None:
                 conn.close()
+                
+    def batch(self, sql, params=None):
+        conn = self.__getConn()
+        if conn is None:
+                return None  # TODO抛异常
+        cursor = conn.cursor()  
+        try:
+            cursor.executemany(sql, params or [])
+            conn.commit() 
+            return cursor.rowcount  # 返回受影响的行数
+        except Exception as e: 
+            Logger.error(f"Error in batch: {e}")
+            conn.rollback()
+            return 0
+        finally: 
+            if conn is not None:
+                conn.close()            
             
     def __getConn(self):
         return HoneyContext.get_connection()

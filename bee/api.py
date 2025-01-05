@@ -70,7 +70,7 @@ class Suid:
             Logger.logsql("params: ",params)
             return self.beeSql.modify(sql, params)  
         finally: 
-            pass        
+            pass
 
     def to_class_t(self, entity):
         return type(entity)  #返回实体的类型  
@@ -99,4 +99,21 @@ class Suid:
     @objToSQL.setter  
     def objToSQL(self, objToSQL):  
         self._objToSQL = objToSQL  
+        
+
+class SuidRich(Suid):
+    
+    def insert_batch(self, entity_list): 
+        if entity_list is None: 
+            return None
+        if len(entity_list) == 0:
+            return 0
+        
+        try: 
+            sql,list_params = self.objToSQL.toInsertBatchSQL(entity_list)            
+            Logger.logsql("sql: ", sql)
+            Logger.logsql("params: ", list_params)
+            return self.beeSql.batch(sql, list_params)
+        finally: 
+            pass 
         

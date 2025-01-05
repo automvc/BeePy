@@ -54,6 +54,17 @@ class ObjToSQL:
         fieldAndValue = self.__getKeyValue(entity)
         return self.__build_delete_sql(table_name, fieldAndValue)
     
+    def toInsertBatchSQL(self, entity_list): 
+        table_name = HoneyUtil.get_table_name(entity_list[0])
+        # fieldAndValue = self.__getKeyValue(entity_list[0])
+        
+        cls=type(entity_list[0])
+        classField = HoneyUtil.get_class_field(cls)
+        sql=self.__build_insert_batch_sql(table_name, classField)
+        list_params= HoneyUtil.get_list_params(classField, entity_list)
+        
+        return sql,list_params
+    
     def __getKeyValue(self, entity):
         fieldAndValue, _ = self.__getKeyValue_classField(entity)
         return fieldAndValue
@@ -126,6 +137,16 @@ class ObjToSQL:
             placeholders = ', '.join(f"{ph}" for _ in data)
         sql = f"{K.insert()} {K.into()} {table_name} ({columns}) {K.values()} ({placeholders})"
         return sql, list(data.values())
+    
+    def __build_insert_batch_sql(self, table_name, classField):
+        ph=self.__getPlaceholder()
+        columns = ', '.join(classField)
+        if self.__getPlaceholderType() == 3:
+            placeholders = ', '.join(f" {ph}{item}" for item in classField)
+        else:
+            placeholders = ', '.join(f"{ph}" for _ in classField)
+        sql = f"{K.insert()} {K.into()} {table_name} ({columns}) {K.values()} ({placeholders})"
+        return sql
 
     def __build_where_condition(self, conditions):
         ph=self.__getPlaceholder()

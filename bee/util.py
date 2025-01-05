@@ -4,7 +4,6 @@ from bee.key import Key
 class HoneyUtil: 
      
     """返回给定对象的属性字典，如果没有则返回None"""
-
     @staticmethod 
     def get_obj_field_value(obj): 
         if hasattr(obj, '__dict__'): 
@@ -62,7 +61,6 @@ class HoneyUtil:
     # dict: {'id': <property object at 0x000001E2C878D350>, 'name': <property object at 0x000001E2C878D3A0>, 'remark': <property object at 0x000001E2C878D3F0>}
     
     """ 返回给定类的属性字典,但不包括系统的 """ 
-
     @staticmethod
     def get_class_field(cls):
         if hasattr(cls, '__dict__'):  
@@ -96,6 +94,30 @@ class HoneyUtil:
             for key, value in dict_obj.items()
         }
         return fieldAndValue
+    
+    """获取对象的值元列表
+    eg:
+            # list_params = [
+            #     (None, 'Alice', 30, 'Likes swimming', '123 Maple St'),
+            #     (None, 'Charlie', 35, 'Enjoys hiking', None),
+            #     (None, 'David', 28, None, None),  # remark 和 addr 均为空  
+            #     ] 
+    """
+    @staticmethod
+    def get_list_params(classField, entity_list):
+        dict_n={i:None for i in classField}
+        dict_classField=dict_n.copy()
+        
+        list_params=[]
+        for entity in entity_list:  
+            obj_dict = HoneyUtil.get_obj_field_value(entity)
+            dict_classField=dict_n.copy()
+            for k, v in obj_dict.items():
+                if v is not None and k in dict_classField:
+                    dict_classField[k]=v
+            list_params.append(tuple(dict_classField.values()))
+        
+        return list_params
         
     @staticmethod 
     def get_table_name(obj):
