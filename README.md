@@ -68,10 +68,46 @@ can set the db_config info yourself.
 
 ```python
 
-	   # select record
-        suid=Suid()
-        orderList=suid.select(Orders())
-        
+    # select record
+    suid=Suid()
+    orderList=suid.select(Orders()) #select all
+    
+    #insert    
+    orders=Orders()
+    orders.id=104
+    orders.name="bee"
+    orders.remark="test"
+    
+    suid=Suid()
+    suid.insert(orders)
+    
+    #update/delete
+    orders=Orders3()
+    orders.name="bee130"
+    orders.ext="aaa"  #实体没有字段，会被忽略。出去安全考虑
+    orders.id=10002
+    
+    suid = Suid()
+    n1= suid.update(orders)
+    n2= suid.delete(orders)
+    print(n1)
+    print(n2)
+    
+    #batch insert
+    student0=Student2()
+    student0.name = "bee"
+    student1=Student2()
+    student1.name = "bee1"
+    student1.addr=""
+    student1.age=40
+    entity_list=[]
+    entity_list.append(student0)
+    entity_list.append(student1)
+    
+    suidRich = SuidRich()
+    insertNum = suidRich.insert_batch(entity_list)
+    print(insertNum)
+
 ```
 
 
