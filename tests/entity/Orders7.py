@@ -13,7 +13,7 @@ class Orders7:
 # 示例  
 # 使用动态参数创建订单实例  
 orders1 = Orders7(  
-    100001,                  # 算作 arg0  
+    100001,                  # 算作 arg0   没有字段名，不能用这种形式
     "Bee(ORM Framework)",    # 算作 arg1  
     29.99,                   # 算作 arg2  
     5,                       # 算作 arg3  
