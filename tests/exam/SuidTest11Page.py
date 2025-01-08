@@ -1,6 +1,6 @@
 # from org.teasoft.exam.entity.Test import Test
 from bee.api import Suid
-from test.entity.Test import Test
+from entity.Test import Test
 
 
 if __name__ == '__main__':

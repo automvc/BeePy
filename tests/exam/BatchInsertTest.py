@@ -1,6 +1,6 @@
 from bee.api import Suid, SuidRich
 from bee.sqllib import BeeSql
-from test.entity.Student2 import Student2
+from entity.Student2 import Student2
 
 """ batch insert for student2 """
 if __name__ == '__main__':

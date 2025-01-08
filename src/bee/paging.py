@@ -1,0 +1,26 @@
+from bee.config import HoneyConfig
+from bee.osql.const import DatabaseConst
+from bee.osql.sqlkeyword import K
+
+
+class Paging:
+    
+    def to_page_sql(self, sql, start, size):
+        config = HoneyConfig()
+        dbName = config.get_dbName()
+        if dbName is None:
+            # 使用配置的dbName TODO  抛异常
+            return sql
+        elif dbName == DatabaseConst.MYSQL.lower(): 
+            return self.__toPageSqlForMySql(sql, start, size)
+        elif dbName == DatabaseConst.SQLite.lower(): 
+            return self.__toLimitOffsetPaging(sql, start, size)
+        
+    def __toPageSqlForMySql(self, sql, start, size): 
+        limitStament = " " + K.limit() + " " + str(start) + ", " + str(size)
+        sql += limitStament
+        return sql
+    
+    def __toLimitOffsetPaging(self, sql, offset, size): 
+        return sql + " " + K.limit() + " " + str(size) + " " + K.offset() + " " + str(offset)
+           

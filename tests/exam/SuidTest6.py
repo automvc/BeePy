@@ -1,5 +1,5 @@
 from bee.api import Suid
-from test.entity.Orders6 import Orders6
+from entity.Orders6 import Orders6
 # from org.teasoft.exam.entity.Orders6 import Orders6
 
 if __name__ == '__main__':

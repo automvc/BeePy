@@ -1,5 +1,5 @@
 from bee.api import SuidRich
-from test.entity.Orders import Orders
+from entity.Orders import Orders
 
 """ batch insert for orders """
 if __name__ == '__main__':

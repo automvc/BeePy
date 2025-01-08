@@ -1,8 +1,8 @@
 from bee.api import Suid
-from test.entity.Orders3 import Orders3
+from entity.Orders3 import Orders3
 
 
-# from test.entity import Orders3
+# from entity import Orders3
 # from bee.HoneyUtil import HoneyUtil
 if __name__ == '__main__':
     print("start")

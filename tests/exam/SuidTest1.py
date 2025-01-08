@@ -1,15 +1,18 @@
+# from org.teasoft.exam.entity.Orders import Orders
+# from bee.api import Suid
 from bee.api import Suid
-from test.entity.Student import Student2
+from entity.Orders import Orders
 
 
+# from org.teasoft.exam.entity.Test import Test
 if __name__ == '__main__':
     print("start")
     
     # orders=Orders(id=1, name="bee")
-    orders=Student2()
+    orders=Orders()
     # orders = Test()
     # orders.id=1
-    # orders.name = "bee"
+    orders.name = "bee"
     
     suid = Suid()
     orderList = suid.select(orders) #test 

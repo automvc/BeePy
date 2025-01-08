@@ -1,6 +1,6 @@
 # from org.teasoft.exam.entity.Orders42 import Orders42
 from bee.api import Suid
-from test.entity.Orders42 import Orders42
+from entity.Orders42 import Orders42
 
 
 # from bee.HoneyUtil import HoneyUtil

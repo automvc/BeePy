@@ -1,5 +1,5 @@
 from bee.api import Suid
-from test.entity.Test import Test
+from entity.Orders import Orders
 
 
 if __name__ == '__main__':
@@ -9,7 +9,7 @@ if __name__ == '__main__':
     # config.dbName="mysql"
     
     # orders=Orders(id=1, name="bee")
-    orders=Test()
+    orders=Orders()
     orders.id=104
     orders.name="bee"
     orders.remark="test"
