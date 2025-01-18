@@ -5,6 +5,9 @@ ORM **Bee** with Python!
 **Bee** with Python url:  
 https://github.com/automvc/BeePy  
 
+**Bee** with Java url:  
+https://github.com/automvc/bee  
+
 ## [中文介绍](../../../BeePy/blob/master/README_CN.md)  
 [点击链接可查看中文介绍](../../../BeePy/blob/master/README_CN.md)  
 
@@ -35,6 +38,10 @@ Print log level characters
 Improve log output  
 Add PreConfig to specify the location of the configuration file  
 Improve anomalies  
+
+### **V1.5**
+1. add Version  
+2. adjust naming  
 
 Quick Start:
 =========	

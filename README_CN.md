@@ -3,6 +3,12 @@ Bee
 ORM **Bee** with Python!  
 Bee(BeePy)是Python版的ORM工具(还有Java版的).  
 
+**Bee** with Python url:  
+https://github.com/automvc/BeePy  
+
+**Bee** with Java url:  
+https://github.com/automvc/bee  
+
 ## 环境要求  
 #### Python 3.x(建议3.12+)   
 
@@ -34,6 +40,7 @@ Bee(BeePy)是Python版的ORM工具(还有Java版的).
 
 ### **V1.5**
 1. 添加Version  
+2. 调整naming  
 
 快速开始:
 =========	

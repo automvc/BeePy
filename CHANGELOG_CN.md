@@ -32,3 +32,4 @@ is_sql_key_word_upper放配置
 
 ### **V1.5**
 1. 添加Version  
+2. 调整naming  
