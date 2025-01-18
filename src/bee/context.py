@@ -1,10 +1,9 @@
 # import sqlite3 
 # import pymysql
-from bee.config import HoneyConfig
+from bee.config import HoneyConfig, PreConfig
 from bee.conn_builder import ConnectionBuilder
 from bee.factory import BeeFactory
-from bee.key import Key
-from bee.osql.const import DatabaseConst
+from bee.osql.const import DatabaseConst, SysConst
 
 
 class HoneyContext: 
@@ -31,8 +30,8 @@ class HoneyContext:
     
     @staticmethod
     def __setDbName(config):
-        if Key.dbName in config:
-            dbName = config.get(Key.dbName, None)
+        if SysConst.dbName in config:
+            dbName = config.get(SysConst.dbName, None)
             if dbName is not None:
                 HoneyContext.dbName = dbName
     
@@ -40,7 +39,7 @@ class HoneyContext:
     def get_placeholder():
         
         honeyConfig=HoneyConfig()
-        dbName=honeyConfig.get_dbName().lower()
+        dbName=honeyConfig.get_dbName()
         
         if dbName is None:
             return None
@@ -51,11 +50,10 @@ class HoneyContext:
         elif dbName == DatabaseConst.ORACLE.lower(): 
             # query = "SELECT * FROM users WHERE username = :username AND age = :age"
             return ":"
+        else:
+            return PreConfig.sql_placeholder
             
-        
-        #还要有set的方法，或在配置文件中设置  TODO
-
-
+            
     @staticmethod
     def is_active_conn(conn):
         

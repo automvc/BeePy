@@ -5,33 +5,30 @@ from bee.sqllib import BeeSql
 
 class Suid:
     
-    def __init__(self):  
+    def __init__(self): 
         self._beeSql = None  
         self._objToSQL = None   
     
-    def select(self, entity):  
-        if entity is None:  
+    def select(self, entity): 
+        if entity is None: 
             return None  
 
-        try:  
-            sql,params = self.objToSQL.toSelectSQL(entity)  
-            # Logger.log_sql("select SQL: ", sql)  
-            Logger.logsql("sql: ", sql)
-            Logger.logsql("params: ",params)
-            return self.beeSql.select(sql, self.to_class_t(entity),params)  # 返回值用到泛型  
-        finally:  
+        try: 
+            sql, params = self.objToSQL.toSelectSQL(entity)  
+            Logger.logsql("select SQL:", sql)
+            Logger.logsql("params:", params)
+            return self.beeSql.select(sql, self.to_class_t(entity), params)  # 返回值用到泛型  
+        finally: 
             pass  # 在 Python 中可以省略 finally, 如果没有清理操作  
-        
         
     def select_paging(self, entity, start, size): 
         if entity is None: 
             return None  
 
         try: 
-            sql, params = self.objToSQL.toSelectSQLWithPaging(entity,start, size)  
-            # Logger.log_sql("select SQL: ", sql)  
-            Logger.logsql("sql: ", sql)
-            Logger.logsql("params: ",params)
+            sql, params = self.objToSQL.toSelectSQLWithPaging(entity, start, size)  
+            Logger.logsql("select_paging SQL:", sql)
+            Logger.logsql("params:", params)
             return self.beeSql.select(sql, self.to_class_t(entity), params)  # 返回值用到泛型  
         finally: 
             pass  
@@ -42,8 +39,8 @@ class Suid:
         
         try: 
             sql, params = self.objToSQL.toUpdateSQL(entity)  
-            Logger.logsql("sql: ", sql)
-            Logger.logsql("params: ",params)
+            Logger.logsql("update SQL:", sql)
+            Logger.logsql("params:", params)
             return self.beeSql.modify(sql, params)
         finally: 
             pass  
@@ -54,8 +51,8 @@ class Suid:
         
         try: 
             sql, params = self.objToSQL.toInsertSQL(entity)  
-            Logger.logsql("sql: ", sql)
-            Logger.logsql("params: ",params)
+            Logger.logsql("insert SQL:", sql)
+            Logger.logsql("params:", params)
             return self.beeSql.modify(sql, params)
         finally: 
             pass 
@@ -66,38 +63,38 @@ class Suid:
         
         try: 
             sql, params = self.objToSQL.toDeleteSQL(entity)  
-            Logger.logsql("sql: ", sql)
-            Logger.logsql("params: ",params)
+            Logger.logsql("delete SQL:", sql)
+            Logger.logsql("params:", params)
             return self.beeSql.modify(sql, params)  
         finally: 
             pass
 
     def to_class_t(self, entity):
-        return type(entity)  #返回实体的类型  
+        return type(entity)  # 返回实体的类型  
     
     # def __init__(self, beeSql=None, objToSQL=None): 
     #     self._beeSql = beeSql  
     #     self._objToSQL = objToSQL  
 
     @property  
-    def beeSql(self):  
-        if self._beeSql is None:  
+    def beeSql(self): 
+        if self._beeSql is None: 
             # self._beeSql = BeeFactory.get_honey_factory().get_beeSql()  
-            self._beeSql =BeeSql()
+            self._beeSql = BeeSql()
         return self._beeSql  
 
     @beeSql.setter  
-    def beeSql(self, beeSql):  
+    def beeSql(self, beeSql): 
         self._beeSql = beeSql  
 
     @property  
-    def objToSQL(self):  
-        if self._objToSQL is None:  
-            self._objToSQL= ObjToSQL()
+    def objToSQL(self): 
+        if self._objToSQL is None: 
+            self._objToSQL = ObjToSQL()
         return self._objToSQL  
 
     @objToSQL.setter  
-    def objToSQL(self, objToSQL):  
+    def objToSQL(self, objToSQL): 
         self._objToSQL = objToSQL  
         
 
@@ -110,10 +107,16 @@ class SuidRich(Suid):
             return 0
         
         try: 
-            sql,list_params = self.objToSQL.toInsertBatchSQL(entity_list)            
-            Logger.logsql("sql: ", sql)
-            Logger.logsql("params: ", list_params)
+            sql, list_params = self.objToSQL.toInsertBatchSQL(entity_list)            
+            Logger.logsql("insert batch SQL:", sql)
+            Logger.logsql("params:", list_params)
             return self.beeSql.batch(sql, list_params)
         finally: 
             pass 
-        
+
+    def select_first(self, entity):
+        listT = self.select_paging(entity, 0, 2)
+        if listT:  # 判断列表是否非空  
+            return listT[0]  # 返回首个元素  
+        return None 
+            

@@ -1,7 +1,6 @@
 from bee.config import HoneyConfig
 from bee.context import HoneyContext
-from bee.key import Key
-from bee.osql.const import DatabaseConst
+from bee.osql.const import DatabaseConst, SysConst
 from bee.osql.logger import Logger
 from bee.osql.sqlkeyword import K
 from bee.paging import Paging
@@ -14,7 +13,7 @@ class ObjToSQL:
         fieldAndValue, classField = self.__getKeyValue_classField(entity)
         
         table_name = HoneyUtil.get_table_name(entity)
-        return self.__build_select_sql(table_name, classField, fieldAndValue);
+        return self.__build_select_sql(table_name, classField, fieldAndValue)
     
     def toSelectSQLWithPaging(self, entity, start, size):
         sql, params = self.toSelectSQL(entity)
@@ -27,15 +26,15 @@ class ObjToSQL:
         fieldAndValue = self.__getKeyValue(entity)
         pk = HoneyUtil.get_pk(entity)
         if pk is None:
-            if not Key.id in fieldAndValue:
+            if not SysConst.id in fieldAndValue:
             # if not "id" in fieldAndValue:
                 Logger.info("update by id,bean has id field or need set the pk field name with __pk__")  # TODO throw exception    
             else:
-                idvalue = fieldAndValue.get(Key.id, None)
+                idvalue = fieldAndValue.get(SysConst.id, None)
                 if idvalue is None:
                     Logger.info("the id value can not be None")
                 else:
-                    pk = Key.id
+                    pk = SysConst.id
             
         conditions = {pk:fieldAndValue.pop(pk)}    
     

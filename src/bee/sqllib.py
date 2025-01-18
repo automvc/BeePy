@@ -1,4 +1,5 @@
 from bee.context import HoneyContext
+from bee.exception.SqlBeeException import SqlBeeException
 from bee.osql.logger import Logger
 from bee.util import HoneyUtil
 
@@ -10,7 +11,7 @@ class BeeSql:
     
         conn = self.__getConn()  
         if conn is None:
-            return None
+            raise SqlBeeException("DB conn is None!")
         
         rs_list = []
         cursor = conn.cursor()
@@ -42,7 +43,7 @@ class BeeSql:
     def modify(self, sql, params=None): 
         conn = self.__getConn()
         if conn is None:
-                return None  # TODO抛异常
+            raise SqlBeeException("DB conn is None!")
         cursor = conn.cursor()  
         try: 
             cursor.execute(sql, params or [])
@@ -59,7 +60,7 @@ class BeeSql:
     def batch(self, sql, params=None):
         conn = self.__getConn()
         if conn is None:
-                return None  # TODO抛异常
+            raise SqlBeeException("DB conn is None!")
         cursor = conn.cursor()  
         try:
             cursor.executemany(sql, params or [])

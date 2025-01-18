@@ -1,6 +1,8 @@
-from bee.key import Key
+from bee.config import PreConfig
+from bee.osql.const import SysConst
 
 
+# from bee.key import Key
 class HoneyUtil: 
      
     """返回给定对象的属性字典，如果没有则返回None"""
@@ -23,7 +25,7 @@ class HoneyUtil:
                    for key, value in cls.__dict__.items() if not (key.startswith('__') and key.endswith('__'))} 
             for key, value in kv.items():
                 if isinstance(value, property):
-                    kv[key]=None   #使用get/set,暂时不能获取到bean的类级别的值。   TODO  应用使用_或__前缀
+                    kv[key]=None   #使用get/set,暂时不能获取到bean的类级别的值。
                     # kv[key]=getattr(cls, key)
             return kv
         else: 
@@ -136,11 +138,11 @@ class HoneyUtil:
     @staticmethod 
     def get_pk(obj):
         cls = obj.__class__
-        temp_name = getattr(cls, Key.pk, None)
+        temp_name = getattr(cls, SysConst.pk, None)
         if temp_name is not None and not temp_name.isspace():
             return temp_name
         else:
-            temp_name = getattr(cls, Key.primary_key, None)
+            temp_name = getattr(cls, SysConst.primary_key, None)
             if temp_name is not None and not temp_name.isspace():
                 return temp_name
         return None
@@ -156,7 +158,10 @@ class HoneyUtil:
         return obj
     
     @staticmethod  
-    def is_sql_key_word_upper():  
-        # 你可以根据需要修改这个方法来决定是使用大写还是小写  
-        # return True  # 示例：返回True表示使用大写  TODO
+    def is_sql_key_word_upper(): 
+        # TODO support set in config file
+        if PreConfig.sql_key_word_case is not None:
+            if PreConfig.sql_key_word_case == SysConst.upper:
+                return True
         return False
+            

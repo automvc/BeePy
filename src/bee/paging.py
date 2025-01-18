@@ -1,4 +1,5 @@
 from bee.config import HoneyConfig
+from bee.exception.SqlBeeException import SqlBeeException
 from bee.osql.const import DatabaseConst
 from bee.osql.sqlkeyword import K
 
@@ -9,8 +10,8 @@ class Paging:
         config = HoneyConfig()
         dbName = config.get_dbName()
         if dbName is None:
-            # 使用配置的dbName TODO  抛异常
-            return sql
+            raise SqlBeeException("dbName is None!")
+            # return sql
         elif dbName == DatabaseConst.MYSQL.lower(): 
             return self.__toPageSqlForMySql(sql, start, size)
         elif dbName == DatabaseConst.SQLite.lower(): 

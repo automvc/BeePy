@@ -2,23 +2,23 @@
 # import pymysql
 import importlib
 
-from bee.key import Key
-from bee.osql.const import DatabaseConst
+from bee.osql.const import DatabaseConst, SysConst
 from bee.osql.logger import Logger
+
 
 class ConnectionBuilder:
     
     @staticmethod
     def build_connect(config):
         dbName = None
-        if Key.dbName in config:
+        if SysConst.dbName in config:
             tempConfig = config.copy()
-            dbName = tempConfig.pop(Key.dbName, None)
+            dbName = tempConfig.pop(SysConst.dbName, None)
         else:
             tempConfig = config
             
         # Map database names to their respective module names and connection functions  
-        db_modules = {  
+        db_modules = {
             DatabaseConst.MYSQL.lower(): 'pymysql',
             DatabaseConst.SQLite.lower(): 'sqlite3',  
             DatabaseConst.ORACLE.lower(): 'cx_Oracle',  
@@ -35,8 +35,8 @@ class ConnectionBuilder:
         
         dbName = dbName.lower()
         
-        if Key.dbModuleName in config:   #优先使用dbModuleName，让用户可以有选择覆盖默认配置的机会
-            dbModuleName = tempConfig.pop(Key.dbModuleName, None)
+        if SysConst.dbModuleName in config:   #优先使用dbModuleName，让用户可以有选择覆盖默认配置的机会
+            dbModuleName = tempConfig.pop(SysConst.dbModuleName, None)
         elif dbName not in db_modules:
             # raise ValueError(f"Database type '{dbName}' is not supported, need config dbModuleName.")      
             print(f"Database type '{dbName}' is not supported, need config dbModuleName.")
@@ -46,7 +46,7 @@ class ConnectionBuilder:
         
             
         db_module = importlib.import_module(dbModuleName)  
-        Logger.info(f"Use  {dbModuleName}!")
+        Logger.info(f"Database driver use: {dbModuleName}!")
         
         # Now create the connection using the imported module  
         if dbName == DatabaseConst.MYSQL.lower(): 
