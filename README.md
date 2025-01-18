@@ -148,7 +148,8 @@ class Student2:
 from bee.api import Suid
 
 if __name__=="__main__":
-    #suggest set project root path for it
+
+    #set bee.properties/bee.json config folder, can set project root for it
     Config.config_folder_root_path="E:\\Bee-Project"
 
     # select record

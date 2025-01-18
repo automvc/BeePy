@@ -98,13 +98,40 @@ can set the db_config info yourself.
 
 ```python
 
+class Orders:
+    id = None  
+    name = None 
+    remark = None
+
+    #can ignore
+    def __repr__(self):  
+        return  str(self.__dict__)
+        
+class Student2:
+    id = None
+    name = None 
+    age = None  
+    remark = None
+    addr = None
+
+    def __repr__(self): 
+        return  str(self.__dict__)
+        
+        
+from bee.api import Suid
+
+if __name__=="__main__":
+    
+    #set bee.properties/bee.json config folder, can set project root for it
+    Config.config_folder_root_path="E:\\Bee-Project"
+    
     # select record
     suid=Suid()
     orderList=suid.select(Orders()) #select all
     
     #insert    
     orders=Orders()
-    orders.id=104
+    orders.id=1
     orders.name="bee"
     orders.remark="test"
     
@@ -112,10 +139,10 @@ can set the db_config info yourself.
     suid.insert(orders)
     
     #update/delete
-    orders=Orders3()
+    orders=Orders()
     orders.name="bee130"
     orders.ext="aaa"  #实体没有字段，会被忽略。出去安全考虑
-    orders.id=10002
+    orders.id=1
     
     suid = Suid()
     n1= suid.update(orders)
