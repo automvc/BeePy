@@ -24,8 +24,22 @@ Bee(BeePy)是Python版的ORM工具(还有Java版的).
 3. reuse the connection 重用 connection 连接，提高效率；  
 4. 添加系统定义异常.  
 
+### **V1.3**
+is_sql_key_word_upper放配置  
+打印日志级别字符  
+完善日志输出  
+增加PreConfig，可以指定配置文件的位置  
+完善异常  
+
 快速开始:
 =========	
+## 安装依赖包  
+在命令行输入以下命令: 
+
+```shell
+pip install bee
+```
+
 ## 1. 配置db连接信息  
 #### 1.1.can custom your db Module  
 in bee.json or bee.properties set dbModuleName  
