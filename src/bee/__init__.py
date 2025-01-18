@@ -15,3 +15,7 @@ JAVA ORM Bee:
         note:the version can change to newest.
 
 """
+from bee.version import Version
+
+
+Version.printversion()

@@ -25,11 +25,15 @@ Bee(BeePy)是Python版的ORM工具(还有Java版的).
 4. 添加系统定义异常.  
 
 ### **V1.3**
-is_sql_key_word_upper放配置  
-打印日志级别字符  
-完善日志输出  
-增加PreConfig，可以指定配置文件的位置  
-完善异常  
+1. is_sql_key_word_upper放配置  
+2. 打印日志级别字符  
+3. 完善日志输出  
+4. 增加PreConfig，可以指定配置文件的位置  
+5. 完善异常  
+6. selectFirst  
+
+### **V1.5**
+1. 添加Version  
 
 快速开始:
 =========	

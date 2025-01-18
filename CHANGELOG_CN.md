@@ -29,3 +29,6 @@ is_sql_key_word_upper放配置
 完善日志输出  
 增加PreConfig，可以指定配置文件的位置  
 完善异常  
+
+### **V1.5**
+1. 添加Version  
