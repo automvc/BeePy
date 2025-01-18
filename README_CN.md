@@ -48,7 +48,7 @@ https://github.com/automvc/bee
 在命令行输入以下命令: 
 
 ```shell
-pip install bee
+pip install ormbee
 ```
 
 ## 1. 配置db连接信息  

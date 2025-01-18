@@ -49,7 +49,7 @@ Quick Start:
 To install, type: 
 
 ```shell
-pip install bee
+pip install ormbee
 ```
 
 
