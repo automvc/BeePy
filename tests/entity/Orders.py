@@ -5,7 +5,7 @@
 
 Created on 2024年10月19日
 
-@author: BeePy
+@author: Bee
 '''
 
 class Orders:
@@ -13,6 +13,7 @@ class Orders:
     name = None 
     remark = None
 
+    #can ignore
     def __repr__(self):  
         return  str(self.__dict__)
 

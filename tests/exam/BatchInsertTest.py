@@ -17,7 +17,7 @@ if __name__ == '__main__':
     """
     
     # beeSql=BeeSql()
-    # beeSql.modify(createSql, []);
+    # beeSql.modify(createSql, [])
     
     student0=Student2()
     student0.name = "bee"
