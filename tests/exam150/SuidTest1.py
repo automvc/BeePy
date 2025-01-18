@@ -8,7 +8,7 @@ if __name__ == '__main__':
     print("start")
     
     #suggest set project root path for it
-    PreConfig.config_folder_root_path="E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc"
+    PreConfig.config_folder_root_path="E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc\\tests\\exam"
     
     orders=Orders()
     orders.name = "bee"

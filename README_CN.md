@@ -3,6 +3,12 @@ Bee
 ORM **Bee** with Python!  
 Bee(BeePy)是Python版的ORM工具(还有Java版的).  
 
+**Bee** with Python url:  
+https://github.com/automvc/BeePy  
+
+**Bee** with Java url:  
+https://github.com/automvc/bee  
+
 ## 环境要求  
 #### Python 3.x(建议3.12+)   
 
@@ -25,11 +31,16 @@ Bee(BeePy)是Python版的ORM工具(还有Java版的).
 4. 添加系统定义异常.  
 
 ### **V1.3**
-is_sql_key_word_upper放配置  
-打印日志级别字符  
-完善日志输出  
-增加PreConfig，可以指定配置文件的位置  
-完善异常  
+1. is_sql_key_word_upper放配置  
+2. 打印日志级别字符  
+3. 完善日志输出  
+4. 增加PreConfig，可以指定配置文件的位置  
+5. 完善异常  
+6. selectFirst  
+
+### **V1.5**
+1. 添加Version  
+2. 调整naming  
 
 快速开始:
 =========	
@@ -37,7 +48,7 @@ is_sql_key_word_upper放配置
 在命令行输入以下命令: 
 
 ```shell
-pip install bee
+pip install ormbee
 ```
 
 ## 1. 配置db连接信息  
@@ -87,13 +98,40 @@ can set the db_config info yourself.
 
 ```python
 
+class Orders:
+    id = None  
+    name = None 
+    remark = None
+
+    #can ignore
+    def __repr__(self):  
+        return  str(self.__dict__)
+        
+class Student2:
+    id = None
+    name = None 
+    age = None  
+    remark = None
+    addr = None
+
+    def __repr__(self): 
+        return  str(self.__dict__)
+        
+        
+from bee.api import Suid
+
+if __name__=="__main__":
+    
+    #set bee.properties/bee.json config folder, can set project root for it
+    Config.config_folder_root_path="E:\\Bee-Project"
+    
     # select record
     suid=Suid()
     orderList=suid.select(Orders()) #select all
     
     #insert    
     orders=Orders()
-    orders.id=104
+    orders.id=1
     orders.name="bee"
     orders.remark="test"
     
@@ -101,10 +139,10 @@ can set the db_config info yourself.
     suid.insert(orders)
     
     #update/delete
-    orders=Orders3()
+    orders=Orders()
     orders.name="bee130"
     orders.ext="aaa"  #实体没有字段，会被忽略。出去安全考虑
-    orders.id=10002
+    orders.id=1
     
     suid = Suid()
     n1= suid.update(orders)

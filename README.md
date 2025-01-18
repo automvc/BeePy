@@ -2,6 +2,15 @@ Bee
 =========
 ORM **Bee** with Python!  
 
+**Bee** with Python url:  
+https://github.com/automvc/BeePy  
+
+**Bee** with Java url:  
+https://github.com/automvc/bee  
+
+## [中文介绍](../../../BeePy/blob/master/README_CN.md)  
+[点击链接可查看中文介绍](../../../BeePy/blob/master/README_CN.md)  
+
 ## Requirement  
 #### Python 3.x(suggest 3.12+)   
 
@@ -17,13 +26,30 @@ ORM **Bee** with Python!
 8.The framework is responsible for managing the implementation logic of connections, transaction commit, rollback, etc;  
 9.The encoding complexity C (n) of ORM is O (1).  
 
+### **V1.1**
+1. SQL keywords, supporting capitalization;  
+2. Batch insert: Batch insert;  
+3. Reuse the connection to improve efficiency;  
+4. Add system definition exceptions  
+
+### **V1.3**
+is_sql_key_word_upper can set upper/lower in configure  
+Print log level characters  
+Improve log output  
+Add PreConfig to specify the location of the configuration file  
+Improve anomalies  
+
+### **V1.5**
+1. add Version  
+2. adjust naming  
+
 Quick Start:
 =========	
 ## Installation  
 To install, type: 
 
 ```shell
-pip install bee
+pip install ormbee
 ```
 
 
@@ -122,7 +148,8 @@ class Student2:
 from bee.api import Suid
 
 if __name__=="__main__":
-    #suggest set project root path for it
+
+    #set bee.properties/bee.json config folder, can set project root for it
     Config.config_folder_root_path="E:\\Bee-Project"
 
     # select record

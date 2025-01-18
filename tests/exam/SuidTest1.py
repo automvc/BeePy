@@ -8,6 +8,8 @@ from entity.Orders import Orders
 if __name__ == '__main__':
     print("start")
     
+    # Version.printversion()
+    
     # orders=Orders(id=1, name="bee")
     orders=Orders()
     # orders = Test()
