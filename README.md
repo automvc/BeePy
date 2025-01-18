@@ -1,8 +1,6 @@
-BeePy
+Bee
 =========
-ORM Bee with Python!  
-BeePy is a Python based ORM tool;  
-BeePy is a Python version of ORM tool (the Java version is Bee)  
+ORM **Bee** with Python!  
 
 ## Requirement  
 #### Python 3.x(suggest 3.12+)   
@@ -21,9 +19,42 @@ BeePy is a Python version of ORM tool (the Java version is Bee)
 
 Quick Start:
 =========	
+## Installation  
+To install, type: 
+
+```shell
+pip install bee
+```
+
+
 ## 1. set db config  
 #### 1.1.can custom your db Module  
 in bee.json or bee.properties set dbModuleName  
+
+```json
+ {
+ "dbName": "SQLite",  
+ "database": "bee.db", 
+ //default support: pymysql,sqlite3,cx_Oracle,psycopg2 (no need set)
+ "dbModuleName":"sqlite3"
+ }
+ ```
+ 
+ ```properties
+ #value is: MySql,SQLite,Oracle,
+#MySQL config
+#bee.db.dbName=MySQL
+#bee.db.host =localhost
+#bee.db.user =root
+#bee.db.password =
+#bee.db.database =bee
+#bee.db.port=3306
+
+# SQLite
+bee.db.dbName=SQLite
+bee.db.database =bee.db
+ ```
+ 
 #### 1.2.if do not want to use the default config file(bee.json or bee.properties),  
 can set the db_config info yourself.  
 
@@ -31,10 +62,10 @@ can set the db_config info yourself.
         # #mysql
         config = {  
             'dbName':'MySQL',
-            'host': 'localhost',  # 数据库主机  
-            'user': 'root',  # 替换为您的 MySQL 用户名  
-            'password': '',  # 替换为您的 MySQL 密码  
-            'database': 'bee',  # 替换为您的数据库名称  
+            'host': 'localhost',
+            'user': 'root',
+            'password': '',
+            'database': 'bee',
             'port':3306
         }
         
@@ -64,9 +95,35 @@ can set the db_config info yourself.
         
 ```
 
-## 2. operate DB  
+## 2. operate DB with Bee
 
 ```python
+
+class Orders:
+    id = None  
+    name = None 
+    remark = None
+
+    #can ignore
+    def __repr__(self):  
+        return  str(self.__dict__)
+        
+class Student2:
+    id = None
+    name = None 
+    age = None  
+    remark = None
+    addr = None
+
+    def __repr__(self): 
+        return  str(self.__dict__)
+        
+        
+from bee.api import Suid
+
+if __name__=="__main__":
+    #suggest set project root path for it
+    Config.config_folder_root_path="E:\\Bee-Project"
 
     # select record
     suid=Suid()
@@ -74,7 +131,7 @@ can set the db_config info yourself.
     
     #insert    
     orders=Orders()
-    orders.id=104
+    orders.id=1
     orders.name="bee"
     orders.remark="test"
     
@@ -82,10 +139,12 @@ can set the db_config info yourself.
     suid.insert(orders)
     
     #update/delete
-    orders=Orders3()
+    orders=Orders()
     orders.name="bee130"
-    orders.ext="aaa"  #实体没有字段，会被忽略。出去安全考虑
-    orders.id=10002
+    #For safety reasons
+    #Fields that are not present in the entity will be ignored.
+    orders.ext="aaa"  
+    orders.id=1
     
     suid = Suid()
     n1= suid.update(orders)
@@ -109,6 +168,3 @@ can set the db_config info yourself.
     print(insertNum)
 
 ```
-
-
-
