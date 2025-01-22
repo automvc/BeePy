@@ -1,5 +1,5 @@
 from bee.context import HoneyContext
-from bee.exception.SqlBeeException import SqlBeeException
+from bee.exception import SqlBeeException
 from bee.osql.logger import Logger
 from bee.util import HoneyUtil
 

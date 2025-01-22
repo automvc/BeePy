@@ -1,3 +1,0 @@
-from bee.exception.BeeException import BeeException
-
-class ConfigBeeException(BeeException): ...

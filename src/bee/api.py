@@ -1,3 +1,5 @@
+from bee import SqlUtil
+from bee.exception import BeeException
 from bee.obj2sql import ObjToSQL
 from bee.osql.logger import Logger
 from bee.sqllib import BeeSql
@@ -14,25 +16,15 @@ class Suid:
             return None  
 
         try: 
+            # a=1/0
             sql, params = self.objToSQL.toSelectSQL(entity)  
             Logger.logsql("select SQL:", sql)
             Logger.logsql("params:", params)
             return self.beeSql.select(sql, self.to_class_t(entity), params)  # 返回值用到泛型  
-        finally: 
-            pass  # 在 Python 中可以省略 finally, 如果没有清理操作  
+        except Exception as e: 
+            raise BeeException(e)
+            # raise BeeException("aaaaa")
         
-    def select_paging(self, entity, start, size): 
-        if entity is None: 
-            return None  
-
-        try: 
-            sql, params = self.objToSQL.toSelectSQLWithPaging(entity, start, size)  
-            Logger.logsql("select_paging SQL:", sql)
-            Logger.logsql("params:", params)
-            return self.beeSql.select(sql, self.to_class_t(entity), params)  # 返回值用到泛型  
-        finally: 
-            pass  
-    
     def update(self, entity): 
         if entity is None: 
             return None
@@ -42,8 +34,8 @@ class Suid:
             Logger.logsql("update SQL:", sql)
             Logger.logsql("params:", params)
             return self.beeSql.modify(sql, params)
-        finally: 
-            pass  
+        except Exception as e: 
+            raise BeeException(e) 
     
     def insert(self, entity): 
         if entity is None: 
@@ -54,8 +46,8 @@ class Suid:
             Logger.logsql("insert SQL:", sql)
             Logger.logsql("params:", params)
             return self.beeSql.modify(sql, params)
-        finally: 
-            pass 
+        except Exception as e: 
+            raise BeeException(e)
         
     def delete(self, entity): 
         if entity is None: 
@@ -66,8 +58,8 @@ class Suid:
             Logger.logsql("delete SQL:", sql)
             Logger.logsql("params:", params)
             return self.beeSql.modify(sql, params)  
-        finally: 
-            pass
+        except Exception as e: 
+            raise BeeException(e)
 
     def to_class_t(self, entity):
         return type(entity)  # 返回实体的类型  
@@ -100,6 +92,18 @@ class Suid:
 
 class SuidRich(Suid):
     
+    def select_paging(self, entity, start, size): 
+        if entity is None: 
+            return None  
+
+        try: 
+            sql, params = self.objToSQL.toSelectSQLWithPaging(entity, start, size)  
+            Logger.logsql("select_paging SQL:", sql)
+            Logger.logsql("params:", params)
+            return self.beeSql.select(sql, self.to_class_t(entity), params)  # 返回值用到泛型  
+        finally: 
+            pass      
+    
     def insert_batch(self, entity_list): 
         if entity_list is None: 
             return None
@@ -119,4 +123,3 @@ class SuidRich(Suid):
         if listT:  # 判断列表是否非空  
             return listT[0]  # 返回首个元素  
         return None 
-            

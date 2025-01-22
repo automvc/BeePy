@@ -1,5 +1,6 @@
-from bee.exception.BeeException import BeeException
-from bee.exception.ConfigBeeException import ConfigBeeException
+# from bee.exception.BeeException import BeeException
+# from bee.exception.ConfigBeeException import ConfigBeeException
+from bee.exception import BeeException, ConfigBeeException
 
 
 # from bee.exception.ConfigBeeException import ConfigBeeException
