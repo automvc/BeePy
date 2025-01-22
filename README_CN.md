@@ -119,11 +119,12 @@ class Student2:
         
         
 from bee.api import Suid
+from bee.config import PreConfig
 
 if __name__=="__main__":
     
     #set bee.properties/bee.json config folder, can set project root for it
-    Config.config_folder_root_path="E:\\Bee-Project"
+    PreConfig.config_folder_root_path="E:\\Bee-Project"
     
     # select record
     suid=Suid()
