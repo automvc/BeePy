@@ -114,7 +114,7 @@ class SuidRich(Suid):
             Logger.logsql("params:", list_params)
             return self.beeSql.batch(sql, list_params)
         except Exception as e: 
-            raise BeeException(e) 
+            raise BeeException(e)
 
     def select_first(self, entity):
         listT = self.select_paging(entity, 0, 2)
@@ -135,7 +135,6 @@ class PreparedSql:
             return None  
         try:
             sql = SqlUtil.add_paging(sql, start, size)
-            # print(".............."+sql)
             
             Logger.logsql("select SQL(PreparedSql):", sql)
             Logger.logsql("params:", params)

@@ -1,7 +1,7 @@
 from bee.config import HoneyConfig
 from bee.context import HoneyContext
+from bee.exception import SqlBeeException
 from bee.osql.const import DatabaseConst, SysConst
-from bee.osql.logger import Logger
 from bee.osql.sqlkeyword import K
 from bee.paging import Paging
 from bee.util import HoneyUtil
@@ -26,18 +26,17 @@ class ObjToSQL:
         fieldAndValue = self.__getKeyValue(entity)
         pk = HoneyUtil.get_pk(entity)
         if pk is None:
-            if not SysConst.id in fieldAndValue:
-            # if not "id" in fieldAndValue:
-                Logger.info("update by id,bean has id field or need set the pk field name with __pk__")  # TODO throw exception    
+            if SysConst.id in fieldAndValue:
+                pk=SysConst.id 
             else:
-                idvalue = fieldAndValue.get(SysConst.id, None)
-                if idvalue is None:
-                    Logger.info("the id value can not be None")
-                else:
-                    pk = SysConst.id
+                raise SqlBeeException("update by id, bean should has id field or need set the pk field name with __pk__")
+                
+        pkvalue = fieldAndValue.pop(pk, None)
+        if pkvalue is None:
+            raise SqlBeeException("the id/pk value can not be None")
             
-        conditions = {pk:fieldAndValue.pop(pk)}    
-    
+        conditions = {pk:pkvalue}    
+        
         table_name = HoneyUtil.get_table_name(entity)
         return self.__build_update_sql(table_name, fieldAndValue, conditions)
     
@@ -191,3 +190,5 @@ class ObjToSQL:
         # cursor.execute(sql, emp_id=emp_id, emp_name=emp_name, emp_salary=emp_salary)
         if DatabaseConst.ORACLE.lower() == self.__get_dbName():
             return 3
+        else:
+            return 0

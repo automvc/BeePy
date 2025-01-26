@@ -15,7 +15,7 @@ class BeeSql:
         
         rs_list = []
         cursor = conn.cursor()
-        try: 
+        try:
             ## with conn.cursor() as cursor:  # SQLite不支持with语法
             # 执行 SQL 查询  
             cursor.execute(sql, params or [])
@@ -29,10 +29,10 @@ class BeeSql:
                 target_obj = HoneyUtil.transform_result(row, column_names, entityClass)  
                 rs_list.append(target_obj) 
     
-        except Exception as err:  # TODO 异常处理
-            Logger.error(f"Error: {err}")  
-        finally: 
-            # 清理资源  
+        except Exception as e:
+            raise SqlBeeException(e)
+        finally:
+            # 清理资源
             if conn is not None:
                 conn.close()
         return rs_list
@@ -40,11 +40,11 @@ class BeeSql:
 
     """ 执行 UPDATE/INSERT/DELETE 操作 """
     # def modify(self, sql: str, params=None) -> int:
-    def modify(self, sql, params=None): 
+    def modify(self, sql, params=None):
         conn = self.__getConn()
         if conn is None:
             raise SqlBeeException("DB conn is None!")
-        cursor = conn.cursor()  
+        cursor = conn.cursor()
         try: 
             cursor.execute(sql, params or [])
             conn.commit() 
