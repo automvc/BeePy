@@ -1,5 +1,5 @@
 '''
-标准get,set Bean;但有类级属性
+标准get,set Bean, 但有类级属性
 有构造方法
 
 get/set 还要测试没有构造方法的。  在Orders42,是可以的。
