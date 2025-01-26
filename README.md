@@ -40,8 +40,13 @@ Add PreConfig to specify the location of the configuration file
 Improve anomalies  
 
 ### **V1.5**
+**1.5.2**  
 1. add Version  
 2. adjust naming  
+**1.5.4**  
+3. adjust exception and select_paging
+4. add PreparedSql support custom SQL  
+5. update toUpdateSQL function  
 
 Quick Start:
 =========	

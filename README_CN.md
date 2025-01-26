@@ -39,8 +39,13 @@ https://github.com/automvc/bee
 6. selectFirst  
 
 ### **V1.5**
+**1.5.2**  
 1. 添加Version  
 2. 调整naming  
+**1.5.4**  
+3. 调整exception和select_paging
+4. 添加PreparedSql支持自定义SQL方式操作DB  
+5. 更新toUpdateSQL方法  
 
 快速开始:
 =========	
