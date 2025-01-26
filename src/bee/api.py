@@ -123,3 +123,69 @@ class SuidRich(Suid):
         if listT:  # 判断列表是否非空  
             return listT[0]  # 返回首个元素  
         return None 
+
+# for custom SQL
+class PreparedSql:
+    
+    """
+    eg:
+    """ 
+    def select(self, sql, return_type, params=None, start=None, size=None):  # TODO 参数类型？？？
+        if sql is None: 
+            return None  
+        if return_type is None: 
+            return None  
+        try:
+            sql = SqlUtil.add_paging(sql, start, size)
+            # print(".............."+sql)
+            
+            Logger.logsql("select SQL(PreparedSql):", sql)
+            Logger.logsql("params:", params)
+            return self.beeSql.select(sql, return_type, params)  # 返回值用到泛型  
+        except Exception as e: 
+            raise BeeException(e)
+        
+       
+        
+    """
+    eg: select * from orders where userid=#{userid}
+    """ 
+
+    def select_dict(self, sql, return_type, params_dict=None, start=None, size=None):
+        transformed_sql, params = SqlUtil.transform_sql(sql, params_dict)  
+        return self.select(transformed_sql, return_type, params, start, size)
+    
+    """
+    eg:
+    """     
+    # def modify(self, sql: str, params=None) -> int:
+    def modify(self, sql, params=None): 
+        try: 
+            Logger.logsql("modify SQL(PreparedSql):", sql)
+            Logger.logsql("params:", params)
+            return self.beeSql.modify(sql, params)  
+        except Exception as e: 
+            raise BeeException(e)
+    
+    """
+    eg:
+    """        
+    def modify_dict(self, sql, dict_params=None): 
+        pass
+    
+    
+    def __init__(self): 
+        self._beeSql = None  
+        self._objToSQL = None   
+        
+    @property
+    def beeSql(self): 
+        if self._beeSql is None: 
+            # self._beeSql = BeeFactory.get_honey_factory().get_beeSql()  
+            self._beeSql = BeeSql()
+        return self._beeSql  
+
+    @beeSql.setter  
+    def beeSql(self, beeSql): 
+        self._beeSql = beeSql 
+        
