@@ -16,14 +16,12 @@ class Suid:
             return None  
 
         try: 
-            # a=1/0
             sql, params = self.objToSQL.toSelectSQL(entity)  
             Logger.logsql("select SQL:", sql)
             Logger.logsql("params:", params)
             return self.beeSql.select(sql, self.to_class_t(entity), params)  # 返回值用到泛型  
         except Exception as e: 
             raise BeeException(e)
-            # raise BeeException("aaaaa")
         
     def update(self, entity): 
         if entity is None: 
@@ -101,8 +99,8 @@ class SuidRich(Suid):
             Logger.logsql("select_paging SQL:", sql)
             Logger.logsql("params:", params)
             return self.beeSql.select(sql, self.to_class_t(entity), params)  # 返回值用到泛型  
-        finally: 
-            pass      
+        except Exception as e: 
+            raise BeeException(e)    
     
     def insert_batch(self, entity_list): 
         if entity_list is None: 
@@ -115,8 +113,8 @@ class SuidRich(Suid):
             Logger.logsql("insert batch SQL:", sql)
             Logger.logsql("params:", list_params)
             return self.beeSql.batch(sql, list_params)
-        finally: 
-            pass 
+        except Exception as e: 
+            raise BeeException(e) 
 
     def select_first(self, entity):
         listT = self.select_paging(entity, 0, 2)
@@ -130,7 +128,7 @@ class PreparedSql:
     """
     eg:
     """ 
-    def select(self, sql, return_type, params=None, start=None, size=None):  # TODO 参数类型？？？
+    def select(self, sql, return_type, params=None, start=None, size=None):
         if sql is None: 
             return None  
         if return_type is None: 
@@ -148,15 +146,20 @@ class PreparedSql:
        
         
     """
-    eg: select * from orders where userid=#{userid}
+    eg:
+      preparedSql=PreparedSql()
+      entity_list =preparedSql.select_dict("SELECT * FROM orders WHERE name=#{name} and id=#{id} and name=#{name}", Orders, params_dict ={"name":"bee1","id":4})
     """ 
-
     def select_dict(self, sql, return_type, params_dict=None, start=None, size=None):
-        transformed_sql, params = SqlUtil.transform_sql(sql, params_dict)  
-        return self.select(transformed_sql, return_type, params, start, size)
+        if params_dict is not None:
+            sql, params_dict = SqlUtil.transform_sql(sql, params_dict)  
+        return self.select(sql, return_type, params_dict, start, size)
     
     """
     eg:
+        sql = "update orders set name = ?, remark = ? where id = ?"
+        params = ('bee130', 'test-update', 1)
+        updateNum = preparedSql.modify(sql, params)
     """     
     # def modify(self, sql: str, params=None) -> int:
     def modify(self, sql, params=None): 
@@ -169,9 +172,14 @@ class PreparedSql:
     
     """
     eg:
+        sql = "update orders set name = #{name}, remark = #{remark} where id = #{id}"
+        params_dict={"id":1, "name":"newName","remark":"remark2"}
+        updateNum = preparedSql.modify_dict(sql, params_dict)
     """        
-    def modify_dict(self, sql, dict_params=None): 
-        pass
+    def modify_dict(self, sql, params_dict=None):
+        if params_dict is not None: 
+            sql, params_dict = SqlUtil.transform_sql(sql, params_dict)
+        return self.modify(sql, params_dict)
     
     
     def __init__(self): 

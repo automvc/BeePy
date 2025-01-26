@@ -43,8 +43,4 @@ def transform_sql(sql, params_dict=None):
     # 从 params_dict 中获取参数值，生成参数元组  
     params_tuple = tuple(params_dict[var] for var in para_array)  
     
-    # 这里可以执行 SQL 查询、返回结果等  
-    # print(sql_transformed, params_tuple)  # Debug output  
-    # 假设你实现了数据库查询逻辑，可以在此处添加更多代码。  
-    
     return sql_transformed, params_tuple
