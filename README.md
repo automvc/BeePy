@@ -203,3 +203,13 @@ if __name__=="__main__":
     //SuidRich: insert_batch,select_first
 
 ```
+
+## 3. Others
+
+```python
+Main API in bee.api.py
+Suid: simple API for Select/Update/Insert/Delete
+SuidRich : select_paging, insert_batch, select_first
+PreparedSql: select, select_dict, modify, modify_dict
+
+```
