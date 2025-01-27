@@ -128,7 +128,7 @@ class SuidRich(Suid):
             return None  
 
         try: 
-            sql, params = self.objToSQL.toSelectById(entity)
+            sql, params = self.objToSQL.toSelectByIdSQL(entity)
             Logger.logsql("select by id SQL:", sql)
             Logger.logsql("params:", params)
             return self.beeSql.select(sql, self.to_class_t(entity), params)  # 返回值用到泛型  
@@ -146,10 +146,30 @@ class SuidRich(Suid):
             return self.beeSql.modify(sql, params)  
         except Exception as e: 
             raise BeeException(e)
-        
 
     def select_fun(self, entity, functionType, field_for_fun):
-        pass
+        if entity is None:
+            return None  
+
+        try: 
+            sql, params = self.objToSQL.toSelectFunSQL(entity, functionType, field_for_fun)
+            Logger.logsql("select fun SQL:", sql)
+            Logger.logsql("params:", params)
+            r = self.beeSql.select_fun(sql, self.to_class_t(entity), params)
+            # if r is not None:
+            #     return r
+            # else:
+            #     if functionType == FunctionType.COUNT:
+            #         return 0
+            #     else:
+            #         return r
+            if  r is None and functionType == FunctionType.COUNT:
+                return 0
+            else:
+                return r
+               
+        except Exception as e: 
+            raise BeeException(e)
     
     def count(self, entity):
         return self.select_fun(entity, FunctionType.COUNT, "*")

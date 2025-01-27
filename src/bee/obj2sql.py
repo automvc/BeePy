@@ -63,7 +63,7 @@ class ObjToSQL:
         
         return sql, list_params
     
-    def toSelectById(self, entity):
+    def toSelectByIdSQL(self, entity):
         classField, condition = self._toById(entity)
         
         table_name = HoneyUtil.get_table_name(entity)
@@ -93,6 +93,12 @@ class ObjToSQL:
             
         conditions = {pk:pkvalue}    
         return classField, conditions
+    
+    def toSelectFunSQL(self, entity, functionType, field_for_fun):
+        fieldAndValue, _ = self.__getKeyValue_classField(entity)
+        
+        table_name = HoneyUtil.get_table_name(entity)
+        return self.__build_select_fun_sql(table_name, functionType, field_for_fun, fieldAndValue)
     
     def __getKeyValue(self, entity):
         fieldAndValue, _ = self.__getKeyValue_classField(entity)
@@ -238,7 +244,7 @@ class ObjToSQL:
     
     def __build_select_fun_sql(self, table_name, functionType, field_for_fun, conditions=None):
         # sql = f"SELECT count() FROM {table_name}"
-        sql = f"{K.select()}  {functionType.get_name} ({field_for_fun}) {K.from_()} {table_name}"
+        sql = f"{K.select()} {functionType.get_name()}({field_for_fun}) {K.from_()} {table_name}"
         
         #where part
         params = []
