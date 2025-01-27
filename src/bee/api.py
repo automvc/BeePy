@@ -1,6 +1,7 @@
 from bee import SqlUtil
 from bee.exception import BeeException
 from bee.obj2sql import ObjToSQL
+from bee.osql.enum import FunctionType
 from bee.osql.logger import Logger
 from bee.sqllib import BeeSql
 
@@ -121,6 +122,42 @@ class SuidRich(Suid):
         if listT:  # 判断列表是否非空  
             return listT[0]  # 返回首个元素  
         return None 
+    
+    def select_by_id(self, entity):
+        if entity is None:
+            return None  
+
+        try: 
+            sql, params = self.objToSQL.toSelectById(entity)
+            Logger.logsql("select by id SQL:", sql)
+            Logger.logsql("params:", params)
+            return self.beeSql.select(sql, self.to_class_t(entity), params)  # 返回值用到泛型  
+        except Exception as e: 
+            raise BeeException(e)
+    
+    def delete_by_id(self, entity):
+        if entity is None: 
+            return None
+        
+        try: 
+            sql, params = self.objToSQL.toDeleteById(entity)  
+            Logger.logsql("delete by id SQL:", sql)
+            Logger.logsql("params:", params)
+            return self.beeSql.modify(sql, params)  
+        except Exception as e: 
+            raise BeeException(e)
+        
+
+    def select_fun(self, entity, functionType, field_for_fun):
+        pass
+    
+    def count(self, entity):
+        return self.select_fun(entity, FunctionType.COUNT, "*")
+
+    def exist(self, entity):
+        r = self.count(entity)
+        return r > 0 
+
 
 # for custom SQL
 class PreparedSql:

@@ -61,7 +61,38 @@ class ObjToSQL:
         sql=self.__build_insert_batch_sql(table_name, classField)
         list_params= HoneyUtil.get_list_params(classField, entity_list)
         
-        return sql,list_params
+        return sql, list_params
+    
+    def toSelectById(self, entity):
+        classField, condition = self._toById(entity)
+        
+        table_name = HoneyUtil.get_table_name(entity)
+        
+        return self.__build_select_sql(table_name, classField, condition)
+    
+    def toDeleteById(self, entity):
+        _, condition = self._toById(entity)
+        
+        table_name = HoneyUtil.get_table_name(entity)
+        
+        return self.__build_delete_sql(table_name, condition)
+    
+    
+    def _toById(self, entity):
+        fieldAndValue, classField = self.__getKeyValue_classField(entity)
+        pk = HoneyUtil.get_pk(entity)
+        if pk is None:
+            if SysConst.id in fieldAndValue:
+                pk = SysConst.id 
+            else:
+                raise SqlBeeException("by id, bean should has id field or need set the pk field name with __pk__")
+                
+        pkvalue = fieldAndValue.pop(pk, None)
+        if pkvalue is None:
+            raise SqlBeeException("the id/pk value can not be None")
+            
+        conditions = {pk:pkvalue}    
+        return classField, conditions
     
     def __getKeyValue(self, entity):
         fieldAndValue, _ = self.__getKeyValue_classField(entity)
@@ -192,3 +223,27 @@ class ObjToSQL:
             return 3
         else:
             return 0
+        
+    # def __build_delete_by_id_sql(self, table_name, conditions):
+    #     ph = self.__getPlaceholder()
+    #     if self.__getPlaceholderType() == 3:
+    #         condition_str = f" {K.and_()} ".join(f"{key} = {ph}{key}" for key in conditions.keys())
+    #     else:
+    #         condition_str = f" {K.and_()} ".join(f"{key} = {ph}" for key in conditions.keys())
+    #
+    #     sql = f"{K.delete()} {K.from_()} {table_name} {K.where()} {condition_str}"
+    #     params = list(conditions.values())
+    #     return sql, params
+    
+    
+    def __build_select_fun_sql(self, table_name, functionType, field_for_fun, conditions=None):
+        # sql = f"SELECT count() FROM {table_name}"
+        sql = f"{K.select()}  {functionType.get_name} ({field_for_fun}) {K.from_()} {table_name}"
+        
+        #where part
+        params = []
+        if conditions:
+            condition_str=self.__build_where_condition(conditions)
+            sql += f" {K.where()} {condition_str}"
+            params = list(conditions.values())
+        return sql, params
