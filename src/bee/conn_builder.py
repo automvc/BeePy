@@ -8,6 +8,8 @@ from bee.osql.logger import Logger
 
 class ConnectionBuilder:
     
+    _already_print=False
+    
     @staticmethod
     def build_connect(config):
         dbName = None
@@ -45,8 +47,10 @@ class ConnectionBuilder:
             dbModuleName = db_modules[dbName]
         
             
-        db_module = importlib.import_module(dbModuleName)  
-        Logger.info(f"Database driver use: {dbModuleName}!")
+        db_module = importlib.import_module(dbModuleName)
+        if not ConnectionBuilder._already_print:
+            Logger.info(f"Database driver use: {dbModuleName}!")
+            ConnectionBuilder._already_print=True
         
         # Now create the connection using the imported module  
         if dbName == DatabaseConst.MYSQL.lower(): 
