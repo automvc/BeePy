@@ -2,6 +2,7 @@ from bee.config import HoneyConfig
 from bee.context import HoneyContext
 from bee.exception import SqlBeeException
 from bee.osql.const import DatabaseConst, SysConst
+from bee.osql.logger import Logger
 from bee.osql.sqlkeyword import K
 from bee.paging import Paging
 from bee.util import HoneyUtil
@@ -253,3 +254,57 @@ class ObjToSQL:
             sql += f" {K.where()} {condition_str}"
             params = list(conditions.values())
         return sql, params
+    
+    #ddl
+    def toCreateSQL(self, entityClass):
+        classField = HoneyUtil.get_class_field(entityClass)  # list
+        # print(classField)
+        # fieldAndValue, classField = self.__getKeyValue_classField(entity)
+        pk = HoneyUtil.get_pk_by_class(entityClass)
+        table_name = HoneyUtil.get_table_name_by_class(entityClass)
+        if pk is None:
+            if SysConst.id in classField:
+                pk = SysConst.id 
+            else:
+                Logger.warn("There are no primary key when create table: "+table_name)
+                
+        # print(pk)
+        classField.remove(pk)
+        # print(classField)
+        
+        field_type = "VARCHAR(255)"  # 假设所有非主键字段都是 VARCHAR(255)   TODO
+    
+        # 创建主键字段语句  
+        # pk_statement = f"{pk} INTEGER PRIMARY KEY NOT NULL"  
+        pk_statement =self.generate_pk_statement(pk)
+        
+        # 创建其他字段语句  
+        fields = [f"{field} {field_type}" for field in classField]  
+        
+        # 合并主键和字段  
+        all_fields = [pk_statement] + fields  
+        
+        # 生成完整的 CREATE TABLE 语句  
+        create_sql = f"CREATE TABLE {table_name} (\n    " + ',\n    '.join(all_fields) + "\n);"  
+        # create_sql = f"""  
+        # CREATE TABLE {table_name} (  
+        #     {', '.join(all_fields)}  
+        # );  
+        # """  
+        print(create_sql)
+        return create_sql  
+    
+    def generate_pk_statement(self, pk): 
+        honeyConfig = HoneyConfig()
+        dbName = honeyConfig.get_dbName()
+        if dbName == DatabaseConst.MYSQL.lower(): 
+            return f"{pk} INT PRIMARY KEY AUTO_INCREMENT NOT NULL"  
+        elif dbName == DatabaseConst.SQLite.lower(): 
+            return f"{pk} INTEGER PRIMARY KEY"  # 自动增长  
+        elif dbName == DatabaseConst.ORACLE.lower(): 
+            return f"{pk} NUMBER PRIMARY KEY"  
+        elif dbName == DatabaseConst.PostgreSQL.lower(): 
+            return f"{pk} SERIAL PRIMARY KEY"  
+        else: 
+            raise ValueError(f"Unsupported database type: {dbName}")  
+                

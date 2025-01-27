@@ -177,6 +177,21 @@ class SuidRich(Suid):
     def exist(self, entity):
         r = self.count(entity)
         return r > 0 
+    
+    def create_table(self, entityClass, isDropExistTable=None):  # isDropExistTable
+        if isDropExistTable:
+            pass  # drop table first TODO
+        sql = self.objToSQL.toCreateSQL(entityClass)
+        return self.beeSql.modify(sql)
+    
+    def index_normal(self, entity):
+        pass    
+    
+    def unique(self, entity):
+        pass  
+    
+    
+    # public <T> boolean createTable(Class<T> entityClass, boolean isDropExistTable);
 
 
 # for custom SQL
