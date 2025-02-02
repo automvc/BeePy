@@ -266,33 +266,35 @@ class ObjToSQL:
             if SysConst.id in classField:
                 pk = SysConst.id 
             else:
-                Logger.warn("There are no primary key when create table: "+table_name)
+                Logger.warn("There are no primary key when create table: " + table_name)
                 
-        # print(pk)
-        classField.remove(pk)
+        print(pk)
+        # classField.remove(pk)
+        hasPk = False
+        if pk in classField: 
+            classField.remove(pk)
+            hasPk = True
         # print(classField)
         
         field_type = "VARCHAR(255)"  # 假设所有非主键字段都是 VARCHAR(255)   TODO
     
+        pk_statement = ""
         # 创建主键字段语句  
-        # pk_statement = f"{pk} INTEGER PRIMARY KEY NOT NULL"  
-        pk_statement =self.generate_pk_statement(pk)
+        if hasPk:
+            pk_statement = self.generate_pk_statement(pk)
         
         # 创建其他字段语句  
-        fields = [f"{field} {field_type}" for field in classField]  
+        fields_statement = [f"{field} {field_type}" for field in classField]  
         
-        # 合并主键和字段  
-        all_fields = [pk_statement] + fields  
+        if hasPk:
+            # 合并主键和字段  
+            all_fields_statement = [pk_statement] + fields_statement  
+        else:
+            all_fields_statement = fields_statement
         
         # 生成完整的 CREATE TABLE 语句  
-        create_sql = f"CREATE TABLE {table_name} (\n    " + ',\n    '.join(all_fields) + "\n);"  
-        # create_sql = f"""  
-        # CREATE TABLE {table_name} (  
-        #     {', '.join(all_fields)}  
-        # );  
-        # """  
-        print(create_sql)
-        return create_sql  
+        create_sql = f"CREATE TABLE {table_name} (\n    " + ',\n    '.join(all_fields_statement) + "\n);"  
+        return create_sql
     
     def generate_pk_statement(self, pk): 
         honeyConfig = HoneyConfig()
@@ -307,4 +309,14 @@ class ObjToSQL:
             return f"{pk} SERIAL PRIMARY KEY"  
         else: 
             raise ValueError(f"Unsupported database type: {dbName}")  
-                
+
+    def toDropTableSQL(self, entityClass):
+        honeyConfig = HoneyConfig()
+        table_name = HoneyUtil.get_table_name_by_class(entityClass)
+        dbName = honeyConfig.get_dbName()
+        if dbName == DatabaseConst.ORACLE.lower() or dbName == DatabaseConst.SQLSERVER.lower(): 
+            sql0 = "DROP TABLE " + table_name;
+        else:
+            sql0 = "DROP TABLE IF EXISTS " + table_name;
+        return sql0
+        

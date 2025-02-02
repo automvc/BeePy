@@ -1,6 +1,6 @@
 from bee.api import SuidRich
 from bee.config import PreConfig
-from entity.Orders import Orders
+from entity.Orders_2025 import Orders_2025
 
 
 if __name__ == '__main__':
@@ -10,9 +10,9 @@ if __name__ == '__main__':
     PreConfig.config_folder_root_path="E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc\\tests\\exam"
     
     suidRich = SuidRich()
-    suidRich.create_table(Orders)
+    suidRich.create_table(Orders_2025)
     
-    one = suidRich.select(Orders())
-    print(one)
+    # one = suidRich.select(Orders_2025)
+    # print(one)
     
     

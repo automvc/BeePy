@@ -178,10 +178,13 @@ class SuidRich(Suid):
         r = self.count(entity)
         return r > 0 
     
-    def create_table(self, entityClass, isDropExistTable=None):  # isDropExistTable
-        if isDropExistTable:
-            pass  # drop table first TODO
+    def create_table(self, entityClass, is_drop_exist_table=None):
+        if is_drop_exist_table:
+            sql0 = self.objToSQL.toDropTableSQL(entityClass)
+            Logger.logsql("drop table SQL:", sql0)
+            self.beeSql.modify(sql0)
         sql = self.objToSQL.toCreateSQL(entityClass)
+        Logger.logsql("create table SQL:", sql)
         return self.beeSql.modify(sql)
     
     def index_normal(self, entity):
