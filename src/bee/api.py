@@ -187,14 +187,25 @@ class SuidRich(Suid):
         Logger.logsql("create table SQL:", sql)
         return self.beeSql.modify(sql)
     
-    def index_normal(self, entity):
-        pass    
-    
-    def unique(self, entity):
-        pass  
-    
-    
-    # public <T> boolean createTable(Class<T> entityClass, boolean isDropExistTable);
+    def index_normal(self, entity_class, fields, index_name=None): 
+        prefix = "idx_"  
+        index_type_tip = "normal"  
+        index_type = ""  # normal will be empty  
+        self._index(entity_class, fields, index_name, prefix, index_type_tip, index_type)  
+
+    def unique(self, entity_class, fields, index_name=None): 
+        prefix = "uie_"  
+        index_type_tip = "unique"  
+        index_type = "UNIQUE "
+        self._index(entity_class, fields, index_name, prefix, index_type_tip, index_type)  
+
+    def _index(self, entity_class, fields, index_name, prefix, index_type_tip, index_type): 
+        index_sql = self.objToSQL.to_index_sql(entity_class, fields, index_name, prefix, index_type_tip, index_type)  
+        self._index_modify(index_sql)  
+
+    def _index_modify(self, index_sql): 
+        Logger.logsql("create index SQL:", index_sql)  
+        self.beeSql.modify(index_sql)
 
 
 # for custom SQL
@@ -250,6 +261,7 @@ class PreparedSql:
         params_dict={"id":1, "name":"newName","remark":"remark2"}
         updateNum = preparedSql.modify_dict(sql, params_dict)
     """        
+
     def modify_dict(self, sql, params_dict=None):
         if params_dict is not None: 
             sql, params_dict = SqlUtil.transform_sql(sql, params_dict)

@@ -319,4 +319,44 @@ class ObjToSQL:
         else:
             sql0 = "DROP TABLE IF EXISTS " + table_name;
         return sql0
+    
+    def to_index_sql(self, entity_class, fields, index_name, prefix, index_type_tip, index_type): 
+        if not fields: 
+            raise ValueError(f"Create {index_type_tip} index, the fields can not be empty!")  
+        
+        # DdlToSql.check_field(fields)  
+        table_name = HoneyUtil.get_table_name_by_class(entity_class)
+        columns = self.transfer_field(fields, entity_class)  
+
+        if not index_name: 
+            index_name = f"{prefix}{table_name}_{columns.replace(',', '_')}"  
+        else: 
+            # DdlToSql.check_field(index_name) #TODO 
+            pass
+
+        index_sql = f"CREATE {index_type}INDEX {index_name} ON {table_name} ({columns})"  
+        return index_sql 
+    
+    def transfer_field(self, fields, entity_class): 
+        # 根据实际的实体类转换字段名  
+        return fields  # 这里简单返回，可以根据需求进行字段转换   TODO
+
+    def to_drop_index_sql(self, entity_class, index_name): 
+        table_name = HoneyUtil.get_table_name_by_class(entity_class)
+        honeyConfig = HoneyConfig()
+        dbName = honeyConfig.get_dbName()
+
+        if index_name: 
+            if dbName == DatabaseConst.SQLSERVER.lower(): 
+                drop_sql = "DROP INDEX table_name.index_name"  
+            elif dbName == DatabaseConst.ORACLE.lower() or dbName == DatabaseConst.SQLite.lower() or dbName == DatabaseConst.DB2.lower():
+                drop_sql = "DROP INDEX index_name" 
+            elif dbName == DatabaseConst.MYSQL.lower() or dbName == DatabaseConst.MsAccess.lower(): 
+                drop_sql = "DROP INDEX index_name ON table_name"  
+            else: 
+                drop_sql = "DROP INDEX index_name"  
+
+            return drop_sql.replace("table_name", table_name).replace("index_name", index_name)  
+        else: 
+            return f"DROP INDEX ALL ON {table_name}"  
         
