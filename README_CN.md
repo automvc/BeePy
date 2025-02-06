@@ -43,9 +43,17 @@ https://github.com/automvc/bee
 1. 添加Version  
 2. 调整naming  
 **1.5.4**  
-3. 调整exception和select_paging
+3. 调整exception和select_paging  
 4. 添加PreparedSql支持自定义SQL方式操作DB  
 5. 更新toUpdateSQL方法  
+6. select_by_id  
+7. delete_by_id  
+8. select_fun  
+9. count  
+10. exist  
+11. create_table  
+12. index_normal  
+13. unique  
 
 快速开始:
 =========	
