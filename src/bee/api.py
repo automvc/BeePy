@@ -206,6 +206,11 @@ class SuidRich(Suid):
     def _index_modify(self, index_sql): 
         Logger.logsql("create index SQL:", index_sql)  
         self.beeSql.modify(index_sql)
+    
+    def drop_index(self, entity_class, index_name=None):
+        sql = self.objToSQL.to_drop_index_sql(entity_class, index_name)
+        Logger.logsql("drop index SQL:", sql)
+        self.beeSql.modify(sql)
 
 
 # for custom SQL

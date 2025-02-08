@@ -18,6 +18,8 @@ if __name__ == '__main__':
     # suidRich.index_normal(Orders_202501, "name#")
     # suidRich.index_normal(Orders_202501, "name","name#")
     
+    suidRich.drop_index(Orders_202501, "uie_orders_202501_name")
+    
     entity=Orders_202501()
     entity.name="2025"
     entity.remark="test create table"
