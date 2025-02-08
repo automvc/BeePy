@@ -13,10 +13,10 @@ if __name__ == '__main__':
     suidRich = SuidRich()
     suidRich.create_table(Orders_202501,True)
     
-    # suidRich.unique(Orders_202501, "name")
+    suidRich.unique(Orders_202501, "name")
     # suidRich.index_normal(Orders_202501, "name*")
     # suidRich.index_normal(Orders_202501, "name#")
-    suidRich.index_normal(Orders_202501, "name","name#")
+    # suidRich.index_normal(Orders_202501, "name","name#")
     
     entity=Orders_202501()
     entity.name="2025"
