@@ -71,7 +71,7 @@ class BeeSql:
             self.__close(cursor, conn)
                 
                 
-    def select_fun(self, sql, entityClass, params=None):
+    def select_fun(self, sql, params=None):
     
         conn = self.__getConn()  
         if conn is None:

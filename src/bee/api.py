@@ -155,7 +155,7 @@ class SuidRich(Suid):
             sql, params = self.objToSQL.toSelectFunSQL(entity, functionType, field_for_fun)
             Logger.logsql("select fun SQL:", sql)
             Logger.logsql("params:", params)
-            r = self.beeSql.select_fun(sql, self.to_class_t(entity), params)
+            r = self.beeSql.select_fun(sql, params)
             # if r is not None:
             #     return r
             # else:
