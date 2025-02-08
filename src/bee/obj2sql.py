@@ -1,6 +1,7 @@
 from bee.config import HoneyConfig
 from bee.context import HoneyContext
 from bee.exception import SqlBeeException
+from bee.name import NameCheckUtil
 from bee.osql.const import DatabaseConst, SysConst
 from bee.osql.logger import Logger
 from bee.osql.sqlkeyword import K
@@ -114,7 +115,7 @@ class ObjToSQL:
         
         classFieldAndValue = HoneyUtil.get_class_field_value(cls)
         
-        # 获取去掉前缀的键    TODO __ ??
+        # 获取去掉前缀的键    todo __ ??
         # fieldAndValue = {key.lstrip('_'): value for key, value in fieldAndValue.items()} 
         
         fieldAndValue = HoneyUtil.remove_prefix(fieldAndValue)
@@ -324,15 +325,14 @@ class ObjToSQL:
         if not fields: 
             raise ValueError(f"Create {index_type_tip} index, the fields can not be empty!")  
         
-        # DdlToSql.check_field(fields)  
+        NameCheckUtil.check_field(fields)  
         table_name = HoneyUtil.get_table_name_by_class(entity_class)
         columns = self.transfer_field(fields, entity_class)  
 
         if not index_name: 
             index_name = f"{prefix}{table_name}_{columns.replace(',', '_')}"  
         else: 
-            # DdlToSql.check_field(index_name) #TODO 
-            pass
+            NameCheckUtil.check_field(index_name)
 
         index_sql = f"CREATE {index_type}INDEX {index_name} ON {table_name} ({columns})"  
         return index_sql 

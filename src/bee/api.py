@@ -214,17 +214,17 @@ class PreparedSql:
     """
     eg:
     """ 
-    def select(self, sql, return_type, params=None, start=None, size=None):
+    def select(self, sql, return_type_class, params=None, start=None, size=None):
         if sql is None: 
             return None  
-        if return_type is None: 
+        if return_type_class is None: 
             return None  
         try:
             sql = SqlUtil.add_paging(sql, start, size)
             
             Logger.logsql("select SQL(PreparedSql):", sql)
             Logger.logsql("params:", params)
-            return self.beeSql.select(sql, return_type, params)  # 返回值用到泛型  
+            return self.beeSql.select(sql, return_type_class, params)  # 返回值用到泛型  
         except Exception as e: 
             raise BeeException(e)
         
@@ -235,10 +235,10 @@ class PreparedSql:
       preparedSql=PreparedSql()
       entity_list =preparedSql.select_dict("SELECT * FROM orders WHERE name=#{name} and id=#{id} and name=#{name}", Orders, params_dict ={"name":"bee1","id":4})
     """ 
-    def select_dict(self, sql, return_type, params_dict=None, start=None, size=None):
+    def select_dict(self, sql, return_type_class, params_dict=None, start=None, size=None):
         if params_dict is not None:
             sql, params_dict = SqlUtil.transform_sql(sql, params_dict)  
-        return self.select(sql, return_type, params_dict, start, size)
+        return self.select(sql, return_type_class, params_dict, start, size)
     
     """
     eg:

@@ -21,12 +21,11 @@ if __name__ == "__main__":
     orders_list = pre.select_dict("SELECT * FROM orders", Orders)
     print(orders_list)
     
-    
     orders_list = pre.select_dict("SELECT * FROM orders where id = #{id}", Orders, params_dict={"id":1})
     print(orders_list)
     
     sql = "update orders set name = #{name}, remark = #{remark} where id = #{id}"
-    params_dict={"id":1, "name":"newName","remark":"remark2"}
+    params_dict = {"id":1, "name":"newName", "remark":"remark2"}
     updateNum = pre.modify_dict(sql, params_dict)
     
     orders_list = pre.select_dict("SELECT * FROM orders where id=#{id}", Orders, params_dict={"id":1})
