@@ -43,8 +43,9 @@ Improve anomalies
 **1.5.2**  
 1. add Version  
 2. adjust naming  
+(uploaded the stability function before)  
 
-**1.5.4(2025·Valentine's Day)**  
+**1.5.4(2025·Valentine's Day·LTS)**  
 3. adjust exception and select_paging
 4. add PreparedSql support custom SQL  
 5. update toUpdateSQL function  

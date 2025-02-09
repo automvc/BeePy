@@ -29,6 +29,21 @@ Add PreConfig to specify the location of the configuration file
 Improve anomalies  
 
 ### **V1.5**
+**1.5.2**  
 1. add Version  
 2. adjust naming  
+(uploaded the stability function before)  
+
+**1.5.4(2025·Valentine's Day·LTS)**  
+3. adjust exception and select_paging
+4. add PreparedSql support custom SQL  
+5. update toUpdateSQL function  
+6. select_by_id  
+7. delete_by_id  
+8. select_fun  
+9. count  
+10. exist  
+11. create_table  
+12. index_normal  
+13. unique  
 
