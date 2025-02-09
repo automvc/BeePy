@@ -1,12 +1,12 @@
 Bee
 =========
-ORM **Bee** with Python!  
+**ORM Bee** in Python!  
 Bee(BeePy)是Python版的ORM工具(还有Java版的).  
 
-**Bee** with Python url:  
+**Bee** in Python url:  
 https://github.com/automvc/BeePy  
 
-**Bee** with Java url:  
+**Bee** in Java url:  
 https://github.com/automvc/bee  
 
 ## 环境要求  
@@ -42,7 +42,7 @@ https://github.com/automvc/bee
 **1.5.2**  
 1. 添加Version  
 2. 调整naming  
-**1.5.4**  
+**1.5.4(2025·元宵节)**  
 3. 调整exception和select_paging  
 4. 添加PreparedSql支持自定义SQL方式操作DB  
 5. 更新toUpdateSQL方法  
@@ -67,6 +67,31 @@ pip install ormbee
 ## 1. 配置db连接信息  
 #### 1.1.can custom your db Module  
 in bee.json or bee.properties set dbModuleName  
+
+```json
+ {
+ "dbName": "SQLite",  
+ "database": "bee.db", 
+ //default support: pymysql,sqlite3,cx_Oracle,psycopg2 (no need set)
+ "dbModuleName":"sqlite3"
+ }
+ ```
+ 
+ ```properties
+ #value is: MySql,SQLite,Oracle,
+#MySQL config
+#bee.db.dbName=MySQL
+#bee.db.host =localhost
+#bee.db.user =root
+#bee.db.password =
+#bee.db.database =bee
+#bee.db.port=3306
+
+# SQLite
+bee.db.dbName=SQLite
+bee.db.database =bee.db
+ ```
+ 
 #### 1.2.if do not want to use the default config file(bee.json or bee.properties),  
 can set the db_config info yourself.  
 
@@ -184,9 +209,10 @@ if __name__=="__main__":
 ## 3. 其它功能
 
 ```python
-Main API in bee.api.py
+主要API在bee.api.py
 Suid: simple API for Select/Update/Insert/Delete
-SuidRich : select_paging, insert_batch, select_first
+SuidRich : select_paging, insert_batch, select_first,select_by_id,
+delete_by_id,select_fun,count,exist,create_table,index_normal,unique
 PreparedSql: select, select_dict, modify, modify_dict
 
 ```

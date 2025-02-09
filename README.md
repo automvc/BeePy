@@ -1,11 +1,11 @@
 Bee
 =========
-ORM **Bee** with Python!  
+**ORM Bee** in Python!  
 
-**Bee** with Python url:  
+**Bee** in Python url:  
 https://github.com/automvc/BeePy  
 
-**Bee** with Java url:  
+**Bee** in Java url:  
 https://github.com/automvc/bee  
 
 ## [中文介绍](../../../BeePy/blob/master/README_CN.md)  
@@ -43,10 +43,18 @@ Improve anomalies
 **1.5.2**  
 1. add Version  
 2. adjust naming  
-**1.5.4**  
+**1.5.4(2025·Valentine's Day)**  
 3. adjust exception and select_paging
 4. add PreparedSql support custom SQL  
 5. update toUpdateSQL function  
+6. select_by_id  
+7. delete_by_id  
+8. select_fun  
+9. count  
+10. exist  
+11. create_table  
+12. index_normal  
+13. unique  
 
 Quick Start:
 =========	
@@ -209,7 +217,8 @@ if __name__=="__main__":
 ```python
 Main API in bee.api.py
 Suid: simple API for Select/Update/Insert/Delete
-SuidRich : select_paging, insert_batch, select_first
+SuidRich : select_paging, insert_batch, select_first,select_by_id,
+delete_by_id,select_fun,count,exist,create_table,index_normal,unique
 PreparedSql: select, select_dict, modify, modify_dict
 
 ```
