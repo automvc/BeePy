@@ -43,6 +43,7 @@ Improve anomalies
 **1.5.2**  
 1. add Version  
 2. adjust naming  
+
 **1.5.4(2025·Valentine's Day)**  
 3. adjust exception and select_paging
 4. add PreparedSql support custom SQL  
@@ -64,7 +65,8 @@ To install, type:
 ```shell
 pip install ormbee
 ```
-
+**ORM Bee** pypi url:  
+https://pypi.org/project/ormbee/
 
 ## 1. set db config  
 #### 1.1.can custom your db Module  

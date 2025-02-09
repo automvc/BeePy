@@ -65,6 +65,9 @@ https://github.com/automvc/bee
 pip install ormbee
 ```
 
+**ORM Bee** pypi url:  
+https://pypi.org/project/ormbee/
+
 ## 1. 配置db连接信息  
 #### 1.1.can custom your db Module  
 in bee.json or bee.properties set dbModuleName  
