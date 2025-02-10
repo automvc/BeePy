@@ -1,5 +1,5 @@
 # from org.teasoft.exam.entity.Test import Test
-from bee.api import Suid
+from bee.api import Suid, SuidRich
 from entity.Test import Test
 
 
@@ -14,8 +14,8 @@ if __name__ == '__main__':
     # orders.id=1
     orders.name="bee"
     
-    suid=Suid()
-    orderList = suid.select_paging(orders, 0, 10)
+    suidRich=SuidRich()
+    orderList = suidRich.select_paging(orders, 0, 10)
     print(orderList)
     
     for one in orderList:  

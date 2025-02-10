@@ -31,5 +31,20 @@ is_sql_key_word_upper放配置
 完善异常  
 
 ### **V1.5**
+**1.5.2**  
 1. 添加Version  
 2. 调整naming  
+(上传之前的稳定版本)  
+
+**1.5.4(2025·元宵节·LTS版)**  
+3. 调整exception和select_paging  
+4. 添加PreparedSql支持自定义SQL方式操作DB  
+5. 更新toUpdateSQL方法  
+6. select_by_id  
+7. delete_by_id  
+8. select_fun  
+9. count  
+10. exist  
+11. create_table  
+12. index_normal  
+13. unique  

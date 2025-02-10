@@ -1,5 +1,5 @@
 from bee.context import HoneyContext
-from bee.exception.SqlBeeException import SqlBeeException
+from bee.exception import SqlBeeException
 from bee.osql.logger import Logger
 from bee.util import HoneyUtil
 
@@ -15,7 +15,7 @@ class BeeSql:
         
         rs_list = []
         cursor = conn.cursor()
-        try: 
+        try:
             ## with conn.cursor() as cursor:  # SQLite不支持with语法
             # 执行 SQL 查询  
             cursor.execute(sql, params or [])
@@ -29,22 +29,20 @@ class BeeSql:
                 target_obj = HoneyUtil.transform_result(row, column_names, entityClass)  
                 rs_list.append(target_obj) 
     
-        except Exception as err:  # TODO 异常处理
-            Logger.error(f"Error: {err}")  
-        finally: 
-            # 清理资源  
-            if conn is not None:
-                conn.close()
+        except Exception as e:
+            raise SqlBeeException(e)
+        finally:
+            self.__close(cursor, conn)
         return rs_list
 
 
     """ 执行 UPDATE/INSERT/DELETE 操作 """
     # def modify(self, sql: str, params=None) -> int:
-    def modify(self, sql, params=None): 
+    def modify(self, sql, params=None):
         conn = self.__getConn()
         if conn is None:
             raise SqlBeeException("DB conn is None!")
-        cursor = conn.cursor()  
+        cursor = conn.cursor()
         try: 
             cursor.execute(sql, params or [])
             conn.commit() 
@@ -54,8 +52,7 @@ class BeeSql:
             conn.rollback()
             return 0
         finally: 
-            if conn is not None:
-                conn.close()
+            self.__close(cursor, conn)
                 
     def batch(self, sql, params=None):
         conn = self.__getConn()
@@ -71,9 +68,35 @@ class BeeSql:
             conn.rollback()
             return 0
         finally: 
-            if conn is not None:
-                conn.close()            
+            self.__close(cursor, conn)
+                
+                
+    def select_fun(self, sql, params=None):
+    
+        conn = self.__getConn()  
+        if conn is None:
+            raise SqlBeeException("DB conn is None!")
+        
+        rs_list = []
+        cursor = conn.cursor()
+        try:
+            cursor.execute(sql, params or [])
+            result = cursor.fetchone()  # 返回一个元组，例如 (1,)  
+            return result[0]
+    
+        except Exception as e:
+            raise SqlBeeException(e)
+        finally:
+            self.__close(cursor, conn)
+        return rs_list         
             
     def __getConn(self):
         return HoneyContext.get_connection()
+    
+    def __close(self, cursor, conn):
+        if cursor is not None:
+            cursor.close()
+            
+        if conn is not None:
+            conn.close()
     

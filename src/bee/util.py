@@ -62,7 +62,7 @@ class HoneyUtil:
         # return result  
     # dict: {'id': <property object at 0x000001E2C878D350>, 'name': <property object at 0x000001E2C878D3A0>, 'remark': <property object at 0x000001E2C878D3F0>}
     
-    """ 返回给定类的属性字典,但不包括系统的 """ 
+    """ 返回给定类的属性列表,但不包括系统的 """ 
     @staticmethod
     def get_class_field(cls):
         if hasattr(cls, '__dict__'):  
@@ -120,12 +120,15 @@ class HoneyUtil:
             list_params.append(tuple(dict_classField.values()))
         
         return list_params
-        
+    
     @staticmethod 
     def get_table_name(obj):
         cls = obj.__class__
-        # print(cls)
-        # temp_name=cls.__tablename__
+        return HoneyUtil.get_table_name_by_class(cls)
+        
+    @staticmethod 
+    def get_table_name_by_class(cls):
+        # cls = obj.__class__
         temp_name = getattr(cls, '__tablename__', None)
         if temp_name is not None and not temp_name.isspace():
             return temp_name
@@ -134,10 +137,14 @@ class HoneyUtil:
         return table_name   
     
     """ get pk from bean"""
-
+    
     @staticmethod 
     def get_pk(obj):
         cls = obj.__class__
+        return HoneyUtil.get_pk_by_class(cls)
+
+    @staticmethod 
+    def get_pk_by_class(cls):
         temp_name = getattr(cls, SysConst.pk, None)
         if temp_name is not None and not temp_name.isspace():
             return temp_name

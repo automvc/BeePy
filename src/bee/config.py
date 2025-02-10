@@ -100,7 +100,7 @@ class HoneyConfig:
                         
             cls.__db_config_data = cls.__instance.get_db_config_dict()            
         except OSError as err: 
-            Logger.warn(err)
+            Logger.info(err)
             # raise ConfigBeeException(err)
                         
     @staticmethod 

@@ -1,5 +1,7 @@
 from bee.config import HoneyConfig
 from bee.context import HoneyContext
+from bee.exception import SqlBeeException
+from bee.name import NameCheckUtil
 from bee.osql.const import DatabaseConst, SysConst
 from bee.osql.logger import Logger
 from bee.osql.sqlkeyword import K
@@ -26,18 +28,17 @@ class ObjToSQL:
         fieldAndValue = self.__getKeyValue(entity)
         pk = HoneyUtil.get_pk(entity)
         if pk is None:
-            if not SysConst.id in fieldAndValue:
-            # if not "id" in fieldAndValue:
-                Logger.info("update by id,bean has id field or need set the pk field name with __pk__")  # TODO throw exception    
+            if SysConst.id in fieldAndValue:
+                pk=SysConst.id 
             else:
-                idvalue = fieldAndValue.get(SysConst.id, None)
-                if idvalue is None:
-                    Logger.info("the id value can not be None")
-                else:
-                    pk = SysConst.id
+                raise SqlBeeException("update by id, bean should has id field or need set the pk field name with __pk__")
+                
+        pkvalue = fieldAndValue.pop(pk, None)
+        if pkvalue is None:
+            raise SqlBeeException("the id/pk value can not be None")
             
-        conditions = {pk:fieldAndValue.pop(pk)}    
-    
+        conditions = {pk:pkvalue}    
+        
         table_name = HoneyUtil.get_table_name(entity)
         return self.__build_update_sql(table_name, fieldAndValue, conditions)
     
@@ -62,7 +63,44 @@ class ObjToSQL:
         sql=self.__build_insert_batch_sql(table_name, classField)
         list_params= HoneyUtil.get_list_params(classField, entity_list)
         
-        return sql,list_params
+        return sql, list_params
+    
+    def toSelectByIdSQL(self, entity):
+        classField, condition = self._toById(entity)
+        
+        table_name = HoneyUtil.get_table_name(entity)
+        
+        return self.__build_select_sql(table_name, classField, condition)
+    
+    def toDeleteById(self, entity):
+        _, condition = self._toById(entity)
+        
+        table_name = HoneyUtil.get_table_name(entity)
+        
+        return self.__build_delete_sql(table_name, condition)
+    
+    
+    def _toById(self, entity):
+        fieldAndValue, classField = self.__getKeyValue_classField(entity)
+        pk = HoneyUtil.get_pk(entity)
+        if pk is None:
+            if SysConst.id in fieldAndValue:
+                pk = SysConst.id 
+            else:
+                raise SqlBeeException("by id, bean should has id field or need set the pk field name with __pk__")
+                
+        pkvalue = fieldAndValue.pop(pk, None)
+        if pkvalue is None:
+            raise SqlBeeException("the id/pk value can not be None")
+            
+        conditions = {pk:pkvalue}    
+        return classField, conditions
+    
+    def toSelectFunSQL(self, entity, functionType, field_for_fun):
+        fieldAndValue, _ = self.__getKeyValue_classField(entity)
+        
+        table_name = HoneyUtil.get_table_name(entity)
+        return self.__build_select_fun_sql(table_name, functionType, field_for_fun, fieldAndValue)
     
     def __getKeyValue(self, entity):
         fieldAndValue, _ = self.__getKeyValue_classField(entity)
@@ -77,7 +115,7 @@ class ObjToSQL:
         
         classFieldAndValue = HoneyUtil.get_class_field_value(cls)
         
-        # 获取去掉前缀的键    TODO __ ??
+        # 获取去掉前缀的键    todo __ ??
         # fieldAndValue = {key.lstrip('_'): value for key, value in fieldAndValue.items()} 
         
         fieldAndValue = HoneyUtil.remove_prefix(fieldAndValue)
@@ -191,3 +229,134 @@ class ObjToSQL:
         # cursor.execute(sql, emp_id=emp_id, emp_name=emp_name, emp_salary=emp_salary)
         if DatabaseConst.ORACLE.lower() == self.__get_dbName():
             return 3
+        else:
+            return 0
+        
+    # def __build_delete_by_id_sql(self, table_name, conditions):
+    #     ph = self.__getPlaceholder()
+    #     if self.__getPlaceholderType() == 3:
+    #         condition_str = f" {K.and_()} ".join(f"{key} = {ph}{key}" for key in conditions.keys())
+    #     else:
+    #         condition_str = f" {K.and_()} ".join(f"{key} = {ph}" for key in conditions.keys())
+    #
+    #     sql = f"{K.delete()} {K.from_()} {table_name} {K.where()} {condition_str}"
+    #     params = list(conditions.values())
+    #     return sql, params
+    
+    
+    def __build_select_fun_sql(self, table_name, functionType, field_for_fun, conditions=None):
+        # sql = f"SELECT count() FROM {table_name}"
+        sql = f"{K.select()} {functionType.get_name()}({field_for_fun}) {K.from_()} {table_name}"
+        
+        #where part
+        params = []
+        if conditions:
+            condition_str=self.__build_where_condition(conditions)
+            sql += f" {K.where()} {condition_str}"
+            params = list(conditions.values())
+        return sql, params
+    
+    #ddl
+    def toCreateSQL(self, entityClass):
+        classField = HoneyUtil.get_class_field(entityClass)  # list
+        # print(classField)
+        # fieldAndValue, classField = self.__getKeyValue_classField(entity)
+        pk = HoneyUtil.get_pk_by_class(entityClass)
+        table_name = HoneyUtil.get_table_name_by_class(entityClass)
+        if pk is None:
+            if SysConst.id in classField:
+                pk = SysConst.id 
+            else:
+                Logger.warn("There are no primary key when create table: " + table_name)
+                
+        print(pk)
+        # classField.remove(pk)
+        hasPk = False
+        if pk in classField: 
+            classField.remove(pk)
+            hasPk = True
+        # print(classField)
+        
+        field_type = "VARCHAR(255)"  # 假设所有非主键字段都是 VARCHAR(255)   TODO
+    
+        pk_statement = ""
+        # 创建主键字段语句  
+        if hasPk:
+            pk_statement = self.generate_pk_statement(pk)
+        
+        # 创建其他字段语句  
+        fields_statement = [f"{field} {field_type}" for field in classField]  
+        
+        if hasPk:
+            # 合并主键和字段  
+            all_fields_statement = [pk_statement] + fields_statement  
+        else:
+            all_fields_statement = fields_statement
+        
+        # 生成完整的 CREATE TABLE 语句  
+        create_sql = f"CREATE TABLE {table_name} (\n    " + ',\n    '.join(all_fields_statement) + "\n);"  
+        return create_sql
+    
+    def generate_pk_statement(self, pk): 
+        honeyConfig = HoneyConfig()
+        dbName = honeyConfig.get_dbName()
+        if dbName == DatabaseConst.MYSQL.lower(): 
+            return f"{pk} INT PRIMARY KEY AUTO_INCREMENT NOT NULL"  
+        elif dbName == DatabaseConst.SQLite.lower(): 
+            return f"{pk} INTEGER PRIMARY KEY"  # 自动增长  
+        elif dbName == DatabaseConst.ORACLE.lower(): 
+            return f"{pk} NUMBER PRIMARY KEY"  
+        elif dbName == DatabaseConst.PostgreSQL.lower(): 
+            return f"{pk} SERIAL PRIMARY KEY"  
+        else: 
+            raise ValueError(f"Unsupported database type: {dbName}")  
+
+    def toDropTableSQL(self, entityClass):
+        honeyConfig = HoneyConfig()
+        table_name = HoneyUtil.get_table_name_by_class(entityClass)
+        dbName = honeyConfig.get_dbName()
+        if dbName == DatabaseConst.ORACLE.lower() or dbName == DatabaseConst.SQLSERVER.lower(): 
+            sql0 = "DROP TABLE " + table_name;
+        else:
+            sql0 = "DROP TABLE IF EXISTS " + table_name;
+        return sql0
+    
+    def to_index_sql(self, entity_class, fields, index_name, prefix, index_type_tip, index_type): 
+        if not fields: 
+            raise ValueError(f"Create {index_type_tip} index, the fields can not be empty!")  
+        
+        NameCheckUtil.check_field(fields)  
+        table_name = HoneyUtil.get_table_name_by_class(entity_class)
+        columns = self.transfer_field(fields, entity_class)  
+
+        if not index_name: 
+            index_name = f"{prefix}{table_name}_{columns.replace(',', '_')}"  
+        else: 
+            NameCheckUtil.check_field(index_name)
+
+        index_sql = f"CREATE {index_type}INDEX {index_name} ON {table_name} ({columns})"  
+        return index_sql 
+    
+    def transfer_field(self, fields, entity_class): 
+        # 根据实际的实体类转换字段名  
+        return fields  # 这里简单返回，可以根据需求进行字段转换   TODO
+
+    def to_drop_index_sql(self, entity_class, index_name): 
+        table_name = HoneyUtil.get_table_name_by_class(entity_class)
+        honeyConfig = HoneyConfig()
+        dbName = honeyConfig.get_dbName()
+
+        if index_name: 
+            if dbName == DatabaseConst.SQLSERVER.lower(): 
+                drop_sql = "DROP INDEX table_name.index_name"  
+            elif dbName == DatabaseConst.ORACLE.lower() or dbName == DatabaseConst.SQLite.lower() or dbName == DatabaseConst.DB2.lower():
+                drop_sql = "DROP INDEX index_name" 
+            elif dbName == DatabaseConst.MYSQL.lower() or dbName == DatabaseConst.MsAccess.lower(): 
+                drop_sql = "DROP INDEX index_name ON table_name"  
+            else: 
+                drop_sql = "DROP INDEX index_name"  
+
+            return drop_sql.replace("table_name", table_name).replace("index_name", index_name)  
+        else: 
+            return f"DROP INDEX ALL ON {table_name}"  
+        

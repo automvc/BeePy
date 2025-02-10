@@ -1,8 +1,7 @@
 from bee.config import HoneyConfig
-from bee.exception.SqlBeeException import SqlBeeException
+from bee.exception import SqlBeeException
 from bee.osql.const import DatabaseConst
 from bee.osql.sqlkeyword import K
-
 
 class Paging:
     

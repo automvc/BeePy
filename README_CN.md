@@ -1,12 +1,12 @@
 Bee
 =========
-ORM **Bee** with Python!  
+**ORM Bee** in Python!  
 Bee(BeePy)是Python版的ORM工具(还有Java版的).  
 
-**Bee** with Python url:  
+**Bee** in Python url:  
 https://github.com/automvc/BeePy  
 
-**Bee** with Java url:  
+**Bee** in Java url:  
 https://github.com/automvc/bee  
 
 ## 环境要求  
@@ -39,8 +39,23 @@ https://github.com/automvc/bee
 6. selectFirst  
 
 ### **V1.5**
+**1.5.2**  
 1. 添加Version  
 2. 调整naming  
+(上传之前的稳定版本)  
+
+**1.5.4(2025·元宵节·LTS版)**  
+3. 调整exception和select_paging  
+4. 添加PreparedSql支持自定义SQL方式操作DB  
+5. 更新toUpdateSQL方法  
+6. select_by_id  
+7. delete_by_id  
+8. select_fun  
+9. count  
+10. exist  
+11. create_table  
+12. index_normal  
+13. unique  
 
 快速开始:
 =========	
@@ -51,9 +66,37 @@ https://github.com/automvc/bee
 pip install ormbee
 ```
 
+**ORM Bee** pypi url:  
+https://pypi.org/project/ormbee/
+
 ## 1. 配置db连接信息  
 #### 1.1.can custom your db Module  
 in bee.json or bee.properties set dbModuleName  
+
+```json
+ {
+ "dbName": "SQLite",  
+ "database": "bee.db", 
+ //default support: pymysql,sqlite3,cx_Oracle,psycopg2 (no need set)
+ "dbModuleName":"sqlite3"
+ }
+ ```
+ 
+ ```properties
+ #value is: MySql,SQLite,Oracle,
+#MySQL config
+#bee.db.dbName=MySQL
+#bee.db.host =localhost
+#bee.db.user =root
+#bee.db.password =
+#bee.db.database =bee
+#bee.db.port=3306
+
+# SQLite
+bee.db.dbName=SQLite
+bee.db.database =bee.db
+ ```
+ 
 #### 1.2.if do not want to use the default config file(bee.json or bee.properties),  
 can set the db_config info yourself.  
 
@@ -119,11 +162,12 @@ class Student2:
         
         
 from bee.api import Suid
+from bee.config import PreConfig
 
 if __name__=="__main__":
     
     #set bee.properties/bee.json config folder, can set project root for it
-    Config.config_folder_root_path="E:\\Bee-Project"
+    PreConfig.config_folder_root_path="E:\\Bee-Project"
     
     # select record
     suid=Suid()
@@ -164,5 +208,16 @@ if __name__=="__main__":
     suidRich = SuidRich()
     insertNum = suidRich.insert_batch(entity_list)
     print(insertNum)
+
+```
+
+## 3. 其它功能
+
+```python
+主要API在bee.api.py
+Suid: simple API for Select/Update/Insert/Delete
+SuidRich : select_paging, insert_batch, select_first,select_by_id,
+delete_by_id,select_fun,count,exist,create_table,index_normal,unique
+PreparedSql: select, select_dict, modify, modify_dict
 
 ```

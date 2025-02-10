@@ -1,11 +1,11 @@
 Bee
 =========
-ORM **Bee** with Python!  
+**ORM Bee** in Python!  
 
-**Bee** with Python url:  
+**Bee** in Python url:  
 https://github.com/automvc/BeePy  
 
-**Bee** with Java url:  
+**Bee** in Java url:  
 https://github.com/automvc/bee  
 
 ## [中文介绍](../../../BeePy/blob/master/README_CN.md)  
@@ -40,8 +40,23 @@ Add PreConfig to specify the location of the configuration file
 Improve anomalies  
 
 ### **V1.5**
+**1.5.2**  
 1. add Version  
 2. adjust naming  
+(uploaded the stability function before)  
+
+**1.5.4(2025·Valentine's Day·LTS)**  
+3. adjust exception and select_paging
+4. add PreparedSql support custom SQL  
+5. update toUpdateSQL function  
+6. select_by_id  
+7. delete_by_id  
+8. select_fun  
+9. count  
+10. exist  
+11. create_table  
+12. index_normal  
+13. unique  
 
 Quick Start:
 =========	
@@ -51,7 +66,8 @@ To install, type:
 ```shell
 pip install ormbee
 ```
-
+**ORM Bee** pypi url:  
+https://pypi.org/project/ormbee/
 
 ## 1. set db config  
 #### 1.1.can custom your db Module  
@@ -146,11 +162,12 @@ class Student2:
         
         
 from bee.api import Suid
+from bee.config import PreConfig
 
 if __name__=="__main__":
 
     #set bee.properties/bee.json config folder, can set project root for it
-    Config.config_folder_root_path="E:\\Bee-Project"
+    PreConfig.config_folder_root_path="E:\\Bee-Project"
 
     # select record
     suid=Suid()
@@ -193,5 +210,18 @@ if __name__=="__main__":
     suidRich = SuidRich()
     insertNum = suidRich.insert_batch(entity_list)
     print(insertNum)
+    
+    //SuidRich: insert_batch,select_first
+
+```
+
+## 3. Others
+
+```python
+Main API in bee.api.py
+Suid: simple API for Select/Update/Insert/Delete
+SuidRich : select_paging, insert_batch, select_first,select_by_id,
+delete_by_id,select_fun,count,exist,create_table,index_normal,unique
+PreparedSql: select, select_dict, modify, modify_dict
 
 ```

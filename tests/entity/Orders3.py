@@ -14,6 +14,9 @@ class Orders3:
     name = None
     remark="test" 
     
+    # __pk__="name"
+    # __pk__="id"
+    
     def __init__(self, id=None,id2=None, name=None,remark=None):  
         self.id = id  
         self.id2=id2
