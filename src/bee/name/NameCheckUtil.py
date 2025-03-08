@@ -14,7 +14,7 @@ def is_not_valid_name(name):
 
 
 def check_field(name): 
-    if name is not None and ',' in name: 
+    if name and ',' in name: 
         names = name.split(',')  
         for n in names: 
             _check_name(n.strip())  
