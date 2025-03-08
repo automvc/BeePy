@@ -57,6 +57,11 @@ https://github.com/automvc/bee
 12. index_normal  
 13. unique  
 
+**1.6.0(2025)**  
+1. 优化BeeSql  
+2. 增强代码  
+3. add naming  
+
 快速开始:
 =========	
 ## 安装依赖包  

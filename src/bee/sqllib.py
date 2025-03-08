@@ -10,12 +10,9 @@ class BeeSql:
     # def select(self, sql: str, entityClass: type, params=None) -> list: 
     
         conn = self.__getConn()  
-        if conn is None:
-            raise SqlBeeException("DB conn is None!")
-        
         rs_list = []
-        cursor = conn.cursor()
         try:
+            cursor = conn.cursor()
             ## with conn.cursor() as cursor:  # SQLite不支持with语法
             # 执行 SQL 查询  
             cursor.execute(sql, params or [])
@@ -40,10 +37,8 @@ class BeeSql:
     # def modify(self, sql: str, params=None) -> int:
     def modify(self, sql, params=None):
         conn = self.__getConn()
-        if conn is None:
-            raise SqlBeeException("DB conn is None!")
-        cursor = conn.cursor()
-        try: 
+        try:
+            cursor = conn.cursor()
             cursor.execute(sql, params or [])
             conn.commit() 
             return cursor.rowcount  # 返回受影响的行数
@@ -56,10 +51,8 @@ class BeeSql:
                 
     def batch(self, sql, params=None):
         conn = self.__getConn()
-        if conn is None:
-            raise SqlBeeException("DB conn is None!")
-        cursor = conn.cursor()  
         try:
+            cursor = conn.cursor()
             cursor.executemany(sql, params or [])
             conn.commit() 
             return cursor.rowcount  # 返回受影响的行数
@@ -74,12 +67,9 @@ class BeeSql:
     def select_fun(self, sql, params=None):
     
         conn = self.__getConn()  
-        if conn is None:
-            raise SqlBeeException("DB conn is None!")
-        
         rs_list = []
-        cursor = conn.cursor()
         try:
+            cursor = conn.cursor()
             cursor.execute(sql, params or [])
             result = cursor.fetchone()  # 返回一个元组，例如 (1,)  
             return result[0]
@@ -91,7 +81,10 @@ class BeeSql:
         return rs_list         
             
     def __getConn(self):
-        return HoneyContext.get_connection()
+        conn = HoneyContext.get_connection()
+        if conn is None:
+            raise SqlBeeException("DB conn is None!")
+        return conn
     
     def __close(self, cursor, conn):
         if cursor is not None:

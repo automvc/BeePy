@@ -70,7 +70,6 @@ class Suid:
     @property  
     def beeSql(self): 
         if self._beeSql is None: 
-            # self._beeSql = BeeFactory.get_honey_factory().get_beeSql()  
             self._beeSql = BeeSql()
         return self._beeSql  
 
@@ -156,13 +155,6 @@ class SuidRich(Suid):
             Logger.logsql("select fun SQL:", sql)
             Logger.logsql("params:", params)
             r = self.beeSql.select_fun(sql, params)
-            # if r is not None:
-            #     return r
-            # else:
-            #     if functionType == FunctionType.COUNT:
-            #         return 0
-            #     else:
-            #         return r
             if  r is None and functionType == FunctionType.COUNT:
                 return 0
             else:
@@ -241,7 +233,7 @@ class PreparedSql:
       entity_list =preparedSql.select_dict("SELECT * FROM orders WHERE name=#{name} and id=#{id} and name=#{name}", Orders, params_dict ={"name":"bee1","id":4})
     """ 
     def select_dict(self, sql, return_type_class, params_dict=None, start=None, size=None):
-        if params_dict is not None:
+        if params_dict:
             sql, params_dict = SqlUtil.transform_sql(sql, params_dict)  
         return self.select(sql, return_type_class, params_dict, start, size)
     
@@ -268,7 +260,7 @@ class PreparedSql:
     """        
 
     def modify_dict(self, sql, params_dict=None):
-        if params_dict is not None: 
+        if params_dict: 
             sql, params_dict = SqlUtil.transform_sql(sql, params_dict)
         return self.modify(sql, params_dict)
     
@@ -280,7 +272,6 @@ class PreparedSql:
     @property
     def beeSql(self): 
         if self._beeSql is None: 
-            # self._beeSql = BeeFactory.get_honey_factory().get_beeSql()  
             self._beeSql = BeeSql()
         return self._beeSql  
 

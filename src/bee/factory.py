@@ -1,3 +1,5 @@
+from bee.osql.honeyfactory import HoneyFactory
+
 class BeeFactory:
     
     __connection = None
@@ -18,3 +20,8 @@ class BeeFactory:
     # def __getattribute__(self, item):  
     #     print(f"Accessing attribute: {item}") 
     #     return super().__getattribute__(item)
+    
+    
+    def getHoneyFactory(self):
+        return HoneyFactory()
+    

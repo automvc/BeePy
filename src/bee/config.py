@@ -38,7 +38,7 @@ class HoneyConfig:
             cls.__instance = super().__new__(cls)
             cls.__loadConfigInProperties(cls)
             cls.__loadConfigInJson(cls)
-            if cls.port is not None:
+            if cls.port:
                 cls.port=int(cls.port)  
         
         if cls.__db_config_data is None:
@@ -125,22 +125,22 @@ class HoneyConfig:
     def get_db_config_dict(self):  
         """将DB相关的类属性打包成字典并返回""" 
         cls=type(self)
-        if cls.__db_config_data is not None:
+        if cls.__db_config_data:
             return cls.__db_config_data
         
         cls.__db_config_data={}
         
-        if HoneyConfig.dbName is not None:  
+        if HoneyConfig.dbName:  
             cls.__db_config_data['dbName'] = HoneyConfig.dbName
-        if HoneyConfig.host is not None:  
+        if HoneyConfig.host:  
             cls.__db_config_data['host'] = HoneyConfig.host
-        if HoneyConfig.user is not None:  
+        if HoneyConfig.user:  
             cls.__db_config_data['user'] = HoneyConfig.user
-        if HoneyConfig.password is not None:  
+        if HoneyConfig.password:  
             cls.__db_config_data['password'] = HoneyConfig.password
-        if HoneyConfig.database is not None:  
+        if HoneyConfig.database:  
             cls.__db_config_data['database'] = HoneyConfig.database
-        if HoneyConfig.port is not None:  
+        if HoneyConfig.port:  
             cls.__db_config_data['port'] = int(HoneyConfig.port)
         
         return cls.__db_config_data
@@ -149,10 +149,10 @@ class HoneyConfig:
         cls=type(self)
         cls.__db_config_data=config
         
-        if config is not None:
+        if config:
             Logger.info("Reset db_config_data")
-        if config.get("dbName") is not None:
-            if cls.__db_config_data is None:
+        if config.get("dbName"):
+            if cls.__db_config_data:
                 cls.__db_config_data={}
             cls.__db_config_data["dbName"] = config.get("dbName")   
            

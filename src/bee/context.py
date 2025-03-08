@@ -10,12 +10,12 @@ class HoneyContext:
     
     dbName=None
 
-    @staticmethod 
+    @staticmethod
     def get_connection():
         
         factory = BeeFactory()
         conn = factory.get_connection()
-        if conn is not None:
+        if conn:
             if HoneyContext.is_active_conn(conn):
                 return conn
         
@@ -31,7 +31,7 @@ class HoneyContext:
     def __setDbName(config):
         if SysConst.dbName in config:
             dbName = config.get(SysConst.dbName, None)
-            if dbName is not None:
+            if dbName:
                 HoneyContext.dbName = dbName
     
     @staticmethod

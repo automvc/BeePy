@@ -41,7 +41,7 @@ class ConnectionBuilder:
             dbModuleName = tempConfig.pop(SysConst.dbModuleName, None)
         elif dbName not in db_modules:
             # raise ValueError(f"Database type '{dbName}' is not supported, need config dbModuleName.")      
-            print(f"Database type '{dbName}' is not supported, need config dbModuleName.")
+            Logger.info(f"Database type '{dbName}' is not supported, need config dbModuleName.") # TODO
             return None
         else:
             dbModuleName = db_modules[dbName]
@@ -66,7 +66,6 @@ class ConnectionBuilder:
 # ```python
 # import psycopg2
 #
-# def fetch_user_data_postgresql(username, age):
 #     connection = psycopg2.connect(
 #         host='localhost',
 #         user='your_username',
@@ -75,18 +74,14 @@ class ConnectionBuilder:
 #     )
 
 
-
-
 # import cx_Oracle
 #
-# def fetch_user_data_oracle(username, age):
-#     connection = cx_Oracle.connect('username/password@localhost/orcl')
+# connection = cx_Oracle.connect('username/password@localhost/orcl')
 
 # Or
 # import cx_Oracle  
 #
 # # 创建数据库连接  
-# def create_connection():  
 #     dsn = cx_Oracle.makedsn("hostname", 1521, service_name="your_service_name")  
 #     connection = cx_Oracle.connect(user="your_username", password="your_password", dsn=dsn)  
 #     return connection  

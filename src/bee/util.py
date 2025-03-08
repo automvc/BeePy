@@ -1,6 +1,8 @@
 from bee.config import PreConfig
 from bee.osql.const import SysConst
 
+from bee.name.naming_handler import NamingHandler
+
 
 # from bee.key import Key
 class HoneyUtil: 
@@ -107,8 +109,8 @@ class HoneyUtil:
     """
     @staticmethod
     def get_list_params(classField, entity_list):
-        dict_n={i:None for i in classField}
-        dict_classField=dict_n.copy()
+        dict_n = {i:None for i in classField}
+        # dict_classField=dict_n.copy()  //TODO
         
         list_params=[]
         for entity in entity_list:  
@@ -130,11 +132,12 @@ class HoneyUtil:
     def get_table_name_by_class(cls):
         # cls = obj.__class__
         temp_name = getattr(cls, '__tablename__', None)
-        if temp_name is not None and not temp_name.isspace():
+        if temp_name and not temp_name.isspace():
             return temp_name
         class_name = cls.__name__  
-        table_name = class_name.lower()  # 还要应用多种转换规则 TODO
-        return table_name   
+        # table_name = class_name.lower()  # 还要应用多种转换规则 TODO
+        # return table_name   
+        return NamingHandler.toTableName(class_name)
     
     """ get pk from bean"""
     
@@ -146,11 +149,11 @@ class HoneyUtil:
     @staticmethod 
     def get_pk_by_class(cls):
         temp_name = getattr(cls, SysConst.pk, None)
-        if temp_name is not None and not temp_name.isspace():
+        if temp_name and not temp_name.isspace():
             return temp_name
         else:
             temp_name = getattr(cls, SysConst.primary_key, None)
-            if temp_name is not None and not temp_name.isspace():
+            if temp_name and not temp_name.isspace():
                 return temp_name
         return None
             
@@ -167,7 +170,7 @@ class HoneyUtil:
     @staticmethod  
     def is_sql_key_word_upper(): 
         # TODO support set in config file
-        if PreConfig.sql_key_word_case is not None:
+        if PreConfig.sql_key_word_case:
             if PreConfig.sql_key_word_case == SysConst.upper:
                 return True
         return False

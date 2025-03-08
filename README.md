@@ -58,6 +58,11 @@ Improve anomalies
 12. index_normal  
 13. unique  
 
+**1.6.0(2025)**  
+1. enhance BeeSql  
+2. enhance code  
+3. add naming  
+
 Quick Start:
 =========	
 ## Installation  

@@ -8,6 +8,8 @@ from bee.osql.sqlkeyword import K
 from bee.paging import Paging
 from bee.util import HoneyUtil
 
+from bee.name.naming_handler import NamingHandler
+
 
 class ObjToSQL:
 
@@ -151,52 +153,83 @@ class ObjToSQL:
     
 
     def __build_update_sql(self, table_name, set_dict, conditions):
+        if not set_dict:
+            raise SqlBeeException("Update SQL's set part is empty!")
+        
+        # if not conditions:  #还没有用到
+        #     Logger.warn("Update SQL's where part is empty, would update all records!")
+        
+        set_dict2 = self.__toColumns_with_dict(set_dict)
+        conditions2 = self.__toColumns_with_dict(conditions)
+        
         ph=self.__getPlaceholder()
         if self.__getPlaceholderType() == 3:
-            updateSet = ', '.join(f"{key} = {ph}{key}" for key in set_dict.keys())
-            condition_str = f" {K.and_()} ".join(f"{key} = {ph}{key}" for key in conditions.keys())
+            updateSet = ', '.join(f"{key} = {ph}{key}" for key in set_dict2.keys())
+            condition_str = f" {K.and_()} ".join(f"{key} = {ph}{key}" for key in conditions2.keys())
         else:
-            updateSet = ', '.join(f"{key} = {ph}" for key in set_dict.keys())
-            condition_str = f" {K.and_()} ".join(f"{key} = {ph}" for key in conditions.keys())
+            updateSet = ', '.join(f"{key} = {ph}" for key in set_dict2.keys())
+            condition_str = f" {K.and_()} ".join(f"{key} = {ph}" for key in conditions2.keys())
         
         # sql = f"UPDATE {table_name} SET {updateSet} WHERE {condition_str}"
         sql = f"{K.update()} {table_name} {K.set()} {updateSet} {K.where()} {condition_str}"
-        params = list(set_dict.values()) + list(conditions.values())
+        params = list(set_dict2.values()) + list(conditions2.values())
         return sql, params
     
     
     def __build_insert_sql(self, table_name, data):
+        if not data:
+            raise SqlBeeException("insert column and value is empty!")
+        
+        data2 = self.__toColumns_with_dict(data)
+        
         ph=self.__getPlaceholder()
-        columns = ', '.join(data.keys())
+        columns = ', '.join(data2.keys())
         if self.__getPlaceholderType() == 3:
-            placeholders = ', '.join(f" {ph}{key}" for key in data.keys())
+            placeholders = ', '.join(f" {ph}{key}" for key in data2.keys())
         else:
-            placeholders = ', '.join(f"{ph}" for _ in data)
+            placeholders = ', '.join(f"{ph}" for _ in data2) #TODO
         sql = f"{K.insert()} {K.into()} {table_name} ({columns}) {K.values()} ({placeholders})"
-        return sql, list(data.values())
+        return sql, list(data2.values())
     
     def __build_insert_batch_sql(self, table_name, classField):
+        if not classField:
+            raise SqlBeeException("column list is empty!")
+        
+        columns=self.__toColumns(classField)
+        
         ph=self.__getPlaceholder()
-        columns = ', '.join(classField)
+        columnsStr = ', '.join(columns)
         if self.__getPlaceholderType() == 3:
             placeholders = ', '.join(f" {ph}{item}" for item in classField)
         else:
             placeholders = ', '.join(f"{ph}" for _ in classField)
-        sql = f"{K.insert()} {K.into()} {table_name} ({columns}) {K.values()} ({placeholders})"
+        sql = f"{K.insert()} {K.into()} {table_name} ({columnsStr}) {K.values()} ({placeholders})"
         return sql
+    
+    def __toColumns_with_dict(self, kv):
+        return {NamingHandler.toColumnName(k):v for k, v in kv.items()}
 
     def __build_where_condition(self, conditions):
-        ph=self.__getPlaceholder()
+        conditions2 = self.__toColumns_with_dict(conditions)
+        
+        ph = self.__getPlaceholder()
         if self.__getPlaceholderType() == 3:
-            condition_str = f" {K.and_()} ".join(f"{key} = {ph}{key}" for key in conditions.keys())
+            condition_str = f" {K.and_()} ".join(f"{key} = {ph}{key}" for key in conditions2.keys())
         else:
-            condition_str = f" {K.and_()} ".join(f"{key} = {ph}" for key in conditions.keys())
+            condition_str = f" {K.and_()} ".join(f"{key} = {ph}" for key in conditions2.keys())
         return condition_str
     
+    def __toColumns(self, classField):
+        return [NamingHandler.toColumnName(field) for field in classField]
+    
     def __build_select_sql(self, table_name, classField, conditions=None):
+        if not classField:
+            raise SqlBeeException("column list is empty!")
+        
+        columns=self.__toColumns(classField)
         # sql = f"SELECT * FROM {table_name}"
         # sql = f"SELECT {', '.join(classField)} FROM {table_name}"
-        sql = f"{K.select()} {', '.join(classField)} {K.from_()} {table_name}"
+        sql = f"{K.select()} {', '.join(columns)} {K.from_()} {table_name}"
         
         #where part
         params = []
@@ -208,7 +241,6 @@ class ObjToSQL:
     
 
     def __build_delete_sql(self, table_name, conditions):
-
         sql = f"{K.delete()} {K.from_()} {table_name}"
         params = []
         if conditions:
@@ -222,7 +254,6 @@ class ObjToSQL:
         return honeyConfig.get_dbName()
     
     def __getPlaceholderType(self):
-        
         # sql = "SELECT * FROM employees WHERE employee_id = :emp_id"
         # cursor.execute(sql, emp_id=emp_id)  
         # sql = "INSERT INTO employees (employee_id, employee_name, salary) VALUES (:emp_id, :emp_name, :emp_salary)"  
@@ -232,21 +263,11 @@ class ObjToSQL:
         else:
             return 0
         
-    # def __build_delete_by_id_sql(self, table_name, conditions):
-    #     ph = self.__getPlaceholder()
-    #     if self.__getPlaceholderType() == 3:
-    #         condition_str = f" {K.and_()} ".join(f"{key} = {ph}{key}" for key in conditions.keys())
-    #     else:
-    #         condition_str = f" {K.and_()} ".join(f"{key} = {ph}" for key in conditions.keys())
-    #
-    #     sql = f"{K.delete()} {K.from_()} {table_name} {K.where()} {condition_str}"
-    #     params = list(conditions.values())
-    #     return sql, params
-    
-    
     def __build_select_fun_sql(self, table_name, functionType, field_for_fun, conditions=None):
+        column_for_fun=NamingHandler.toColumnName(field_for_fun)
+        
         # sql = f"SELECT count() FROM {table_name}"
-        sql = f"{K.select()} {functionType.get_name()}({field_for_fun}) {K.from_()} {table_name}"
+        sql = f"{K.select()} {functionType.get_name()}({column_for_fun}) {K.from_()} {table_name}"
         
         #where part
         params = []
@@ -269,19 +290,21 @@ class ObjToSQL:
             else:
                 Logger.warn("There are no primary key when create table: " + table_name)
                 
-        print(pk)
+        # print(pk) # bug
         # classField.remove(pk)
         hasPk = False
         if pk in classField: 
             classField.remove(pk)
             hasPk = True
-        # print(classField)
+        
+        classField = self.__toColumns(classField)
         
         field_type = "VARCHAR(255)"  # 假设所有非主键字段都是 VARCHAR(255)   TODO
     
         pk_statement = ""
         # 创建主键字段语句  
         if hasPk:
+            pk = NamingHandler.toColumnName(pk)
             pk_statement = self.generate_pk_statement(pk)
         
         # 创建其他字段语句  
@@ -339,7 +362,8 @@ class ObjToSQL:
     
     def transfer_field(self, fields, entity_class): 
         # 根据实际的实体类转换字段名  
-        return fields  # 这里简单返回，可以根据需求进行字段转换   TODO
+        # return fields  # 这里简单返回，可以根据需求进行字段转换   TODO
+        return NamingHandler.toColumnName(fields)
 
     def to_drop_index_sql(self, entity_class, index_name): 
         table_name = HoneyUtil.get_table_name_by_class(entity_class)
