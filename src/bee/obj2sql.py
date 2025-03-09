@@ -67,20 +67,34 @@ class ObjToSQL:
         
         return sql, list_params
     
-    def toSelectByIdSQL(self, entity):
-        classField, condition = self._toById(entity)
-        
-        table_name = HoneyUtil.get_table_name(entity)
-        
-        return self.__build_select_sql(table_name, classField, condition)
+    def toSelectByIdSQL(self, entity_class, length):
+        classField = HoneyUtil.get_class_field(entity_class)  # list 
+        where_condition_str = self._toWhereById(entity_class, length)
     
-    def toDeleteById(self, entity):
-        _, condition = self._toById(entity)
-        
-        table_name = HoneyUtil.get_table_name(entity)
-        
-        return self.__build_delete_sql(table_name, condition)
+        table_name = HoneyUtil.get_table_name_by_class(entity_class)
     
+        return self.__build_select_by_id_sql(table_name, classField, where_condition_str)
+    
+    def _toWhereById(self, entity_class, length):
+        
+        pk = HoneyUtil.get_pk_by_class(entity_class)
+        if pk is None:
+            raise SqlBeeException("by id, bean should has id field or need set the pk field name with __pk__")
+        
+        pk = NamingHandler.toColumnName(pk)
+        
+        ph = self.__getPlaceholder()
+        if self.__getPlaceholderType() == 3:
+            condition_str = f" {K.or_()} ".join([f"{pk} = {ph}{pk}"] * length)
+        else:
+            condition_str = f" {K.or_()} ".join([f"{pk} = {ph}" ] * length)
+        
+        return f" {K.where()} {condition_str}"
+    
+    def toDeleteById(self, entity_class, length):
+        where_condition_str = self._toWhereById(entity_class, length)
+        table_name = HoneyUtil.get_table_name_by_class(entity_class)
+        return self.__build_delete_by_id_sql(table_name, where_condition_str)
     
     def _toById(self, entity):
         fieldAndValue, classField = self.__getKeyValue_classField(entity)
@@ -239,6 +253,13 @@ class ObjToSQL:
             params = list(conditions.values())
         return sql, params
     
+    def __build_select_by_id_sql(self, table_name, classField, where_condition_str):
+        if not classField:
+            raise SqlBeeException("column list is empty!")
+        
+        columns = self.__toColumns(classField)
+        sql = f"{K.select()} {', '.join(columns)} {K.from_()} {table_name}"
+        return sql + where_condition_str
 
     def __build_delete_sql(self, table_name, conditions):
         sql = f"{K.delete()} {K.from_()} {table_name}"
@@ -248,6 +269,12 @@ class ObjToSQL:
             sql += f" {K.where()} {condition_str}"
             params = list(conditions.values())
         return sql, params
+    
+    
+    def __build_delete_by_id_sql(self, table_name, where_condition_str):
+        sql = f"{K.delete()} {K.from_()} {table_name}"
+        return sql + where_condition_str
+    
     
     def __get_dbName(self):
         honeyConfig=HoneyConfig()

@@ -155,6 +155,9 @@ class HoneyUtil:
             temp_name = getattr(cls, SysConst.primary_key, None)
             if temp_name and not temp_name.isspace():
                 return temp_name
+            else:
+                if hasattr(cls, SysConst.id):
+                    return SysConst.id
         return None
             
     """将结果集的一行转换为实体对象"""        

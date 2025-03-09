@@ -60,7 +60,12 @@ https://github.com/automvc/bee
 **1.6.0(2025)**  
 1. 优化BeeSql  
 2. 增强代码  
-3. add naming  
+3. 增加命名转换支持  
+4. 增加拦截器支持  
+5. 记录sql执行时间  
+6. 调用select_by_id,delete_by_id:  
+def select_by_id(self, entity_class, *ids)  
+def delete_by_id(self, entity_class, *ids)  
 
 快速开始:
 =========	

@@ -1,5 +1,5 @@
 from bee import SqlUtil
-from bee.exception import BeeException
+from bee.exception import BeeException, ParamBeeException
 from bee.obj2sql import ObjToSQL
 from bee.osql.enum import FunctionType, SuidType
 from bee.osql.logger import Logger
@@ -146,31 +146,42 @@ class SuidRich(Suid):
             return listT[0]  # 返回首个元素  
         return None 
     
-    def select_by_id(self, entity):
-        if entity is None:
-            return None  
-
-        try: 
-            super().doBeforePasreEntity(entity, SuidType.SELECT)
-            sql, params = self.objToSQL.toSelectByIdSQL(entity)
+    def select_by_id(self, entity_class, *ids):
+        # self.check_for_by_id(entity_class, ids)
+        
+        if not entity_class:
+            raise ParamBeeException("entity_class can not be empty!")
+        
+        if not ids:
+            raise ParamBeeException("id can not be None when call select_by_id!") 
+        
+        try:
+            id_list = list(ids)
+            super().doBeforePasreEntity(entity_class, SuidType.SELECT)
+            sql = self.objToSQL.toSelectByIdSQL(entity_class, len(id_list))
             Logger.logsql("select by id SQL:", sql)
-            super().log_params(params)
-            return self.beeSql.select(sql, self.to_class_t(entity), params)  # 返回值用到泛型  
+            super().log_params(id_list)
+            return self.beeSql.select(sql, entity_class, id_list) 
         except Exception as e: 
             raise BeeException(e)
         finally:
-            super().doBeforeReturn()
+            # super().doBeforeReturn()         
+            super().doBeforeReturnSimple()         
     
-    def delete_by_id(self, entity):
-        if entity is None: 
-            return None
+    def delete_by_id(self, entity_class, *ids):
+        if not entity_class:
+            raise ParamBeeException("entity_class can not be empty!")
+        
+        if not ids:
+            raise ParamBeeException("id can not be None when call select_by_id!") 
         
         try: 
-            super().doBeforePasreEntity(entity, SuidType.DELETE)
-            sql, params = self.objToSQL.toDeleteById(entity)  
+            id_list = list(ids)
+            super().doBeforePasreEntity(entity_class, SuidType.DELETE)
+            sql = self.objToSQL.toDeleteById(entity_class, len(id_list))
             Logger.logsql("delete by id SQL:", sql)
-            super().log_params(params)
-            return self.beeSql.modify(sql, params)  
+            super().log_params(id_list)
+            return self.beeSql.modify(sql, id_list)  
         except Exception as e: 
             raise BeeException(e)
         finally:
@@ -238,7 +249,7 @@ class SuidRich(Suid):
 
 
 # for custom SQL
-class PreparedSql:
+class PreparedSql(AbstractCommOperate):
     
     """
     eg:

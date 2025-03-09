@@ -62,6 +62,11 @@ Improve anomalies
 1. enhance BeeSql  
 2. enhance code  
 3. add naming  
+4. add interceptors  
+5. log sql execute spent time  
+6. adjust select_by_id,delete_by_id:  
+def select_by_id(self, entity_class, *ids)  
+def delete_by_id(self, entity_class, *ids)  
 
 Quick Start:
 =========	
