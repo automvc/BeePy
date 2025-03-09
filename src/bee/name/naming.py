@@ -3,21 +3,23 @@ from bee.name import NameUtil
 
 class NameTranslate:
 
-    def toTableName(self, entityName): 
-        raise NotImplementedError  
+    def toTableName(self, entityName):
+        raise NotImplementedError
 
-    def toColumnName(self, fieldName): 
-        raise NotImplementedError  
+    def toColumnName(self, fieldName):
+        raise NotImplementedError
 
-    def toEntityName(self, tableName): 
-        raise NotImplementedError  
+    def toEntityName(self, tableName):
+        raise NotImplementedError
 
-    def toFieldName(self, columnName): 
-        raise NotImplementedError 
+    def toFieldName(self, columnName):
+        raise NotImplementedError
 
 """
  * Python Camel and Databse UnderScore transform.
  * Python<-->DB,eg: orderNo<-->order_no.
+ * @author Kingstar
+ * @since  1.5
 """
 class UnderScoreAndCamelName(NameTranslate):
 
@@ -31,21 +33,21 @@ class UnderScoreAndCamelName(NameTranslate):
             return fieldName
         return NameUtil.toUnderscoreNaming(fieldName)
 
-    def toEntityName(self, tableName): 
+    def toEntityName(self, tableName):
         if not tableName:
             return tableName
         naming_to_lower_before = True  # TODO
-        if naming_to_lower_before: 
+        if naming_to_lower_before:
             tableName = tableName.lower()  
         return NameUtil.firstLetterToUpper(NameUtil.toCamelNaming(tableName))  
     
-    def toFieldName(self, columnName): 
+    def toFieldName(self, columnName):
         if not columnName:
             return columnName
         naming_to_lower_before = True  # TODO
-        if naming_to_lower_before: 
+        if naming_to_lower_before:
             columnName = columnName.lower()  
-        return NameUtil.toCamelNaming(columnName)  
+        return NameUtil.toCamelNaming(columnName)
     
     
 class OriginalName(NameTranslate):
@@ -96,6 +98,8 @@ class DbUpperAndJavaLower(NameTranslate):
 """  
  * Python Camel and Database UnderScore & Upper transform.
  * Python<-->DB,eg: orderNo<-->ORDER_NO.
+ * @author Kingstar
+ * @since  1.5
 """
 class UpperUnderScoreAndCamelName(UnderScoreAndCamelName):
 

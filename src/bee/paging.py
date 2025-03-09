@@ -15,6 +15,8 @@ class Paging:
             return self.__toPageSqlForMySql(sql, start, size)
         elif dbName == DatabaseConst.SQLite.lower(): 
             return self.__toLimitOffsetPaging(sql, start, size)
+        else:
+            return self.custom_to_page_sql(sql, start, size)
         
     def __toPageSqlForMySql(self, sql, start, size): 
         limitStament = " " + K.limit() + " " + str(start) + ", " + str(size)
@@ -23,4 +25,7 @@ class Paging:
     
     def __toLimitOffsetPaging(self, sql, offset, size): 
         return sql + " " + K.limit() + " " + str(size) + " " + K.offset() + " " + str(offset)
+    
+    def custom_to_page_sql(self, sql, start, size):
+        raise NotImplementedError
            

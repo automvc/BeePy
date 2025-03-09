@@ -1,14 +1,17 @@
 from bee import SqlUtil
 from bee.exception import BeeException
 from bee.obj2sql import ObjToSQL
-from bee.osql.enum import FunctionType
+from bee.osql.enum import FunctionType, SuidType
 from bee.osql.logger import Logger
 from bee.sqllib import BeeSql
 
+from bee.base import AbstractCommOperate
 
-class Suid:
+
+class Suid(AbstractCommOperate):
     
-    def __init__(self): 
+    def __init__(self):
+        super().__init__()
         self._beeSql = None  
         self._objToSQL = None   
     
@@ -17,48 +20,61 @@ class Suid:
             return None  
 
         try: 
+            super().doBeforePasreEntity(entity, SuidType.SELECT)
             sql, params = self.objToSQL.toSelectSQL(entity)  
             Logger.logsql("select SQL:", sql)
-            Logger.logsql("params:", params)
-            return self.beeSql.select(sql, self.to_class_t(entity), params)  # 返回值用到泛型  
+            super().log_params(params)
+            list_r= self.beeSql.select(sql, self.to_class_t(entity), params)  # 返回值用到泛型
+            return list_r
         except Exception as e: 
             raise BeeException(e)
+        finally:
+            super().doBeforeReturn(list_r)
         
     def update(self, entity): 
         if entity is None: 
             return None
         
-        try: 
+        try:
+            super().doBeforePasreEntity(entity, SuidType.UPDATE) 
             sql, params = self.objToSQL.toUpdateSQL(entity)  
             Logger.logsql("update SQL:", sql)
-            Logger.logsql("params:", params)
+            super().log_params(params)
             return self.beeSql.modify(sql, params)
         except Exception as e: 
             raise BeeException(e) 
+        finally:
+            super().doBeforeReturnSimple()
     
     def insert(self, entity): 
         if entity is None: 
             return None
         
         try: 
+            super().doBeforePasreEntity(entity, SuidType.INSERT)
             sql, params = self.objToSQL.toInsertSQL(entity)  
             Logger.logsql("insert SQL:", sql)
-            Logger.logsql("params:", params)
+            super().log_params(params)
             return self.beeSql.modify(sql, params)
         except Exception as e: 
             raise BeeException(e)
+        finally:
+            super().doBeforeReturnSimple()
         
     def delete(self, entity): 
         if entity is None: 
             return None
         
         try: 
+            super().doBeforePasreEntity(entity, SuidType.DELETE)
             sql, params = self.objToSQL.toDeleteSQL(entity)  
             Logger.logsql("delete SQL:", sql)
-            Logger.logsql("params:", params)
+            super().log_params(params)
             return self.beeSql.modify(sql, params)  
         except Exception as e: 
             raise BeeException(e)
+        finally:
+            super().doBeforeReturnSimple()
 
     def to_class_t(self, entity):
         return type(entity)  # 返回实体的类型  
@@ -95,12 +111,16 @@ class SuidRich(Suid):
             return None  
 
         try: 
+            super().doBeforePasreEntity(entity, SuidType.SELECT)
             sql, params = self.objToSQL.toSelectSQLWithPaging(entity, start, size)  
             Logger.logsql("select_paging SQL:", sql)
-            Logger.logsql("params:", params)
-            return self.beeSql.select(sql, self.to_class_t(entity), params)  # 返回值用到泛型  
+            super().log_params(params)
+            list_r= self.beeSql.select(sql, self.to_class_t(entity), params)
+            return list_r
         except Exception as e: 
-            raise BeeException(e)    
+            raise BeeException(e)
+        finally:
+            super().doBeforeReturn(list_r)
     
     def insert_batch(self, entity_list): 
         if entity_list is None: 
@@ -109,15 +129,19 @@ class SuidRich(Suid):
             return 0
         
         try: 
+            super().doBeforePasreListEntity(entity_list)
             sql, list_params = self.objToSQL.toInsertBatchSQL(entity_list)            
             Logger.logsql("insert batch SQL:", sql)
-            Logger.logsql("params:", list_params)
+            super().log_params(list_params)
             return self.beeSql.batch(sql, list_params)
         except Exception as e: 
             raise BeeException(e)
+        finally:
+            super().doBeforeReturn()
 
     def select_first(self, entity):
-        listT = self.select_paging(entity, 0, 2)
+        # listT = self.select_paging(entity, 0, 2)
+        listT = self.select_paging(entity, 0, 1)
         if listT:  # 判断列表是否非空  
             return listT[0]  # 返回首个元素  
         return None 
@@ -127,41 +151,49 @@ class SuidRich(Suid):
             return None  
 
         try: 
+            super().doBeforePasreEntity(entity, SuidType.SELECT)
             sql, params = self.objToSQL.toSelectByIdSQL(entity)
             Logger.logsql("select by id SQL:", sql)
-            Logger.logsql("params:", params)
+            super().log_params(params)
             return self.beeSql.select(sql, self.to_class_t(entity), params)  # 返回值用到泛型  
         except Exception as e: 
             raise BeeException(e)
+        finally:
+            super().doBeforeReturn()
     
     def delete_by_id(self, entity):
         if entity is None: 
             return None
         
         try: 
+            super().doBeforePasreEntity(entity, SuidType.DELETE)
             sql, params = self.objToSQL.toDeleteById(entity)  
             Logger.logsql("delete by id SQL:", sql)
-            Logger.logsql("params:", params)
+            super().log_params(params)
             return self.beeSql.modify(sql, params)  
         except Exception as e: 
             raise BeeException(e)
+        finally:
+            super().doBeforeReturnSimple()
 
     def select_fun(self, entity, functionType, field_for_fun):
         if entity is None:
             return None  
 
         try: 
+            super().doBeforePasreEntity(entity, SuidType.SELECT)
             sql, params = self.objToSQL.toSelectFunSQL(entity, functionType, field_for_fun)
             Logger.logsql("select fun SQL:", sql)
-            Logger.logsql("params:", params)
+            super().log_params(params)
             r = self.beeSql.select_fun(sql, params)
             if  r is None and functionType == FunctionType.COUNT:
                 return 0
             else:
                 return r
-               
         except Exception as e: 
             raise BeeException(e)
+        finally:
+            super().doBeforeReturnSimple()
     
     def count(self, entity):
         return self.select_fun(entity, FunctionType.COUNT, "*")
@@ -220,7 +252,7 @@ class PreparedSql:
             sql = SqlUtil.add_paging(sql, start, size)
             
             Logger.logsql("select SQL(PreparedSql):", sql)
-            Logger.logsql("params:", params)
+            super().log_params(params)
             return self.beeSql.select(sql, return_type_class, params)  # 返回值用到泛型  
         except Exception as e: 
             raise BeeException(e)
@@ -247,7 +279,7 @@ class PreparedSql:
     def modify(self, sql, params=None): 
         try: 
             Logger.logsql("modify SQL(PreparedSql):", sql)
-            Logger.logsql("params:", params)
+            super().log_params(params)
             return self.beeSql.modify(sql, params)  
         except Exception as e: 
             raise BeeException(e)
@@ -266,6 +298,7 @@ class PreparedSql:
     
     
     def __init__(self): 
+        super().__init__()
         self._beeSql = None  
         self._objToSQL = None   
         
