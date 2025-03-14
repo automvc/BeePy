@@ -9,7 +9,8 @@ from bee.osql.logger import Logger
 class PreConfig:
     
     # suggest set project root path for it
-    config_folder_root_path = ""
+    config_folder_root_path = None  #replace with config_path since 1.6.0
+    config_path = ""
     
     # value is:lower,upper
     sql_key_word_case = None
@@ -48,7 +49,10 @@ class HoneyConfig:
     @staticmethod
     def __adjust_config_file(cls, config_file):
         
-        root_dir = PreConfig.config_folder_root_path
+        root_dir0 = PreConfig.config_folder_root_path
+        root_dir = PreConfig.config_path
+        if not root_dir and root_dir0:
+            root_dir = root_dir0
         
         # 构建两个可能的路径  
         resources_path = os.path.join(root_dir, 'resources', config_file)  # resources 目录下
@@ -126,6 +130,7 @@ class HoneyConfig:
         """将DB相关的类属性打包成字典并返回""" 
         cls=type(self)
         if cls.__db_config_data:
+            #adjust db path
             return cls.__db_config_data
         
         cls.__db_config_data={}
@@ -139,7 +144,7 @@ class HoneyConfig:
         if HoneyConfig.password:  
             cls.__db_config_data['password'] = HoneyConfig.password
         if HoneyConfig.database:  
-            cls.__db_config_data['database'] = HoneyConfig.database
+            cls.__db_config_data['database'] = HoneyConfig.database #adjust db path
         if HoneyConfig.port:  
             cls.__db_config_data['port'] = int(HoneyConfig.port)
         
