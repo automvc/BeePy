@@ -1,14 +1,17 @@
 # from org.teasoft.exam.entity.Orders import Orders
 # from bee.api import Suid
 from bee.api import Suid
+
+import MyConfig
 from entity.Orders import Orders
 
 
+# from bee.config import PreConfig
 # from org.teasoft.exam.entity.Test import Test
 if __name__ == '__main__':
     print("start")
     
-    # Version.printversion()
+    MyConfig.init()
     
     # orders=Orders(id=1, name="bee")
     orders=Orders()

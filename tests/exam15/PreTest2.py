@@ -1,11 +1,11 @@
 from bee.api import PreparedSql
-from bee.config import PreConfig
+
+import MyConfig
 from entity.Orders import Orders
 
 
 if __name__=="__main__":
-    
-    PreConfig.config_folder_root_path="E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc\\tests\\exam"
+    MyConfig.init()
     
     pre=PreparedSql()
     

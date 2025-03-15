@@ -13,6 +13,10 @@ class Orders:
     id = None  
     name = None 
     remark = None
+    
+    # __pk__="id" #aaa
+    # __pk__="name" #aaa
+    # __primary_key__="name" #aaa
 
     #can ignore
     def __repr__(self):  

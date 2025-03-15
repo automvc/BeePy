@@ -1,15 +1,15 @@
 """ batch insert for orders """
 
 from bee.api import SuidRich
-from bee.config import PreConfig
 from bee.sqllib import BeeSql
+
+import MyConfig
 from entity.Orders import Orders
 
 
 if __name__ == '__main__':
     print("start")
-    
-    PreConfig.config_folder_root_path="E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc\\tests\\exam"
+    MyConfig.init()
     
     createSql = """
     CREATE TABLE orders (

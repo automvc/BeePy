@@ -1,9 +1,14 @@
+""" batch insert for orders """
+
 from bee.api import SuidRich
+
+import MyConfig
 from entity.Orders import Orders
 
-""" batch insert for orders """
+
 if __name__ == '__main__':
     print("start")
+    MyConfig.init()
     
     orders0=Orders()
     orders0.name = "bee"

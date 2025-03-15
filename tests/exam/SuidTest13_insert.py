@@ -1,9 +1,12 @@
 from bee.api import Suid
+
+import MyConfig
 from entity.Orders import Orders
 
 
 if __name__ == '__main__':
     print("start")
+    MyConfig.init()
     
     # config = HoneyConfig()
     # config.dbName="mysql"

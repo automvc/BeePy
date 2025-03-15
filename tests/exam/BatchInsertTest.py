@@ -1,10 +1,15 @@
+""" batch insert for student2 """
+
 from bee.api import Suid, SuidRich
 from bee.sqllib import BeeSql
+
+import MyConfig
 from entity.Student2 import Student2
 
-""" batch insert for student2 """
+
 if __name__ == '__main__':
     print("start")
+    MyConfig.init()
     
     createSql = """
     CREATE TABLE student2 (

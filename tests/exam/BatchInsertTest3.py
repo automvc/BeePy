@@ -1,12 +1,15 @@
 """ batch insert for orders """
 
 from bee.api import Suid, SuidRich
+
+import MyConfig
 from entity.Orders import Orders
 from entity.Orders3 import Orders3
 
 
 if __name__ == '__main__':
     print("start")
+    MyConfig.init()
     
     # select record
     suid=Suid()

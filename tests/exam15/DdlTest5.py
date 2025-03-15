@@ -1,11 +1,14 @@
 from bee.api import SuidRich
 from bee.config import PreConfig
+
+import MyConfig
 from entity.Orders_202501 import Orders_202501
 
-# test unique,index_normal
 
+# test unique,index_normal
 if __name__ == '__main__':
     print("start")
+    MyConfig.init()
     
     #suggest set project root path for it
     PreConfig.config_folder_root_path="E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc\\tests\\exam"
