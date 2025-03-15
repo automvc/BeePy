@@ -1,5 +1,5 @@
 from bee.context import HoneyContext
-from bee.exception import SqlBeeException
+from bee.exception import SqlBeeException, BeeException
 from bee.osql.logger import Logger
 from bee.util import HoneyUtil
 
@@ -81,7 +81,11 @@ class BeeSql:
         return rs_list         
             
     def __getConn(self):
-        conn = HoneyContext.get_connection()
+        try:
+            conn = HoneyContext.get_connection()
+        except Exception as e: 
+            raise BeeException(e)
+        
         if conn is None:
             raise SqlBeeException("DB conn is None!")
         return conn

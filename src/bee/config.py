@@ -1,7 +1,8 @@
 import json
 import os
 
-from bee.osql.const import SysConst
+from bee.exception import ConfigBeeException
+from bee.osql.const import SysConst, DatabaseConst
 from bee.osql.logger import Logger
 
 
@@ -125,12 +126,31 @@ class HoneyConfig:
                 
         except OSError as err: 
             Logger.error(err)
+            
+    def __adjust_db_path_for_sqllite(self):
+        cls = type(self)
+        t_dbName = cls.__db_config_data['dbName']
+        if t_dbName.lower() == DatabaseConst.SQLite.lower():
+            
+            t_database = cls.__db_config_data['database']
+            if os.path.isfile(t_database): 
+                return
+            
+            path_separator = os.path.sep  
+            if path_separator not in t_database: 
+                root_dir = PreConfig.config_path
+                newPath = root_dir + path_separator + t_database
+                Logger.warn("adjust the SQLite db file path to: " + newPath)
+                if not os.path.isfile(newPath):
+                    raise ConfigBeeException(f"File not found in current path or adjust path: {newPath}")
+                cls.__db_config_data['database'] = newPath
                         
     def get_db_config_dict(self):  
         """将DB相关的类属性打包成字典并返回""" 
         cls=type(self)
         if cls.__db_config_data:
             #adjust db path
+            self.__adjust_db_path_for_sqllite()
             return cls.__db_config_data
         
         cls.__db_config_data={}
@@ -147,7 +167,8 @@ class HoneyConfig:
             cls.__db_config_data['database'] = HoneyConfig.database #adjust db path
         if HoneyConfig.port:  
             cls.__db_config_data['port'] = int(HoneyConfig.port)
-        
+            
+        self.__adjust_db_path_for_sqllite()        
         return cls.__db_config_data
     
     def set_db_config_dict(self,config):

@@ -14,7 +14,7 @@ class Logger:
     @staticmethod
     def warn(msg):
         # print("[WARN] ",StrConst.LOG_PREFIX, msg)
-        print("\033[31m[WARN] " + StrConst.LOG_PREFIX + msg + "\033[0m ")
+        print("\033[31m[WARN]  " + StrConst.LOG_PREFIX + msg + "\033[0m ")
         
     @staticmethod
     def error(msg):
