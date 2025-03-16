@@ -15,7 +15,8 @@ if __name__ == '__main__':
     suidRich = SuidRich()
     # one = suidRich.select_by_id(orders)  # 1.5.4
     # one = suidRich.select_by_id(Orders,"1")  #1.6.0
-    one = suidRich.select_by_id(Orders,'bee')  #1.6.0
+    one = suidRich.select_by_id(Orders,1)
+    # one = suidRich.select_by_id(Orders,'bee')  #1.6.0
     print(one)
     
     # one = suidRich.select(orders)

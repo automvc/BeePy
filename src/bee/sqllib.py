@@ -25,7 +25,7 @@ class BeeSql:
                 # 将行数据映射到新创建的实体对象
                 target_obj = HoneyUtil.transform_result(row, column_names, entityClass)  
                 rs_list.append(target_obj) 
-    
+            Logger.info(" | <--  select rows: " + str(len(rs_list)))
         except Exception as e:
             raise SqlBeeException(e)
         finally:
@@ -37,11 +37,14 @@ class BeeSql:
     # def modify(self, sql: str, params=None) -> int:
     def modify(self, sql, params=None):
         conn = self.__getConn()
+        a = 0
         try:
             cursor = conn.cursor()
             cursor.execute(sql, params or [])
             conn.commit() 
-            return cursor.rowcount  # 返回受影响的行数
+            a = cursor.rowcount  # 返回受影响的行数
+            Logger.info(" | <--  Affected rows: " + str(a))
+            return a
         except Exception as e: 
             Logger.error(f"Error in modify: {e}")  
             conn.rollback()
@@ -51,11 +54,14 @@ class BeeSql:
                 
     def batch(self, sql, params=None):
         conn = self.__getConn()
+        a = 0
         try:
             cursor = conn.cursor()
             cursor.executemany(sql, params or [])
             conn.commit() 
-            return cursor.rowcount  # 返回受影响的行数
+            a = cursor.rowcount  # 返回受影响的行数
+            Logger.info(" | <--  Affected rows: " + str(a))
+            return a
         except Exception as e: 
             Logger.error(f"Error in batch: {e}")
             conn.rollback()
@@ -71,7 +77,9 @@ class BeeSql:
         try:
             cursor = conn.cursor()
             cursor.execute(sql, params or [])
-            result = cursor.fetchone()  # 返回一个元组，例如 (1,)  
+            result = cursor.fetchone()  # 返回一个元组，例如 (1,)
+            if result[0]:
+                Logger.info(" | <--  select rows: 1" )
             return result[0]
     
         except Exception as e:

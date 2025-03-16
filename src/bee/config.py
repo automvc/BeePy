@@ -78,6 +78,9 @@ class HoneyConfig:
         
         try:
             config_file = cls.__adjust_config_file(cls, config_file)
+            if not os.path.isfile(config_file):
+                Logger.info("Not found the file bee.properties!")
+                return
             with open(config_file, 'r') as file:
                 cls._loaded = True  # 设置为已加载   
                 Logger.info("Loading config file: " + config_file)
@@ -140,7 +143,7 @@ class HoneyConfig:
             if path_separator not in t_database: 
                 root_dir = PreConfig.config_path
                 newPath = root_dir + path_separator + t_database
-                Logger.warn("adjust the SQLite db file path to: " + newPath)
+                Logger.info("adjust the SQLite db file path to: " + newPath)
                 if not os.path.isfile(newPath):
                     raise ConfigBeeException(f"File not found in current path or adjust path: {newPath}")
                 cls.__db_config_data['database'] = newPath
