@@ -16,9 +16,7 @@ class HoneyFactory:
         self.suidRich = None  
         self.beeSql = None  
         self.objToSQL = None  
-        self.objToSQLRich = None  
         self.preparedSql = None  
-        self.callableSql = None  
         self.condition = None  
     
     def getSuid(self): 
@@ -53,14 +51,6 @@ class HoneyFactory:
     def setObjToSQL(self, objToSQL): 
         self.objToSQL = objToSQL  
     
-    # def getObjToSQLRich(self):  
-    #     if self.objToSQLRich is None:  
-    #         return ObjectToSQLRich()  
-    #     return self.objToSQLRich  
-    #
-    # def setObjToSQLRich(self, objToSQLRich):  
-    #     self.objToSQLRich = objToSQLRich  
-    
     def getPreparedSql(self): 
         if self.preparedSql is None: 
             return PreparedSql()  
@@ -68,14 +58,6 @@ class HoneyFactory:
     
     def setPreparedSql(self, preparedSql): 
         self.preparedSql = preparedSql  
-    
-    # def getCallableSql(self):  
-    #     if self.callableSql is None:  
-    #         return CallableSqlLib()  
-    #     return self.callableSql  
-    #
-    # def setCallableSql(self, callableSql):  
-    #     self.callableSql = callableSql  
     
     def getCondition(self): 
         if self.condition is None: 
@@ -102,3 +84,12 @@ class BF:
     @staticmethod
     def condition():
         return HoneyFactory().getCondition()
+    
+    @staticmethod
+    def preparedSql():
+        return HoneyFactory().getPreparedSql()
+    
+    @staticmethod
+    def objToSQL():
+        return HoneyFactory().getObjToSQL()
+    

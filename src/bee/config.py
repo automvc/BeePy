@@ -6,7 +6,6 @@ from bee.osql.const import SysConst, DatabaseConst
 from bee.osql.logger import Logger
 
 
-# from bee.key import Key
 class PreConfig:
     
     # suggest set project root path for it

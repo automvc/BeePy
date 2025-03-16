@@ -52,20 +52,8 @@ class ObjToSQL:
         return self.__build_update_sql(table_name, fieldAndValue, conditions)
     
     def toUpdateBySQL2(self, entity, condition, whereFields):
-        
-        # fieldAndValue = self.__getKeyValue(entity)
         fieldAndValue, classField = self.__getKeyValue_classField(entity)
-        # print(type(whereFields))
-        # print(type(classField))
-        # whereFields=list(whereFields)
         ext=list(set(whereFields) - set(classField))
-        # print(whereFields)
-        # print(classField)
-        
-        # ext=whereFields-classField
-        
-        # print(ext)
-        
         if ext:
             raise ParamBeeException("some fields in whereFields not in bean: ", ext)
         
@@ -310,15 +298,6 @@ class ObjToSQL:
             params = list(entityFilter.values())
             
         if conditionStruct:
-            # condition_where=conditionStruct.where
-            # if condition_where:
-            #     values=conditionStruct.values
-            #     if entityFilter:
-            #         sql += " "+ K.and_()
-            #     else:
-            #         sql +=" "+ K.where()
-            #     sql +=" "+condition_where
-            #     params = params + values
             sql,params=self.__appendWhere(sql, params, entityFilter, conditionStruct)
             start = conditionStruct.start
             size = conditionStruct.size
@@ -368,10 +347,9 @@ class ObjToSQL:
                 set_dict[key] = value
                 
         if not set_dict:
-            raise SqlBeeException("Update SQL's set part is empty!")
+            raise SqlBeeException("UpdateBy SQL's set part is empty!")
         
-        no_value_filter = set(whereFields) - set(where_dict)
-        # print(no_value_filter)
+        null_value_filter = set(whereFields) - set(where_dict)
         
         if condition:
             condition.suidType(SuidType.UPDATE)
@@ -391,13 +369,12 @@ class ObjToSQL:
             updateSet = ', '.join(f"{key} = {ph}" for key in set_dict2.keys())
             condition_str = f" {K.and_()} ".join(f"{key} = {ph}" for key in conditions2.keys())
         
-        if no_value_filter:
-            no_value_filter2 = self.__toColumns(no_value_filter)
+        if null_value_filter:
+            no_value_filter2 = self.__toColumns(null_value_filter)
             if condition_str:
                 condition_str+=" " +{K.and_()}
             condition_str += f" {K.and_()} ".join(f"{key} {K.isnull()}" for key in no_value_filter2)
         
-        # sql = f"UPDATE {table_name} SET {updateSet} WHERE {condition_str}"
         if condition_str:
             sql = f"{K.update()} {table_name} {K.set()} {updateSet} {K.where()} {condition_str}"
         else:
@@ -419,13 +396,6 @@ class ObjToSQL:
         return sql + where_condition_str
 
     def __build_delete_sql(self, table_name, entityFilter):
-        # sql = f"{K.delete()} {K.from_()} {table_name}"
-        # params = []
-        # if entityFilter:
-        #     condition_str=self.__build_where_condition(entityFilter)
-        #     sql += f" {K.where()} {condition_str}"
-        #     params = list(entityFilter.values())
-        # return sql, params
         return self.__build_delete_sql2(table_name, entityFilter, None)
     
     def __build_delete_by_id_sql(self, table_name, where_condition_str):
@@ -464,7 +434,6 @@ class ObjToSQL:
     #ddl
     def toCreateSQL(self, entityClass):
         classField = HoneyUtil.get_class_field(entityClass)  # list
-        # print(classField)
         # fieldAndValue, classField = self.__getKeyValue_classField(entity)
         pk = HoneyUtil.get_pk_by_class(entityClass)
         table_name = HoneyUtil.get_table_name_by_class(entityClass)

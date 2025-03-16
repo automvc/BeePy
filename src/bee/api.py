@@ -264,8 +264,6 @@ class SuidRich(Suid):
         if entity is None: 
             return None
         
-        print(len(whereFields))
-        print(type(whereFields))
         if whereFields is None or len(whereFields) == 0 or (len(whereFields) == 1 and (not whereFields[0] or whereFields[0].isspace())):
             raise ParamBeeException("whereFields at least include one field.")
         
