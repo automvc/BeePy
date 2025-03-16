@@ -8,7 +8,7 @@ class NamingHandler:
     def getNameTranslate() -> NameTranslate:
         # TODO 下一步，要支持使用实时命名规则
         factory = BeeFactory()
-        return factory.getHoneyFactory().getInitNameTranslate()
+        return factory.getInitNameTranslate()
     
     @staticmethod
     def toTableName(entityName) -> str:

@@ -1,14 +1,16 @@
+from bee import SqlUtil
 from bee.config import HoneyConfig
 from bee.context import HoneyContext
-from bee.exception import SqlBeeException
+from bee.exception import SqlBeeException, ParamBeeException
 from bee.name import NameCheckUtil
+from bee.name.naming_handler import NamingHandler
 from bee.osql.const import DatabaseConst, SysConst
+from bee.osql.enum import SuidType
 from bee.osql.logger import Logger
 from bee.osql.sqlkeyword import K
-from bee.paging import Paging
 from bee.util import HoneyUtil
 
-from bee.name.naming_handler import NamingHandler
+from bee.condition import Condition
 
 
 class ObjToSQL:
@@ -19,11 +21,16 @@ class ObjToSQL:
         table_name = HoneyUtil.get_table_name(entity)
         return self.__build_select_sql(table_name, classField, fieldAndValue)
     
+    def toSelectSQL2(self, entity, condition: Condition):
+        fieldAndValue, classField = self.__getKeyValue_classField(entity)
+        
+        table_name = HoneyUtil.get_table_name(entity)
+        return self.__build_select_sql2(table_name, classField, fieldAndValue, condition)
+    
     def toSelectSQLWithPaging(self, entity, start, size):
         sql, params = self.toSelectSQL(entity)
         
-        paging = Paging()
-        sql = paging.to_page_sql(sql, start, size)
+        sql = SqlUtil.add_paging(sql, start, size)
         return sql, params
     
     def toUpdateSQL(self, entity):
@@ -44,7 +51,27 @@ class ObjToSQL:
         table_name = HoneyUtil.get_table_name(entity)
         return self.__build_update_sql(table_name, fieldAndValue, conditions)
     
+    def toUpdateBySQL2(self, entity, condition, whereFields):
         
+        # fieldAndValue = self.__getKeyValue(entity)
+        fieldAndValue, classField = self.__getKeyValue_classField(entity)
+        # print(type(whereFields))
+        # print(type(classField))
+        # whereFields=list(whereFields)
+        ext=list(set(whereFields) - set(classField))
+        # print(whereFields)
+        # print(classField)
+        
+        # ext=whereFields-classField
+        
+        # print(ext)
+        
+        if ext:
+            raise ParamBeeException("some fields in whereFields not in bean: ", ext)
+        
+        table_name = HoneyUtil.get_table_name(entity)
+        return self.__build_update_by_sql2(table_name, fieldAndValue, condition, whereFields)
+    
     def toInsertSQL(self, entity):
         table_name = HoneyUtil.get_table_name(entity)
         fieldAndValue = self.__getKeyValue(entity)
@@ -55,6 +82,11 @@ class ObjToSQL:
         table_name = HoneyUtil.get_table_name(entity)
         fieldAndValue = self.__getKeyValue(entity)
         return self.__build_delete_sql(table_name, fieldAndValue)
+    
+    def toDeleteSQL2(self, entity, condition):
+        table_name = HoneyUtil.get_table_name(entity)
+        fieldAndValue = self.__getKeyValue(entity)
+        return self.__build_delete_sql2(table_name, fieldAndValue, condition)
     
     def toInsertBatchSQL(self, entity_list): 
         table_name = HoneyUtil.get_table_name(entity_list[0])
@@ -164,17 +196,18 @@ class ObjToSQL:
     
     def __getPlaceholder(self):
         return HoneyContext.get_placeholder()
-    
 
-    def __build_update_sql(self, table_name, set_dict, conditions):
+    #updateById
+    def __build_update_sql(self, table_name, set_dict, entityFilter):
+        # entityFilter just pk 
         if not set_dict:
             raise SqlBeeException("Update SQL's set part is empty!")
         
-        # if not conditions:  #还没有用到
+        # if not entityFilter:  #还没有用到
         #     Logger.warn("Update SQL's where part is empty, would update all records!")
         
         set_dict2 = self.__toColumns_with_dict(set_dict)
-        conditions2 = self.__toColumns_with_dict(conditions)
+        conditions2 = self.__toColumns_with_dict(entityFilter)
         
         ph=self.__getPlaceholder()
         if self.__getPlaceholderType() == 3:
@@ -223,20 +256,20 @@ class ObjToSQL:
     def __toColumns_with_dict(self, kv):
         return {NamingHandler.toColumnName(k):v for k, v in kv.items()}
 
-    def __build_where_condition(self, conditions):
-        conditions2 = self.__toColumns_with_dict(conditions)
+    def __build_where_condition(self, entityFilter):
+        entityFilter2 = self.__toColumns_with_dict(entityFilter)
         
         ph = self.__getPlaceholder()
         if self.__getPlaceholderType() == 3:
-            condition_str = f" {K.and_()} ".join(f"{key} = {ph}{key}" for key in conditions2.keys())
+            condition_str = f" {K.and_()} ".join(f"{key} = {ph}{key}" for key in entityFilter2.keys())
         else:
-            condition_str = f" {K.and_()} ".join(f"{key} = {ph}" for key in conditions2.keys())
+            condition_str = f" {K.and_()} ".join(f"{key} = {ph}" for key in entityFilter2.keys())
         return condition_str
     
     def __toColumns(self, classField):
         return [NamingHandler.toColumnName(field) for field in classField]
     
-    def __build_select_sql(self, table_name, classField, conditions=None):
+    def __build_select_sql(self, table_name, classField, entityFilter=None):
         if not classField:
             raise SqlBeeException("column list is empty!")
         
@@ -247,11 +280,135 @@ class ObjToSQL:
         
         #where part
         params = []
-        if conditions:
-            condition_str=self.__build_where_condition(conditions)
+        if entityFilter:
+            condition_str=self.__build_where_condition(entityFilter)
             sql += f" {K.where()} {condition_str}"
-            params = list(conditions.values())
+            params = list(entityFilter.values())
         return sql, params
+    
+    def __build_select_sql2(self, table_name, classField, entityFilter=None, condition=None):
+        
+        if condition:
+            conditionStruct=condition.parseCondition()
+            selectFields=conditionStruct.selectFields
+        
+        if not selectFields and not classField:
+            raise SqlBeeException("column list is empty!")
+        
+        if selectFields:
+            columns=self.__toColumns(selectFields) # TODO
+        else:
+            columns=self.__toColumns(classField)
+            
+        sql = f"{K.select()} {', '.join(columns)} {K.from_()} {table_name}"
+        
+        #where part
+        params = []
+        if entityFilter:
+            condition_str=self.__build_where_condition(entityFilter)
+            sql += f" {K.where()} {condition_str}"
+            params = list(entityFilter.values())
+            
+        if conditionStruct:
+            # condition_where=conditionStruct.where
+            # if condition_where:
+            #     values=conditionStruct.values
+            #     if entityFilter:
+            #         sql += " "+ K.and_()
+            #     else:
+            #         sql +=" "+ K.where()
+            #     sql +=" "+condition_where
+            #     params = params + values
+            sql,params=self.__appendWhere(sql, params, entityFilter, conditionStruct)
+            start = conditionStruct.start
+            size = conditionStruct.size
+            if start or size:
+                sql = SqlUtil.add_paging(sql, start, size)
+            if conditionStruct.has_for_update:
+                sql += " " + K.for_update()
+            
+        return sql, params
+    
+    def __appendWhere(self,sql,params,entityFilter,conditionStruct):
+        if conditionStruct:
+            condition_where=conditionStruct.where
+            if condition_where:
+                values=conditionStruct.values
+                if entityFilter:
+                    sql += " "+ K.and_()
+                else:
+                    sql +=" "+ K.where()
+                sql +=" "+condition_where
+                params = params + values
+        return sql,params
+    
+    def __build_delete_sql2(self, table_name, entityFilter, condition=None):
+        sql = f"{K.delete()} {K.from_()} {table_name}"
+        params = []
+        if entityFilter:
+            condition_str=self.__build_where_condition(entityFilter)
+            sql += f" {K.where()} {condition_str}"
+            params = list(entityFilter.values())
+            
+        if condition:
+            condition.suidType(SuidType.DELETE)
+            conditionStruct=condition.parseCondition()
+            sql,params=self.__appendWhere(sql, params, entityFilter, conditionStruct)
+            
+        return sql, params
+    
+    def __build_update_by_sql2(self, table_name, entityFilter, condition, whereFields):
+        
+        where_dict = {}  
+        set_dict = {}  
+        for key, value in entityFilter.items():  
+            if key in whereFields:  
+                where_dict[key] = value  
+            else:  
+                set_dict[key] = value
+                
+        if not set_dict:
+            raise SqlBeeException("Update SQL's set part is empty!")
+        
+        no_value_filter = set(whereFields) - set(where_dict)
+        # print(no_value_filter)
+        
+        if condition:
+            condition.suidType(SuidType.UPDATE)
+            conditionStruct=condition.parseCondition()
+            where=conditionStruct.where
+            if not where_dict and not where:
+                Logger.warn("Update SQL's where part is empty, would update all records!")
+        
+        set_dict2 = self.__toColumns_with_dict(set_dict)
+        conditions2 = self.__toColumns_with_dict(where_dict)
+        
+        ph=self.__getPlaceholder()
+        if self.__getPlaceholderType() == 3:
+            updateSet = ', '.join(f"{key} = {ph}{key}" for key in set_dict2.keys())
+            condition_str = f" {K.and_()} ".join(f"{key} = {ph}{key}" for key in conditions2.keys())
+        else:
+            updateSet = ', '.join(f"{key} = {ph}" for key in set_dict2.keys())
+            condition_str = f" {K.and_()} ".join(f"{key} = {ph}" for key in conditions2.keys())
+        
+        if no_value_filter:
+            no_value_filter2 = self.__toColumns(no_value_filter)
+            if condition_str:
+                condition_str+=" " +{K.and_()}
+            condition_str += f" {K.and_()} ".join(f"{key} {K.isnull()}" for key in no_value_filter2)
+        
+        # sql = f"UPDATE {table_name} SET {updateSet} WHERE {condition_str}"
+        if condition_str:
+            sql = f"{K.update()} {table_name} {K.set()} {updateSet} {K.where()} {condition_str}"
+        else:
+            sql = f"{K.update()} {table_name} {K.set()} {updateSet}" 
+        params = list(set_dict2.values()) + list(conditions2.values())
+        
+        if where:    
+            sql,params=self.__appendWhere(sql, params, whereFields, conditionStruct)
+            
+        return sql, params
+    
     
     def __build_select_by_id_sql(self, table_name, classField, where_condition_str):
         if not classField:
@@ -261,15 +418,15 @@ class ObjToSQL:
         sql = f"{K.select()} {', '.join(columns)} {K.from_()} {table_name}"
         return sql + where_condition_str
 
-    def __build_delete_sql(self, table_name, conditions):
-        sql = f"{K.delete()} {K.from_()} {table_name}"
-        params = []
-        if conditions:
-            condition_str=self.__build_where_condition(conditions)
-            sql += f" {K.where()} {condition_str}"
-            params = list(conditions.values())
-        return sql, params
-    
+    def __build_delete_sql(self, table_name, entityFilter):
+        # sql = f"{K.delete()} {K.from_()} {table_name}"
+        # params = []
+        # if entityFilter:
+        #     condition_str=self.__build_where_condition(entityFilter)
+        #     sql += f" {K.where()} {condition_str}"
+        #     params = list(entityFilter.values())
+        # return sql, params
+        return self.__build_delete_sql2(table_name, entityFilter, None)
     
     def __build_delete_by_id_sql(self, table_name, where_condition_str):
         sql = f"{K.delete()} {K.from_()} {table_name}"

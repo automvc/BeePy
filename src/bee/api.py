@@ -1,11 +1,12 @@
 from bee import SqlUtil
+from bee.base import AbstractCommOperate
 from bee.exception import BeeException, ParamBeeException
 from bee.obj2sql import ObjToSQL
 from bee.osql.enum import FunctionType, SuidType
 from bee.osql.logger import Logger
 from bee.sqllib import BeeSql
 
-from bee.base import AbstractCommOperate
+from bee.condition import Condition
 
 
 class Suid(AbstractCommOperate):
@@ -24,7 +25,7 @@ class Suid(AbstractCommOperate):
             sql, params = self.objToSQL.toSelectSQL(entity)  
             Logger.logsql("select SQL:", sql)
             super().log_params(params)
-            list_r= self.beeSql.select(sql, self.to_class_t(entity), params)  # 返回值用到泛型
+            list_r = self.beeSql.select(sql, self.to_class_t(entity), params)
             return list_r
         except Exception as e: 
             raise BeeException(e)
@@ -75,6 +76,39 @@ class Suid(AbstractCommOperate):
             raise BeeException(e)
         finally:
             super().doBeforeReturnSimple()
+    
+    # since 1.6.0        
+    def select2(self, entity, condition: Condition=None): 
+        if entity is None: 
+            return None  
+
+        try: 
+            super().doBeforePasreEntity(entity, SuidType.SELECT)
+            sql, params = self.objToSQL.toSelectSQL2(entity, condition)  
+            Logger.logsql("select SQL:", sql)
+            super().log_params(params)
+            list_r = self.beeSql.select(sql, self.to_class_t(entity), params)
+            return list_r
+        except Exception as e: 
+            raise BeeException(e)
+        finally:
+            super().doBeforeReturn(list_r)
+    
+    # since 1.6.0        
+    def delete2(self, entity, condition: Condition=None): 
+        if entity is None: 
+            return None
+        
+        try: 
+            super().doBeforePasreEntity(entity, SuidType.DELETE)
+            sql, params = self.objToSQL.toDeleteSQL2(entity, condition)
+            Logger.logsql("delete SQL:", sql)
+            super().log_params(params)
+            return self.beeSql.modify(sql, params)  
+        except Exception as e: 
+            raise BeeException(e)
+        finally:
+            super().doBeforeReturnSimple()
 
     def to_class_t(self, entity):
         return type(entity)  # 返回实体的类型  
@@ -115,7 +149,7 @@ class SuidRich(Suid):
             sql, params = self.objToSQL.toSelectSQLWithPaging(entity, start, size)  
             Logger.logsql("select_paging SQL:", sql)
             super().log_params(params)
-            list_r= self.beeSql.select(sql, self.to_class_t(entity), params)
+            list_r = self.beeSql.select(sql, self.to_class_t(entity), params)
             return list_r
         except Exception as e: 
             raise BeeException(e)
@@ -129,7 +163,7 @@ class SuidRich(Suid):
             return 0
         
         try: 
-            super().doBeforePasreListEntity(entity_list)
+            super().doBeforePasreListEntity(entity_list, SuidType.INSERT)
             sql, list_params = self.objToSQL.toInsertBatchSQL(entity_list)            
             Logger.logsql("insert batch SQL:", sql)
             super().log_params(list_params)
@@ -137,7 +171,7 @@ class SuidRich(Suid):
         except Exception as e: 
             raise BeeException(e)
         finally:
-            super().doBeforeReturn()
+            super().doBeforeReturnSimple()
 
     def select_first(self, entity):
         # listT = self.select_paging(entity, 0, 2)
@@ -213,6 +247,44 @@ class SuidRich(Suid):
         r = self.count(entity)
         return r > 0 
     
+    # /**
+    # * Update record according to whereFields.
+    # * @param entity table's entity(do not allow null).
+    # * <br>Fields that are not specified as whereFields, as part of the set(only non empty and non null fields 
+    # * <br>are processed by default).
+    # * @param condition Condition as filter the record.
+    # * @param whereFields As a field list of where part in SQL, multiple fields can separated by commas in one 
+    # * <br>whereField parameter or use variable parameter (the fields in the list will be used as where filter)
+    # * <br>But if id's value is null can not as filter.
+    # * <br>Notice:the method op of condition also maybe converted to the where expression.
+    # * @return the numbers of update record(s) successfully,if fails, return integer less than 0.
+    # * @since 1.6.0
+    # */
+    def updateBy(self, entity, condition: Condition=None, *whereFields):
+        if entity is None: 
+            return None
+        
+        print(len(whereFields))
+        print(type(whereFields))
+        if whereFields is None or len(whereFields) == 0 or (len(whereFields) == 1 and (not whereFields[0] or whereFields[0].isspace())):
+            raise ParamBeeException("whereFields at least include one field.")
+        
+        try:
+            super().doBeforePasreEntity(entity, SuidType.UPDATE) 
+            sql, params = self.objToSQL.toUpdateBySQL2(entity, condition, whereFields)
+            Logger.logsql("updateBy SQL:", sql)
+            super().log_params(params)
+            return self.beeSql.modify(sql, params)
+        except Exception as e: 
+            raise BeeException(e) 
+        finally:
+            super().doBeforeReturnSimple()
+            
+    # since 1.6.0
+    # * @param entity table's entity(do not allow null).
+    # * <br>If the field of entity is not null or empty, it will be translate to field=value in where part.Other can define with condition.
+    # def update3(self, entity, condition: Condition=None, *updateFields): 
+    
     def create_table(self, entityClass, is_drop_exist_table=None):
         if is_drop_exist_table:
             sql0 = self.objToSQL.toDropTableSQL(entityClass)
@@ -254,6 +326,7 @@ class PreparedSql(AbstractCommOperate):
     """
     eg:
     """ 
+
     def select(self, sql, return_type_class, params=None, start=None, size=None):
         if sql is None: 
             return None  
@@ -264,17 +337,16 @@ class PreparedSql(AbstractCommOperate):
             
             Logger.logsql("select SQL(PreparedSql):", sql)
             super().log_params(params)
-            return self.beeSql.select(sql, return_type_class, params)  # 返回值用到泛型  
+            return self.beeSql.select(sql, return_type_class, params)
         except Exception as e: 
             raise BeeException(e)
-        
-       
         
     """
     eg:
       preparedSql=PreparedSql()
       entity_list =preparedSql.select_dict("SELECT * FROM orders WHERE name=#{name} and id=#{id} and name=#{name}", Orders, params_dict ={"name":"bee1","id":4})
     """ 
+
     def select_dict(self, sql, return_type_class, params_dict=None, start=None, size=None):
         if params_dict:
             sql, params_dict = SqlUtil.transform_sql(sql, params_dict)  
@@ -286,6 +358,7 @@ class PreparedSql(AbstractCommOperate):
         params = ('bee130', 'test-update', 1)
         updateNum = preparedSql.modify(sql, params)
     """     
+
     # def modify(self, sql: str, params=None) -> int:
     def modify(self, sql, params=None): 
         try: 
@@ -306,7 +379,6 @@ class PreparedSql(AbstractCommOperate):
         if params_dict: 
             sql, params_dict = SqlUtil.transform_sql(sql, params_dict)
         return self.modify(sql, params_dict)
-    
     
     def __init__(self): 
         super().__init__()
