@@ -66,6 +66,10 @@ https://github.com/automvc/bee
 6. 调用select_by_id,delete_by_id:  
 def select_by_id(self, entity_class, *ids)  
 def delete_by_id(self, entity_class, *ids)  
+7. PreConfig.config_path用于设置配置文件/Sqlite数据库文件所在的路径  
+8. 支持复杂的where语句构造器Condition  
+   e.g. name!='aaa',age>=10, like, between,group by,having,order,paging(start,size)  
+9. 支持Update Set设置更新的表达式构造器Condition  
 
 快速开始:
 =========	

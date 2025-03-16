@@ -67,6 +67,10 @@ Improve anomalies
 6. adjust select_by_id,delete_by_id:  
 def select_by_id(self, entity_class, *ids)  
 def delete_by_id(self, entity_class, *ids)  
+7. PreConfig.config_path set the config file/Sqlite db file path  
+8. support complex Where statement constructor with condition  
+  e.g. name!='aaa',age>=10, like, between,group by,having,order,paging(start,size)  
+9. support update set part with condition  
 
 Quick Start:
 =========	
