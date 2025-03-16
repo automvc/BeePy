@@ -45,11 +45,23 @@ class ConditionStruct:
         self.where = where  
         self.pv = pv
         self.values = values
+        self.suidType = suidType
         self.selectFields = selectFields
         self.start = start
         self.size = size
-        self.suidType = suidType
         self.has_for_update = has_for_update
+        
+    def __repr__(self):
+        return  str(self.__dict__) 
+    
+class ConditionUpdateSetStruct:
+
+    def __init__(self, updateSet: str, pv: List[PreparedValue], values: List, suidType:SuidType): 
+        self.updateSet = updateSet  
+        self.pv = pv
+        self.values = values
+        self.suidType = suidType
+
         
     def __repr__(self):
         return  str(self.__dict__) 
@@ -132,13 +144,46 @@ class Condition(ABC):
     @abstractmethod  
     def getSuidType(self) -> 'Condition': 
         pass
-
+    
+    ### ###########-------just use in update-------------start-
+    @abstractmethod  
+    def setAdd(self, field: str, value: Any) -> 'Condition': 
+        pass 
+    
+    @abstractmethod  
+    def setMultiply(self, field: str, value: Any) -> 'Condition': 
+        pass
+    
+    @abstractmethod  
+    def setAdd2(self, field1: str, field2: str) -> 'Condition': 
+        pass 
+    
+    @abstractmethod  
+    def setMultiply2(self, field1: str, field2: str) -> 'Condition': 
+        pass
+    
+    @abstractmethod  
+    def set(self, field: str, value: Any) -> 'Condition': 
+        pass 
+    
+    @abstractmethod  
+    def setNull(self, field: str) -> 'Condition': 
+        pass
+    
+    @abstractmethod  
+    def setWithField(self, field1: str, field2: str) -> 'Condition': 
+        pass 
+    ### ###########-------just use in update-------------end-
 
 class ConditionImpl(Condition):
 
     def __init__(self): 
         self.expressions = []  # List of Expression objects  
         self.where_fields = set()  # Fields used in WHERE clause 
+        
+        self.update_set_exp = []
+        self.update_set_fields = set()
+        
         self.__isStartOrderBy = True  # 实例变量  
         self.__isStartGroupBy = True
         self.__isStartHaving = True
@@ -196,7 +241,7 @@ class ConditionImpl(Condition):
     
     # 'forUpdate', 'groupBy', 'orderBy', 'selectField', 'size', 'start'
 
-    def groupBy(self, field:str) -> 'Condition': 
+    def groupBy(self, field:str) -> 'ConditionImpl': 
         self.__check_field(field)
         exp = Expression(field_name=field, op_type=K.group_by(), op_num=-4)
         
@@ -209,7 +254,7 @@ class ConditionImpl(Condition):
         return self
     
     # having(FunctionType.MIN, "field", Op.ge, 60)-->having min(field)>=60
-    def having(self, functionType:FunctionType, field: str, op: Op, value: Any) -> 'Condition': 
+    def having(self, functionType:FunctionType, field: str, op: Op, value: Any) -> 'ConditionImpl': 
         self.__check_field(field)
         exp = Expression(field_name=field, Op=op, value=value, op_num=5)
         exp.value2 = functionType
@@ -228,7 +273,7 @@ class ConditionImpl(Condition):
     
     __COMMA = ","
 
-    def orderBy(self, field:str) -> 'Condition': 
+    def orderBy(self, field:str) -> 'ConditionImpl': 
         self.__check_field(field)
         exp = Expression(field_name=field, op_type=K.order_by(), op_num=12)
         self.expressions.append(exp) 
@@ -239,7 +284,7 @@ class ConditionImpl(Condition):
             exp.value = self.__COMMA
         return self
     
-    def orderBy2(self, field:str, orderType:OrderType) -> 'Condition': 
+    def orderBy2(self, field:str, orderType:OrderType) -> 'ConditionImpl': 
         self.__check_field(field)
         exp = Expression(field_name=field, op_type=K.order_by(), op_num=13)
         exp.value2 = orderType.get_name()
@@ -251,7 +296,7 @@ class ConditionImpl(Condition):
             exp.value = self.__COMMA
         return self
     
-    def orderBy3(self, functionType:FunctionType, field:str, orderType:OrderType) -> 'Condition': 
+    def orderBy3(self, functionType:FunctionType, field:str, orderType:OrderType) -> 'ConditionImpl': 
         self.__check_field(field)
         exp = Expression(field_name=field, op_type=K.order_by(), op_num=14)
         exp.value2 = orderType.get_name()
@@ -264,20 +309,20 @@ class ConditionImpl(Condition):
             exp.value = self.__COMMA
         return self
     
-    def selectField(self, *fields:str) -> 'Condition': 
+    def selectField(self, *fields:str) -> 'ConditionImpl': 
         self.__check_field(fields)
         exp = Expression(value=fields, op_num=20)
         self.expressions.append(exp)
         return self
     
-    def start(self, start:int) -> 'Condition': 
+    def start(self, start:int) -> 'ConditionImpl': 
         if start is None or start < 0:   #　if not 0:　is True
             raise ParamBeeException("Parameter 'start' need >=0 .")
         exp = Expression(value=start, op_num=21)
         self.expressions.append(exp)
         return self
     
-    def size(self, size:int) -> 'Condition': 
+    def size(self, size:int) -> 'ConditionImpl': 
         if not size or size <= 0:
             raise ParamBeeException("Parameter 'size' need >0 .")
         
@@ -285,22 +330,51 @@ class ConditionImpl(Condition):
         self.expressions.append(exp)
         return self
     
-    def suidType(self, suidType:SuidType) -> 'Condition': 
+    def suidType(self, suidType:SuidType) -> 'ConditionImpl': 
         self.__suidType = suidType
         return self
     
-    #get
-    def getSuidType(self) -> 'Condition': 
+    # get
+    def getSuidType(self) -> 'SuidType': 
         return self.__suidType
     
-    def forUpdate(self) -> 'Condition':
+    def forUpdate(self) -> 'ConditionImpl':
         exp = Expression(op_type=K.for_update(), op_num=30)
         self.expressions.append(exp)
         return self
     
-    # parse
+    ### ###########-------just use in update-------------start-
+    def setAdd(self, field: str, value: Any) -> 'ConditionImpl': 
+        pass 
+    
+    def setMultiply(self, field: str, value: Any) -> 'ConditionImpl': 
+        pass
+    
+    def setAdd2(self, field: str, otherFieldName: str) -> 'ConditionImpl': 
+        pass 
+    
+    def setMultiply2(self, field: str, otherFieldName: str) -> 'ConditionImpl': 
+        pass
+    
+    def set(self, field: str, value: Any) -> 'ConditionImpl': 
+        pass 
+    
+    def setNull(self, field: str) -> 'ConditionImpl': 
+        pass
+    
+    def setWithField(self, field1: str, field2: str) -> 'Condition': 
+        pass 
+    ### ###########-------just use in update-------------end-
+    
+    
+    
+    # parse where
     def parseCondition(self) -> ConditionStruct:
         return ParseCondition.parse(self.expressions, self)
+    
+    # parse update set
+    def parseConditionUpdateSet(self) -> ConditionStruct:
+        return ParseCondition.parseUpdateSet(self.update_set_exp, self)
 
     
 class ParseCondition:
@@ -309,6 +383,12 @@ class ParseCondition:
     def __getPlaceholder() -> str:
         return HoneyContext.get_placeholder() 
     
+    # parse update set
+    @staticmethod       
+    def parseUpdateSet(update_set_exp, condition:Condition) -> ConditionUpdateSetStruct:
+        pass 
+    
+    # parse where
     @staticmethod       
     def parse(expressions, condition:Condition) -> ConditionStruct: 
         where_clauses = []
