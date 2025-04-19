@@ -4,16 +4,16 @@ import MyConfig
 from bee.honeyfactory import BF
 from entity.Student2 import Student2
 
-#update set case 0:
-#entity no value
+#update set case 1:
+#entity have value (diff case 0)
 #donot use condtion setXxx
-
 if __name__ == '__main__':
     print("start")
     
     MyConfig.init()
     
     stu=Student2()
+    stu.age=11
     
     suidRich = BF.suidRich()
         
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     # updateNum = suidRich.updateBy(stu,condition,"")# check
     # updateNum = suidRich.updateBy(stu,condition," ")# check
     print(updateNum)
-    # updateBy SQL: update student2 set addr = ?, remark = ? where name is null and addr is null
+    # updateBy SQL: update student2 set age = ?, addr = ?, remark = ? where name is null and addr is null
     
     orderList = suidRich.select(stu)
     for one in orderList:

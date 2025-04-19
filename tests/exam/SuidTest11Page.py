@@ -1,5 +1,5 @@
 # from org.teasoft.exam.entity.Test import Test
-from bee.api import Suid, SuidRich
+from bee.api import SuidRich
 
 from entity.Test import Test
 import MyConfig
@@ -9,7 +9,7 @@ if __name__ == '__main__':
     print("start")
     MyConfig.init()
     # config = HoneyConfig()
-    # config.dbName="mysql"
+    # config.dbname="mysql"
     
     # orders=Orders(id=1, name="bee")
     orders=Test()

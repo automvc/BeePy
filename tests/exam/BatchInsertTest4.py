@@ -3,47 +3,36 @@
 from bee.api import SuidRich
 
 import MyConfig
-from bee.honeyfactory import BF
-from entity.Student2 import Student2
+# from bee.honeyfactory import BF
+from entity.Student3 import Student3
 
 
 if __name__ == '__main__':
     print("start")
     MyConfig.init()
     
-    # createSql = """
-    # CREATE TABLE student2 (
-    # id INTEGER PRIMARY KEY NOT NULL, 
-    # name VARCHAR(100),  
-    # age INT,  
-    # remark VARCHAR(100),  
-    # addr VARCHAR(100)  
-    # );  
-    # """
-    # preparedSql=BF.preparedSql()
-    # preparedSql.modify(createSql, [])
     
     
-    suidRich=BF.suidRich()
-    suidRich.create_table(Student2,True) # since 1.6.0
+    # suidRich=BF.suidRich()
+    # suidRich.create_table(Student3,True) # since 1.6.0
     
-    student0=Student2()
+    student0=Student3()
     student0.name = "bee"
     student0.age=20
     student0.remark= "bee"
     
-    student1=Student2()
+    student1=Student3()
     student1.name = "bee1"
     student1.addr=""
     student1.age=22
     student1.remark= "bee1"
     
-    student2=Student2()
+    student2=Student3()
     student2.name = "黄二"
     student2.addr=""
     student2.age=21
     
-    student3=Student2()
+    student3=Student3()
     student3.name = "张三"
     student3.addr=""
     student3.age=21

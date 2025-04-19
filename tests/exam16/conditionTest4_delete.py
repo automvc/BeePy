@@ -1,4 +1,4 @@
-from bee.osql.enum import Op, FunctionType
+from bee.osql.bee_enum import Op
 
 import MyConfig
 from bee.honeyfactory import BF
@@ -17,7 +17,7 @@ if __name__ == '__main__':
     
     # empty condition    
     # condition = BF.condition()
-    # orderList = suid.select2(stu,condition)
+    # orderList = suid.select(stu,condition)
     # for one in orderList: 
     #     print(one) 
     
@@ -26,11 +26,11 @@ if __name__ == '__main__':
     # condition.op("remark", Op.eq, None)
     condition.op("addr", Op.eq, None)
     
-    orderList = suid.select2(stu,condition)
+    orderList = suid.select(stu,condition)
     for one in orderList: 
         print(one) 
     
-    delNum = suid.delete2(stu,condition)
+    delNum = suid.delete(stu,condition)
     print(delNum) 
     
     
@@ -38,7 +38,7 @@ if __name__ == '__main__':
     condition = BF.condition()
     condition.op("name", Op.eq, "黄二")
     
-    orderList = suid.select2(stu,condition)
+    orderList = suid.select(stu,condition)
     for one in orderList: 
         print(one) 
     
@@ -46,7 +46,7 @@ if __name__ == '__main__':
     # condition.groupBy("name")
     # condition.having(FunctionType.MAX, "age", Op.lt, 30)
     # condition.orderBy("name")
-    delNum = suid.delete2(stu,condition)
+    delNum = suid.delete(stu,condition)
     print(delNum)        
        
     

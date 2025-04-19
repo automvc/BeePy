@@ -1,6 +1,6 @@
 # from org.teasoft.exam.entity.Orders import Orders
 # from bee.api import Suid
-from bee.osql.enum import Op
+from bee.osql.bee_enum import Op
 
 import MyConfig
 from bee.honeyfactory import BF
@@ -24,7 +24,7 @@ if __name__ == '__main__':
         
     condition = BF.condition()
     condition.op("name", Op.ne, "bee1").between("age", 20, 28)
-    orderList = suid.select2(stu,condition)
+    orderList = suid.select(stu,condition)
     for one in orderList: 
         print(one)
         
@@ -32,20 +32,20 @@ if __name__ == '__main__':
     condition = BF.condition()  
     condition.op("name", Op.ne, "bee1").or_()
     condition.l_parentheses().between("age", 20, 28).r_parentheses()
-    orderList = suid.select2(stu,condition)
+    orderList = suid.select(stu,condition)
     for one in orderList: 
         print(one)
         
         
     condition = BF.condition()
     condition.opWithField("name", Op.eq, "remark")
-    orderList = suid.select2(stu,condition)
+    orderList = suid.select(stu,condition)
     for one in orderList: 
         print(one)  
         
     # condition = BF.condition()
     # condition.groupBy("name")
-    # orderList = suid.select2(stu,condition)
+    # orderList = suid.select(stu,condition)
     # for one in orderList: 
     #     print(one)     
        

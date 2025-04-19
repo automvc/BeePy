@@ -1,4 +1,4 @@
-from bee.api import Suid, SuidRich
+from bee.api import SuidRich
 
 import MyConfig
 from entity.Orders import Orders

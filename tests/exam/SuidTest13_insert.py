@@ -9,7 +9,7 @@ if __name__ == '__main__':
     MyConfig.init()
     
     # config = HoneyConfig()
-    # config.dbName="mysql"
+    # config.dbname="mysql"
     
     # orders=Orders(id=1, name="bee")
     orders=Orders()

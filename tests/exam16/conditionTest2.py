@@ -1,16 +1,10 @@
-# from org.teasoft.exam.entity.Orders import Orders
-# from bee.api import Suid
-
-# from bee.config import PreConfig
-from bee.osql.enum import Op
+from bee.osql.bee_enum import Op
 
 import MyConfig
 from bee.honeyfactory import BF
 from entity.Student2 import Student2
 
 
-# from bee.config import PreConfig
-# from org.teasoft.exam.entity.Test import Test
 if __name__ == '__main__':
     print("start")
     
@@ -24,7 +18,7 @@ if __name__ == '__main__':
     
     # empty condition    
     condition = BF.condition()
-    orderList = suid.select2(stu,condition)
+    orderList = suid.select(stu,condition)
     for one in orderList: 
         print(one) 
     
@@ -32,7 +26,7 @@ if __name__ == '__main__':
     condition = BF.condition()
     # condition.op("remark", Op.eq, None)
     condition.op("addr", Op.eq, None)
-    orderList = suid.select2(stu,condition)
+    orderList = suid.select(stu,condition)
     for one in orderList: 
         print(one)         
        
