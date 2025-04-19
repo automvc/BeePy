@@ -1,12 +1,15 @@
-from bee import SqlUtil
-from bee.base import AbstractCommOperate
-from bee.exception import BeeException, ParamBeeException
-from bee.obj2sql import ObjToSQL
-from bee.osql.enum import FunctionType, SuidType
-from bee.osql.logger import Logger
-from bee.sqllib import BeeSql
+from typing import overload
 
-from bee.condition import Condition
+from bee.context import HoneyContext
+from bee.exception import BeeException, ParamBeeException
+from bee.osql import SqlUtil
+
+from bee.condition import Condition, ConditionImpl
+from bee.osql.base import AbstractCommOperate
+from bee.osql.bee_enum import FunctionType, SuidType, LocalType
+from bee.osql.obj2sql import ObjToSQL
+from bee.osql.sqllib import BeeSql
+from bee.osql.struct import CacheSuidStruct
 
 
 class Suid(AbstractCommOperate):
@@ -16,16 +19,26 @@ class Suid(AbstractCommOperate):
         self._beeSql = None  
         self._objToSQL = None   
     
-    def select(self, entity): 
-        if entity is None: 
-            return None  
-
+    @overload
+    def select(self, entity):
+        ...
+        
+    @overload    
+    def select(self, entity, condition: Condition):
+        ... 
+        
+    def __select(self, entity): 
+        list_r = None
         try: 
             super().doBeforePasreEntity(entity, SuidType.SELECT)
-            sql, params = self.objToSQL.toSelectSQL(entity)  
-            Logger.logsql("select SQL:", sql)
+            sql, params, table_name = self.objToSQL.toSelectSQL(entity) 
+            
+            entityClass = self._to_class_t(entity)
+            self._reg_cache_in_context(sql, params, table_name, "list<T>", entityClass)
+             
+            super().logsql("select SQL:", sql)
             super().log_params(params)
-            list_r = self.beeSql.select(sql, self.to_class_t(entity), params)
+            list_r = self.beeSql.select(sql, entityClass, params)
             return list_r
         except Exception as e: 
             raise BeeException(e)
@@ -33,13 +46,17 @@ class Suid(AbstractCommOperate):
             super().doBeforeReturn(list_r)
         
     def update(self, entity): 
-        if entity is None: 
+        if not entity:
             return None
         
         try:
             super().doBeforePasreEntity(entity, SuidType.UPDATE) 
-            sql, params = self.objToSQL.toUpdateSQL(entity)  
-            Logger.logsql("update SQL:", sql)
+            sql, params, table_name = self.objToSQL.toUpdateSQL(entity)
+            
+            entityClass = self._to_class_t(entity)
+            self._reg_cache_in_context2(sql, params, table_name, "int", entityClass, SuidType.UPDATE)
+              
+            super().logsql("update SQL:", sql)
             super().log_params(params)
             return self.beeSql.modify(sql, params)
         except Exception as e: 
@@ -48,28 +65,41 @@ class Suid(AbstractCommOperate):
             super().doBeforeReturnSimple()
     
     def insert(self, entity): 
-        if entity is None: 
+        if not entity: 
             return None
         
         try: 
             super().doBeforePasreEntity(entity, SuidType.INSERT)
-            sql, params = self.objToSQL.toInsertSQL(entity)  
-            Logger.logsql("insert SQL:", sql)
+            sql, params, table_name = self.objToSQL.toInsertSQL(entity) 
+            
+            entityClass = self._to_class_t(entity)
+            self._reg_cache_in_context2(sql, params, table_name, "int", entityClass, SuidType.INSERT)
+             
+            super().logsql("insert SQL:", sql)
             super().log_params(params)
             return self.beeSql.modify(sql, params)
         except Exception as e: 
             raise BeeException(e)
         finally:
             super().doBeforeReturnSimple()
+            
+    @overload
+    def delete(self, entity):
+        ...
         
-    def delete(self, entity): 
-        if entity is None: 
-            return None
+    @overload    
+    def delete(self, entity, condition: Condition):
+        ...
         
+    def __delete(self, entity): 
         try: 
             super().doBeforePasreEntity(entity, SuidType.DELETE)
-            sql, params = self.objToSQL.toDeleteSQL(entity)  
-            Logger.logsql("delete SQL:", sql)
+            sql, params, table_name = self.objToSQL.toDeleteSQL(entity)
+            
+            entityClass = self._to_class_t(entity)
+            self._reg_cache_in_context2(sql, params, table_name, "int", entityClass, SuidType.DELETE)
+              
+            super().logsql("delete SQL:", sql)
             super().log_params(params)
             return self.beeSql.modify(sql, params)  
         except Exception as e: 
@@ -78,16 +108,24 @@ class Suid(AbstractCommOperate):
             super().doBeforeReturnSimple()
     
     # since 1.6.0        
-    def select2(self, entity, condition: Condition=None): 
-        if entity is None: 
-            return None  
-
+    def select(self, entity, condition: Condition = None): 
+        if not entity:
+            return None
+        
+        if not condition:
+            return self.__select(entity)
+        
+        list_r = None
         try: 
             super().doBeforePasreEntity(entity, SuidType.SELECT)
-            sql, params = self.objToSQL.toSelectSQL2(entity, condition)  
-            Logger.logsql("select SQL:", sql)
+            sql, params, table_name = self.objToSQL.toSelectSQL2(entity, condition)
+            
+            entityClass = self._to_class_t(entity)
+            self._reg_cache_in_context(sql, params, table_name, "list<T>", entityClass)  
+            
+            super().logsql("select SQL:", sql)
             super().log_params(params)
-            list_r = self.beeSql.select(sql, self.to_class_t(entity), params)
+            list_r = self.beeSql.select(sql, entityClass, params)
             return list_r
         except Exception as e: 
             raise BeeException(e)
@@ -95,14 +133,21 @@ class Suid(AbstractCommOperate):
             super().doBeforeReturn(list_r)
     
     # since 1.6.0        
-    def delete2(self, entity, condition: Condition=None): 
-        if entity is None: 
+    def delete(self, entity, condition: Condition = None): 
+        if not entity: 
             return None
+        
+        if not condition:
+            return self.__delete(entity)
         
         try: 
             super().doBeforePasreEntity(entity, SuidType.DELETE)
-            sql, params = self.objToSQL.toDeleteSQL2(entity, condition)
-            Logger.logsql("delete SQL:", sql)
+            sql, params, table_name = self.objToSQL.toDeleteSQL2(entity, condition)
+            
+            entityClass = self._to_class_t(entity)
+            self._reg_cache_in_context2(sql, params, table_name, "int", entityClass, SuidType.DELETE)
+            
+            super().logsql("delete SQL:", sql)
             super().log_params(params)
             return self.beeSql.modify(sql, params)  
         except Exception as e: 
@@ -110,14 +155,18 @@ class Suid(AbstractCommOperate):
         finally:
             super().doBeforeReturnSimple()
 
-    def to_class_t(self, entity):
-        return type(entity)  # 返回实体的类型  
+    def _to_class_t(self, entity):
+        return type(entity)  # 返回实体的类型 
     
-    # def __init__(self, beeSql=None, objToSQL=None): 
-    #     self._beeSql = beeSql  
-    #     self._objToSQL = objToSQL  
-
-    @property  
+    def _reg_cache_in_context(self, sql, params, table_name, returnType, entityClass):
+        
+        HoneyContext._set_data(LocalType.CacheSuidStruct, sql, CacheSuidStruct(sql, params, table_name, returnType, entityClass, SuidType.SELECT))
+        
+    def _reg_cache_in_context2(self, sql, params, table_name, returnType, entityClass, suidType):
+        
+        HoneyContext._set_data(LocalType.CacheSuidStruct, sql, CacheSuidStruct(sql, params, table_name, returnType, entityClass, suidType)) 
+    
+    @property
     def beeSql(self): 
         if self._beeSql is None: 
             self._beeSql = BeeSql()
@@ -140,16 +189,38 @@ class Suid(AbstractCommOperate):
 
 class SuidRich(Suid):
     
+    @overload
     def select_paging(self, entity, start, size): 
-        if entity is None: 
+        ...
+        
+    @overload
+    def select_paging(self, entity, start, size, *selectFields):
+        ...
+    
+    def select_paging(self, entity, start, size, *selectFields):
+        
+        if not selectFields:
+            return self.__select_paging(entity, start, size)
+        
+        condition = ConditionImpl()
+        condition.selectField(*selectFields)
+        condition.start(start).size(size)
+        return super().select(entity, condition)
+        
+    def __select_paging(self, entity, start, size): 
+        if not entity: 
             return None  
 
         try: 
             super().doBeforePasreEntity(entity, SuidType.SELECT)
-            sql, params = self.objToSQL.toSelectSQLWithPaging(entity, start, size)  
-            Logger.logsql("select_paging SQL:", sql)
+            sql, params, table_name = self.objToSQL.toSelectSQLWithPaging(entity, start, size)
+            
+            entityClass = self._to_class_t(entity)
+            self._reg_cache_in_context(sql, params, table_name, "list<T>", entityClass)
+              
+            super().logsql("select_paging SQL:", sql)
             super().log_params(params)
-            list_r = self.beeSql.select(sql, self.to_class_t(entity), params)
+            list_r = self.beeSql.select(sql, entityClass, params)
             return list_r
         except Exception as e: 
             raise BeeException(e)
@@ -157,16 +228,20 @@ class SuidRich(Suid):
             super().doBeforeReturn(list_r)
     
     def insert_batch(self, entity_list): 
-        if entity_list is None: 
+        if not entity_list: 
             return None
         if len(entity_list) == 0:
             return 0
         
         try: 
             super().doBeforePasreListEntity(entity_list, SuidType.INSERT)
-            sql, list_params = self.objToSQL.toInsertBatchSQL(entity_list)            
-            Logger.logsql("insert batch SQL:", sql)
-            super().log_params(list_params)
+            sql, list_params, table_name = self.objToSQL.toInsertBatchSQL(entity_list)   
+            
+            entityClass = self._to_class_t(entity_list[0])
+            self._reg_cache_in_context2(sql, list_params, table_name, "int", entityClass, SuidType.INSERT)
+                     
+            super().logsql("insert batch SQL:", sql)
+            super().log_params_for_batch(list_params)
             return self.beeSql.batch(sql, list_params)
         except Exception as e: 
             raise BeeException(e)
@@ -174,8 +249,15 @@ class SuidRich(Suid):
             super().doBeforeReturnSimple()
 
     def select_first(self, entity):
-        # listT = self.select_paging(entity, 0, 2)
-        listT = self.select_paging(entity, 0, 1)
+        
+        start = 0
+        size = 2
+        if HoneyContext.isMySql() or HoneyContext.isSQLite():
+            size = 1
+        elif HoneyContext.isOracle():
+            start = 1
+        
+        listT = self.select_paging(entity, start, size)
         if listT:  # 判断列表是否非空  
             return listT[0]  # 返回首个元素  
         return None 
@@ -192,8 +274,11 @@ class SuidRich(Suid):
         try:
             id_list = list(ids)
             super().doBeforePasreEntity(entity_class, SuidType.SELECT)
-            sql = self.objToSQL.toSelectByIdSQL(entity_class, len(id_list))
-            Logger.logsql("select by id SQL:", sql)
+            sql, table_name = self.objToSQL.toSelectByIdSQL(entity_class, len(id_list))
+            
+            self._reg_cache_in_context(sql, id_list, table_name, "<T>", entity_class)
+            
+            super().logsql("select by id SQL:", sql)
             super().log_params(id_list)
             return self.beeSql.select(sql, entity_class, id_list) 
         except Exception as e: 
@@ -212,8 +297,11 @@ class SuidRich(Suid):
         try: 
             id_list = list(ids)
             super().doBeforePasreEntity(entity_class, SuidType.DELETE)
-            sql = self.objToSQL.toDeleteById(entity_class, len(id_list))
-            Logger.logsql("delete by id SQL:", sql)
+            sql, table_name = self.objToSQL.toDeleteById(entity_class, len(id_list))
+            
+            self._reg_cache_in_context2(sql, id_list, table_name, "int", entity_class, SuidType.DELETE)
+            
+            super().logsql("delete by id SQL:", sql)
             super().log_params(id_list)
             return self.beeSql.modify(sql, id_list)  
         except Exception as e: 
@@ -222,13 +310,17 @@ class SuidRich(Suid):
             super().doBeforeReturnSimple()
 
     def select_fun(self, entity, functionType, field_for_fun):
-        if entity is None:
+        if not entity:
             return None  
 
         try: 
             super().doBeforePasreEntity(entity, SuidType.SELECT)
-            sql, params = self.objToSQL.toSelectFunSQL(entity, functionType, field_for_fun)
-            Logger.logsql("select fun SQL:", sql)
+            sql, params, table_name = self.objToSQL.toSelectFunSQL(entity, functionType, field_for_fun)
+            
+            entityClass = self._to_class_t(entity)
+            self._reg_cache_in_context(sql, params, table_name, "<T>", entityClass)
+            
+            super().logsql("select fun SQL:", sql)
             super().log_params(params)
             r = self.beeSql.select_fun(sql, params)
             if  r is None and functionType == FunctionType.COUNT:
@@ -260,17 +352,21 @@ class SuidRich(Suid):
     # * @return the numbers of update record(s) successfully,if fails, return integer less than 0.
     # * @since 1.6.0
     # */
-    def updateBy(self, entity, condition: Condition=None, *whereFields):
-        if entity is None: 
+    def updateBy(self, entity, condition: Condition = None, *whereFields):
+        if not entity: 
             return None
-        
-        if whereFields is None or len(whereFields) == 0 or (len(whereFields) == 1 and (not whereFields[0] or whereFields[0].isspace())):
-            raise ParamBeeException("whereFields at least include one field.")
+        # the op method in condition can as whereFields
+        # if not whereFields or len(whereFields) == 0 or (len(whereFields) == 1 and (not whereFields[0] or whereFields[0].isspace())):
+        #     raise ParamBeeException("whereFields at least include one field.")
         
         try:
             super().doBeforePasreEntity(entity, SuidType.UPDATE) 
-            sql, params = self.objToSQL.toUpdateBySQL2(entity, condition, whereFields)
-            Logger.logsql("updateBy SQL:", sql)
+            sql, params, table_name = self.objToSQL.toUpdateBySQL2(entity, condition, whereFields)
+            
+            entityClass = self._to_class_t(entity)
+            self._reg_cache_in_context2(sql, params, table_name, "int", entityClass, SuidType.UPDATE)
+            
+            super().logsql("updateBy SQL:", sql)
             super().log_params(params)
             return self.beeSql.modify(sql, params)
         except Exception as e: 
@@ -283,22 +379,22 @@ class SuidRich(Suid):
     # * <br>If the field of entity is not null or empty, it will be translate to field=value in where part.Other can define with condition.
     # def update3(self, entity, condition: Condition=None, *updateFields): 
     
-    def create_table(self, entityClass, is_drop_exist_table=None):
+    def create_table(self, entityClass, is_drop_exist_table = None):
         if is_drop_exist_table:
             sql0 = self.objToSQL.toDropTableSQL(entityClass)
-            Logger.logsql("drop table SQL:", sql0)
+            super().logsql("drop table SQL:", sql0)
             self.beeSql.modify(sql0)
         sql = self.objToSQL.toCreateSQL(entityClass)
-        Logger.logsql("create table SQL:", sql)
+        super().logsql("create table SQL:", sql)
         return self.beeSql.modify(sql)
     
-    def index_normal(self, entity_class, fields, index_name=None): 
+    def index_normal(self, entity_class, fields, index_name = None): 
         prefix = "idx_"  
         index_type_tip = "normal"  
         index_type = ""  # normal will be empty  
         self._index(entity_class, fields, index_name, prefix, index_type_tip, index_type)  
 
-    def unique(self, entity_class, fields, index_name=None): 
+    def unique(self, entity_class, fields, index_name = None): 
         prefix = "uie_"  
         index_type_tip = "unique"  
         index_type = "UNIQUE "
@@ -309,31 +405,35 @@ class SuidRich(Suid):
         self._index_modify(index_sql)  
 
     def _index_modify(self, index_sql): 
-        Logger.logsql("create index SQL:", index_sql)  
+        super().logsql("create index SQL:", index_sql)  
         self.beeSql.modify(index_sql)
     
-    def drop_index(self, entity_class, index_name=None):
+    def drop_index(self, entity_class, index_name = None):
         sql = self.objToSQL.to_drop_index_sql(entity_class, index_name)
-        Logger.logsql("drop index SQL:", sql)
+        super().logsql("drop index SQL:", sql)
         self.beeSql.modify(sql)
 
 
 # for custom SQL
+# custom SQL do not support cache
 class PreparedSql(AbstractCommOperate):
     
     """
     eg:
     """ 
 
-    def select(self, sql, return_type_class, params=None, start=None, size=None):
-        if sql is None: 
+    def select(self, sql, return_type_class, params = None, start = None, size = None):
+        if not sql: 
             return None  
-        if return_type_class is None: 
-            return None  
+        if not return_type_class: 
+            return None
+
         try:
+            sql = self.__adjust_placeholder(sql)
+            
             sql = SqlUtil.add_paging(sql, start, size)
             
-            Logger.logsql("select SQL(PreparedSql):", sql)
+            super().logsql("select SQL(PreparedSql):", sql)
             super().log_params(params)
             return self.beeSql.select(sql, return_type_class, params)
         except Exception as e: 
@@ -345,10 +445,11 @@ class PreparedSql(AbstractCommOperate):
       entity_list =preparedSql.select_dict("SELECT * FROM orders WHERE name=#{name} and id=#{id} and name=#{name}", Orders, params_dict ={"name":"bee1","id":4})
     """ 
 
-    def select_dict(self, sql, return_type_class, params_dict=None, start=None, size=None):
+    def select_dict(self, sql, return_type_class, params_dict = None, start = None, size = None):
+        params = None
         if params_dict:
-            sql, params_dict = SqlUtil.transform_sql(sql, params_dict)  
-        return self.select(sql, return_type_class, params_dict, start, size)
+            sql, params = SqlUtil.transform_sql(sql, params_dict)  
+        return self.select(sql, return_type_class, params, start, size)
     
     """
     eg:
@@ -358,13 +459,20 @@ class PreparedSql(AbstractCommOperate):
     """     
 
     # def modify(self, sql: str, params=None) -> int:
-    def modify(self, sql, params=None): 
+    def modify(self, sql, params = None): 
         try: 
-            Logger.logsql("modify SQL(PreparedSql):", sql)
+            sql = self.__adjust_placeholder(sql)
+            super().logsql("modify SQL(PreparedSql):", sql)
             super().log_params(params)
             return self.beeSql.modify(sql, params)  
         except Exception as e: 
             raise BeeException(e)
+        
+    def __adjust_placeholder(self, sql):
+        placeholder = HoneyContext.get_placeholder()  # in python different db have diffent placeholder
+        sql = sql.replace("%s", placeholder)
+        sql = sql.replace("?", placeholder)
+        return sql
     
     """
     eg:
@@ -373,10 +481,11 @@ class PreparedSql(AbstractCommOperate):
         updateNum = preparedSql.modify_dict(sql, params_dict)
     """        
 
-    def modify_dict(self, sql, params_dict=None):
-        if params_dict: 
-            sql, params_dict = SqlUtil.transform_sql(sql, params_dict)
-        return self.modify(sql, params_dict)
+    def modify_dict(self, sql, params_dict = None):
+        params = None
+        if params_dict:
+            sql, params = SqlUtil.transform_sql(sql, params_dict)
+        return self.modify(sql, params)
     
     def __init__(self): 
         super().__init__()

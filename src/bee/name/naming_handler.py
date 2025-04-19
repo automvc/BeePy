@@ -6,7 +6,7 @@ class NamingHandler:
     
     @staticmethod
     def getNameTranslate() -> NameTranslate:
-        # TODO 下一步，要支持使用实时命名规则
+        # todo 下一步，要支持使用实时命名规则
         factory = BeeFactory()
         return factory.getInitNameTranslate()
     

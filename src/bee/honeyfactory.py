@@ -1,7 +1,10 @@
 from bee.api import Suid, SuidRich, PreparedSql
-from bee.obj2sql import ObjToSQL
-from bee.sqllib import BeeSql
+
 from bee.condition import ConditionImpl
+from bee.osql.obj2sql import ObjToSQL
+from bee.osql.sqllib import BeeSql
+
+
 class HoneyFactory:
     
     __instance = None
@@ -66,7 +69,8 @@ class HoneyFactory:
     
     def setCondition(self, condition): 
         if condition is not None: 
-            self.condition = condition.clone()  
+            # self.condition = condition.clone()  
+            self.condition = condition
         else: 
             self.condition = condition 
     

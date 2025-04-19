@@ -1,6 +1,6 @@
-from enum import Enum  
+from enum import Enum, auto  
 
-from bee.config import PreConfig
+from bee.config import HoneyConfig
 
 
 # class EnumCaseMeta(EnumMeta):  
@@ -13,7 +13,6 @@ from bee.config import PreConfig
 #             else:  
 #                 return enum_member._name_.lower()  
 #         return value  
-    
 # class FunctionType(Enum, metaclass=EnumCaseMeta): 
 class FunctionType(Enum): 
     MAX = "max"  
@@ -25,9 +24,9 @@ class FunctionType(Enum):
     # def get_name(self): 
     #     return self.value
     def get_name(self): 
-        if PreConfig.sql_key_word_case == "upper":  
+        if HoneyConfig.sql_key_word_case == "upper": 
             return self.value.upper()  
-        else:  
+        else: 
             return self.value.lower()  
 
 
@@ -43,9 +42,6 @@ class SuidType(Enum):
     def __init__(self, type_string): 
         self.type = type_string  
 
-    # def getType(self):  # 为了更贴近 Java 的 getter 方法命名  
-    #     return self.type  
-
     # @property  #  或者使用 property 装饰器  
     def get_name(self): 
         return self.value  
@@ -57,14 +53,15 @@ class OrderType(Enum):
 
     # def get_name(self): 
     #     return self.value  
-    def get_name(self):  
-        if PreConfig.sql_key_word_case == "upper":  
+    def get_name(self): 
+        if HoneyConfig.sql_key_word_case == "upper": 
             return self.value.upper()  
-        else:  
+        else: 
             return self.value.lower()  
 
     def __str__(self): 
         return self.get_name() 
+
 
 class Op(Enum): 
     eq = "="  
@@ -87,5 +84,13 @@ class Op(Enum):
         return self.value  
 
     def __str__(self): 
-        return self.get_name() 
+        return self.get_name()
+    
+    
+class LocalType(Enum): 
+    """数据类型标识枚举"""  
+    CacheSuidStruct = auto()  # 对应原来的 sqlPreValueLocal  
+    # SQL_PRE_VALUE = auto()  # 对应原来的 sqlPreValueLocal  
+    # SQL_INDEX = auto()  # 对应原来的 sqlIndexLocal  
+    # CONDITION = auto()  # 对应原来的 conditionLocal  
     
