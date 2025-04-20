@@ -9,6 +9,8 @@ from bee.osql.const import DatabaseConst, SysConst
 from bee.osql.struct import TableMeta
 from bee.util import HoneyUtil
 
+from bee.custom import Custom
+
 
 class GenBean:
     
@@ -38,7 +40,7 @@ class GenBean:
         Util.write_to_file(file_path, file_name, code)
     
     def _init_db_sql(self): 
-        sql_mysql = "SELECT COLUMN_NAME col, DATA_TYPE type, CASE IS_NULLABLE WHEN 'YES' THEN 1  ELSE 0  END AS ynNull, CASE COLUMN_KEY WHEN 'PRI' THEN 1  ELSE 0  END AS ynKey, COLUMN_COMMENT label,COLUMN_DEFAULT defaultValue,CHARACTER_MAXIMUM_LENGTH strLen FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '{database}' AND TABLE_NAME = '{table_name}' ORDER BY ORDINAL_POSITION"
+        sql_mysql = "SELECT COLUMN_NAME col, DATA_TYPE type, CASE IS_NULLABLE WHEN 'YES' THEN 1  ELSE 0  END AS ynNull, CASE COLUMN_KEY WHEN 'PRI' THEN 1  ELSE 0  END AS ynKey, COLUMN_COMMENT label,COLUMN_DEFAULT defaultValue,CHARACTER_MAXIMUM_LENGTH strLen, NUMERIC_PRECISION precision,NUMERIC_SCALE scale FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '{database}' AND TABLE_NAME = '{table_name}' ORDER BY ORDINAL_POSITION"
         sql_sqlite = "select name col,type,[notnull] ynNull,pk ynKey,dflt_value defaultValue from pragma_table_info('{table_name}')"
         
         GenBean._db_sql[DatabaseConst.MYSQL.lower()] = sql_mysql
@@ -54,7 +56,7 @@ class GenBean:
         
         sql = GenBean._db_sql.get(dbName, None)
         if sql is None:
-            return None
+            sql = Custom.custom_get_fetch_bean_sql(dbName)
         
         sql = sql.replace('{table_name}', table_name)
         if database:

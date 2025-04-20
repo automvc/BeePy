@@ -412,6 +412,7 @@ class Mid:
                 "int": "INT(11)",
                 "float": "FLOAT(19,6)",
                 "boolean": "TINYINT(1)",
+                "JSON":"JSON",
 
                 "date": "DATETIME",
                 "time": "TIME",
