@@ -508,7 +508,7 @@ class ObjToSQL:
             sql_type = HoneyUtil.python_type_to_sql_type(field_type) 
             column_name = NamingHandler.toColumnName(field_name)
             temp_sql = f"{column_name} {sql_type}"
-            if unique_key_set and field_name in field_name:
+            if unique_key_set and field_name in unique_key_set:
                 temp_sql += UNIQUE_STR  
             if not_null_filels_set and field_name in not_null_filels_set:
                 temp_sql += NOT_NULL_STR

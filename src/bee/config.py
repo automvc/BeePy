@@ -44,8 +44,8 @@ class HoneyConfig:
     sql_key_word_case = "lower"
     sql_placeholder = "?"
     
-    show_sql:bool = False
-    show_sql_params:bool = False
+    show_sql:bool = True
+    show_sql_params:bool = True
     show_sql_spent_time:bool = False
     show_sql_spent_time_min_ms:int = 0
     
