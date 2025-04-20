@@ -1,16 +1,19 @@
 from bee.api import Suid
+
 from entity.Test import Test
+import MyConfig
 
 
 if __name__ == '__main__':
     print("start")
+    MyConfig.init()
     
     # config = HoneyConfig()
-    # config.dbName="mysql"
+    # config.dbname="mysql"
     
     # orders=Orders(id=1, name="bee")
     orders=Test()
-    orders.id=104
+    orders.id=106
     orders.name="bee"
     orders.remark="test"
     

@@ -1,11 +1,14 @@
 from bee.api import Suid
-from entity.Orders4 import Orders4
 
+import MyConfig
+from entity.Orders4 import Orders4
 
 
 # from bee.HoneyUtil import HoneyUtil
 # 实例化对象  
 if __name__ == '__main__':  
+    MyConfig.init()
+    
     # orders = Orders4(id=1, name="bee")  
     orders = Orders4(name="bee")
     

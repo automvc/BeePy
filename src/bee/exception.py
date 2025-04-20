@@ -36,7 +36,7 @@ class BeeException(Exception):
         self.code = code
         
     def __str__(self):
-        if self.code is not None:  
+        if self.code:
             return f"{super().__str__()} (error code: {self.code})"
         return super().__str__()
 
@@ -46,5 +46,11 @@ class ConfigBeeException(BeeException): ...
 
 class SqlBeeException(BeeException): ...
 
+
+class ParamBeeException(BeeException): ...
+
+
 class BeeErrorNameException(BeeException): ...
 
+
+class BeeErrorGrammarException(BeeException): ...

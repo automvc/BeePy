@@ -414,244 +414,248 @@ class LowerKey(SqlKeyWord):
 
 
 class K:  
-    _sql_keywords = None  
+    __sql_keywords = None  
 
     @classmethod  
-    def _get_sql_keywords(cls):  
-        if HoneyUtil.is_sql_key_word_upper():  # 根据配置指定是用大写还是小写  
-            return UpperKey()  
-        else:  
-            return LowerKey()  # 默认使用小写  
+    def _get_sql_keywords(cls):
+        try:  
+            if HoneyUtil.is_sql_key_word_upper():  # 根据配置指定是用大写还是小写  
+                return UpperKey()
+        except Exception:
+            pass
+        
+        return LowerKey()  # 默认使用小写
+          
 
     @classmethod  
     def _initialize(cls):  
-        if cls._sql_keywords is None:  
-            cls._sql_keywords = cls._get_sql_keywords()  
+        if not cls.__sql_keywords:  
+            cls.__sql_keywords = cls._get_sql_keywords()  
 
     @classmethod  
     def select(cls):  
         cls._initialize()  
-        return cls._sql_keywords.select()  
+        return cls.__sql_keywords.select()  
 
     @classmethod  
     def as_(cls):  
         cls._initialize()  
-        return cls._sql_keywords.as_()  
+        return cls.__sql_keywords.as_()  
 
     @classmethod  
     def from_(cls):  
         cls._initialize()  
-        return cls._sql_keywords.from_()  
+        return cls.__sql_keywords.from_()  
 
     @classmethod  
     def where(cls):  
         cls._initialize()  
-        return cls._sql_keywords.where()  
+        return cls.__sql_keywords.where()  
 
     @classmethod  
     def insert(cls):  
         cls._initialize()  
-        return cls._sql_keywords.insert()  
+        return cls.__sql_keywords.insert()  
 
     @classmethod  
     def replace(cls):  
         cls._initialize()  
-        return cls._sql_keywords.replace()  
+        return cls.__sql_keywords.replace()  
 
     @classmethod  
     def into(cls):  
         cls._initialize()  
-        return cls._sql_keywords.into()  
+        return cls.__sql_keywords.into()  
 
     @classmethod  
     def values(cls):  
         cls._initialize()  
-        return cls._sql_keywords.values()  
+        return cls.__sql_keywords.values()  
 
     @classmethod  
     def and_(cls):  
         cls._initialize()  
-        return cls._sql_keywords.and_()  
+        return cls.__sql_keywords.and_()  
 
     @classmethod  
     def or_(cls):  
         cls._initialize()  
-        return cls._sql_keywords.or_()  
+        return cls.__sql_keywords.or_()  
 
     @classmethod  
     def not_(cls):  
         cls._initialize()  
-        return cls._sql_keywords.not_()  
+        return cls.__sql_keywords.not_()  
 
     @classmethod  
     def null(cls):  
         cls._initialize()  
-        return cls._sql_keywords.null()  
+        return cls.__sql_keywords.null()  
 
     @classmethod  
     def isnull(cls):  
         cls._initialize()  
-        return cls._sql_keywords.isnull()  
+        return cls.__sql_keywords.isnull()  
 
     @classmethod  
     def is_not_null(cls):  
         cls._initialize()  
-        return cls._sql_keywords.is_not_null()  
+        return cls.__sql_keywords.is_not_null()  
 
     @classmethod  
     def update(cls):  
         cls._initialize()  
-        return cls._sql_keywords.update()  
+        return cls.__sql_keywords.update()  
 
     @classmethod  
     def set(cls):  
         cls._initialize()  
-        return cls._sql_keywords.set()  
+        return cls.__sql_keywords.set()  
 
     @classmethod  
     def delete(cls):  
         cls._initialize()  
-        return cls._sql_keywords.delete()  
+        return cls.__sql_keywords.delete()  
 
     @classmethod  
     def order_by(cls):  
         cls._initialize()  
-        return cls._sql_keywords.order_by()  
+        return cls.__sql_keywords.order_by()  
 
     @classmethod  
     def count(cls):  
         cls._initialize()  
-        return cls._sql_keywords.count()  
+        return cls.__sql_keywords.count()  
 
     @classmethod  
     def asc(cls):  
         cls._initialize()  
-        return cls._sql_keywords.asc()  
+        return cls.__sql_keywords.asc()  
 
     @classmethod  
     def on(cls):  
         cls._initialize()  
-        return cls._sql_keywords.on()  
+        return cls.__sql_keywords.on()  
 
     @classmethod  
     def limit(cls):  
         cls._initialize()  
-        return cls._sql_keywords.limit()  
+        return cls.__sql_keywords.limit()  
 
     @classmethod  
     def offset(cls):  
         cls._initialize()  
-        return cls._sql_keywords.offset()  
+        return cls.__sql_keywords.offset()  
 
     @classmethod  
     def top(cls):  
         cls._initialize()  
-        return cls._sql_keywords.top()  
+        return cls.__sql_keywords.top()  
 
     @classmethod  
     def group_by(cls):  
         cls._initialize()  
-        return cls._sql_keywords.group_by()  
+        return cls.__sql_keywords.group_by()  
 
     @classmethod  
     def having(cls):  
         cls._initialize()  
-        return cls._sql_keywords.having()  
+        return cls.__sql_keywords.having()  
 
     @classmethod  
     def between(cls):  
         cls._initialize()  
-        return cls._sql_keywords.between()  
+        return cls.__sql_keywords.between()  
 
     @classmethod  
     def not_between(cls):  
         cls._initialize()  
-        return cls._sql_keywords.not_between()  
+        return cls.__sql_keywords.not_between()  
 
     @classmethod  
     def for_update(cls):  
         cls._initialize()  
-        return cls._sql_keywords.for_update()  
+        return cls.__sql_keywords.for_update()  
 
     @classmethod  
     def distinct(cls):  
         cls._initialize()  
-        return cls._sql_keywords.distinct()  
+        return cls.__sql_keywords.distinct()  
 
     @classmethod  
     def join(cls):  
         cls._initialize()  
-        return cls._sql_keywords.join()  
+        return cls.__sql_keywords.join()  
 
     @classmethod  
     def inner_join(cls):  
         cls._initialize()  
-        return cls._sql_keywords.inner_join()  
+        return cls.__sql_keywords.inner_join()  
 
     @classmethod  
     def left_join(cls):  
         cls._initialize()  
-        return cls._sql_keywords.left_join()  
+        return cls.__sql_keywords.left_join()  
 
     @classmethod  
     def right_join(cls):  
         cls._initialize()  
-        return cls._sql_keywords.right_join()  
+        return cls.__sql_keywords.right_join()  
 
     @classmethod  
     def in_(cls):  
         cls._initialize()  
-        return cls._sql_keywords.in_()  
+        return cls.__sql_keywords.in_()  
 
     @classmethod  
     def not_in(cls):  
         cls._initialize()  
-        return cls._sql_keywords.not_in()  
+        return cls.__sql_keywords.not_in()  
 
     @classmethod  
     def exists(cls):  
         cls._initialize()  
-        return cls._sql_keywords.exists()  
+        return cls.__sql_keywords.exists()  
 
     @classmethod  
     def not_exists(cls):  
         cls._initialize()  
-        return cls._sql_keywords.not_exists()  
+        return cls.__sql_keywords.not_exists()  
 
     @classmethod  
     def union(cls):  
         cls._initialize()  
-        return cls._sql_keywords.union()  
+        return cls.__sql_keywords.union()  
 
     @classmethod  
     def union_all(cls):  
         cls._initialize()  
-        return cls._sql_keywords.union_all()  
+        return cls.__sql_keywords.union_all()  
 
     @classmethod  
     def truncate(cls):  
         cls._initialize()  
-        return cls._sql_keywords.truncate()  
+        return cls.__sql_keywords.truncate()  
 
     @classmethod  
     def table(cls):  
         cls._initialize()  
-        return cls._sql_keywords.table()  
+        return cls.__sql_keywords.table()  
 
     @classmethod  
     def drop(cls):  
         cls._initialize()  
-        return cls._sql_keywords.drop()  
+        return cls.__sql_keywords.drop()  
 
     @classmethod  
     def if_(cls):  
         cls._initialize()  
-        return cls._sql_keywords.if_()  
+        return cls.__sql_keywords.if_()  
 
     @classmethod  
     def to_date(cls):  
         cls._initialize()  
-        return cls._sql_keywords.to_date()  
+        return cls.__sql_keywords.to_date()  
 
 
 # 在类外部访问静态属性  

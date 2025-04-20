@@ -1,18 +1,17 @@
-from bee.api import Suid, SuidRich
-from bee.config import PreConfig
-from bee.osql.enum import FunctionType
+from bee.api import SuidRich
+
+import MyConfig
+from bee.osql.bee_enum import FunctionType
 from entity.Orders import Orders
 
 
 if __name__ == '__main__':
     print("start")
-    
-    #suggest set project root path for it
-    PreConfig.config_folder_root_path="E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc\\tests\\exam"
+    MyConfig.init()
     
     orders=Orders()
     orders.name = "bee"
-    orders.id=1
+    # orders.id=1
     
     suidRich = SuidRich()
     # suidRich.delete(Orders())

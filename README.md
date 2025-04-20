@@ -58,6 +58,35 @@ Improve anomalies
 12. index_normal  
 13. unique  
 
+**1.6.0(2025)**  
+1. Optimize BeeSql  
+2. enhance the code  
+3. Add naming conversion support  
+4. add interceptors  
+5. can print execute min time  
+   can config the print execute min time  
+6. adjust select_by_id,delete_by_id
+def select_by_id(self, entity_class, *ids)  
+def delete_by_id(self, entity_class, *ids)  
+7. Preconfig.config.path is used to set the path where the configuration file/SQLite database file is located  
+8. Support complex where statement constructor Condition   
+   e.g. name!='aaa',age>=10, like, between,group by,having,order,paging(start,size)  
+9. Support Update Set to set the expression constructor Condition for updates  
+10. Select query supports specifying the fields to be queried  
+11. transform the Result of the query  
+12. Convert the type of setting parameters  
+13. support cache  
+	support md5 for cache key  
+14. transform bool result  
+15. enhance config  
+16. support python version 3.8.10+  
+17. generate bean/entity file  
+18. bean/entity mid type support  
+19. cache entity field_and_type  
+20. Object oriented approach, when creating a table, supports declaring fields with unique constraints in entities and fields that are not allowed to be empty:  
+    __unique_key__={"name","type"}  
+    __not_null_filels__={"name","type"}  
+
 Quick Start:
 =========	
 ## Installation  
@@ -75,7 +104,7 @@ in bee.json or bee.properties set dbModuleName
 
 ```json
  {
- "dbName": "SQLite",  
+ "dbname": "SQLite",  
  "database": "bee.db", 
  //default support: pymysql,sqlite3,cx_Oracle,psycopg2 (no need set)
  "dbModuleName":"sqlite3"
@@ -85,7 +114,7 @@ in bee.json or bee.properties set dbModuleName
  ```properties
  #value is: MySql,SQLite,Oracle,
 #MySQL config
-#bee.db.dbName=MySQL
+#bee.db.dbname=MySQL
 #bee.db.host =localhost
 #bee.db.user =root
 #bee.db.password =
@@ -93,7 +122,7 @@ in bee.json or bee.properties set dbModuleName
 #bee.db.port=3306
 
 # SQLite
-bee.db.dbName=SQLite
+bee.db.dbname=SQLite
 bee.db.database =bee.db
  ```
  
@@ -102,8 +131,8 @@ can set the db_config info yourself.
 
 ```python
         # #mysql
-        config = {  
-            'dbName':'MySQL',
+        dict_config = {  
+            'dbname':'MySQL',
             'host': 'localhost',
             'user': 'root',
             'password': '',
@@ -112,7 +141,7 @@ can set the db_config info yourself.
         }
         
         honeyConfig= HoneyConfig()
-        honeyConfig.set_db_config_dict(config)
+        honeyConfig.set_db_config_dict(dict_config)
 
 ```
 
@@ -120,7 +149,7 @@ can set the db_config info yourself.
 
 ```python
         config = {  
-            # 'dbName':'MySQL',
+            # 'dbname':'MySQL',
             'host': 'localhost',
             'user': 'root',
             'password': '',
@@ -129,11 +158,11 @@ can set the db_config info yourself.
         }
         
         honeyConfig= HoneyConfig()
-        honeyConfig.set_dbName("MySQL")
+        honeyConfig.set_dbname("MySQL")
         
         conn = pymysql.connect(**config)
         factory=BeeFactory()
-        factory.setConnection(conn)
+        factory.set_connection(conn)
         
 ```
 
@@ -149,6 +178,16 @@ class Orders:
     #can ignore
     def __repr__(self):  
         return  str(self.__dict__)
+  
+#also can use field type as :int        
+class Orders8:
+    __tablename__ = "orders"
+    id:int = None  
+    name:str = None 
+    remark:str = None
+
+    def __repr__(self): 
+        return  str(self.__dict__)
         
 class Student2:
     id = None
@@ -161,13 +200,14 @@ class Student2:
         return  str(self.__dict__)
         
         
-from bee.api import Suid
+from bee.api import Suid, SuidRich
 from bee.config import PreConfig
+
 
 if __name__=="__main__":
 
-    #set bee.properties/bee.json config folder, can set project root for it
-    PreConfig.config_folder_root_path="E:\\Bee-Project"
+    #set bee.properties/bee.json config folder
+    PreConfig.config_path="E:\\Bee-Project"
 
     # select record
     suid=Suid()
@@ -211,8 +251,8 @@ if __name__=="__main__":
     insertNum = suidRich.insert_batch(entity_list)
     print(insertNum)
     
-    //SuidRich: insert_batch,select_first
-
+    #SuidRich: insert_batch,select_first,updateBy
+    #Condition Param can support complex where statement, Update set
 ```
 
 ## 3. Others
@@ -220,7 +260,7 @@ if __name__=="__main__":
 ```python
 Main API in bee.api.py
 Suid: simple API for Select/Update/Insert/Delete
-SuidRich : select_paging, insert_batch, select_first,select_by_id,
+SuidRich : select_paging, insert_batch, updateBy, select_first,select_by_id,
 delete_by_id,select_fun,count,exist,create_table,index_normal,unique
 PreparedSql: select, select_dict, modify, modify_dict
 

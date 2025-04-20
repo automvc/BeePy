@@ -1,11 +1,13 @@
 from bee.api import PreparedSql
-from bee.config import PreConfig
+
+import MyConfig
 from entity.Orders import Orders
+from bee.context import HoneyContext
+
 
 if __name__ == "__main__":
     
-    PreConfig.config_folder_root_path = "E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc\\tests\\exam"
-    
+    MyConfig.init()    
     pre = PreparedSql()
     
     print("-------------------")
@@ -13,6 +15,9 @@ if __name__ == "__main__":
     print(orders_list)
     
     sql = "update orders set name = ?, remark = ? where id = ?"
+    # placeholder=HoneyContext.get_placeholder() #in python different db have diffent placeholder
+    # sql=sql.replace("%s", placeholder)
+    # sql=sql.replace("?", placeholder)
     params = ('bee130', 'test-update', 1)
     updateNum = pre.modify(sql, params)
     print("updateNum:", updateNum)

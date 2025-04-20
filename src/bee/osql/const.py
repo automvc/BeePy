@@ -50,7 +50,7 @@ class DatabaseConst:
 
     
 class StrConst:
-    LOG_PREFIX = "[Bee]========="
+    LOG_PREFIX = "[Bee]========"
     LOG_SQL_PREFIX = "[Bee] sql>>> "
 
 
@@ -58,12 +58,16 @@ class SysConst:
     tablename = "__tablename__"
     pk = "__pk__"
     primary_key = "__primary_key__"
-    id="id"
+    id = "id"
+    unique_key="__unique_key__" # unique_key set
+    not_null_filels="__not_null_filels__" # not null filels set
     
-    dbModuleName="dbModuleName"
-    dbName="dbName"
+    dbModuleName = "dbModuleName"
+    dbname = "dbname"
     
-    configPropertiesFileName="bee.properties"
-    configJsonFileName="bee.json"
+    upper = "upper"
     
-    upper="upper"
+    # move to PreConfig
+    # configPropertiesFileName = "bee.properties"
+    # configJsonFileName = "bee.json"
+    

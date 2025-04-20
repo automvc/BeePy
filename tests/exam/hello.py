@@ -1,5 +1,7 @@
 from bee.api import Suid
 
+import MyConfig
+
 
 # from bee.api import Suid
 # from bee.HoneyUtil import HoneyUtil
@@ -27,6 +29,7 @@ if __name__ == '__main__':
     print("x.i   ", x.i)
     print("MyClass.i   ", MyClass.i)
     
+    MyConfig.init()
     suid = Suid()
 
     suid.select(x)

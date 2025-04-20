@@ -1,4 +1,6 @@
 from bee.api import Suid
+
+import MyConfig
 from entity.Orders3 import Orders3
 
 
@@ -6,6 +8,7 @@ from entity.Orders3 import Orders3
 # from bee.HoneyUtil import HoneyUtil
 if __name__ == '__main__':
     print("start")
+    MyConfig.init()
     # orders=Orders(id=1, name="bee")
     orders=Orders3()
     orders.name="bee130"
