@@ -48,28 +48,28 @@ Improve anomalies
 13. unique  
 
 **1.6.0(2025)**  
-1. 优化BeeSql  
-2. 增强代码  
-3. 增加命名转换支持  
-4. 增加拦截器支持  
-5. 记录sql执行时间  
-6. 调用select_by_id,delete_by_id:  
+1. Optimize BeeSql  
+2. enhance the code  
+3. Add naming conversion support  
+4. Add support for interceptors  
+5. can print execute min time  
+   can config the print execute min time  
+6. select_by_id,delete_by_id:  
 def select_by_id(self, entity_class, *ids)  
 def delete_by_id(self, entity_class, *ids)  
-7. PreConfig.config_path用于设置配置文件/Sqlite数据库文件所在的路径  
-8. 支持复杂的where语句构造器Condition  
+7. Preconfig.config.path is used to set the path where the configuration file/SQLite database file is located  
+8. Support complex where statement constructor Condition   
    e.g. name!='aaa',age>=10, like, between,group by,having,order,paging(start,size)  
-9. 支持Update Set设置更新的表达式构造器Condition  
-10. select查询支持指定要查询的字段  
-11. 处理查询的ResultSet结果;  
-12. 转换设置参数的类型  
+9. Support Update Set to set the expression constructor Condition for updates  
+10. Select query supports specifying the fields to be queried  
+11. transform the Result of the query  
+12. Convert the type of setting parameters  
 13. support cache  
 	support md5 for cache key  
 14. transform bool result  
-15. config 完善；  
-16. 可配置当sql执行时间小于一定值时不打印  
+15. enhance config  
+16. support python version 3.8.10+  
 17. generate bean/entity file  
 18. bean/entity mid type support  
-
-
+19. cache entity field_and_type  
 
