@@ -150,7 +150,15 @@ class HoneyUtil:
             else:
                 if hasattr(cls, SysConst.id):
                     return SysConst.id
-        return None           
+        return None  
+    
+    @staticmethod 
+    def get_unique_key(cls): 
+        return getattr(cls, SysConst.unique_key, None)     
+    
+    @staticmethod 
+    def get_not_null_filels(cls): 
+        return getattr(cls, SysConst.not_null_filels, None)   
     
     @staticmethod  
     def is_sql_key_word_upper(): 

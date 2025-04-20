@@ -465,6 +465,11 @@ class ObjToSQL:
     def toCreateSQL(self, cls):
         """根据实体类生成创建表的 SQL 语句"""  
         
+        NOT_NULL_STR = HoneyUtil.adjustUpperOrLower(" NOT NULL")
+        UNIQUE_STR = HoneyUtil.adjustUpperOrLower(" UNIQUE")
+        PK_STR = HoneyUtil.adjustUpperOrLower("PRIMARY KEY")
+        CREATE_TABLE_STR = HoneyUtil.adjustUpperOrLower("CREATE TABLE")
+        
         field_and_type = HoneyUtil.get_field_and_type(cls)
         
         # p1.主键
@@ -476,7 +481,8 @@ class ObjToSQL:
             else:
                 Logger.warn("There are no primary key when create table: " + table_name)
         
-        sql_fields = []  
+        sql_fields = []
+        addPkLast = None  
         # p1.5 创建主键字段语句
         if pk:
             # pk_type = field_and_type.pop(pk, None)
@@ -485,16 +491,35 @@ class ObjToSQL:
                 field_and_type[pk] = None
             else:
                 pk = NamingHandler.toColumnName(pk)
-                pk_statement = pk + HoneyUtil.adjustUpperOrLower(HoneyUtil.generate_pk_statement())
-                sql_fields.append(pk_statement)
+                temp_type=HoneyUtil.adjustUpperOrLower(HoneyUtil.generate_pk_statement())
+                pk_statement = pk + temp_type
+                # sql_fields.append(pk_statement)
                 field_and_type.pop(pk, None)
+                if " int(11)" == temp_type:
+                    addPkLast = pk
+                    pk_statement += NOT_NULL_STR
+                    
+                sql_fields.append(pk_statement)
+                
+        unique_key_set = HoneyUtil.get_unique_key(cls)
+        not_null_filels_set = HoneyUtil.get_not_null_filels(cls)
                
         for field_name, field_type in field_and_type.items(): 
             sql_type = HoneyUtil.python_type_to_sql_type(field_type) 
             column_name = NamingHandler.toColumnName(field_name)
-            sql_fields.append(f"{column_name} {sql_type}")  
+            temp_sql = f"{column_name} {sql_type}"
+            if unique_key_set and field_name in field_name:
+                temp_sql += UNIQUE_STR  
+            if not_null_filels_set and field_name in not_null_filels_set:
+                temp_sql += NOT_NULL_STR
+            sql_fields.append(temp_sql)
+            
+        if addPkLast:
+            sql_fields.append(f"{PK_STR}({addPkLast})")
         
-        sql_statement = f"CREATE TABLE {table_name} (\n    " + ",\n    ".join(sql_fields) + "\n);"  
+        sql_statement = f"{CREATE_TABLE_STR} {table_name} (\n    " + ",\n    ".join(sql_fields) + "\n);"  
+
+        
         return sql_statement
     
     def toDropTableSQL(self, entityClass):
