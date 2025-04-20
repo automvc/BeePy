@@ -57,6 +57,7 @@ https://github.com/automvc/bee
 12. index_normal  
 13. unique  
 
+### **V1.6**
 **1.6.0(2025)**  
 1. 优化BeeSql  
 2. 增强代码  
@@ -253,7 +254,7 @@ if __name__=="__main__":
     print(insertNum)
     
     #SuidRich: insert_batch,select_first,updateBy
-    #complex where statement constructor Condition
+    #复杂的where过滤条件、group,having,order by,Update Set等可使用Condition;
 
 ```
 

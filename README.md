@@ -252,7 +252,7 @@ if __name__=="__main__":
     print(insertNum)
     
     #SuidRich: insert_batch,select_first,updateBy
-    #complex where statement constructor Condition
+    #Condition Param can support complex where statement, Update set
 ```
 
 ## 3. Others
