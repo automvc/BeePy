@@ -72,4 +72,7 @@ def delete_by_id(self, entity_class, *ids)
 17. generate bean/entity file  
 18. bean/entity mid type support  
 19. cache entity field_and_type  
+20. Object oriented approach, when creating a table, supports declaring fields with unique constraints in entities and fields that are not allowed to be empty:  
+    __unique_key__={"name","type"}  
+    __not_null_filels__={"name","type"}  
 

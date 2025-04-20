@@ -1,4 +1,6 @@
 from bee.api import SuidRich
+from bee.config import HoneyConfig
+from bee.osql.obj2sql import ObjToSQL
 
 import MyConfig
 from entity.Orders import Orders
@@ -17,10 +19,19 @@ if __name__ == '__main__':
     suidRich = SuidRich()
     
     #有声明类型和无声明类型都有
-    suidRich.create_table(Entity,True)
+    # suidRich.create_table(Entity,True)
     
     #无声明类型
     suidRich.create_table(Orders,True)
+    
+    ######1. just print create table sql
+    # honeyConfig = HoneyConfig()
+    # # honeyConfig.set_dbname("MySQL")
+    # # # honeyConfig.set_dbname("Oracle")
+    # # # honeyConfig.set_dbname("sqlite")
+    # honeyConfig.set_dbname("H2")
+    # sql = ObjToSQL().toCreateSQL(Orders)
+    # print(sql)
     
     # suidRich.create_table(Orders3,True)
     

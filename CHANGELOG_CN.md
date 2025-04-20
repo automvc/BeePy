@@ -74,4 +74,7 @@ def delete_by_id(self, entity_class, *ids)
 17. generate bean/entity file  
 18. bean/entity中间类型支持  
 19. 缓存实体field_and_type  
+20. 面向对象方式，创建表时，支持在实体声明唯一约束的字段和不允许为空的字段:  
+    __unique_key__={"name","type"}  
+    __not_null_filels__={"name","type"}  
 
