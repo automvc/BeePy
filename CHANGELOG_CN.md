@@ -56,7 +56,7 @@ is_sql_key_word_upper放配置
 4. 增加拦截器支持  
 5. 记录sql执行时间  
    可配置当sql执行时间小于一定值时不打印  
-6. 调用select_by_id,delete_by_id:  
+6. 调整select_by_id,delete_by_id:  
 def select_by_id(self, entity_class, *ids)  
 def delete_by_id(self, entity_class, *ids)  
 7. PreConfig.config_path用于设置配置文件/Sqlite数据库文件所在的路径  
