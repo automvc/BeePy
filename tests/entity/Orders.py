@@ -15,7 +15,7 @@ class Orders:
     remark = None
     
     # __pk__="id" #aaa
-    # __pk__="name" #aaa
+    # __pk__ = "name"  # aaa
     # __primary_key__="name" #aaa
 
     #can ignore

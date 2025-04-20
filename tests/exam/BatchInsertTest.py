@@ -1,9 +1,9 @@
 """ batch insert for student2 """
 
-from bee.api import Suid, SuidRich
-from bee.sqllib import BeeSql
+from bee.api import SuidRich
 
 import MyConfig
+from bee.honeyfactory import BF
 from entity.Student2 import Student2
 
 
@@ -11,18 +11,21 @@ if __name__ == '__main__':
     print("start")
     MyConfig.init()
     
-    createSql = """
-    CREATE TABLE student2 (
-    id INTEGER PRIMARY KEY NOT NULL, 
-    name VARCHAR(100),  
-    age INT,  
-    remark VARCHAR(100),  
-    addr VARCHAR(100)  
-    );  
-    """
+    # createSql = """
+    # CREATE TABLE student2 (
+    # id INTEGER PRIMARY KEY NOT NULL, 
+    # name VARCHAR(100),  
+    # age INT,  
+    # remark VARCHAR(100),  
+    # addr VARCHAR(100)  
+    # );  
+    # """
+    # preparedSql=BF.preparedSql()
+    # preparedSql.modify(createSql, [])
     
-    # beeSql=BeeSql()
-    # beeSql.modify(createSql, [])
+    
+    suidRich=BF.suidRich()
+    suidRich.create_table(Student2,True) # since 1.6.0
     
     student0=Student2()
     student0.name = "bee"

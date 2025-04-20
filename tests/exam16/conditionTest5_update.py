@@ -1,9 +1,12 @@
-from bee.osql.enum import Op
+from bee.osql.bee_enum import Op
 
 import MyConfig
 from bee.honeyfactory import BF
 from entity.Student2 import Student2
 
+#update set case 0:
+#entity no value
+#donot use condtion setXxx
 
 if __name__ == '__main__':
     print("start")
@@ -20,7 +23,7 @@ if __name__ == '__main__':
     # condition.op("remark", Op.eq, None)
     condition.op("addr", Op.eq, None)
     
-    orderList = suidRich.select2(stu,condition)
+    orderList = suidRich.select(stu,condition)
     for one in orderList: 
         print(one) 
     

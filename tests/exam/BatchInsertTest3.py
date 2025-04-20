@@ -28,7 +28,7 @@ if __name__ == '__main__':
     orders=Orders3()
     orders.name="bee130"
     orders.ext="aaa"  #实体没有字段，会被忽略。出去安全考虑
-    orders.id=10002
+    orders.id=104
     
     suid = Suid()
     n1= suid.update(orders)

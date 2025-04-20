@@ -1,7 +1,7 @@
 # from org.teasoft.exam.entity.Orders import Orders
 # from bee.api import Suid
 
-from bee.osql.enum import Op
+from bee.osql.bee_enum import Op
 
 import MyConfig
 from bee.honeyfactory import BF
@@ -28,7 +28,7 @@ if __name__ == '__main__':
         
     condition = BF.condition()  
     condition.op("name", Op.ne, "bee1").op("remark", Op.ne, "new2")
-    orderList = suid.select2(orders,condition)
+    orderList = suid.select(orders,condition)
     for one in orderList: 
         print(one)
         

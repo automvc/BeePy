@@ -1,5 +1,6 @@
 # NameUtil.py
 
+
 def getClassName(obj): 
     return obj.__class__.__name__  
 
@@ -29,8 +30,9 @@ def toCamelNaming(name):
 def firstLetterToUpper(name): 
     if not name: 
         return name  
-    # return name[0].upper() + name[1:]  
-    return name.capitalize()
+    return name[0].upper() + name[1:]
+    #bug testName->Testname
+    # return name.capitalize()
 
 
 def firstLetterToLower(name): 
@@ -38,16 +40,18 @@ def firstLetterToLower(name):
         return name  
     return name[0].lower() + name[1:]  
 
-
 # if __name__=="__main__":
-#
-#     print(toCamelNaming("_aaa_bb_"))
-#     print(toCamelNaming("_aaa_bb"))
-#
+# #
+# #     print(toCamelNaming("_aaa_bb_"))
+# #     print(toCamelNaming("_aaa_bb"))
+# #
 #     print(toCamelNaming("user_name"))
-#
-#     print(toUnderscoreNaming("userName"))
-#     print(toUnderscoreNaming("UserName"))
-#
-#     print(firstLetterToUpper("user"))
+#     print(toCamelNaming("test_name"))
+#     name="testName"
+#     print(name.capitalize())
+# #
+# #     print(toUnderscoreNaming("userName"))
+# #     print(toUnderscoreNaming("UserName"))
+# #
+#     print(firstLetterToUpper("testName"))
 
