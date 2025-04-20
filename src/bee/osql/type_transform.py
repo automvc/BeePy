@@ -375,9 +375,9 @@ class Mid:
 
         common_type_mappings: Dict[str, str] = {
             "string":"varchar",
-            "text":"varchar",
-            "json":"varchar",
-            "varchar":"varchar",
+            "text":"text",
+            "JSON":"text",
+            "varchar":"varchar(255)",
 
             "integer":"int",
             # "smallint":"smallint",

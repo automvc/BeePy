@@ -1,9 +1,12 @@
+from bee.api import PreparedSql
 from bee.context import HoneyContext
 from bee.gen import TableMeta
 from bee.name.naming_handler import NamingHandler
+from bee.osql.obj2sql import ObjToSQL
 from bee.util import HoneyUtil
 
 from bee.osql.mid_typing import *
+
 
 class Model: 
     __subclasses__ = []  
@@ -164,17 +167,17 @@ class MidSQL:
             table_names.append(model.__name__)
         return all_sql, table_names
     
-    # def create_all(self, is_drop_exist_table = None):
-    #
-    #     all_sql, table_names = self.to_create_all_sql()
-    #     pre = PreparedSql()
-    #
-    #     if is_drop_exist_table:
-    #         objToSQL = ObjToSQL()
-    #         for tab_name in table_names:
-    #             sql0 = objToSQL.toDropTableSQL(tab_name)
-    #             pre.modify(sql0)
-    #
-    #     for sql in all_sql:
-    #         pre.modify(sql)
+    def create_all(self, is_drop_exist_table = None):
+    
+        all_sql, table_names = self.to_create_all_sql()
+        pre = PreparedSql()
+    
+        if is_drop_exist_table:
+            objToSQL = ObjToSQL()
+            for tab_name in table_names:
+                sql0 = objToSQL.toDropTableSQL(tab_name)
+                pre.modify(sql0)
+    
+        for sql in all_sql:
+            pre.modify(sql)
 
