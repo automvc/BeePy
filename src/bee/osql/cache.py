@@ -16,9 +16,6 @@ class CacheUtil:
     
     # 一般缓存  
     __map: Dict[str, int] = {}  # <key, index>  
-    # __obj: List[Any] = []  # 存放缓存对象  
-    # __keys: List[str] = []  # 保存key的数组  
-    # __time: List[float] = []  # 存放时间点
     __obj = None  # 存放缓存对象  
     __keys = None  # 保存key的数组  
     __time = None  # 存放当前毫秒的时间数组
@@ -57,8 +54,6 @@ class CacheUtil:
                     
                     cls.__cacheArrayIndex = CacheArrayIndex()
                     
-                    # todo 对map和set初始化
-                    
                     cls.__cache_init = True
     
     # 不允许被继承                
@@ -67,7 +62,7 @@ class CacheUtil:
 
     @staticmethod  
     def __get_table_name(sql: str) -> str: 
-        # TODO 可能有多个table 用逗号分隔？？
+        # todo 可能有多个table 用逗号分隔？？
         
         cacheSuidStruct = HoneyContext.get_data(LocalType.CacheSuidStruct, sql)
         if cacheSuidStruct:
@@ -125,7 +120,7 @@ class CacheUtil:
             
             # 快满了,删除一定比例最先存入的
             CacheUtil._del_cache_in_between(CacheUtil.__cacheArrayIndex.get_delete_cache_index())
-            # 上一句改为新线程运行才启用 TODO
+            # 上一句改为新线程运行才启用 todo
             # if CacheUtil.__cacheArrayIndex.get_used_rate() >= 90:
             #  if HoneyConfig.show_sql:
             #     Logger.warn("[Bee] ==========Cache already used more than 90% !");
@@ -178,7 +173,7 @@ class CacheUtil:
         if index == 0 or index: 
             if CacheUtil.__is_timeout(index):
                 if CacheUtil.__cacheArrayIndex.is_start_delete():
-                    # 删除多个  TODO 起一个线程
+                    # 删除多个  todo 起一个线程
                     CacheUtil._del_cache_in_between(index)
                 else:
                     CacheUtil.__del_one_cache(index) 

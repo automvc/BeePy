@@ -15,7 +15,7 @@ class ResultUtil:
     @staticmethod
     def transform_result(row, column_names, entity_class): 
         
-        field_and_type = HoneyUtil.get_field_and_type(entity_class)  # TODO  put in cache
+        field_and_type = HoneyUtil.get_field_and_type(entity_class)
         # 创建实体类的新实例
         obj = entity_class()
         for i in range(len(column_names)):

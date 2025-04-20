@@ -81,7 +81,6 @@ class HoneyUtil:
     
     # 对象的不会改
     """ remove  __  or _ prefix """    
-
     @staticmethod
     def remove_prefix(dict_obj):
         if not dict_obj:
@@ -89,7 +88,6 @@ class HoneyUtil:
     
         fieldAndValue = {
             key[2:] if key.startswith('__') else key[1:] if key.startswith('_') else key: value  
-            # key[1:] if key.startswith('_') else key: value 
             for key, value in dict_obj.items()
         }
         return fieldAndValue
@@ -225,17 +223,27 @@ class HoneyUtil:
                 if not (key.startswith('__') and key.endswith('__'))  
             ]  
         else: 
-            return None   
+            return None  
+         
+    __field_and_type_cache = {}  # V1.6.0 
     
     @staticmethod
     def get_field_and_type(cls): 
+        field_and_type = HoneyUtil.__field_and_type_cache.get(cls, None)
+        if field_and_type is None:
+            field_and_type = HoneyUtil.__get_field_and_type(cls)
+            HoneyUtil.__field_and_type_cache[cls] = field_and_type
+        return field_and_type
+    
+    @staticmethod
+    def __get_field_and_type(cls): 
         # 声明基本类型和无声明类型的字段（保留定义顺序）  
         A = HoneyUtil.get_class_normal_field(cls)
         
         B = {}
         try:
             # 保留有类型的;包括复合类型; 低版本没有使用时，会报异常
-            #3.8.10 have exception if no use like: remark: str = None
+            # 3.8.10 have exception if no use like: remark: str = None
             B = cls.__annotations__
         except Exception:
             pass

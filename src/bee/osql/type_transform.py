@@ -264,7 +264,7 @@ class Sql2Py:
                  
                 **common_sql_type_mappings,  # 引用公共类型映射
                 "NUMBER(10)":"int",
-                "NUMBER(19,6)":"float",  # 要使用长度？  TODO
+                "NUMBER(19,6)":"float",  # 要使用长度？  todo
                 "NUMBER":"int",
                 "VARCHAR2(1)":"bool",
                 "VARCHAR2":"str",

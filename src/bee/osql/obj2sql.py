@@ -145,13 +145,11 @@ class ObjToSQL:
     def __getKeyValue_classField(self, entity):
         
         cls = type(entity)
+        #already use cache
         classField = HoneyUtil.get_class_field(cls)  # list
         fieldAndValue = HoneyUtil.get_obj_field_value(entity)  # dict
         
         classFieldAndValue = HoneyUtil.get_class_field_value(cls)
-        
-        # 获取去掉前缀的键    todo __ ??
-        # fieldAndValue = {key.lstrip('_'): value for key, value in fieldAndValue.items()} 
         
         fieldAndValue = HoneyUtil.remove_prefix(fieldAndValue)
         
@@ -159,7 +157,6 @@ class ObjToSQL:
         
         set1 = set(classField)
         set2 = set(objKey)  # list转set 顺序会乱了
-        
         setExt = set2 - set1
         
         # 默认删除动态加的属性

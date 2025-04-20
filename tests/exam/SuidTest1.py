@@ -4,6 +4,7 @@ from bee.api import Suid
 
 import MyConfig
 from entity.Orders import Orders
+from entity.Student import Student2
 
 
 # from bee.config import PreConfig
@@ -26,5 +27,8 @@ if __name__ == '__main__':
     
     for one in orderList: 
         print(one)  
+        
+        
+    orderList = suid.select(Student2())
     
     print("finished")
