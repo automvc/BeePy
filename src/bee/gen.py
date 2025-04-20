@@ -33,8 +33,8 @@ class GenBean:
     def gen_and_write_bean(self, table_name:str, file_path: str, file_name:str = None):
         code = self.gen_bean(table_name)
         if file_name is None:
-            className = NamingHandler.toEntityName(table_name)
-            file_name = className + ".py"
+            # className = NamingHandler.toEntityName(table_name)
+            file_name = table_name + ".py"
         Util.write_to_file(file_path, file_name, code)
     
     def _init_db_sql(self): 
