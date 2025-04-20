@@ -2,7 +2,7 @@ from bee.context import HoneyContext
 import time
 import MyConfig
 from bee.honeyfactory import BF
-from bee.osql.cache import CacheUtil
+# from bee.osql.cache import CacheUtil
 from entity.Orders import Orders
 from entity.Orders2 import Orders2
 
