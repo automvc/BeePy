@@ -58,7 +58,7 @@ Improve anomalies
 12. index_normal  
 13. unique  
 
-**1.6.0(2025)**  
+**1.6.0(2025·International Labour Day)**  
 1. Optimize BeeSql  
 2. enhance the code  
 3. Add naming conversion support  
