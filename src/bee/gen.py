@@ -46,7 +46,7 @@ class GenBean:
         GenBean._db_sql[DatabaseConst.MYSQL.lower()] = sql_mysql
         GenBean._db_sql[DatabaseConst.SQLite.lower()] = sql_sqlite 
         
-        sql_oralce = "SELECT column_name col, data_type type, nullable ynNull, data_default defaultValue, data_length strLen  FROM user_tab_columns  WHERE table_name = UPPER('{table_name}') ORDER BY column_id"
+        sql_oralce = "SELECT column_name col, data_type type, nullable ynNull, data_default defaultValue, data_length strLen, data_precision precision, data_scale scale FROM user_tab_columns  WHERE table_name = UPPER('{table_name}') ORDER BY column_id"
         GenBean.add_fetch_bean_sql(DatabaseConst.ORACLE, sql_oralce)
     
     def _get_fetch_bean_sql(self, table_name):
