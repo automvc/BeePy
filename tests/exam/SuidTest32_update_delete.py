@@ -13,7 +13,7 @@ if __name__ == '__main__':
     orders=Orders3()
     orders.name="bee130"
     # orders.remark=None
-    orders.ext="aaa"  #实体没有字段，会被忽略。出去安全考虑
+    orders.ext="aaa"  #实体没有字段，会被忽略。出于安全考虑
     
     # print(orders.__dict__)
     # {'id': None, 'name': 'bee', 'remark': None, 'ext': 'aaa'}

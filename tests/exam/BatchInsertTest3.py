@@ -18,7 +18,7 @@ if __name__ == '__main__':
     #insert    
     orders=Orders()
     orders.id=104
-    orders.name="bee"
+    orders.name="bee3"
     orders.remark="test"
     
     suid=Suid()
@@ -27,7 +27,7 @@ if __name__ == '__main__':
     #update/delete
     orders=Orders3()
     orders.name="bee130"
-    orders.ext="aaa"  #实体没有字段，会被忽略。出去安全考虑
+    orders.ext="aaa"  #实体没有字段，会被忽略。出于安全考虑
     orders.id=104
     
     suid = Suid()

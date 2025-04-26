@@ -9,7 +9,7 @@ if __name__ == '__main__':
     MyConfig.init()  
       
     suidRich = SuidRich()
-    suidRich.create_table(Orders)
+    # suidRich.create_table(Orders)
     
     one = suidRich.select(Orders())
     print(one)

@@ -13,6 +13,7 @@ class Orders_2025:
     id = None  
     name = None 
     remark = None
+    type = None
 
     #can ignore
     def __repr__(self):  
