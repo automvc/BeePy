@@ -140,6 +140,8 @@ class CacheUtil:
             CacheUtil.__reg_table_indexSet_map(table_name, index)
             
             return True
+        
+        return False
     
     # reg index set to table_dict    table关联它相关的缓存的下标。 
     @staticmethod  
