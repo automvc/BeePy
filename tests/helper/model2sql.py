@@ -1,5 +1,5 @@
-from bee.api import SuidRich
-from bee.config import HoneyConfig
+# from bee.api import SuidRich
+# from bee.config import HoneyConfig
 
 import MyConfig
 from bee.helper import SQLAlchemy
@@ -42,14 +42,14 @@ class Organization(db.Model):
     Remark = db.Column(db.Text)
 
 # 用户表
-class User(db.Model):
-    ID = db.Column(db.Integer, primary_key=True)
-    OrgID = db.Column(db.Integer)
-    RoleID = db.Column(db.Integer)
-    Name = db.Column(db.String(64), unique=True)
-    Password = db.Column(db.String(16))
-    Tel = db.Column(db.String(16), unique=True)
-    Remark = db.Column(db.Text)
+class Users(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    org_id = db.Column(db.Integer)
+    role_id = db.Column(db.Integer)
+    name = db.Column(db.String(64), unique=True)
+    password = db.Column(db.String(16))
+    tel = db.Column(db.String(16), unique=True)
+    remark = db.Column(db.Text)
 
     
     
@@ -73,8 +73,17 @@ if __name__=='__main__':
     MyConfig.init()
     
     #######2. create all table
-    # db.create_all() 
-    db.create_all(True)
+    db.create_all() 
+    # db.create_all(True)
+  
+    
+    try:
+        db.create_one(Organization)
+        # db.create_one(Organization, True)
+        pass
+    except Exception as e: 
+            print(e)
+            
     print("end")
     
     # suidRich=SuidRich()
