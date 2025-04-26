@@ -9,6 +9,6 @@ def init():
     # print(py_version)
         
     #TODO change to your config file path
-    PreConfig.config_path="E:\\xxx\\BeePy\\tests\\resources"
+    PreConfig.config_path="E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc\\tests\\resources"
     
     HoneyConfig() # how to call first time

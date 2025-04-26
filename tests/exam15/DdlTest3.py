@@ -10,7 +10,7 @@ if __name__ == '__main__':
     
     suidRich = SuidRich()
     # suidRich.create_table(Orders_202501)
-    suidRich.create_table(Orders_202501,True)
+    suidRich.create_table(Orders_202501, True)
     
     # entity=Orders_202501()
     # entity.name="2025"

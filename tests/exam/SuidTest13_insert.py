@@ -13,8 +13,8 @@ if __name__ == '__main__':
     
     # orders=Orders(id=1, name="bee")
     orders=Orders()
-    orders.id=104
-    orders.name="bee"
+    # orders.id=104
+    orders.name="bee13"
     orders.remark="test"
     
     suid=Suid()

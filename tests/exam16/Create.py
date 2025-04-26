@@ -7,6 +7,7 @@ from entity.Orders import Orders
 from entity.Orders3 import Orders3
 from entity.Student2 import Student2
 from entity.Student3 import Student3
+from entity.Test import Test
 from entity.full import Entity
 
 
@@ -23,6 +24,7 @@ if __name__ == '__main__':
     
     #无声明类型
     suidRich.create_table(Orders,True)
+    suidRich.create_table(Test,True)
     
     ######1. just print create table sql
     # honeyConfig = HoneyConfig()

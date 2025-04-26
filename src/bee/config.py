@@ -1,6 +1,7 @@
 import json
 import os
 
+from bee.version import Version
 from bee.exception import ConfigBeeException
 from bee.osql.const import DatabaseConst
 from bee.osql.logger import Logger
@@ -15,22 +16,7 @@ class PreConfig:
     config_properties_file_name = "bee.properties"
     config_json_file_name = "bee.json"
     
-    # # value is:lower,upper
-    # sql_key_word_case = None
-    #
-    # sql_placeholder = "?"
 
-
-# class SingletonMeta(type):  
-#     _instances = {}  
-#
-#     def __call__(self, *args, **kwargs): 
-#         print("------SingletonMeta---__call__--------") 
-#         if self not in self._instances:  
-#             self._instances[self] = super().__call__(*args, **kwargs)  
-#         return self._instances[self]  
-#
-# class HoneyConfig(metaclass=SingletonMeta):
 class HoneyConfig:
     
     dbname = None 
@@ -58,7 +44,7 @@ class HoneyConfig:
     naming_to_lower_before:bool = True
     
     # cache的要提前用,不能设置为None.   是可以的，之前是因为Cache在属性使用了__cacheArrayIndex = CacheArrayIndex()引起；import时就会运行到。
-    cache_max_size:int = 1000
+    cache_max_size:int = 20000
     cache_start_delete_rate:float = 0.6  
     cache_full_used_rate:float = 0.9
     cache_full_clear_rate:float = 0.2
@@ -67,7 +53,7 @@ class HoneyConfig:
     cache_key_use_md5:bool = True
     
     # >= this-value will do not put in cache
-    cache_donot_put_cache_result_min_size:int = 100
+    cache_donot_put_cache_result_min_size:int = 200
     
     _loaded = False  # 标记是否已加载配置
     __db_config_data = None
@@ -77,7 +63,8 @@ class HoneyConfig:
     def __new__(cls): 
         if cls.__instance is None: 
             # Logger.debug("HoneyConfig.__new__") 
-            Logger.debug("HoneyConfig instance...") 
+            Version.printversion()
+            Logger.info("HoneyConfig instance...") 
             cls.__instance = super().__new__(cls)
             cls.__loadConfigInProperties(cls)
             cls.__loadConfigInJson(cls)
@@ -86,16 +73,6 @@ class HoneyConfig:
             if cls.__db_config_data is None:
                 Logger.info("Default loading and init configuration file failed!")
         return cls.__instance 
-    
-    # def __init__(self): 
-    #     print("--------HoneyConfig-----__init__-------")
-    # #
-    # # def __call__(self): 
-    # #     print("--------HoneyConfig-----__call__-------")
-    #
-    # def __getattribute__(self, item):  
-    #     print(f"Accessing attribute: {item}") 
-    #     return super().__getattribute__(item)
     
     @staticmethod
     def __adjust_config_file(cls, config_file):

@@ -72,7 +72,7 @@ class MidSQL:
         except Exception: 
             return "VARCHAR"
     
-    def to_create_all_sql(self): 
+    def to_create_all_sql(self, entity = None): 
         
         NOT_NULL_STR = HoneyUtil.adjustUpperOrLower(" NOT NULL")
         # NULL_STR = HoneyUtil.adjustUpperOrLower(" NULL")
@@ -84,6 +84,8 @@ class MidSQL:
         table_names = []
         
         for model in Model.__subclasses__: 
+            if not (entity is None or entity == model): 
+                continue
             # print(model)
             # 实例化模型以收集列信息
             model_instance = model()
@@ -167,9 +169,9 @@ class MidSQL:
             table_names.append(model.__name__)
         return all_sql, table_names
     
-    def create_all(self, is_drop_exist_table = None):
+    def __create(self, is_drop_exist_table = None, entity_class = None):
     
-        all_sql, table_names = self.to_create_all_sql()
+        all_sql, table_names = self.to_create_all_sql(entity_class)
         pre = PreparedSql()
     
         if is_drop_exist_table:
@@ -180,4 +182,10 @@ class MidSQL:
     
         for sql in all_sql:
             pre.modify(sql)
+            
+    def create_all(self, is_drop_exist_table = None):
+        return self.__create(is_drop_exist_table = is_drop_exist_table)
+            
+    def create_one(self, entity_class, is_drop_exist_table = None):
+        return self.__create(is_drop_exist_table = is_drop_exist_table, entity_class = entity_class)
 

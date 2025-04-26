@@ -1,0 +1,564 @@
+INFO - Current Python version: 3.12.4 (tags/v3.12.4:8e8a4ba, Jun  6 2024, 19:30:16) [MSC v.1940 64 bit (AMD64)]
+INFO - 开始运行脚本: MyConfig.py
+INFO - 脚本 MyConfig.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+INFO - 开始运行脚本: TestName.py
+INFO - 开始运行脚本: Test_name.py
+INFO - 开始运行脚本: entity\full.py
+INFO - 脚本 entity\full.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+INFO - 开始运行脚本: entity\naming.py
+INFO - 开始运行脚本: entity\Orders.py
+INFO - 开始运行脚本: entity\Orders01.py
+INFO - 开始运行脚本: entity\Orders02.py
+INFO - 开始运行脚本: entity\Orders2.py
+INFO - 开始运行脚本: entity\Orders3.py
+INFO - 开始运行脚本: entity\Orders4.py
+INFO - 开始运行脚本: entity\Orders42.py
+INFO - 开始运行脚本: entity\Orders5.py
+INFO - 开始运行脚本: entity\Orders6.py
+INFO - 脚本 entity\Orders6.py 输出:
+{'id': 100001, 'name': 'Bee(ORM Framework)', 'price': 29.99, 'quantity': 5, 'customer_id': 123, 'order_date': '2023-10-01', 'status': 'Shipped', 'shipping_address': '123 Main St', 'payment_method': 'Credit Card', 'note': 'Leave at the front door'}
+INFO - 开始运行脚本: entity\Orders7.py
+INFO - 脚本 entity\Orders7.py 输出:
+{'arg0': 100001, 'arg1': 'Bee(ORM Framework)', 'arg2': 29.99, 'arg3': 5, 'customer_id': 123, 'order_date': '2023-10-01', 'status': 'Shipped', 'shipping_address': '123 Main St', 'payment_method': 'Credit Card', 'note': 'Leave at the front door'}
+INFO - 开始运行脚本: entity\Orders8.py
+INFO - 开始运行脚本: entity\Orders_2025.py
+INFO - 开始运行脚本: entity\Orders_202501.py
+INFO - 开始运行脚本: entity\Student.py
+INFO - 开始运行脚本: entity\Student2.py
+INFO - 开始运行脚本: entity\Student3.py
+INFO - 开始运行脚本: entity\Test.py
+INFO - 开始运行脚本: exam\BatchInsertTest.py
+INFO - 脚本 exam\BatchInsertTest.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> drop table SQL: DROP TABLE IF EXISTS student2
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  Affected rows: 0
+[INFO]  [Bee] sql>>> create table SQL: CREATE TABLE student2 (
+    id int primary key auto_increment not null,
+    name varchar(255),
+    age varchar(255),
+    remark varchar(255),
+    addr varchar(255)
+);
+[INFO]  [Bee]========  | <--  Affected rows: 0
+[INFO]  [Bee] sql>>> insert batch SQL: insert into student2 (id, name, age, remark, addr) values (%s, %s, %s, %s, %s)
+[INFO]  [Bee] sql>>> params: [(None, 'bee', 20, 'bee', None), (None, 'bee1', 22, 'bee1', ''), (None, '黄二', 21, None, ''), (None, '张三', 21, None, '')]
+[INFO]  [Bee]========  | <--  Affected rows: 4
+4
+finished
+INFO - 开始运行脚本: exam\BatchInsertTest2.py
+INFO - 脚本 exam\BatchInsertTest2.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> insert batch SQL: insert into orders (id, name, remark) values (%s, %s, %s)
+[INFO]  [Bee] sql>>> params: [(None, 'bee', None), (None, 'bee1', None)]
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  Affected rows: 2
+2
+finished
+INFO - 开始运行脚本: exam\BatchInsertTest3.py
+INFO - 脚本 exam\BatchInsertTest3.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders
+[INFO]  [Bee] sql>>> params: []
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  select rows: 2
+[INFO]  [Bee] sql>>> insert SQL: insert into orders (id, name, remark) values (%s, %s, %s)
+[INFO]  [Bee] sql>>> params: [104, 'bee', 'test']
+[INFO]  [Bee]========  | <--  Affected rows: 1
+[INFO]  [Bee] sql>>> update SQL: update orders set name = %s, remark = %s where id = %s
+[INFO]  [Bee] sql>>> params: ['bee130', 'test', 104]
+[INFO]  [Bee]========  | <--  Affected rows: 1
+[INFO]  [Bee] sql>>> delete SQL: delete from orders where id = %s and name = %s and remark = %s
+[INFO]  [Bee] sql>>> params: [104, 'bee130', 'test']
+[INFO]  [Bee]========  | <--  Affected rows: 1
+1
+1
+finished
+INFO - 开始运行脚本: exam\BatchInsertTest4.py
+INFO - 脚本 exam\BatchInsertTest4.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> insert batch SQL: insert into student3 (id, name, age, remark, addr) values (%s, %s, %s, %s, %s)
+[INFO]  [Bee] sql>>> params: [(None, 'bee', 20, 'bee', None), (None, 'bee1', 22, 'bee1', ''), (None, '黄二', 21, None, ''), (None, '张三', 21, None, '')]
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  Affected rows: 4
+4
+finished
+INFO - 开始运行脚本: exam\SuidTest1.py
+INFO - 脚本 exam\SuidTest1.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders where name = %s
+[INFO]  [Bee] sql>>> params: ['bee']
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  select rows: 1
+[INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders where name = %s
+[INFO]  [Bee] sql>>> params: ['bee']
+[INFO]  [Bee]======== ---------------get from cache
+[INFO]  [Bee]========  | <--  select rows: 1
+{'id': 1, 'name': 'bee', 'remark': None}
+finished
+INFO - 开始运行脚本: exam\SuidTest10.py
+INFO - 脚本 exam\SuidTest10.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> select SQL: select id, name, age, remark, addr from student2
+[INFO]  [Bee] sql>>> params: []
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  select rows: 4
+[INFO]  [Bee] sql>>> select SQL: select id, name, age, remark, addr from student2
+[INFO]  [Bee] sql>>> params: []
+[INFO]  [Bee]======== ---------------get from cache
+[INFO]  [Bee]========  | <--  select rows: 4
+{'id': 1, 'name': 'bee', 'age': '20', 'remark': 'bee', 'addr': None}
+{'id': 2, 'name': 'bee1', 'age': '22', 'remark': 'bee1', 'addr': ''}
+{'id': 3, 'name': '黄二', 'age': '21', 'remark': None, 'addr': ''}
+{'id': 4, 'name': '张三', 'age': '21', 'remark': None, 'addr': ''}
+finished
+INFO - 开始运行脚本: exam\SuidTest11Page.py
+INFO - 脚本 exam\SuidTest11Page.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> select_paging SQL: select id, name from test where name = %s limit 0, 10
+[INFO]  [Bee] sql>>> params: ['bee']
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  select rows: 9
+[{'id': 1, 'name': 'bee'}, {'id': 3, 'name': 'bee'}, {'id': 4, 'name': 'bee'}, {'id': 100, 'name': 'bee'}, {'id': 101, 'name': 'bee'}, {'id': 103, 'name': 'bee'}, {'id': 104, 'name': 'bee'}, {'id': 105, 'name': 'bee'}, {'id': 106, 'name': 'bee'}]
+{'id': 1, 'name': 'bee'}
+{'id': 3, 'name': 'bee'}
+{'id': 4, 'name': 'bee'}
+{'id': 100, 'name': 'bee'}
+{'id': 101, 'name': 'bee'}
+{'id': 103, 'name': 'bee'}
+{'id': 104, 'name': 'bee'}
+{'id': 105, 'name': 'bee'}
+{'id': 106, 'name': 'bee'}
+finished
+INFO - 开始运行脚本: exam\SuidTest12_insert.py
+INFO - 脚本 exam\SuidTest12_insert.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> insert SQL: insert into test (id, name) values (%s, %s)
+[INFO]  [Bee] sql>>> params: [106, 'bee']
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[31m[ERROR] [Bee]========Error in modify: (1062, "Duplicate entry '106' for key 'PRIMARY'")[0m 
+[INFO]  [Bee] sql>>> select SQL: select id, name from test where id = %s and name = %s
+[INFO]  [Bee] sql>>> params: [106, 'bee']
+[INFO]  [Bee]========  | <--  select rows: 1
+[{'id': 106, 'name': 'bee'}]
+{'id': 106, 'name': 'bee'}
+finished
+INFO - 开始运行脚本: exam\SuidTest13_insert.py
+INFO - 脚本 exam\SuidTest13_insert.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> insert SQL: insert into orders (id, name, remark) values (%s, %s, %s)
+[INFO]  [Bee] sql>>> params: [104, 'bee', 'test']
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  Affected rows: 1
+[INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders where id = %s and name = %s and remark = %s
+[INFO]  [Bee] sql>>> params: [104, 'bee', 'test']
+[INFO]  [Bee]========  | <--  select rows: 1
+[{'id': 104, 'name': 'bee', 'remark': 'test'}]
+{'id': 104, 'name': 'bee', 'remark': 'test'}
+finished
+INFO - 开始运行脚本: exam\SuidTest32_update_delete.py
+INFO - 脚本 exam\SuidTest32_update_delete.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> update SQL: update orders set name = %s, remark = %s where id = %s
+[INFO]  [Bee] sql>>> params: ['bee130', 'test', 10002]
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  Affected rows: 0
+[INFO]  [Bee] sql>>> delete SQL: delete from orders where id = %s and name = %s and remark = %s
+[INFO]  [Bee] sql>>> params: [10002, 'bee130', 'test']
+[INFO]  [Bee]========  | <--  Affected rows: 0
+0
+0
+[INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders where remark = %s
+[INFO]  [Bee] sql>>> params: ['test']
+[INFO]  [Bee]========  | <--  select rows: 1
+{'id': 104, 'id2': None, 'name': 'bee', 'remark': 'test'}
+---finished
+INFO - 开始运行脚本: exam\SuidTest4.py
+INFO - 脚本 exam\SuidTest4.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+{'_id': None, '_name': 'bee', '_remark': None}
+start
+[INFO]  [Bee] sql>>> select SQL: select name, remark, id from orders where name = %s
+[INFO]  [Bee] sql>>> params: ['bee']
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  select rows: 2
+{'_id': 1, '_name': 'bee', '_remark': None}
+{'_id': 104, '_name': 'bee', '_remark': 'test'}
+---finished
+INFO - 开始运行脚本: exam\SuidTest42.py
+INFO - 脚本 exam\SuidTest42.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+start
+[INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders
+[INFO]  [Bee] sql>>> params: []
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  select rows: 3
+{'_id': 1, '_name': 'bee', '_remark': None}
+{'_id': 2, '_name': 'bee1', '_remark': None}
+{'_id': 104, '_name': 'bee', '_remark': 'test'}
+---finished
+INFO - 开始运行脚本: exam\SuidTest6.py
+INFO - 脚本 exam\SuidTest6.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+{'id': 100001, 'name': 'Bee(ORM Framework)', 'price': 29.99, 'quantity': 5, 'customer_id': 123, 'order_date': '2023-10-01', 'status': 'Shipped', 'shipping_address': '123 Main St', 'payment_method': 'Credit Card', 'note': 'Leave at the front door'}
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+{'name': 'bee', 'remark': 'test'}
+{'name': 'bee', 'remark': 'test'}
+[INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders where name = %s and remark = %s
+[INFO]  [Bee] sql>>> params: ['bee', 'test']
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  select rows: 1
+{'id': 104, 'name': 'bee', 'remark': 'test'}
+finished
+INFO - 开始运行脚本: exam15\BatchInsertTest2.py
+INFO - 脚本 exam15\BatchInsertTest2.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> drop table SQL: DROP TABLE IF EXISTS orders
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  Affected rows: 0
+[INFO]  [Bee] sql>>> create table SQL: CREATE TABLE orders (
+    id int primary key auto_increment not null,
+    name varchar(255),
+    remark varchar(255)
+);
+[INFO]  [Bee]========  | <--  Affected rows: 0
+[INFO]  [Bee] sql>>> insert batch SQL: insert into orders (id, name, remark) values (%s, %s, %s)
+[INFO]  [Bee] sql>>> params: [(None, 'bee', 'remark test'), (None, 'bee1', 'remark test1')]
+[INFO]  [Bee]========  | <--  Affected rows: 2
+2
+finished
+INFO - 开始运行脚本: exam15\ByIdTest.py
+INFO - 脚本 exam15\ByIdTest.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> select by id SQL: select id, name, remark from orders where id = %s
+[INFO]  [Bee] sql>>> params: [1]
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  select rows: 1
+[{'id': 1, 'name': 'bee', 'remark': 'remark test'}]
+[INFO]  [Bee] sql>>> delete by id SQL: delete from orders where id = %s or id = %s
+[INFO]  [Bee] sql>>> params: [1, 2]
+[INFO]  [Bee]========  | <--  Affected rows: 2
+2
+finished
+INFO - 开始运行脚本: exam15\DdlTest.py
+INFO - 脚本 exam15\DdlTest.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> create table SQL: CREATE TABLE orders (
+    id int primary key auto_increment not null,
+    name varchar(255),
+    remark varchar(255)
+);
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[31m[ERROR] [Bee]========Error in modify: (1050, "Table 'orders' already exists")[0m 
+[INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders
+[INFO]  [Bee] sql>>> params: []
+[INFO]  [Bee]========  | <--  select rows: 0
+[]
+INFO - 开始运行脚本: exam15\DdlTest2.py
+INFO - 脚本 exam15\DdlTest2.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> create table SQL: CREATE TABLE orders_2025 (
+    id int primary key auto_increment not null,
+    name varchar(255),
+    remark varchar(255)
+);
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[31m[ERROR] [Bee]========Error in modify: (1050, "Table 'orders_2025' already exists")[0m
+INFO - 开始运行脚本: exam15\DdlTest3.py
+INFO - 脚本 exam15\DdlTest3.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> drop table SQL: DROP TABLE IF EXISTS orders_202501
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  Affected rows: 0
+[31m[WARN]  [Bee]========There are no primary key when create table: orders_202501[0m 
+[INFO]  [Bee] sql>>> create table SQL: CREATE TABLE orders_202501 (
+    name varchar(255),
+    remark varchar(255)
+);
+[INFO]  [Bee]========  | <--  Affected rows: 0
+[INFO]  [Bee] sql>>> select SQL: select name, remark from orders_202501
+[INFO]  [Bee] sql>>> params: []
+[INFO]  [Bee]========  | <--  select rows: 0
+[]
+INFO - 开始运行脚本: exam15\DdlTest4.py
+INFO - 脚本 exam15\DdlTest4.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> drop table SQL: DROP TABLE IF EXISTS orders_202501
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  Affected rows: 0
+[31m[WARN]  [Bee]========There are no primary key when create table: orders_202501[0m 
+[INFO]  [Bee] sql>>> create table SQL: CREATE TABLE orders_202501 (
+    name varchar(255),
+    remark varchar(255)
+);
+[INFO]  [Bee]========  | <--  Affected rows: 0
+[INFO]  [Bee] sql>>> create index SQL: CREATE INDEX idx_orders_202501_name ON orders_202501 (name)
+[INFO]  [Bee]========  | <--  Affected rows: 0
+[INFO]  [Bee] sql>>> insert SQL: insert into orders_202501 (name, remark) values (%s, %s)
+[INFO]  [Bee] sql>>> params: ['2025', 'test create table']
+[INFO]  [Bee]========  | <--  Affected rows: 1
+[INFO]  [Bee] sql>>> insert SQL: insert into orders_202501 (name, remark) values (%s, %s)
+[INFO]  [Bee] sql>>> params: ['2025', 'test create table']
+[INFO]  [Bee]========  | <--  Affected rows: 1
+[INFO]  [Bee] sql>>> select SQL: select name, remark from orders_202501
+[INFO]  [Bee] sql>>> params: []
+[INFO]  [Bee]========  | <--  select rows: 2
+[{'name': '2025', 'remark': 'test create table'}, {'name': '2025', 'remark': 'test create table'}]
+INFO - 开始运行脚本: exam15\DdlTest5.py
+INFO - 脚本 exam15\DdlTest5.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> drop table SQL: DROP TABLE IF EXISTS orders_202501
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  Affected rows: 0
+[31m[WARN]  [Bee]========There are no primary key when create table: orders_202501[0m 
+[INFO]  [Bee] sql>>> create table SQL: CREATE TABLE orders_202501 (
+    name varchar(255),
+    remark varchar(255)
+);
+[INFO]  [Bee]========  | <--  Affected rows: 0
+[INFO]  [Bee] sql>>> create index SQL: CREATE UNIQUE INDEX uie_orders_202501_name ON orders_202501 (name)
+[INFO]  [Bee]========  | <--  Affected rows: 0
+[INFO]  [Bee] sql>>> drop index SQL: DROP INDEX uie_orders_202501_name ON orders_202501
+[INFO]  [Bee]========  | <--  Affected rows: 0
+[INFO]  [Bee] sql>>> insert SQL: insert into orders_202501 (name, remark) values (%s, %s)
+[INFO]  [Bee] sql>>> params: ['2025', 'test create table']
+[INFO]  [Bee]========  | <--  Affected rows: 1
+[INFO]  [Bee] sql>>> insert SQL: insert into orders_202501 (name, remark) values (%s, %s)
+[INFO]  [Bee] sql>>> params: ['2025', 'test create table']
+[INFO]  [Bee]========  | <--  Affected rows: 1
+[INFO]  [Bee] sql>>> select SQL: select name, remark from orders_202501
+[INFO]  [Bee] sql>>> params: []
+[INFO]  [Bee]========  | <--  select rows: 2
+[{'name': '2025', 'remark': 'test create table'}, {'name': '2025', 'remark': 'test create table'}]
+INFO - 开始运行脚本: exam15\PreTest.py
+INFO - 脚本 exam15\PreTest.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+-------------------
+[INFO]  [Bee] sql>>> select SQL(PreparedSql): select * from orders
+[INFO]  [Bee] sql>>> params: None
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  select rows: 0
+[]
+-------------------
+[INFO]  [Bee] sql>>> select SQL(PreparedSql): select * from orders limit 0, 2
+[INFO]  [Bee] sql>>> params: None
+[INFO]  [Bee]========  | <--  select rows: 0
+[]
+[INFO]  [Bee] sql>>> select SQL(PreparedSql): select * from orders limit 2, 100
+[INFO]  [Bee] sql>>> params: None
+[INFO]  [Bee]========  | <--  select rows: 0
+[]
+finished
+INFO - 开始运行脚本: exam15\PreTest2.py
+INFO - 脚本 exam15\PreTest2.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+-------------------
+[INFO]  [Bee] sql>>> select SQL(PreparedSql): SELECT * FROM orders WHERE name=%s and id=%s and name=%s
+[INFO]  [Bee] sql>>> params: ['bee1', 4, 'bee1']
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  select rows: 0
+[]
+-------------------
+finished
+INFO - 开始运行脚本: exam15\PreTest3.py
+INFO - 脚本 exam15\PreTest3.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+-------------------
+[INFO]  [Bee] sql>>> select SQL(PreparedSql): SELECT * FROM orders WHERE name=%s and id=%s and name=%s
+[INFO]  [Bee] sql>>> params: ['bee1', 4, 'bee1']
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  select rows: 0
+[]
+[INFO]  [Bee] sql>>> modify SQL(PreparedSql): update orders set name = %s, remark = %s where id = %s
+[INFO]  [Bee] sql>>> params: ['bee130', 'test-update', 1]
+[INFO]  [Bee]========  | <--  Affected rows: 0
+updateNum: 0
+-------------------
+[INFO]  [Bee] sql>>> select SQL(PreparedSql): SELECT * FROM orders
+[INFO]  [Bee] sql>>> params: None
+[INFO]  [Bee]========  | <--  select rows: 0
+[]
+[INFO]  [Bee] sql>>> select SQL(PreparedSql): SELECT * FROM orders where id = %s
+[INFO]  [Bee] sql>>> params: [1]
+[INFO]  [Bee]========  | <--  select rows: 0
+[]
+[INFO]  [Bee] sql>>> modify SQL(PreparedSql): update orders set name = %s, remark = %s where id = %s
+[INFO]  [Bee] sql>>> params: ['newName', 'remark2', 1]
+[INFO]  [Bee]========  | <--  Affected rows: 0
+[INFO]  [Bee] sql>>> select SQL(PreparedSql): SELECT * FROM orders where id=%s
+[INFO]  [Bee] sql>>> params: [1]
+[INFO]  [Bee]========  | <--  select rows: 0
+[]
+finished
+INFO - 开始运行脚本: exam15\PreTest4_test_placeholder.py
+INFO - 脚本 exam15\PreTest4_test_placeholder.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+-------------------
+[INFO]  [Bee] sql>>> modify SQL(PreparedSql): update orders set name = %s, remark = %s where id = %s
+[INFO]  [Bee] sql>>> params: ['bee130', 'test-update', 1]
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  Affected rows: 0
+updateNum: 0
+[INFO]  [Bee] sql>>> modify SQL(PreparedSql): update orders set name = %s, remark = %s where id = %s
+[INFO]  [Bee] sql>>> params: ['bee130', 'test-update', 1]
+[INFO]  [Bee]========  | <--  Affected rows: 0
+updateNum: 0
+finished
+INFO - 开始运行脚本: exam15\SelectFun.py
+INFO - 脚本 exam15\SelectFun.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders
+[INFO]  [Bee] sql>>> params: []
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  select rows: 0
+[]
+[INFO]  [Bee] sql>>> select fun SQL: select count(id) from orders where name = %s
+[INFO]  [Bee] sql>>> params: ['bee']
+0
+[INFO]  [Bee] sql>>> select fun SQL: select max(id) from orders where name = %s
+[INFO]  [Bee] sql>>> params: ['bee']
+None
+[INFO]  [Bee] sql>>> select fun SQL: select min(id) from orders where name = %s
+[INFO]  [Bee] sql>>> params: ['bee']
+None
+[INFO]  [Bee] sql>>> select fun SQL: select sum(id) from orders where name = %s
+[INFO]  [Bee] sql>>> params: ['bee']
+None
+[INFO]  [Bee] sql>>> select fun SQL: select avg(id) from orders where name = %s
+[INFO]  [Bee] sql>>> params: ['bee']
+None
+[INFO]  [Bee] sql>>> select fun SQL: select count(*) from orders where name = %s
+[INFO]  [Bee] sql>>> params: ['bee']
+0
+[INFO]  [Bee] sql>>> select fun SQL: select count(*) from orders where name = %s
+[INFO]  [Bee] sql>>> params: ['bee']
+False
+finished
+INFO - 开始运行脚本: exam15\SuidTest1.py
+INFO - 脚本 exam15\SuidTest1.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> select_paging SQL: select id, name, remark from orders where name = %s limit 0, 1
+[INFO]  [Bee] sql>>> params: ['bee']
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  select rows: 0
+None
+finished
+INFO - 开始运行脚本: exam16\bugTest.py
+INFO - 脚本 exam16\bugTest.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+empty result
+empty result
+INFO - 开始运行脚本: exam16\cacheTest.py
+INFO - 脚本 exam16\cacheTest.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders where id = %s and name = %s
+[INFO]  [Bee] sql>>> params: [1, 'bee']
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  select rows: 0
+[INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders where id = %s and name = %s
+[INFO]  [Bee] sql>>> params: [1, 'bee']
+[INFO]  [Bee]======== ---------------get from cache
+[INFO]  [Bee]========  | <--  select rows: 0
+[INFO]  [Bee] sql>>> insert SQL: insert into orders (id, name) values (%s, %s)
+[INFO]  [Bee] sql>>> params: [2, 'bee2']
+[INFO]  [Bee]========  | <--  Affected rows: 1
+[INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders where id = %s and name = %s
+[INFO]  [Bee] sql>>> params: [1, 'bee']
+[INFO]  [Bee]========  | <--  select rows: 0
+finished
+INFO - 开始运行脚本: exam16\cacheTest2.py
+INFO - 脚本 exam16\cacheTest2.py 输出:
+[INFO]  [Bee]======== Bee Version is: 1.6.0
+start
+[DEBUG]  [Bee]======== HoneyConfig instance...
+[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders where id = %s and name = %s
+[INFO]  [Bee] sql>>> params: [1, 'bee']
+[INFO]  [Bee]======== Database driver use pymysql for MySQL
+[INFO]  [Bee]========  | <--  select rows: 0
+[INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders where id = %s and name = %s
+[INFO]  [Bee] sql>>> params: [1, 'bee']
+[INFO]  [Bee]======== ---------------get from cache
+[INFO]  [Bee]========  | <--  select rows: 0
+{}
+finished
+INFO - 开始运行脚本: exam16\cacheTest3.py
