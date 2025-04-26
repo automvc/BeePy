@@ -18,8 +18,8 @@ class Orders:
     # __pk__="id" 
     # __pk__ = "name"  
     # __primary_key__="name" 
-    __unique_key__={"name","type"}
-    __not_null_filels__={"name","type"} # "id"不用设置
+    __unique_key__={"name"}
+    __not_null_filels__={"name"} # "id"不用设置
 
     #can ignore
     def __repr__(self):  
