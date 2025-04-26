@@ -58,9 +58,10 @@ class ConnectionBuilder:
         elif dbname == DatabaseConst.SQLite.lower(): 
             return db_module.connect(**tempConfig)
         elif dbname == DatabaseConst.ORACLE.lower():
-            return db_module.connect('scott/Bee123456@192.168.1.5/orcl')
-            # return db_module.connect('scott/Bee123456@localhost:1521/orcl')
-            # return db_module.connect('scott/Bee123456@localhost:1521:orcl')
+            return db_module.connect(**tempConfig)
+        elif dbname == DatabaseConst.PostgreSQL.lower():
+            return db_module.connect(**tempConfig)
+        
 
 # ### 2. 使用 `psycopg2`（PostgreSQL）
 #
