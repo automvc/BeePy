@@ -86,6 +86,10 @@ def delete_by_id(self, entity_class, *ids)
 20. Object oriented approach, when creating a table, supports declaring fields with unique constraints in entities and fields that are not allowed to be empty:  
     __unique_key__={"name","type"}  
     __not_null_filels__={"name","type"}  
+    
+**1.6.2(2025·doing)**  
+1.support condition like/like_left/like_right,in/not in;  
+eg: condtion.op("num", Op.IN, [1,2]); can support list/set/tuple type  
 
 Quick Start:
 =========	

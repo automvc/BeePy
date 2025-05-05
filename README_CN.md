@@ -87,6 +87,11 @@ def delete_by_id(self, entity_class, *ids)
     __unique_key__={"name","type"}  
     __not_null_filels__={"name","type"} 
     
+**1.6.2(2025·doing)**  
+1.condition支持like/like_left/like_right,in/not in;  
+eg: condtion.op("num", Op.IN, [1,2]); in可以支持的类型有:list/set/tuple type  
+
+    
 
 快速开始:
 =========	
