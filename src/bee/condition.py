@@ -1,3 +1,4 @@
+import re 
 from abc import ABC, abstractmethod
 from typing import List, Set, Any
 
@@ -487,43 +488,44 @@ class ParseCondition:
             else: 
                 Logger.warn(f"Unknown operation number: {exp.op_num}")  
                 
-# UPDATE employees  
-# SET salary = 60000, department = 'HR'  
-# WHERE employee_id = 101;      
-                
-# UPDATE employees  
-# SET salary = CASE  
-#     WHEN department = 'Sales' THEN salary * 1.2  
-#     WHEN department = 'HR' THEN salary * 1.1  
-#     ELSE salary  
-# END; 
-
-# UPDATE employees e  
-# JOIN departments d ON e.department_id = d.department_id  
-# SET e.salary = e.salary * 1.1  
-# WHERE d.department_name = 'Engineering'; 
-
-# UPDATE employees  
-# SET salary = (  
-#     SELECT AVG(salary)  
-#     FROM employees  
-#     WHERE department = 'HR'  
-# )  
-# WHERE employee_id = 102;  
-
-# 6. 使用ORDER BY和LIMIT：限制更新数量
-# 按特定顺序更新前N行（适用于MySQL等支持的数据库）。
-#
-# sql
-# UPDATE scores  
-# SET score = 100  
-# ORDER BY submission_time DESC  
-# LIMIT 5;   
+        # UPDATE employees  
+        # SET salary = 60000, department = 'HR'  
+        # WHERE employee_id = 101;      
+                        
+        # UPDATE employees  
+        # SET salary = CASE  
+        #     WHEN department = 'Sales' THEN salary * 1.2  
+        #     WHEN department = 'HR' THEN salary * 1.1  
+        #     ELSE salary  
+        # END; 
+        
+        # UPDATE employees e  
+        # JOIN departments d ON e.department_id = d.department_id  
+        # SET e.salary = e.salary * 1.1  
+        # WHERE d.department_name = 'Engineering'; 
+        
+        # UPDATE employees  
+        # SET salary = (  
+        #     SELECT AVG(salary)  
+        #     FROM employees  
+        #     WHERE department = 'HR'  
+        # )  
+        # WHERE employee_id = 102;  
+        
+        # 6. 使用ORDER BY和LIMIT：限制更新数量
+        # 按特定顺序更新前N行（适用于MySQL等支持的数据库）。
+        #
+        # sql
+        # UPDATE scores  
+        # SET score = 100  
+        # ORDER BY submission_time DESC  
+        # LIMIT 5;   
 
         # Join all where clauses into a single string  
         updateSet_str = "".join(update_set_sql)  
 
         return ConditionUpdateSetStruct(updateSet_str, prepared_values, values, suidType, condition.update_set_fields) 
+    
     
     # parse where
     @staticmethod       
@@ -552,15 +554,32 @@ class ParseCondition:
         for exp in expressions:
             # exp.field_name ->column_name  
             column_name = NamingHandler.toColumnName(exp.field_name)
-            if exp.op_num == 2:  # Binary operation  # op("name", Op.ne, "bee1")
+            
+            if exp.op_num == 2:
                 is_need_and = adjust_and()
-                if exp.value is None:
-                    where_clause = f"{column_name} {K.isnull()}"
-                else:
+                op = exp.op
+                if op==Op.LIKE or op==Op.LIKE_LEFT or op==Op.LIKE_RIGHT or op==Op.LIKE_LEFT_RIGHT:
+                    
                     where_clause = f"{column_name} {exp.op} {ph}"
-                    prepared_values.append(PreparedValue(type(exp.value), exp.value)) 
-                    values.append(exp.value)
-                where_clauses.append(where_clause) 
+                    v = exp.value
+                    v = ParseCondition.__process_like(op, v)
+                    prepared_values.append(PreparedValue(type(v), v))
+                    
+                elif op==Op.IN or op==Op.NOT_IN:
+                    v = exp.value
+                    in_ph= ParseCondition.__process_in(prepared_values,v)
+                    where_clause = f"{column_name} {exp.op}" + in_ph
+                    
+                else: # Binary operation  # op("name", Op.ne, "bee1")
+                    
+                    if exp.value is None:
+                        where_clause = f"{column_name} {K.isnull()}"
+                    else:
+                        where_clause = f"{column_name} {exp.op} {ph}"
+                        prepared_values.append(PreparedValue(type(exp.value), exp.value)) 
+                        values.append(exp.value)
+                    
+                where_clauses.append(where_clause)    
                 is_need_and = True
                 
             elif exp.op_num == -3:  # eg:field1=field2
@@ -584,7 +603,7 @@ class ParseCondition:
             elif exp.op_num == 3:  # BETWEEN  
                 is_need_and = adjust_and()
                 where_clause = f"{column_name} {exp.op_type} {ph} {K.and_()} {ph}"
-                where_clauses.append(where_clause)  
+                where_clauses.append(where_clause)
                 prepared_values.append(PreparedValue(type(exp.value), exp.value))
                 prepared_values.append(PreparedValue(type(exp.value), exp.value2)) 
                 values.append(exp.value)
@@ -640,4 +659,110 @@ class ParseCondition:
         where_clause_str = "".join(where_clauses)  
 
         return ConditionStruct(where_clause_str, prepared_values, values, suidType, condition.where_fields, __selectFields, __start, __size, __has_for_update)
-
+    
+    
+    @staticmethod
+    def __process_like(op, v):  
+        if v is not None: 
+            if op is Op.LIKE_LEFT: 
+                ParseCondition.__check_like_empty_exception(v)  
+                v = "%" + ParseCondition.__escape_like(v)  
+            elif op is Op.LIKE_RIGHT: 
+                ParseCondition.__check_like_empty_exception(v)  
+                v = ParseCondition.__escape_like(v) + "%"  
+            elif op is Op.LIKE_LEFT_RIGHT: 
+                ParseCondition.__check_like_empty_exception(v)  
+                v = "%" + ParseCondition.__escape_like(v) + "%" 
+            else:  # Op.like
+                if ParseCondition.__just_like_char(v): 
+                    raise ParamBeeException(f"Like has SQL injection risk! like '{v}'")  
+        else:   
+            print("WARN: the parameter value in like is null!")  
+        
+        return v  
+    
+    @staticmethod
+    def __escape_like(value):  
+        if value is None:  
+            return value  
+        
+        buf = []  
+        i = 0  
+        while i < len(value):  
+            temp = value[i]  
+            if temp == '\\':  
+                buf.append(temp)  
+                i += 1  
+                if i < len(value):  
+                    buf.append(value[i])  
+                    i += 1  
+            elif temp == '%' or temp == '_':  
+                buf.append('\\')  
+                buf.append(temp)  
+                i += 1  
+            else:  
+                buf.append(temp)  
+                i += 1  
+        
+        return ''.join(buf) 
+    
+    @staticmethod 
+    def __check_like_empty_exception(v): 
+        if v.isspace():
+            raise ParamBeeException("Like has SQL injection risk! the value can not be empty string!")
+    
+    @staticmethod
+    def __just_like_char(name: str) -> bool: 
+        if not name: 
+            return False  
+        pattern = r'^[%_]+$'
+        return bool(re.fullmatch(pattern, name))  
+    
+    @staticmethod
+    def __process_in(param_list, v): 
+        sql_buffer = [] 
+        sql_buffer.append(" (")  
+        sql_buffer.append("?")  
+        length = 1  
+        need_set_null = False  
+        
+        if v is None: 
+            need_set_null = True  
+        else: 
+            in_list = ParseCondition.__process_in_value(v)  
+            length = len(in_list)  
+            if length > 0: 
+                param_list.extend(in_list)  
+            elif length == 0: 
+                need_set_null = True  
+        
+        if need_set_null: 
+            # param_list.append({"value": None, "type": "object"})
+            param_list.append(PreparedValue(type(object), None))
+        
+        for _ in range(1, length):  # start from 1  
+            sql_buffer.append(",?")
+        
+        sql_buffer.append(")")
+        
+        return ''.join(sql_buffer)
+    
+    @staticmethod
+    def __process_in_value(v):  
+        in_list = []  
+        
+        if isinstance(v, (list, set, tuple)):  # List or Set  
+            for item in v:  
+                in_list.append(PreparedValue(type(item), item))
+                
+        # elif ParseCondition.is_number_array(v):  # Number array   py对数字数组支持很差 
+        #     for number in v:  
+        #         in_list.append(PreparedValue(type(number),item))  
+                
+        elif isinstance(v, str):  # String with comma separator  
+            values = v.strip().split(",")  
+            for item in values: 
+                in_list.append(PreparedValue(type(item), item))    
+        else:  # Single value  
+            in_list.append(PreparedValue(type(v), v))    
+        return in_list  

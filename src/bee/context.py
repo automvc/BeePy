@@ -42,7 +42,7 @@ class HoneyContext:
         dbName = HoneyConfig().get_dbname()
         
         if not dbName:
-            return None
+            return "?"
         elif dbName == DatabaseConst.MYSQL.lower() or dbName == DatabaseConst.PostgreSQL.lower(): 
             return "%s"
         elif dbName == DatabaseConst.SQLite.lower(): 
