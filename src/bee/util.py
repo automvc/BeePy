@@ -10,12 +10,13 @@ from bee.osql.mid_typing import Column
 
 class HoneyUtil: 
      
-    """返回给定对象的属性字典，如果没有则返回None"""
+    
 
     @staticmethod 
     def get_obj_field_value(obj): 
-        if hasattr(obj, '__dict__'): 
-            # print(obj.__dict__)
+        """返回给定对象的属性字典，如果没有则返回None"""
+        
+        if hasattr(obj, '__dict__'):
             return obj.__dict__  
         else: 
             return None 
@@ -24,7 +25,7 @@ class HoneyUtil:
     def get_class_field_value(cls):
         
         if hasattr(cls, '__dict__'): 
-            # 并去掉前缀__和_   只是__开前开头，会变化的。
+            # 并去掉前缀__和_   只是__开头，会变化的。
             class_name = cls.__name__
             prefix = "_" + class_name + "__"
             kv = { key[len(prefix):] if key.startswith(prefix) else key[1:] if key.startswith('_') else key: value
@@ -40,21 +41,6 @@ class HoneyUtil:
         else: 
             return None
         
-        # if hasattr(cls, '__dict__'): 
-        #     print(cls.__dict__)
-        #     return {key: value for key, value in cls.__dict__.items() if (not (key.startswith('__') and key.endswith('__'))) and not isinstance(value, property)  } 
-        # else: 
-        #     return None
-        
-        # if hasattr(cls, '__dict__'):  
-        #     return {  
-        #         key: (getattr(cls, key)() if isinstance(getattr(cls, key), property) else getattr(cls, key))  
-        #         for key in cls.__dict__.keys()  
-        #         if not (key.startswith('__') and key.endswith('__'))  # 排除私有属性  
-        #     }  
-        # else:  
-        #     return None  
-        
         # result = {}  
         # for key in cls.__class__.__dict__:  
         #     # 排除私有属性  
@@ -69,13 +55,13 @@ class HoneyUtil:
         # return result  
     # dict: {'id': <property object at 0x000001E2C878D350>, 'name': <property object at 0x000001E2C878D3A0>, 'remark': <property object at 0x000001E2C878D3F0>}
     
-    """ 
-    返回给定类的属性列表,但不包括系统的 
-    since 1.6.0 还考虑字段的类型;时间类型等
-    """ 
 
     @staticmethod
     def get_class_field(cls):
+        """ 
+        返回给定类的属性列表,但不包括系统的 
+        since 1.6.0 还考虑字段的类型;时间类型等
+        """
         fieldname_and_type_dict = HoneyUtil.get_field_and_type(cls)
         return fieldname_and_type_dict.keys()
     
@@ -92,17 +78,18 @@ class HoneyUtil:
         }
         return fieldAndValue
     
-    """获取对象的值元列表
-    eg:
-            # list_params = [
-            #     (None, 'Alice', 30, 'Likes swimming', '123 Maple St'),
-            #     (None, 'Charlie', 35, 'Enjoys hiking', None),
-            #     (None, 'David', 28, None, None),  # remark 和 addr 均为空  
-            #     ] 
-    """
-
     @staticmethod
     def get_list_params(classField, entity_list):
+        
+        """获取对象的值元列表
+        eg:
+                # list_params = [
+                #     (None, 'Alice', 30, 'Likes swimming', '123 Maple St'),
+                #     (None, 'Charlie', 35, 'Enjoys hiking', None),
+                #     (None, 'David', 28, None, None),  # remark 和 addr 均为空  
+                #     ] 
+        """
+        
         dict_n = {e: None for e in classField}
         # dict_classField=dict_n.copy()
         
@@ -131,8 +118,6 @@ class HoneyUtil:
         class_name = cls.__name__  
         return NamingHandler.toTableName(class_name)
     
-    """ get pk from bean"""
-    
     @staticmethod 
     def get_pk(obj):
         cls = obj.__class__
@@ -140,6 +125,7 @@ class HoneyUtil:
 
     @staticmethod 
     def get_pk_by_class(cls):
+        """ get pk from bean"""
         temp_name = getattr(cls, SysConst.pk, None)
         if temp_name and not temp_name.isspace():
             return temp_name
@@ -189,7 +175,8 @@ class HoneyUtil:
     
     @staticmethod    
     def adjustUpperOrLower(value):
-        
+        if not value:
+            return value
         isUpper = HoneyUtil.is_sql_key_word_upper()
         if isUpper:
             return value.upper()
@@ -214,7 +201,6 @@ class HoneyUtil:
             return sql_type
         
         python_type = mid.mid_to_python_type(mid_type)
-        # print('aaa:',python_type)
         
         type0 = Py2Sql().python_type_to_sql_type(python_type)
         return HoneyUtil.adjustUpperOrLower(type0)
@@ -222,7 +208,7 @@ class HoneyUtil:
     @staticmethod
     def get_class_normal_field(cls):
         if hasattr(cls, '__dict__'): 
-    # 过滤掉以__开头和结尾的键，并去掉前缀__和_   只是__开前开头，会变化的。
+            # 过滤掉以__开头和结尾的键，并去掉前缀__和_   只是__开头，会变化的。
             class_name = cls.__name__
             prefix = "_" + class_name + "__"
             return [  
@@ -327,11 +313,11 @@ class HoneyUtil:
     
     @staticmethod
     def get_mid_field_and_type(cls):
-        M = {}
+        m = {}
         for name, obj in cls.__dict__.items(): 
             if isinstance(obj, Column):  # 确认是Column对象  
                 field_type = obj.type  
                 # print(f"字段名: {name}, 类型: {field_type}") 
-                M[name] = Mid().mid_to_python_type(str(field_type))
-        return M
+                m[name] = Mid().mid_to_python_type(str(field_type))
+        return m
                 

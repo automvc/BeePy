@@ -24,9 +24,9 @@ class CacheUtil:
     __key_tableNameList_map: Dict[str, List] = {}  # e.g. {"key": ['table1','table2']
 
     # 特殊缓存  
-    _set1: Set[str] = set()  # 从不放缓存的表名集合  
-    _set2: Set[str] = set()  # 永久放缓存的表名集合  //改成外部不可访问
-    _set3: Set[str] = set()  # 长久放缓存的表名集合  
+    __set1: Set[str] = set()  # 从不放缓存的表名集合  cache_never
+    __set2: Set[str] = set()  # 永久放缓存的表名集合  cache_forever
+    __set3: Set[str] = set()  # 长久放缓存的表名集合  cache_modify_syn
 
     __map2: Dict[str, Any] = {}  # 永久缓存  
     __map3: Dict[str, Any] = {}  # 长久缓存 (有修改时，会删除缓存，下次再获取就会是新的)  
@@ -41,6 +41,10 @@ class CacheUtil:
     # __cacheArrayIndex = CacheArrayIndex() #不可以在属性就new,否则import SuidRich时，就会运行CacheArrayIndex的__init__方法
     __cacheArrayIndex = None
     
+    # 不允许被继承                
+    def __init_subclass__(self): 
+        raise TypeError("CacheUtil cannot be subclassed")  
+    
     @classmethod  
     def __init0(cls): 
         if not cls.__cache_init: 
@@ -54,11 +58,23 @@ class CacheUtil:
                     
                     cls.__cacheArrayIndex = CacheArrayIndex()
                     
+                    __cache_never = HoneyConfig.cache_never
+                    __cache_forever = HoneyConfig.cache_forever
+                    __cache_modify_syn = HoneyConfig.cache_modify_syn
+                    
+                    if __cache_never:
+                        cls.__set1 = CacheUtil.__parse_str(__cache_never)
+                    if __cache_forever:
+                        cls.__set2 = CacheUtil.__parse_str(__cache_forever)
+                    if __cache_modify_syn:
+                        cls.__set3 = CacheUtil.__parse_str(__cache_modify_syn)
+                    
                     cls.__cache_init = True
-    
-    # 不允许被继承                
-    def __init_subclass__(self): 
-        raise TypeError("CacheUtil cannot be subclassed")   
+
+    @staticmethod  
+    def __parse_str(s: str):
+        # 使用split()方法拆分字符串，并使用列表推导式去除每个元素的前后空格
+        return [item.strip() for item in s.split(',')]
 
     @staticmethod  
     def __get_table_name(sql: str) -> str: 
@@ -95,18 +111,18 @@ class CacheUtil:
         table_name = CacheUtil.__get_table_name(sql)  
 
         # 1. 检查是否在set1（从不缓存）  
-        if table_name in CacheUtil._set1: 
+        if table_name in CacheUtil.__set1: 
             return False
 
         # 2. 检查是否在set2（永久缓存）  
-        if table_name in CacheUtil._set2: 
+        if table_name in CacheUtil.__set2: 
             if key not in CacheUtil.__set2_exist: 
                 CacheUtil.__set2_exist.add(key)  
                 CacheUtil.__map2[key] = rs  
             return True
 
         # 3. 检查是否在set3（长久缓存）  
-        if table_name in CacheUtil._set3: 
+        if table_name in CacheUtil.__set3: 
             if key not in CacheUtil.__set3_exist: 
                 CacheUtil.__set3_exist.add(key)  
                 CacheUtil.__map3[key] = rs
@@ -386,8 +402,8 @@ class LongArray:
 #     sql1 = "SELECT * FROM orders WHERE id = 1"  # orders
 #     result1 = {"id": 10, "name": "milk"} 
 #     # 4. 添加永久缓存  
-#     CacheUtil._set2.add("orders")  # 将 'orders' 表标记为永久缓存  
-#     # CacheUtil._set2.add("users")  # 将 'orders' 表标记为永久缓存  
+#     CacheUtil.__set2.add("orders")  # 将 'orders' 表标记为永久缓存  
+#     # CacheUtil.__set2.add("users")  # 将 'orders' 表标记为永久缓存  
 #     CacheUtil.add(sql1, result1)  # 再次添加 sql1，这次会放入永久缓存  
 #     print("Added permanent cache for sql1")  
 #

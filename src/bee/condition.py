@@ -15,15 +15,13 @@ from bee.osql.sqlkeyword import K
 class Expression: 
 
     def __init__(self, field_name: str = None, Op: Op = None, op_type = None, value: Any = None,
-                 op_num: int = None, value2: Any = None, value3: Any = None, value4: Any = None): 
+                 op_num: int = None, value2: Any = None): 
         self.field_name = field_name  
         self.op_type = op_type if op_type else Op.get_name() if Op else None  
         self.op = Op  
         self.value = value  
         self.op_num = op_num  # type num
         self.value2 = value2  
-        self.value3 = value3  
-        self.value4 = value4  
 
     def __str__(self): 
         if self.op_num == 2:  # Binary operation  
@@ -124,6 +122,9 @@ class Condition(ABC):
 
     @abstractmethod  
     def orderBy3(self, field:str) -> 'Condition': 
+        """
+        eg: orderBy3(FunctionType.MAX, "total", OrderType.DESC)-->order by max(total) desc
+        """
         pass
     
     @abstractmethod  
@@ -282,38 +283,38 @@ class ConditionImpl(Condition):
 
     def orderBy(self, field:str) -> 'ConditionImpl': 
         self.__check_one_field(field)
-        exp = Expression(field_name = field, op_type = K.order_by(), op_num = 12)
+        exp = Expression(field_name = field, op_num = 12)
         self.expressions.append(exp) 
         if self.__isStartOrderBy:
             self.__isStartOrderBy = False
-            exp.value = K.order_by()
+            exp.op_type = " " + K.order_by()
         else:
-            exp.value = self.__COMMA
+            exp.op_type = self.__COMMA
         return self
     
     def orderBy2(self, field:str, orderType:OrderType) -> 'ConditionImpl': 
         self.__check_one_field(field)
-        exp = Expression(field_name = field, op_type = K.order_by(), op_num = 13)
-        exp.value2 = orderType.get_name()
+        exp = Expression(field_name = field, op_num = 13)
+        exp.value = orderType.get_name()
         self.expressions.append(exp) 
         if self.__isStartOrderBy:
             self.__isStartOrderBy = False
-            exp.value = K.order_by()
+            exp.op_type = " " + K.order_by()
         else:
-            exp.value = self.__COMMA
+            exp.op_type = self.__COMMA
         return self
     
     def orderBy3(self, functionType:FunctionType, field:str, orderType:OrderType) -> 'ConditionImpl': 
         self.__check_one_field(field)
-        exp = Expression(field_name = field, op_type = K.order_by(), op_num = 14)
-        exp.value2 = orderType.get_name()
-        exp.value3 = functionType.get_name()
+        exp = Expression(field_name = field, op_num = 14)
+        exp.value = orderType.get_name()
+        exp.value2 = functionType.get_name()
         self.expressions.append(exp) 
         if self.__isStartOrderBy:
             self.__isStartOrderBy = False
-            exp.value = K.order_by()
+            exp.op_type = " " + K.order_by()
         else:
-            exp.value = self.__COMMA
+            exp.op_type = self.__COMMA
         return self
     
     def selectField(self, *fields:str) -> 'ConditionImpl': 
@@ -617,6 +618,7 @@ class ParseCondition:
                 where_clauses.append(where_clause)
                 
             elif exp.op_num == 5:  # having
+                # having(FunctionType.MIN, "field", Op.ge, 60)-->having min(field)>=60
                 if suidType != SuidType.SELECT:
                     raise BeeErrorGrammarException(suidType.get_name() + " do not support 'having' !")
                 
@@ -629,9 +631,9 @@ class ParseCondition:
                 if suidType != SuidType.SELECT:
                     raise BeeErrorGrammarException(suidType.get_name() + " do not support 'order by' !")
                 
-                where_clauses.append(" " + exp.value + " ")  # order by或者,
+                where_clauses.append(exp.op_type + " ")  # order by或者,
                 if 14 == exp.op_num:  # order by   max(total)
-                    where_clauses.append(exp.value3)
+                    where_clauses.append(exp.value2)
                     where_clauses.append("(")
                     where_clauses.append(column_name)
                     where_clauses.append(")")
@@ -640,7 +642,7 @@ class ParseCondition:
 
                 if 13 == exp.op_num or 14 == exp.op_num:  # 指定 desc,asc
                     where_clauses.append(" ")
-                    where_clauses.append(exp.value2)
+                    where_clauses.append(exp.value)
 
             elif exp.op_num == 20:  # selectField("name,age")
                 __selectFields = exp.value

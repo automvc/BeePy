@@ -25,8 +25,8 @@ if __name__ == '__main__':
         print(one)
     
     orders2=Orders()
-    orders2.id=2
-    orders2.name = "bee2"
+    orders2.id=16
+    orders2.name = "bee16"
     suid.insert(orders2)
         
     #test cache    

@@ -55,6 +55,10 @@ class HoneyConfig:
     # >= this-value will do not put in cache
     cache_donot_put_cache_result_min_size:int = 200
     
+    cache_never:str = ""
+    cache_forever:str = ""
+    cache_modify_syn:str = ""
+    
     _loaded = False  # 标记是否已加载配置
     __db_config_data = None
     __instance = None
