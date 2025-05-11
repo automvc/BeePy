@@ -90,7 +90,10 @@ def delete_by_id(self, entity_class, *ids)
 **1.6.2(2025·doing)**  
 1.condition支持like/like_left/like_right,in/not in;  
 eg: condtion.op("num", Op.IN, [1,2]); in可以支持的类型有:list/set/tuple type  
-
+2. 更新cache的相关配置:cache_never,cache_forever,cache_modify_syn config  
+3. 增强分页(LimitOffset)  
+4. 更新默认的命名类型(默认为不转换OriginalName)  
+5. 更新condition Expression(delete value3,value4)  
     
 
 快速开始:
