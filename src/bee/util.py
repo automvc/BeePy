@@ -14,7 +14,8 @@ class HoneyUtil:
 
     @staticmethod 
     def get_obj_field_value(obj): 
-        """返回给定对象的属性字典，如果没有则返回None"""
+        # 返回给定对象的属性字典，如果没有则返回None
+        """Return the property dictionary of the given object, if not, return None"""
         
         if hasattr(obj, '__dict__'):
             return obj.__dict__  
@@ -58,17 +59,18 @@ class HoneyUtil:
 
     @staticmethod
     def get_class_field(cls):
+        #返回给定类的属性列表,但不包括系统的 
+        # since 1.6.0 还考虑字段的类型;时间类型等
         """ 
-        返回给定类的属性列表,但不包括系统的 
-        since 1.6.0 还考虑字段的类型;时间类型等
+        Returns a list of properties for a given class, but does not include the system's.
         """
         fieldname_and_type_dict = HoneyUtil.get_field_and_type(cls)
         return fieldname_and_type_dict.keys()
     
     # 对象的不会改
-    """ remove  __  or _ prefix """    
     @staticmethod
     def remove_prefix(dict_obj):
+        """ remove  __  or _ prefix """   
         if not dict_obj:
             return dict_obj
     
@@ -80,14 +82,15 @@ class HoneyUtil:
     
     @staticmethod
     def get_list_params(classField, entity_list):
-        
-        """获取对象的值元列表
+        # 获取对象的值元列表
+        """
+        get object value with tuple.
         eg:
-                # list_params = [
-                #     (None, 'Alice', 30, 'Likes swimming', '123 Maple St'),
-                #     (None, 'Charlie', 35, 'Enjoys hiking', None),
-                #     (None, 'David', 28, None, None),  # remark 和 addr 均为空  
-                #     ] 
+                # list_params = [<br>
+                #     (None, 'Alice', 30, 'Likes swimming', '123 Maple St'),<br>
+                #     (None, 'Charlie', 35, 'Enjoys hiking', None),<br>
+                #     (None, 'David', 28, None, None),  # remark 和 addr 均为空  <br>
+                #     ] <br>
         """
         
         dict_n = {e: None for e in classField}

@@ -14,14 +14,14 @@ from bee.custom import Custom
 
 class GenBean:
     
-    _db_sql: Dict[str, Any] = {}
+    __db_sql: Dict[str, Any] = {}
     
     def __init__(self): 
-        # 初始化 _db_sql（如果尚未初始化）  
-        if not GenBean._db_sql: 
-            self._init_db_sql()  
+        # 初始化 __db_sql（如果尚未初始化）  
+        if not GenBean.__db_sql: 
+            self.__init_db_sql()  
             
-    def gen_bean(self, table_name:str):
+    def get_bean_code(self, table_name:str):
         sql = self._get_fetch_bean_sql(table_name)
 
         tableMeta_list = self._get_table_metadata(sql)
@@ -33,18 +33,18 @@ class GenBean:
         return code
         
     def gen_and_write_bean(self, table_name:str, file_path: str, file_name:str = None):
-        code = self.gen_bean(table_name)
+        code = self.get_bean_code(table_name)
         if file_name is None:
             # className = NamingHandler.toEntityName(table_name)
             file_name = table_name + ".py"
         Util.write_to_file(file_path, file_name, code)
     
-    def _init_db_sql(self): 
+    def __init_db_sql(self): 
         sql_mysql = "SELECT COLUMN_NAME col, DATA_TYPE type, CASE IS_NULLABLE WHEN 'YES' THEN 1  ELSE 0  END AS ynNull, CASE COLUMN_KEY WHEN 'PRI' THEN 1  ELSE 0  END AS ynKey, COLUMN_COMMENT label,COLUMN_DEFAULT defaultValue,CHARACTER_MAXIMUM_LENGTH strLen, NUMERIC_PRECISION precision,NUMERIC_SCALE scale FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '{database}' AND TABLE_NAME = '{table_name}' ORDER BY ORDINAL_POSITION"
         sql_sqlite = "select name col,type,[notnull] ynNull,pk ynKey,dflt_value defaultValue from pragma_table_info('{table_name}')"
         
-        GenBean._db_sql[DatabaseConst.MYSQL.lower()] = sql_mysql
-        GenBean._db_sql[DatabaseConst.SQLite.lower()] = sql_sqlite 
+        GenBean.__db_sql[DatabaseConst.MYSQL.lower()] = sql_mysql
+        GenBean.__db_sql[DatabaseConst.SQLite.lower()] = sql_sqlite 
         
         sql_oralce = "SELECT column_name col, data_type type, nullable ynNull, data_default defaultValue, data_length strLen, data_precision precision, data_scale scale FROM user_tab_columns  WHERE table_name = UPPER('{table_name}') ORDER BY column_id"
         GenBean.add_fetch_bean_sql(DatabaseConst.ORACLE, sql_oralce)
@@ -54,7 +54,7 @@ class GenBean:
         dbName = HoneyContext.get_dbname()
         database = HoneyConfig().get_db_config_dict().get('database')
         
-        sql = GenBean._db_sql.get(dbName, None)
+        sql = GenBean.__db_sql.get(dbName, None)
         if sql is None:
             sql = Custom.custom_get_fetch_bean_sql(dbName)
         
@@ -66,7 +66,7 @@ class GenBean:
     
     @staticmethod
     def add_fetch_bean_sql(dbname:str, sql:str):
-        GenBean._db_sql[dbname.lower()] = sql
+        GenBean.__db_sql[dbname.lower()] = sql
     
     def _get_table_metadata(self, sql):
         old_naming_translate_type= HoneyConfig.naming_translate_type

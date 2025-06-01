@@ -235,8 +235,9 @@ class HoneyConfig:
                     raise ConfigBeeException(f"File not found in current path or adjust path: {newPath}")
                 cls.__db_config_data['database'] = newPath
                         
-    def get_db_config_dict(self): 
-        """将DB相关的类属性打包成字典并返回""" 
+    def get_db_config_dict(self):
+        # 将DB相关的类属性打包成字典并返回
+        """put DB related class properties into a dictionary and return them""" 
         cls = type(self)
         if cls.__db_config_data:
             # adjust db path

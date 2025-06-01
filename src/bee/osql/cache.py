@@ -104,6 +104,11 @@ class CacheUtil:
         
     @staticmethod  
     def add(sql: str, rs: Any):
+        '''
+        add result to cache which relative sql. 
+        :param sql: SQL statement.
+        :param rs: result
+        '''
         
         CacheUtil.__init0() 
         
@@ -182,6 +187,10 @@ class CacheUtil:
 
     @staticmethod  
     def get(sql: str) -> Any:
+        '''
+        get result by sql. 
+        :param sql: SQL statement.
+        '''
         
         CacheUtil.__init0() 
         
@@ -244,6 +253,11 @@ class CacheUtil:
 
     @staticmethod  
     def clear(sql: str):
+        '''
+        clear result by sql.
+        :param sql: SQL statement.
+        '''
+        
         CacheUtil.__init0()
         
         table_name = CacheUtil.__get_table_name(sql)

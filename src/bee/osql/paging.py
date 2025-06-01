@@ -9,6 +9,12 @@ from bee.custom import Custom
 class Paging:
     
     def to_page_sql(self, sql, start, size):
+        '''
+        add paging part for sql.
+        :param sql: SQL select statement which use placeholder.
+        :param start: start index,min value is 0 or 1(eg:MySQL is 0,Oracle is 1).
+        :param size: fetch result size (>0).
+        '''
         dbName = HoneyConfig().get_dbname()
         if not dbName:
             raise SqlBeeException("dbName is None!")
