@@ -16,6 +16,9 @@ class HoneyContext:
 
     @staticmethod
     def get_connection():
+        '''
+        get connection.
+        '''
         
         factory = BeeFactory()
         conn = factory.get_connection()
@@ -38,6 +41,9 @@ class HoneyContext:
     
     @staticmethod
     def get_placeholder():
+        '''
+        get placeholder for current database.
+        '''
         
         dbName = HoneyConfig().get_dbname()
         
@@ -55,7 +61,11 @@ class HoneyContext:
         
     @staticmethod
     def is_active_conn(conn):
-        
+        '''
+        check the connection whether is active.
+        :param conn: connection
+        :return: if connection is active return True, else return False.
+        '''
         dbName = HoneyConfig().get_dbname().lower()
         
         if dbName is None:
@@ -103,12 +113,11 @@ class HoneyContext:
 
     @staticmethod  
     def _set_data(local_type:LocalType, key = None, value = None): 
-        """  
-        设置线程局部数据（静态方法）  
-        :param local_type: DataType 枚举值，指定要存储的数据类型  
-        :param key: 存储的key
-        :param value: 要存储的值  
-        """  
+        # 设置线程局部数据（静态方法）  
+        # :param local_type: DataType 枚举值，指定要存储的数据类型  
+        # :param key: 存储的key
+        # :param value: 要存储的值  
+        
         storage = HoneyContext._get_storage()  
         
         if not value or not key or not key.strip(): 
@@ -116,17 +125,16 @@ class HoneyContext:
         if local_type not in storage: 
             storage[local_type] = {}  
             
-        # print("----local------: "+key)
-        # print(str(value))
         storage[local_type][key] = value  
 
     @staticmethod  
     def get_data(local_type:LocalType, key = None): 
+        # 获取线程局部数据（静态方法）  
         """  
-        获取线程局部数据（静态方法）  
-        :param local_type: DataType 枚举值  
-        :param key: 存储的key
-        :return: 存储的值或 None  
+        Retrieve thread local data
+        :param local_type: DataType enum.  
+        :param key: the key of data.
+        :return: storage data or None 
         """  
         storage = HoneyContext._get_storage()  
         
@@ -136,11 +144,10 @@ class HoneyContext:
 
     @staticmethod  
     def _remove_data(local_type:LocalType, key = None): 
-        """  
-        移除线程局部数据（静态方法）  
-        :param local_type: DataType 枚举值  
-        :param key: 存储的key
-        """  
+        # 移除线程局部数据（静态方法）  
+        # :param local_type: DataType 枚举值  
+        # :param key: 存储的key
+          
         storage = HoneyContext._get_storage()  
         
         if local_type in storage and key: 
@@ -151,27 +158,6 @@ class HoneyContext:
         storage = HoneyContext._get_storage()  
         if local_type in storage: 
             storage.pop(local_type, None)  
-    
-    # __local = threading.local()  
-    # @staticmethod
-    # def getCacheInfo(sql:str):
-    #     if not sql or not hasattr(HoneyContext.__local, '_cache'):  
-    #         return None  
-    #     return HoneyContext.__local._cache.get(sql) 
-    #
-    # @staticmethod
-    # def _setCacheInfo(sql:str, value:CacheSuidStruct):
-    #     if not sql or not sql.strip(): 
-    #         return
-    #
-    #     if not hasattr(HoneyContext.__local, '_cache'): 
-    #         HoneyContext.__local._cache = {}  
-    #
-    #     HoneyContext.__local._cache[sql] = value  
-    #
-    # @staticmethod
-    # def _deleteCacheInfo(sql:str):
-    #     pass
     
     @staticmethod
     def isMySql(): 
@@ -190,5 +176,8 @@ class HoneyContext:
     
     @staticmethod
     def get_dbname(): 
+        '''
+        get database name.
+        '''
         return HoneyConfig().get_dbname()
             

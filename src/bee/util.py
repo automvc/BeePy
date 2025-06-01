@@ -10,8 +10,6 @@ from bee.osql.mid_typing import Column
 
 class HoneyUtil: 
      
-    
-
     @staticmethod 
     def get_obj_field_value(obj): 
         # 返回给定对象的属性字典，如果没有则返回None
