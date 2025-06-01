@@ -12,6 +12,10 @@ class ConnectionBuilder:
     
     @staticmethod
     def build_connect(config):
+        '''
+        build connect via dict config
+        :param config:
+        '''
         dbname = None
         if SysConst.dbname in config:
             tempConfig = config.copy()
