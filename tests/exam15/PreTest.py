@@ -13,8 +13,9 @@ if __name__=="__main__":
     # pre.select("select * from orders", "Orders", params=["active"],  start=1,size=10)
     # pre.select("select * from orders where name=?", Orders, params=["bee"])
     # pre.select("select * from orders where name=?", Orders, params=["bee"],  size=10)
-    # one =pre.select("select * from orders where name=?", Orders, params=["bee"],  start=1)
-    # print(one)
+    one =pre.select("select * from orders where name=?", Orders, params=["bee"],  start=0) # params need list 
+    # one =pre.select("select * from orders where name=?", Orders, params=("bee"),  start=0)
+    print(one)
     print("-------------------")
     listEntity = pre.select("select * from orders", Orders)
     print(listEntity)
