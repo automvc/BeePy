@@ -17,6 +17,7 @@ class Model:
             self.__table__ = type('Table', (), {'columns': []})  
     
     def __init__(self): 
+        self.__table__.columns = []
         # 收集所有Column属性  
         for name, value in self.__class__.__dict__.items(): 
             if isinstance(value, Column): 
@@ -115,7 +116,7 @@ class MidSQL:
                 meta_list.append(meta)
                 
             sql_fields = []
-            sql_statement = ""          
+            sql_statement = ""
             for meta in meta_list:
                 column = NamingHandler.toColumnName(meta.col) 
                 col_type = HoneyUtil.adjustUpperOrLower(meta.type)
