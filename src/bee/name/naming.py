@@ -16,15 +16,13 @@ class NameTranslate:
     def toFieldName(self, columnName):
         raise NotImplementedError
 
-"""
- * Python Camel and Databse UnderScore transform.
- * Python<-->DB,eg: orderNo<-->order_no.
- * @author Kingstar
- * @since  1.5
-"""
-
 
 class UnderScoreAndCamelName(NameTranslate):
+    '''
+    Python Camel and Databse UnderScore transform.<br>
+    Python<-->DB,eg: orderNo<-->order_no. 
+    
+    '''
 
     def toTableName(self, entityName):
         if not entityName:
@@ -98,15 +96,12 @@ class DbUpperAndPythonLower(NameTranslate):
             return columnName
         return columnName.lower()
 
-"""  
- * Python Camel and Database UnderScore & Upper transform.
- * Python<-->DB,eg: orderNo<-->ORDER_NO.
- * @author Kingstar
- * @since  1.5
-"""
-
 
 class UpperUnderScoreAndCamelName(UnderScoreAndCamelName):
+    '''
+    Python Camel and Database UnderScore & Upper transform.<br>
+    Python<-->DB,eg: orderNo<-->ORDER_NO.
+    '''
 
     def toTableName(self, entityName):
         return super.toTableName(entityName).upper()

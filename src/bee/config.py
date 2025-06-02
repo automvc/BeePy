@@ -55,6 +55,10 @@ class HoneyConfig:
     # >= this-value will do not put in cache
     cache_donot_put_cache_result_min_size:int = 200
     
+    cache_never:str = ""
+    cache_forever:str = ""
+    cache_modify_syn:str = ""
+    
     _loaded = False  # 标记是否已加载配置
     __db_config_data = None
     __instance = None
@@ -186,7 +190,7 @@ class HoneyConfig:
             Logger.info(err)
             # raise ConfigBeeException(err)
             
-    bool_map = {'True': True, 'False': False} 
+    # bool_map = {'True': True, 'False': False} 
                         
     @staticmethod 
     def __loadConfigInJson(cls): 
@@ -231,8 +235,9 @@ class HoneyConfig:
                     raise ConfigBeeException(f"File not found in current path or adjust path: {newPath}")
                 cls.__db_config_data['database'] = newPath
                         
-    def get_db_config_dict(self): 
-        """将DB相关的类属性打包成字典并返回""" 
+    def get_db_config_dict(self):
+        # 将DB相关的类属性打包成字典并返回
+        """put DB related class properties into a dict and return them""" 
         cls = type(self)
         if cls.__db_config_data:
             # adjust db path
@@ -258,6 +263,10 @@ class HoneyConfig:
         return cls.__db_config_data
     
     def set_db_config_dict(self, config):
+        '''
+        set database config via dict config.
+        :param config: dict config of database.
+        '''
         if not config:
             return
         Logger.info("Reset db_config_data")
@@ -271,12 +280,19 @@ class HoneyConfig:
             HoneyConfig.dbName=config.get("dbname")
            
     def get_dbname(self):
+        '''
+        get database name.
+        '''
         if HoneyConfig.dbname is None:
             return None
         
         return HoneyConfig.dbname.lower()
     
     def set_dbname(self, dbname):
+        '''
+        set database name.
+        :param dbname: database name
+        '''
         Logger.info("set database name:" + dbname)
         HoneyConfig.dbname = dbname
     

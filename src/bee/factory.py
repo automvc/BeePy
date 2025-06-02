@@ -35,7 +35,8 @@ class BeeFactory:
             elif translateType == 2: __nameTranslate = UpperUnderScoreAndCamelName()
             elif translateType == 3: __nameTranslate = OriginalName()
             elif translateType == 4: __nameTranslate = DbUpperAndPythonLower()
-            else:__nameTranslate = UnderScoreAndCamelName()
+            # else:__nameTranslate = UnderScoreAndCamelName()
+            else:__nameTranslate = OriginalName()  #v1.6.2
                 
         return __nameTranslate
     

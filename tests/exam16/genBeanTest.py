@@ -2,9 +2,9 @@
 # from bee.osql.const import DatabaseConst
 
 from bee.config import HoneyConfig
-from bee.gen import GenBean
 
 import MyConfig
+from bee.osql.gen import GenBean
 
 
 if __name__ == '__main__':
