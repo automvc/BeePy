@@ -4,6 +4,8 @@ from bee.name.naming import NameTranslate
 
 class NamingHandler:
     
+    __key_work=['key','primary']
+    
     @staticmethod
     def getNameTranslate() -> NameTranslate:
         # todo 下一步，要支持使用实时命名规则
@@ -16,7 +18,10 @@ class NamingHandler:
 
     @staticmethod
     def toColumnName(fieldName) -> str:
-        return NamingHandler.getNameTranslate().toColumnName(fieldName)
+        name = NamingHandler.getNameTranslate().toColumnName(fieldName)
+        if name and name.lower() in NamingHandler.__key_work:
+            name = "`" + name + "`";
+        return name
     
     @staticmethod
     def toEntityName(tableName) -> str:
