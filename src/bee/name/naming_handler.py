@@ -1,10 +1,9 @@
 from bee.factory import BeeFactory
 from bee.name.naming import NameTranslate
+from bee.osql.const import KeyWork
 
 
 class NamingHandler:
-    
-    __key_work=['key','primary']
     
     @staticmethod
     def getNameTranslate() -> NameTranslate:
@@ -19,7 +18,7 @@ class NamingHandler:
     @staticmethod
     def toColumnName(fieldName) -> str:
         name = NamingHandler.getNameTranslate().toColumnName(fieldName)
-        if name and name.lower() in NamingHandler.__key_work:
+        if name and name.lower() in KeyWork.key_work: # TODO 具体DB还要
             name = "`" + name + "`";
         return name
     
