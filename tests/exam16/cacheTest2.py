@@ -2,7 +2,7 @@ from bee.context import HoneyContext
 
 import MyConfig
 from bee.honeyfactory import BF
-from bee.osql.bee_enum import LocalType
+from bee.bee_enum import LocalType
 from bee.osql.cache import CacheUtil
 from entity.Orders import Orders
 from entity.Orders2 import Orders2

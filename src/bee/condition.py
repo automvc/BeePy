@@ -6,7 +6,7 @@ from bee.context import HoneyContext
 from bee.exception import ParamBeeException, BeeErrorGrammarException
 from bee.name import NameCheckUtil
 from bee.name.naming_handler import NamingHandler
-from bee.osql.bee_enum import FunctionType, Op, OrderType, SuidType
+from bee.bee_enum import FunctionType, Op, OrderType, SuidType
 from bee.osql.logger import Logger
 from bee.osql.sqlkeyword import K
 

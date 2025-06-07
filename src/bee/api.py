@@ -1,7 +1,7 @@
 from typing import overload
 
 from bee.condition import Condition
-from bee.osql.bee_enum import FunctionType
+from bee.bee_enum import FunctionType
 
 from bee.osql.engine import ObjSQL, ObjSQLRich, PreparedSqlLib
 

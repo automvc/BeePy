@@ -1,15 +1,15 @@
 from typing import overload
 
+from bee.condition import Condition, ConditionImpl
 from bee.context import HoneyContext
 from bee.exception import BeeException, ParamBeeException
 from bee.osql import SqlUtil
-
-from bee.condition import Condition, ConditionImpl
 from bee.osql.base import AbstractCommOperate
-from bee.osql.bee_enum import FunctionType, SuidType, LocalType
 from bee.osql.obj2sql import ObjToSQL
 from bee.osql.sqllib import BeeSql
 from bee.osql.struct import CacheSuidStruct
+
+from bee.bee_enum import SuidType, LocalType, FunctionType
 
 
 class ObjSQL(AbstractCommOperate):

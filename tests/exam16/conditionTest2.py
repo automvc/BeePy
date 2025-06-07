@@ -1,4 +1,4 @@
-from bee.osql.bee_enum import Op
+from bee.bee_enum import Op
 
 import MyConfig
 from bee.honeyfactory import BF

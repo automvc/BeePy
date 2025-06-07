@@ -10,7 +10,7 @@ from bee.osql.sqlkeyword import K
 from bee.util import HoneyUtil
 
 from bee.condition import Condition
-from bee.osql.bee_enum import SuidType
+from bee.bee_enum import SuidType
 
 
 class ObjToSQL:

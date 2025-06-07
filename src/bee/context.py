@@ -7,7 +7,7 @@ from bee.conn_builder import ConnectionBuilder
 from bee.factory import BeeFactory
 from bee.osql.const import DatabaseConst, SysConst
 
-from bee.osql.bee_enum import LocalType
+from bee.bee_enum import LocalType
 
 
 class HoneyContext: 

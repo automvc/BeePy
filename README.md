@@ -211,9 +211,9 @@ class Student2:
         
         
 from bee.api import Suid, SuidRich
+from bee.bee_enum import Op
 from bee.config import PreConfig
 from bee.honeyfactory import BF
-from bee.osql.bee_enum import Op
 
 if __name__ == "__main__":
 

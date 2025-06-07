@@ -8,7 +8,7 @@ from bee.context import HoneyContext
 from bee.osql import Util
 from bee.osql.logger import Logger
 
-from bee.osql.bee_enum import LocalType
+from bee.bee_enum import LocalType
 from bee.osql.index import CacheArrayIndex
 
 
