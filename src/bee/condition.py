@@ -679,7 +679,7 @@ class ParseCondition:
                 if ParseCondition.__just_like_char(v): 
                     raise ParamBeeException(f"Like has SQL injection risk! like '{v}'")  
         else:   
-            print("WARN: the parameter value in like is null!")  
+            Logger.warn("the parameter value in like is null!")  
         
         return v  
     

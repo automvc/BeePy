@@ -23,8 +23,8 @@ class Model:
             if isinstance(value, Column): 
                 value.name = name  
                 self.__table__.columns.append(value) 
-            else:
-                print(name,value) 
+            # else:
+                # print(name,value) 
                 #另外记录顺序号
                 # __annotations__ {'Field8': <class 'int'>, 'Field9': <class 'str'>}
 
