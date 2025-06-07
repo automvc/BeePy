@@ -71,7 +71,7 @@ class SysConst:
     # configPropertiesFileName = "bee.properties"
     # configJsonFileName = "bee.json"
 
-    
+
 class KeyWork:
     key_work = [
         'select', 'from', 'where', 'group', 'by', 'having', 'order', 'by', 'limit', 'offset',
@@ -140,9 +140,5 @@ class KeyWork:
         'dual', 'rownum', 'rowid', 'nvl', 'nvl2', 'decode', 'connect', 'by',
         'start', 'with', 'prior', 'level', 'sysdate', 'systimestamp', 'sequence'
     ]
-    # 12. Cubrid, HSQL, Derby, Firebird
-    other_db_keywords = [
-        'cubrid', 'hsql', 'derby', 'firebird', 'auto_increment', 'identity',
-        'generated', 'always', 'as', 'identity', 'sequence', 'cache'
-    ]
+    
     
