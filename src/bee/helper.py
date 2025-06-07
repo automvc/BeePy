@@ -50,7 +50,7 @@ class Users(db.Model):
 if __name__=='__main__':
     
     print("start")
-    PreConfig.config_path="E:\\Project-name\\resources"
+    PreConfig.config_path="E:\\Project-name\\resources" #need to change
     
     try:
         db.create_all(True)
