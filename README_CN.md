@@ -94,6 +94,8 @@ eg: condtion.op("num", Op.IN, [1,2]); in可以支持的类型有:list/set/tuple 
 3. 增强分页(LimitOffset)  
 4. 更新默认的命名类型(默认为不转换OriginalName)  
 5. 更新condition Expression(delete value3,value4)  
+6. 支持active record风格操作数据库  
+7. 兼容字段名/表名使用SQL关键字  
     
 
 快速开始:

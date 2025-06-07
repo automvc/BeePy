@@ -94,6 +94,8 @@ eg: condtion.op("num", Op.IN, [1,2]); can support list/set/tuple type
 3. enhance paging(LimitOffset)  
 4. update default naming type(use OriginalName)  
 5. update condition Expression  
+6. support active record style  
+7. use SQL keywords for compatible field name or table name  
 
 Quick Start:
 =========	
