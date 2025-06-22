@@ -5,11 +5,11 @@ class Logger:
     
     @staticmethod
     def debug(msg):
-        print("[DEBUG] ",StrConst.LOG_PREFIX, msg)
+        print("[DEBUG] ", StrConst.LOG_PREFIX, msg)
         
     @staticmethod
     def info(msg):
-        print("[INFO] ",StrConst.LOG_PREFIX, msg)
+        print("[INFO] ", StrConst.LOG_PREFIX, msg)
 
     @staticmethod
     def warn(msg):
@@ -24,6 +24,6 @@ class Logger:
     @staticmethod
     def logsql(*msg):
         if msg:  # 检查是否有传入参数  
-            msg = ("[INFO]  "+StrConst.LOG_SQL_PREFIX + msg[0],) + msg[1:]  # 添加前缀并保留其他参数  
+            msg = ("[INFO]  " + StrConst.LOG_SQL_PREFIX + msg[0],) + msg[1:]  # 添加前缀并保留其他参数  
         print(*msg)
 

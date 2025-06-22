@@ -37,7 +37,6 @@ def write_to_file(file_path: str, file_name:str, content: str) -> None:
     except Exception as e: 
         Logger.warn(f"write error: {e}")
 
-
 # # 使用示例  
 # if __name__ == "__main__": 
 #     # 指定文件路径和内容  

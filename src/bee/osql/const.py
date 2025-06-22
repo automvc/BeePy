@@ -59,8 +59,8 @@ class SysConst:
     pk = "__pk__"
     primary_key = "__primary_key__"
     id = "id"
-    unique_key="__unique_key__" # unique_key set
-    not_null_filels="__not_null_filels__" # not null filels set
+    unique_key = "__unique_key__"  # unique_key set
+    not_null_filels = "__not_null_filels__"  # not null filels set
     
     dbModuleName = "dbModuleName"
     dbname = "dbname"
@@ -85,7 +85,6 @@ class KeyWork:
         'commit', 'rollback', 'savepoint', 'begin', 'transaction',
         'grant', 'revoke', 'deny', 'with', 'cascade', 'constraint'
     ]
-    
     
     # 1. MySQL
     mysql_keywords = [
@@ -140,5 +139,4 @@ class KeyWork:
         'dual', 'rownum', 'rowid', 'nvl', 'nvl2', 'decode', 'connect', 'by',
         'start', 'with', 'prior', 'level', 'sysdate', 'systimestamp', 'sequence'
     ]
-    
     

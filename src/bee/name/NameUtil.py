@@ -31,7 +31,7 @@ def firstLetterToUpper(name):
     if not name: 
         return name  
     return name[0].upper() + name[1:]
-    #bug testName->Testname
+    # bug testName->Testname
     # return name.capitalize()
 
 

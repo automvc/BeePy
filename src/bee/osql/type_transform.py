@@ -34,7 +34,7 @@ class Py2Sql:
             # e.g. String(100)
             return self.__default_type() + f"({python_type.len})"
         
-        #check for Python whether support Annotated or version <=3.8.10
+        # check for Python whether support Annotated or version <=3.8.10
         if Py2Sql.__import_check or Py2Sql.__ANNOTATED_SUPPORTED:
             try:
                 Py2Sql.__import_check = False
@@ -336,7 +336,7 @@ class Mid:
         
     def _init_type(self): 
         
-        #2 mid -> py type
+        # 2 mid -> py type
         Mid._mid_to_py_mappings: Dict[str, str] = {
             "String":str,
             "Text":str,
@@ -370,8 +370,8 @@ class Mid:
         sql_type = type_mapping.get(mid_type.lower(), type_mapping.get(mid_type.upper(), None))
         return sql_type
     
-    #1 mid->sql type   mid到SQL直接映射
-    def _init_mid_to_sqltype(self):  
+    # 1 mid->sql type   mid到SQL直接映射
+    def _init_mid_to_sqltype(self): 
 
         common_type_mappings: Dict[str, str] = {
             "string":"varchar",
@@ -489,7 +489,7 @@ class Mid:
             },
         }
         
-#sql/sqltypes.py       
+# sql/sqltypes.py       
 # Integer: 整数类型。
 # SMALLINT  
 # SmallInteger: 小整数类型，范围较小。

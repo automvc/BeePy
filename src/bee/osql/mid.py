@@ -25,7 +25,7 @@ class Model:
                 self.__table__.columns.append(value) 
             # else:
                 # print(name,value) 
-                #另外记录顺序号
+                # 另外记录顺序号
                 # __annotations__ {'Field8': <class 'int'>, 'Field9': <class 'str'>}
 
 
@@ -138,7 +138,7 @@ class MidSQL:
                     # col_type = HoneyUtil.adjustUpperOrLower(self.__default_type())
                     col_type = HoneyUtil.adjustUpperOrLower(HoneyUtil.mid_type_to_sql_type(meta.type))
                     if not meta.strLen:
-                        meta.strLen=255
+                        meta.strLen = 255
                     col_type += '(' + str(meta.strLen) + ')'
                     temp_sql = f"{column} {col_type}"
                 elif meta.type == 'Text':

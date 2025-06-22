@@ -19,7 +19,6 @@ class SmallInteger:
     def __repr__(self): 
         return "SmallInteger"
 
-
 # class SmallInt:
 #
 #     def __repr__(self): 
@@ -83,14 +82,17 @@ class Float:
     def __repr__(self): 
         return "Float"
 
-class Numeric:  
-    def __init__(self, precision, scale):  
+
+class Numeric: 
+
+    def __init__(self, precision, scale): 
         self.precision = precision  # 总位数（如10）  
-        self.scale = scale          # 小数位数（如2）  
+        self.scale = scale  # 小数位数（如2）  
     
-    def __repr__(self):  
+    def __repr__(self): 
         # return f"Numeric({self.precision}, {self.scale})"  
         return "Numeric"  
+
 
 # 同 Numeric，别名
 DECIMAL = Numeric
