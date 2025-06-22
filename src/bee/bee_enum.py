@@ -2,6 +2,7 @@ from enum import Enum, auto
 
 from bee.config import HoneyConfig
 
+
 class FunctionType(Enum): 
     MAX = "max"  
     MIN = "min"  
@@ -79,5 +80,4 @@ class Op(Enum):
 class LocalType(Enum): 
     # 数据类型标识枚举 
     CacheSuidStruct = auto()  # 对应原来的 sqlPreValueLocal  
-
     

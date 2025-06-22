@@ -48,8 +48,6 @@ class BaseMode:
         '''
         return self.__suid.delete(self, condition)
     
-    
-    
     ################ suidRich
     def select_paging(self, start, size, *selectFields):
         '''
@@ -127,5 +125,4 @@ class BaseMode:
         :return: the numbers of update record(s) successfully,if fails, return integer less than 0.
         '''
         return self.__suidRich.updateBy(self, condition, *whereFields)
-
     

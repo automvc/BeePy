@@ -229,5 +229,4 @@ JAVA ORM Bee:
 """
 from bee.version import Version
 
-
 Version.printversion()

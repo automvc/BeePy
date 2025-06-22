@@ -15,7 +15,6 @@ class Suid:
     def __init__(self):
         self.__suid = ObjSQL()
         
-        
     @overload
     def select(self, entity):
         ...
@@ -42,7 +41,6 @@ class Suid:
         :return: the numbers of insert records successfully, if fails,return integer less than 0.
         '''
         return self.__suid.insert(entity) 
-    
         
     @overload
     def delete(self, entity):
@@ -261,7 +259,6 @@ class PreparedSql:
         :return: list which element type is same as return_type_class.
         '''
         return self.__preparedSql.select_dict(sql, return_type_class, params_dict, start, size)          
-    
     
     def modify(self, sql, params = None): 
         '''
