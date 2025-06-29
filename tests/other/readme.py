@@ -33,13 +33,13 @@ class Student2:
 from bee.api import Suid, SuidRich
 from bee.config import PreConfig
 from bee.honeyfactory import BF
-from bee.osql.bee_enum import Op
+from bee.bee_enum import Op
 
 if __name__ == "__main__":
 
     # set bee.properties/bee.json config folder
     # PreConfig.config_path="E:\\Bee-Project"
-    PreConfig.config_path = "E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc\\tests\\resources"
+    PreConfig.config_path = "E:\\Bee-Project\\resources"
 
     # select record
     suid = Suid()

@@ -1,5 +1,5 @@
 from bee.condition import ConditionImpl
-from bee.osql.bee_enum import Op
+from bee.bee_enum import Op
 
 
 if __name__ == '__main__':

@@ -106,7 +106,7 @@ class HoneyConfig:
         if cls._loaded:
             return 
         config_file = PreConfig.config_properties_file_name  # 文件路径 
-        old_config_file=config_file
+        old_config_file = config_file
         
         try:
             config_file = cls.__adjust_config_file(cls, config_file)
@@ -198,7 +198,7 @@ class HoneyConfig:
             return
          
         config_file = PreConfig.config_json_file_name
-        old_config_file=config_file
+        old_config_file = config_file
         
         try:
             config_file = cls.__adjust_config_file(cls, config_file)
@@ -277,7 +277,7 @@ class HoneyConfig:
         
         if config.get("dbname"):
             cls.__db_config_data["dbname"] = config.get("dbname")
-            HoneyConfig.dbName=config.get("dbname")
+            HoneyConfig.dbName = config.get("dbname")
            
     def get_dbname(self):
         '''

@@ -1,6 +1,6 @@
 import MyConfig
 from bee.honeyfactory import BF
-from bee.osql.bee_enum import Op
+from bee.bee_enum import Op
 import datetime as dt
 from entity.naming import TestName
 

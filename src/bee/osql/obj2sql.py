@@ -10,7 +10,7 @@ from bee.osql.sqlkeyword import K
 from bee.util import HoneyUtil
 
 from bee.condition import Condition
-from bee.osql.bee_enum import SuidType
+from bee.bee_enum import SuidType
 
 
 class ObjToSQL:
@@ -145,7 +145,7 @@ class ObjToSQL:
     def __getKeyValue_classField(self, entity):
         
         cls = type(entity)
-        #already use cache
+        # already use cache
         classField = HoneyUtil.get_class_field(cls)  # list
         fieldAndValue = HoneyUtil.get_obj_field_value(entity)  # dict
         
@@ -491,7 +491,7 @@ class ObjToSQL:
                 field_and_type[pk] = None
             else:
                 pk = NamingHandler.toColumnName(pk)
-                temp_type=HoneyUtil.adjustUpperOrLower(HoneyUtil.generate_pk_statement())
+                temp_type = HoneyUtil.adjustUpperOrLower(HoneyUtil.generate_pk_statement())
                 pk_statement = pk + temp_type
                 # sql_fields.append(pk_statement)
                 field_and_type.pop(pk, None)
@@ -518,7 +518,6 @@ class ObjToSQL:
             sql_fields.append(f"{PK_STR}({addPkLast})")
         
         sql_statement = f"{CREATE_TABLE_STR} {table_name} (\n    " + ",\n    ".join(sql_fields) + "\n);"  
-
         
         return sql_statement
     

@@ -34,7 +34,7 @@ class HoneyUtil:
                     kv[key] = None  # 使用get/set,暂时不能获取到bean的类级别的值。
                     # kv[key]=getattr(cls, key)
                 elif isinstance(value, Column):
-                    #print(value)
+                    # print(value)
                     kv[key] = None
             return kv
         else: 
@@ -53,11 +53,10 @@ class HoneyUtil:
         # print(result)
         # return result  
     # dict: {'id': <property object at 0x000001E2C878D350>, 'name': <property object at 0x000001E2C878D3A0>, 'remark': <property object at 0x000001E2C878D3F0>}
-    
 
     @staticmethod
     def get_class_field(cls):
-        #返回给定类的属性列表,但不包括系统的 
+        # 返回给定类的属性列表,但不包括系统的 
         # since 1.6.0 还考虑字段的类型;时间类型等
         """ 
         Returns a list of properties for a given class, but does not include the system's.
@@ -196,7 +195,7 @@ class HoneyUtil:
     @staticmethod
     def mid_type_to_sql_type(mid_type): 
         mid = Mid()
-        #直接找到，则直接返回
+        # 直接找到，则直接返回
         sql_type = mid.mid_to_sqltype(mid_type)
         if sql_type:
             return sql_type

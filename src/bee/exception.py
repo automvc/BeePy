@@ -1,6 +1,6 @@
 class BeeException(Exception):
     
-    def __init__(self, message_or_exception=None, code=None):
+    def __init__(self, message_or_exception = None, code = None):
         super().__init__(message_or_exception)
         self.code = code
         

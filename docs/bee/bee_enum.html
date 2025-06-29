@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="pdoc 15.0.3"/>
-    <title>bee.osql.base API documentation</title>
+    <title>bee.bee_enum API documentation</title>
 
     <style>/*! * Bootstrap Reboot v5.0.0 (https://getbootstrap.com/) * Copyright 2011-2021 The Bootstrap Authors * Copyright 2011-2021 Twitter, Inc. * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE) * Forked from Normalize.css, licensed MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md) */*,::after,::before{box-sizing:border-box}@media (prefers-reduced-motion:no-preference){:root{scroll-behavior:smooth}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-size:1rem;font-weight:400;line-height:1.5;color:#212529;background-color:#fff;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}hr{margin:1rem 0;color:inherit;background-color:currentColor;border:0;opacity:.25}hr:not([size]){height:1px}h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:.5rem;font-weight:500;line-height:1.2}h1{font-size:calc(1.375rem + 1.5vw)}@media (min-width:1200px){h1{font-size:2.5rem}}h2{font-size:calc(1.325rem + .9vw)}@media (min-width:1200px){h2{font-size:2rem}}h3{font-size:calc(1.3rem + .6vw)}@media (min-width:1200px){h3{font-size:1.75rem}}h4{font-size:calc(1.275rem + .3vw)}@media (min-width:1200px){h4{font-size:1.5rem}}h5{font-size:1.25rem}h6{font-size:1rem}p{margin-top:0;margin-bottom:1rem}abbr[data-bs-original-title],abbr[title]{-webkit-text-decoration:underline dotted;text-decoration:underline dotted;cursor:help;-webkit-text-decoration-skip-ink:none;text-decoration-skip-ink:none}address{margin-bottom:1rem;font-style:normal;line-height:inherit}ol,ul{padding-left:2rem}dl,ol,ul{margin-top:0;margin-bottom:1rem}ol ol,ol ul,ul ol,ul ul{margin-bottom:0}dt{font-weight:700}dd{margin-bottom:.5rem;margin-left:0}blockquote{margin:0 0 1rem}b,strong{font-weight:bolder}small{font-size:.875em}mark{padding:.2em;background-color:#fcf8e3}sub,sup{position:relative;font-size:.75em;line-height:0;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}a{color:#0d6efd;text-decoration:underline}a:hover{color:#0a58ca}a:not([href]):not([class]),a:not([href]):not([class]):hover{color:inherit;text-decoration:none}code,kbd,pre,samp{font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:1em;direction:ltr;unicode-bidi:bidi-override}pre{display:block;margin-top:0;margin-bottom:1rem;overflow:auto;font-size:.875em}pre code{font-size:inherit;color:inherit;word-break:normal}code{font-size:.875em;color:#d63384;word-wrap:break-word}a>code{color:inherit}kbd{padding:.2rem .4rem;font-size:.875em;color:#fff;background-color:#212529;border-radius:.2rem}kbd kbd{padding:0;font-size:1em;font-weight:700}figure{margin:0 0 1rem}img,svg{vertical-align:middle}table{caption-side:bottom;border-collapse:collapse}caption{padding-top:.5rem;padding-bottom:.5rem;color:#6c757d;text-align:left}th{text-align:inherit;text-align:-webkit-match-parent}tbody,td,tfoot,th,thead,tr{border-color:inherit;border-style:solid;border-width:0}label{display:inline-block}button{border-radius:0}button:focus:not(:focus-visible){outline:0}button,input,optgroup,select,textarea{margin:0;font-family:inherit;font-size:inherit;line-height:inherit}button,select{text-transform:none}[role=button]{cursor:pointer}select{word-wrap:normal}select:disabled{opacity:1}[list]::-webkit-calendar-picker-indicator{display:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]:not(:disabled),[type=reset]:not(:disabled),[type=submit]:not(:disabled),button:not(:disabled){cursor:pointer}::-moz-focus-inner{padding:0;border-style:none}textarea{resize:vertical}fieldset{min-width:0;padding:0;margin:0;border:0}legend{float:left;width:100%;padding:0;margin-bottom:.5rem;font-size:calc(1.275rem + .3vw);line-height:inherit}@media (min-width:1200px){legend{font-size:1.5rem}}legend+*{clear:left}::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-fields-wrapper,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-text,::-webkit-datetime-edit-year-field{padding:0}::-webkit-inner-spin-button{height:auto}[type=search]{outline-offset:-2px;-webkit-appearance:textfield}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-color-swatch-wrapper{padding:0}::file-selector-button{font:inherit}::-webkit-file-upload-button{font:inherit;-webkit-appearance:button}output{display:inline-block}iframe{border:0}summary{display:list-item;cursor:pointer}progress{vertical-align:baseline}[hidden]{display:none!important}</style>
     <style>/*! syntax-highlighting.css */pre{line-height:125%;}span.linenos{color:inherit; background-color:transparent; padding-left:5px; padding-right:20px;}.pdoc-code .hll{background-color:#ffffcc}.pdoc-code{background:#f8f8f8;}.pdoc-code .c{color:#3D7B7B; font-style:italic}.pdoc-code .err{border:1px solid #FF0000}.pdoc-code .k{color:#008000; font-weight:bold}.pdoc-code .o{color:#666666}.pdoc-code .ch{color:#3D7B7B; font-style:italic}.pdoc-code .cm{color:#3D7B7B; font-style:italic}.pdoc-code .cp{color:#9C6500}.pdoc-code .cpf{color:#3D7B7B; font-style:italic}.pdoc-code .c1{color:#3D7B7B; font-style:italic}.pdoc-code .cs{color:#3D7B7B; font-style:italic}.pdoc-code .gd{color:#A00000}.pdoc-code .ge{font-style:italic}.pdoc-code .gr{color:#E40000}.pdoc-code .gh{color:#000080; font-weight:bold}.pdoc-code .gi{color:#008400}.pdoc-code .go{color:#717171}.pdoc-code .gp{color:#000080; font-weight:bold}.pdoc-code .gs{font-weight:bold}.pdoc-code .gu{color:#800080; font-weight:bold}.pdoc-code .gt{color:#0044DD}.pdoc-code .kc{color:#008000; font-weight:bold}.pdoc-code .kd{color:#008000; font-weight:bold}.pdoc-code .kn{color:#008000; font-weight:bold}.pdoc-code .kp{color:#008000}.pdoc-code .kr{color:#008000; font-weight:bold}.pdoc-code .kt{color:#B00040}.pdoc-code .m{color:#666666}.pdoc-code .s{color:#BA2121}.pdoc-code .na{color:#687822}.pdoc-code .nb{color:#008000}.pdoc-code .nc{color:#0000FF; font-weight:bold}.pdoc-code .no{color:#880000}.pdoc-code .nd{color:#AA22FF}.pdoc-code .ni{color:#717171; font-weight:bold}.pdoc-code .ne{color:#CB3F38; font-weight:bold}.pdoc-code .nf{color:#0000FF}.pdoc-code .nl{color:#767600}.pdoc-code .nn{color:#0000FF; font-weight:bold}.pdoc-code .nt{color:#008000; font-weight:bold}.pdoc-code .nv{color:#19177C}.pdoc-code .ow{color:#AA22FF; font-weight:bold}.pdoc-code .w{color:#bbbbbb}.pdoc-code .mb{color:#666666}.pdoc-code .mf{color:#666666}.pdoc-code .mh{color:#666666}.pdoc-code .mi{color:#666666}.pdoc-code .mo{color:#666666}.pdoc-code .sa{color:#BA2121}.pdoc-code .sb{color:#BA2121}.pdoc-code .sc{color:#BA2121}.pdoc-code .dl{color:#BA2121}.pdoc-code .sd{color:#BA2121; font-style:italic}.pdoc-code .s2{color:#BA2121}.pdoc-code .se{color:#AA5D1F; font-weight:bold}.pdoc-code .sh{color:#BA2121}.pdoc-code .si{color:#A45A77; font-weight:bold}.pdoc-code .sx{color:#008000}.pdoc-code .sr{color:#A45A77}.pdoc-code .s1{color:#BA2121}.pdoc-code .ss{color:#19177C}.pdoc-code .bp{color:#008000}.pdoc-code .fm{color:#0000FF}.pdoc-code .vc{color:#19177C}.pdoc-code .vg{color:#19177C}.pdoc-code .vi{color:#19177C}.pdoc-code .vm{color:#19177C}.pdoc-code .il{color:#666666}</style>
@@ -16,11 +16,11 @@
     <nav class="pdoc">
         <label id="navtoggle" for="togglestate" class="pdoc-button"><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke-linecap='round' stroke="currentColor" stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg></label>
         <input id="togglestate" type="checkbox" aria-hidden="true" tabindex="-1">
-        <div>            <a class="pdoc-button module-list-button" href="../osql.html">
+        <div>            <a class="pdoc-button module-list-button" href="../bee.html">
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0v-2z"/>
   <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
-</svg>                &nbsp;bee.osql</a>
+</svg>                &nbsp;bee</a>
 
 
             <input type="search" placeholder="Search..." role="searchbox" aria-label="search"
@@ -31,43 +31,127 @@
             <h2>API Documentation</h2>
                 <ul class="memberlist">
             <li>
-                    <a class="class" href="#AbstractCommOperate">AbstractCommOperate</a>
+                    <a class="class" href="#FunctionType">FunctionType</a>
                             <ul class="memberlist">
                         <li>
-                                <a class="variable" href="#AbstractCommOperate.local">local</a>
+                                <a class="variable" href="#FunctionType.MAX">MAX</a>
                         </li>
                         <li>
-                                <a class="function" href="#AbstractCommOperate.doBeforePasreEntity">doBeforePasreEntity</a>
+                                <a class="variable" href="#FunctionType.MIN">MIN</a>
                         </li>
                         <li>
-                                <a class="function" href="#AbstractCommOperate.doBeforePasreListEntity">doBeforePasreListEntity</a>
+                                <a class="variable" href="#FunctionType.SUM">SUM</a>
                         </li>
                         <li>
-                                <a class="function" href="#AbstractCommOperate.doBeforeReturn">doBeforeReturn</a>
+                                <a class="variable" href="#FunctionType.AVG">AVG</a>
                         </li>
                         <li>
-                                <a class="function" href="#AbstractCommOperate.doBeforeReturnSimple">doBeforeReturnSimple</a>
+                                <a class="variable" href="#FunctionType.COUNT">COUNT</a>
                         </li>
                         <li>
-                                <a class="function" href="#AbstractCommOperate.logsql">logsql</a>
-                        </li>
-                        <li>
-                                <a class="function" href="#AbstractCommOperate.log_params">log_params</a>
-                        </li>
-                        <li>
-                                <a class="function" href="#AbstractCommOperate.log_params_for_batch">log_params_for_batch</a>
+                                <a class="function" href="#FunctionType.get_name">get_name</a>
                         </li>
                 </ul>
 
             </li>
             <li>
-                    <a class="class" href="#AbstractBase">AbstractBase</a>
+                    <a class="class" href="#SuidType">SuidType</a>
                             <ul class="memberlist">
                         <li>
-                                <a class="function" href="#AbstractBase.addInCache">addInCache</a>
+                                <a class="variable" href="#SuidType.SELECT">SELECT</a>
                         </li>
                         <li>
-                                <a class="function" href="#AbstractBase.loginfo">loginfo</a>
+                                <a class="variable" href="#SuidType.UPDATE">UPDATE</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SuidType.INSERT">INSERT</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SuidType.DELETE">DELETE</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SuidType.MODIFY">MODIFY</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SuidType.SUID">SUID</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SuidType.DDL">DDL</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SuidType.type">type</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#SuidType.get_name">get_name</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#OrderType">OrderType</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#OrderType.ASC">ASC</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#OrderType.DESC">DESC</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#OrderType.get_name">get_name</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#Op">Op</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#Op.eq">eq</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Op.gt">gt</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Op.lt">lt</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Op.ne">ne</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Op.ge">ge</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Op.le">le</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Op.LIKE">LIKE</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Op.LIKE_LEFT">LIKE_LEFT</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Op.LIKE_RIGHT">LIKE_RIGHT</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Op.LIKE_LEFT_RIGHT">LIKE_LEFT_RIGHT</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Op.IN">IN</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Op.NOT_IN">NOT_IN</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Op.get_name">get_name</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#LocalType">LocalType</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#LocalType.CacheSuidStruct">CacheSuidStruct</a>
                         </li>
                 </ul>
 
@@ -86,162 +170,460 @@
     <main class="pdoc">
             <section class="module-info">
                     <h1 class="modulename">
-<a href="./../../bee.html">bee</a><wbr>.<a href="./../osql.html">osql</a><wbr>.base    </h1>
+<a href="./../bee.html">bee</a><wbr>.bee_enum    </h1>
 
                 
                 
                 
                 
             </section>
-                <section id="AbstractCommOperate">
+                <section id="FunctionType">
                     <div class="attr class">
             
     <span class="def">class</span>
-    <span class="name">AbstractCommOperate</span>:
+    <span class="name">FunctionType</span><wbr>(<span class="base">enum.Enum</span>):
 
         
     </div>
-    <a class="headerlink" href="#AbstractCommOperate"></a>
+    <a class="headerlink" href="#FunctionType"></a>
     
     
 
-                            <div id="AbstractCommOperate.local" class="classattr">
+                            <div id="FunctionType.MAX" class="classattr">
                                 <div class="attr variable">
-            <span class="name">local</span>
+            <span class="name">MAX</span>        =
+<span class="default_value">&lt;<a href="#FunctionType.MAX">FunctionType.MAX</a>: &#39;max&#39;&gt;</span>
 
         
     </div>
-    <a class="headerlink" href="#AbstractCommOperate.local"></a>
+    <a class="headerlink" href="#FunctionType.MAX"></a>
     
     
 
                             </div>
-                            <div id="AbstractCommOperate.doBeforePasreEntity" class="classattr">
-                                <div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">doBeforePasreEntity</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">entity</span>, </span><span class="param"><span class="n">SuidType</span><span class="p">:</span> <span class="n"><a href="../bee_enum.html#SuidType">bee.bee_enum.SuidType</a></span></span><span class="return-annotation">):</span></span>
+                            <div id="FunctionType.MIN" class="classattr">
+                                <div class="attr variable">
+            <span class="name">MIN</span>        =
+<span class="default_value">&lt;<a href="#FunctionType.MIN">FunctionType.MIN</a>: &#39;min&#39;&gt;</span>
 
         
     </div>
-    <a class="headerlink" href="#AbstractCommOperate.doBeforePasreEntity"></a>
+    <a class="headerlink" href="#FunctionType.MIN"></a>
     
     
 
                             </div>
-                            <div id="AbstractCommOperate.doBeforePasreListEntity" class="classattr">
-                                <div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">doBeforePasreListEntity</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">entityArray</span>, </span><span class="param"><span class="n">SuidType</span><span class="p">:</span> <span class="n"><a href="../bee_enum.html#SuidType">bee.bee_enum.SuidType</a></span></span><span class="return-annotation">):</span></span>
+                            <div id="FunctionType.SUM" class="classattr">
+                                <div class="attr variable">
+            <span class="name">SUM</span>        =
+<span class="default_value">&lt;<a href="#FunctionType.SUM">FunctionType.SUM</a>: &#39;sum&#39;&gt;</span>
 
         
     </div>
-    <a class="headerlink" href="#AbstractCommOperate.doBeforePasreListEntity"></a>
+    <a class="headerlink" href="#FunctionType.SUM"></a>
     
     
 
                             </div>
-                            <div id="AbstractCommOperate.doBeforeReturn" class="classattr">
-                                <div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">doBeforeReturn</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">list_param</span><span class="p">:</span> <span class="nb">list</span></span><span class="return-annotation">):</span></span>
+                            <div id="FunctionType.AVG" class="classattr">
+                                <div class="attr variable">
+            <span class="name">AVG</span>        =
+<span class="default_value">&lt;<a href="#FunctionType.AVG">FunctionType.AVG</a>: &#39;avg&#39;&gt;</span>
 
         
     </div>
-    <a class="headerlink" href="#AbstractCommOperate.doBeforeReturn"></a>
+    <a class="headerlink" href="#FunctionType.AVG"></a>
     
     
 
                             </div>
-                            <div id="AbstractCommOperate.doBeforeReturnSimple" class="classattr">
-                                <div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">doBeforeReturnSimple</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
+                            <div id="FunctionType.COUNT" class="classattr">
+                                <div class="attr variable">
+            <span class="name">COUNT</span>        =
+<span class="default_value">&lt;<a href="#FunctionType.COUNT">FunctionType.COUNT</a>: &#39;count&#39;&gt;</span>
 
         
     </div>
-    <a class="headerlink" href="#AbstractCommOperate.doBeforeReturnSimple"></a>
+    <a class="headerlink" href="#FunctionType.COUNT"></a>
     
     
 
                             </div>
-                            <div id="AbstractCommOperate.logsql" class="classattr">
+                            <div id="FunctionType.get_name" class="classattr">
                                 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">logsql</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">hard_str</span>, </span><span class="param"><span class="n">sql</span></span><span class="return-annotation">):</span></span>
+        <span class="name">get_name</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
 
         
     </div>
-    <a class="headerlink" href="#AbstractCommOperate.logsql"></a>
-    
-    
-
-                            </div>
-                            <div id="AbstractCommOperate.log_params" class="classattr">
-                                <div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">log_params</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">params</span></span><span class="return-annotation">):</span></span>
-
-        
-    </div>
-    <a class="headerlink" href="#AbstractCommOperate.log_params"></a>
-    
-    
-
-                            </div>
-                            <div id="AbstractCommOperate.log_params_for_batch" class="classattr">
-                                <div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">log_params_for_batch</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">params</span></span><span class="return-annotation">):</span></span>
-
-        
-    </div>
-    <a class="headerlink" href="#AbstractCommOperate.log_params_for_batch"></a>
+    <a class="headerlink" href="#FunctionType.get_name"></a>
     
     
 
                             </div>
                 </section>
-                <section id="AbstractBase">
+                <section id="SuidType">
                     <div class="attr class">
             
     <span class="def">class</span>
-    <span class="name">AbstractBase</span>:
+    <span class="name">SuidType</span><wbr>(<span class="base">enum.Enum</span>):
 
         
     </div>
-    <a class="headerlink" href="#AbstractBase"></a>
+    <a class="headerlink" href="#SuidType"></a>
     
     
 
-                            <div id="AbstractBase.addInCache" class="classattr">
-                                <div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">addInCache</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">sql</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">rs</span><span class="p">:</span> <span class="n">Any</span>, </span><span class="param"><span class="n">resultSetSize</span><span class="p">:</span> <span class="nb">int</span></span><span class="return-annotation">):</span></span>
+                            <div id="SuidType.SELECT" class="classattr">
+                                <div class="attr variable">
+            <span class="name">SELECT</span>        =
+<span class="default_value">&lt;<a href="#SuidType.SELECT">SuidType.SELECT</a>: &#39;SELECT&#39;&gt;</span>
 
         
     </div>
-    <a class="headerlink" href="#AbstractBase.addInCache"></a>
+    <a class="headerlink" href="#SuidType.SELECT"></a>
     
     
 
                             </div>
-                            <div id="AbstractBase.loginfo" class="classattr">
-                                <div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">loginfo</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">msg</span></span><span class="return-annotation">):</span></span>
+                            <div id="SuidType.UPDATE" class="classattr">
+                                <div class="attr variable">
+            <span class="name">UPDATE</span>        =
+<span class="default_value">&lt;<a href="#SuidType.UPDATE">SuidType.UPDATE</a>: &#39;UPDATE&#39;&gt;</span>
 
         
     </div>
-    <a class="headerlink" href="#AbstractBase.loginfo"></a>
+    <a class="headerlink" href="#SuidType.UPDATE"></a>
+    
+    
+
+                            </div>
+                            <div id="SuidType.INSERT" class="classattr">
+                                <div class="attr variable">
+            <span class="name">INSERT</span>        =
+<span class="default_value">&lt;<a href="#SuidType.INSERT">SuidType.INSERT</a>: &#39;INSERT&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SuidType.INSERT"></a>
+    
+    
+
+                            </div>
+                            <div id="SuidType.DELETE" class="classattr">
+                                <div class="attr variable">
+            <span class="name">DELETE</span>        =
+<span class="default_value">&lt;<a href="#SuidType.DELETE">SuidType.DELETE</a>: &#39;DELETE&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SuidType.DELETE"></a>
+    
+    
+
+                            </div>
+                            <div id="SuidType.MODIFY" class="classattr">
+                                <div class="attr variable">
+            <span class="name">MODIFY</span>        =
+<span class="default_value">&lt;<a href="#SuidType.MODIFY">SuidType.MODIFY</a>: &#39;MODIFY&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SuidType.MODIFY"></a>
+    
+    
+
+                            </div>
+                            <div id="SuidType.SUID" class="classattr">
+                                <div class="attr variable">
+            <span class="name">SUID</span>        =
+<span class="default_value">&lt;<a href="#SuidType.SUID">SuidType.SUID</a>: &#39;SUID&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SuidType.SUID"></a>
+    
+    
+
+                            </div>
+                            <div id="SuidType.DDL" class="classattr">
+                                <div class="attr variable">
+            <span class="name">DDL</span>        =
+<span class="default_value">&lt;<a href="#SuidType.DDL">SuidType.DDL</a>: &#39;DDL&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SuidType.DDL"></a>
+    
+    
+
+                            </div>
+                            <div id="SuidType.type" class="classattr">
+                                <div class="attr variable">
+            <span class="name">type</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SuidType.type"></a>
+    
+    
+
+                            </div>
+                            <div id="SuidType.get_name" class="classattr">
+                                <div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">get_name</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
+
+        
+    </div>
+    <a class="headerlink" href="#SuidType.get_name"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="OrderType">
+                    <div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">OrderType</span><wbr>(<span class="base">enum.Enum</span>):
+
+        
+    </div>
+    <a class="headerlink" href="#OrderType"></a>
+    
+    
+
+                            <div id="OrderType.ASC" class="classattr">
+                                <div class="attr variable">
+            <span class="name">ASC</span>        =
+<span class="default_value">&lt;<a href="#OrderType.ASC">OrderType.ASC</a>: &#39;asc&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#OrderType.ASC"></a>
+    
+    
+
+                            </div>
+                            <div id="OrderType.DESC" class="classattr">
+                                <div class="attr variable">
+            <span class="name">DESC</span>        =
+<span class="default_value">&lt;<a href="#OrderType.DESC">OrderType.DESC</a>: &#39;desc&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#OrderType.DESC"></a>
+    
+    
+
+                            </div>
+                            <div id="OrderType.get_name" class="classattr">
+                                <div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">get_name</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
+
+        
+    </div>
+    <a class="headerlink" href="#OrderType.get_name"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="Op">
+                    <div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">Op</span><wbr>(<span class="base">enum.Enum</span>):
+
+        
+    </div>
+    <a class="headerlink" href="#Op"></a>
+    
+    
+
+                            <div id="Op.eq" class="classattr">
+                                <div class="attr variable">
+            <span class="name">eq</span>        =
+<span class="default_value">&lt;<a href="#Op.eq">Op.eq</a>: &#39;=&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Op.eq"></a>
+    
+    
+
+                            </div>
+                            <div id="Op.gt" class="classattr">
+                                <div class="attr variable">
+            <span class="name">gt</span>        =
+<span class="default_value">&lt;<a href="#Op.gt">Op.gt</a>: &#39;&gt;&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Op.gt"></a>
+    
+    
+
+                            </div>
+                            <div id="Op.lt" class="classattr">
+                                <div class="attr variable">
+            <span class="name">lt</span>        =
+<span class="default_value">&lt;<a href="#Op.lt">Op.lt</a>: &#39;&lt;&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Op.lt"></a>
+    
+    
+
+                            </div>
+                            <div id="Op.ne" class="classattr">
+                                <div class="attr variable">
+            <span class="name">ne</span>        =
+<span class="default_value">&lt;<a href="#Op.ne">Op.ne</a>: &#39;!=&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Op.ne"></a>
+    
+    
+
+                            </div>
+                            <div id="Op.ge" class="classattr">
+                                <div class="attr variable">
+            <span class="name">ge</span>        =
+<span class="default_value">&lt;<a href="#Op.ge">Op.ge</a>: &#39;&gt;=&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Op.ge"></a>
+    
+    
+
+                            </div>
+                            <div id="Op.le" class="classattr">
+                                <div class="attr variable">
+            <span class="name">le</span>        =
+<span class="default_value">&lt;<a href="#Op.le">Op.le</a>: &#39;&lt;=&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Op.le"></a>
+    
+    
+
+                            </div>
+                            <div id="Op.LIKE" class="classattr">
+                                <div class="attr variable">
+            <span class="name">LIKE</span>        =
+<span class="default_value">&lt;<a href="#Op.LIKE">Op.LIKE</a>: &#39;like&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Op.LIKE"></a>
+    
+    
+
+                            </div>
+                            <div id="Op.LIKE_LEFT" class="classattr">
+                                <div class="attr variable">
+            <span class="name">LIKE_LEFT</span>        =
+<span class="default_value">&lt;<a href="#Op.LIKE_LEFT">Op.LIKE_LEFT</a>: (&#39;like&#39;, &lt;object object&gt;)&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Op.LIKE_LEFT"></a>
+    
+    
+
+                            </div>
+                            <div id="Op.LIKE_RIGHT" class="classattr">
+                                <div class="attr variable">
+            <span class="name">LIKE_RIGHT</span>        =
+<span class="default_value">&lt;<a href="#Op.LIKE_RIGHT">Op.LIKE_RIGHT</a>: (&#39;like&#39;, &lt;object object&gt;)&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Op.LIKE_RIGHT"></a>
+    
+    
+
+                            </div>
+                            <div id="Op.LIKE_LEFT_RIGHT" class="classattr">
+                                <div class="attr variable">
+            <span class="name">LIKE_LEFT_RIGHT</span>        =
+<span class="default_value">&lt;<a href="#Op.LIKE_LEFT_RIGHT">Op.LIKE_LEFT_RIGHT</a>: (&#39;like&#39;, &lt;object object&gt;)&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Op.LIKE_LEFT_RIGHT"></a>
+    
+    
+
+                            </div>
+                            <div id="Op.IN" class="classattr">
+                                <div class="attr variable">
+            <span class="name">IN</span>        =
+<span class="default_value">&lt;<a href="#Op.IN">Op.IN</a>: &#39;in&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Op.IN"></a>
+    
+    
+
+                            </div>
+                            <div id="Op.NOT_IN" class="classattr">
+                                <div class="attr variable">
+            <span class="name">NOT_IN</span>        =
+<span class="default_value">&lt;<a href="#Op.NOT_IN">Op.NOT_IN</a>: &#39;not in&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Op.NOT_IN"></a>
+    
+    
+
+                            </div>
+                            <div id="Op.get_name" class="classattr">
+                                <div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">get_name</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
+
+        
+    </div>
+    <a class="headerlink" href="#Op.get_name"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="LocalType">
+                    <div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">LocalType</span><wbr>(<span class="base">enum.Enum</span>):
+
+        
+    </div>
+    <a class="headerlink" href="#LocalType"></a>
+    
+    
+
+                            <div id="LocalType.CacheSuidStruct" class="classattr">
+                                <div class="attr variable">
+            <span class="name">CacheSuidStruct</span>        =
+<span class="default_value">&lt;<a href="#LocalType.CacheSuidStruct">LocalType.CacheSuidStruct</a>: 1&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#LocalType.CacheSuidStruct"></a>
     
     
 
@@ -300,7 +682,7 @@
                 script.async = true;
                 script.onload = () => resolve(window.pdocSearch);
                 script.onerror = (e) => reject(e);
-                script.src = "../../search.js";
+                script.src = "../search.js";
                 document.getElementsByTagName("head")[0].appendChild(script);
             });
         } catch (e) {
@@ -342,7 +724,7 @@
             }
             for (let result of results.slice(0, 10)) {
                 let doc = result.doc;
-                let url = `../../${doc.modulename.replaceAll(".", "/")}.html`;
+                let url = `../${doc.modulename.replaceAll(".", "/")}.html`;
                 if (doc.qualname) {
                     url += `#${doc.qualname}`;
                 }

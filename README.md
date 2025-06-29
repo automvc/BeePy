@@ -94,6 +94,8 @@ eg: condtion.op("num", Op.IN, [1,2]); can support list/set/tuple type
 3. enhance paging(LimitOffset)  
 4. update default naming type(use OriginalName)  
 5. update condition Expression  
+6. support active record style  
+7. use SQL keywords for compatible field name or table name  
 
 Quick Start:
 =========	
@@ -211,9 +213,9 @@ class Student2:
         
         
 from bee.api import Suid, SuidRich
+from bee.bee_enum import Op
 from bee.config import PreConfig
 from bee.honeyfactory import BF
-from bee.osql.bee_enum import Op
 
 if __name__ == "__main__":
 

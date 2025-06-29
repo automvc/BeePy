@@ -12,4 +12,4 @@ class Version:
     @staticmethod
     def printversion():
         print("[INFO] ", StrConst.LOG_PREFIX, "Bee Version is: " + Version.__version)
-        
+

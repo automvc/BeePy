@@ -2,7 +2,7 @@
 # from bee.api import Suid
 
 from bee.honeyfactory import BF
-from bee.osql.bee_enum import Op
+from bee.bee_enum import Op
 
 import MyConfig
 # from entity.Orders import Orders

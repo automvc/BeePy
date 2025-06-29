@@ -6,7 +6,7 @@ from bee.context import HoneyContext
 from bee.exception import ParamBeeException, BeeErrorGrammarException
 from bee.name import NameCheckUtil
 from bee.name.naming_handler import NamingHandler
-from bee.osql.bee_enum import FunctionType, Op, OrderType, SuidType
+from bee.bee_enum import FunctionType, Op, OrderType, SuidType
 from bee.osql.logger import Logger
 from bee.osql.sqlkeyword import K
 
@@ -321,7 +321,7 @@ class ConditionImpl(Condition):
         if fields:
             if len(fields) == 1:
                 if fields[0]:
-                    NameCheckUtil.check_fields(fields[0].replace(" ",""))
+                    NameCheckUtil.check_fields(fields[0].replace(" ", ""))
             else:
                 for field in fields:
                     self.__check_one_field(field)
@@ -527,7 +527,6 @@ class ParseCondition:
 
         return ConditionUpdateSetStruct(updateSet_str, prepared_values, values, suidType, condition.update_set_fields) 
     
-    
     # parse where
     @staticmethod       
     def parse(expressions, condition:Condition) -> ConditionStruct: 
@@ -559,19 +558,19 @@ class ParseCondition:
             if exp.op_num == 2:
                 is_need_and = adjust_and()
                 op = exp.op
-                if op==Op.LIKE or op==Op.LIKE_LEFT or op==Op.LIKE_RIGHT or op==Op.LIKE_LEFT_RIGHT:
+                if op == Op.LIKE or op == Op.LIKE_LEFT or op == Op.LIKE_RIGHT or op == Op.LIKE_LEFT_RIGHT:
                     
                     where_clause = f"{column_name} {exp.op} {ph}"
                     v = exp.value
                     v = ParseCondition.__process_like(op, v)
                     prepared_values.append(PreparedValue(type(v), v))
                     
-                elif op==Op.IN or op==Op.NOT_IN:
+                elif op == Op.IN or op == Op.NOT_IN:
                     v = exp.value
-                    in_ph= ParseCondition.__process_in(prepared_values,v)
+                    in_ph = ParseCondition.__process_in(prepared_values, v)
                     where_clause = f"{column_name} {exp.op}" + in_ph
                     
-                else: # Binary operation  # op("name", Op.ne, "bee1")
+                else:  # Binary operation  # op("name", Op.ne, "bee1")
                     
                     if exp.value is None:
                         where_clause = f"{column_name} {K.isnull()}"
@@ -662,9 +661,8 @@ class ParseCondition:
 
         return ConditionStruct(where_clause_str, prepared_values, values, suidType, condition.where_fields, __selectFields, __start, __size, __has_for_update)
     
-    
     @staticmethod
-    def __process_like(op, v):  
+    def __process_like(op, v): 
         if v is not None: 
             if op is Op.LIKE_LEFT: 
                 ParseCondition.__check_like_empty_exception(v)  
@@ -678,31 +676,31 @@ class ParseCondition:
             else:  # Op.like
                 if ParseCondition.__just_like_char(v): 
                     raise ParamBeeException(f"Like has SQL injection risk! like '{v}'")  
-        else:   
-            print("WARN: the parameter value in like is null!")  
+        else: 
+            Logger.warn("the parameter value in like is null!")  
         
         return v  
     
     @staticmethod
-    def __escape_like(value):  
-        if value is None:  
+    def __escape_like(value): 
+        if value is None: 
             return value  
         
         buf = []  
         i = 0  
-        while i < len(value):  
+        while i < len(value): 
             temp = value[i]  
-            if temp == '\\':  
+            if temp == '\\': 
                 buf.append(temp)  
                 i += 1  
-                if i < len(value):  
+                if i < len(value): 
                     buf.append(value[i])  
                     i += 1  
-            elif temp == '%' or temp == '_':  
+            elif temp == '%' or temp == '_': 
                 buf.append('\\')  
                 buf.append(temp)  
                 i += 1  
-            else:  
+            else: 
                 buf.append(temp)  
                 i += 1  
         
@@ -750,11 +748,11 @@ class ParseCondition:
         return ''.join(sql_buffer)
     
     @staticmethod
-    def __process_in_value(v):  
+    def __process_in_value(v): 
         in_list = []  
         
         if isinstance(v, (list, set, tuple)):  # List or Set  
-            for item in v:  
+            for item in v: 
                 in_list.append(PreparedValue(type(item), item))
                 
         # elif ParseCondition.is_number_array(v):  # Number array   py对数字数组支持很差 

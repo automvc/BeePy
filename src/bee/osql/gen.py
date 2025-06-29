@@ -69,14 +69,14 @@ class GenBean:
         GenBean.__db_sql[dbname.lower()] = sql
     
     def _get_table_metadata(self, sql):
-        old_naming_translate_type= HoneyConfig.naming_translate_type
-        HoneyConfig.naming_translate_type=3
+        old_naming_translate_type = HoneyConfig.naming_translate_type
+        HoneyConfig.naming_translate_type = 3
     
         pre = PreparedSql()
         tableMeta_list = pre.select(sql, TableMeta)
         
         # reset    
-        HoneyConfig.naming_translate_type=old_naming_translate_type
+        HoneyConfig.naming_translate_type = old_naming_translate_type
     
         return tableMeta_list
     

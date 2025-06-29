@@ -22,6 +22,7 @@ def check_fields(name):
     else: 
         _check_one_name(name)  
 
+
 def _check_one_name(name):
     if not name: 
         raise BeeErrorNameException("The name is null.")  

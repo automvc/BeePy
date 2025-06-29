@@ -5,7 +5,7 @@
 
 import MyConfig
 from bee.honeyfactory import BF
-from bee.osql.bee_enum import Op, FunctionType
+from bee.bee_enum import Op, FunctionType
 from entity.Student2 import Student2
 
 

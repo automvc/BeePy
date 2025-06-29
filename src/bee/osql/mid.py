@@ -17,11 +17,16 @@ class Model:
             self.__table__ = type('Table', (), {'columns': []})  
     
     def __init__(self): 
+        self.__table__.columns = []
         # 收集所有Column属性  
         for name, value in self.__class__.__dict__.items(): 
             if isinstance(value, Column): 
                 value.name = name  
-                self.__table__.columns.append(value)  
+                self.__table__.columns.append(value) 
+            # else:
+                # print(name,value) 
+                # 另外记录顺序号
+                # __annotations__ {'Field8': <class 'int'>, 'Field9': <class 'str'>}
 
 
 class MidSQL: 
@@ -115,7 +120,7 @@ class MidSQL:
                 meta_list.append(meta)
                 
             sql_fields = []
-            sql_statement = ""          
+            sql_statement = ""
             for meta in meta_list:
                 column = NamingHandler.toColumnName(meta.col) 
                 col_type = HoneyUtil.adjustUpperOrLower(meta.type)
@@ -133,7 +138,7 @@ class MidSQL:
                     # col_type = HoneyUtil.adjustUpperOrLower(self.__default_type())
                     col_type = HoneyUtil.adjustUpperOrLower(HoneyUtil.mid_type_to_sql_type(meta.type))
                     if not meta.strLen:
-                        meta.strLen=255
+                        meta.strLen = 255
                     col_type += '(' + str(meta.strLen) + ')'
                     temp_sql = f"{column} {col_type}"
                 elif meta.type == 'Text':

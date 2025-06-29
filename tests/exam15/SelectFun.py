@@ -1,7 +1,7 @@
 from bee.api import SuidRich
 
 import MyConfig
-from bee.osql.bee_enum import FunctionType
+from bee.bee_enum import FunctionType
 from entity.Orders import Orders
 
 

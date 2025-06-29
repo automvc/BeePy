@@ -6,7 +6,7 @@ from bee.config import HoneyConfig
 from bee.context import HoneyContext
 from bee.osql.logger import Logger
 
-from bee.osql.bee_enum import SuidType, LocalType
+from bee.bee_enum import SuidType, LocalType
 from bee.osql.cache import CacheUtil
 from bee.osql.transform import ParamUtil
 
