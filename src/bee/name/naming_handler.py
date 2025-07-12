@@ -16,7 +16,6 @@ class NamingHandler:
         DatabaseConst.MsAccess.lower():KeyWork.msaccess_keywords,
         DatabaseConst.Kingbase.lower():KeyWork.kingbase_keywords,
         DatabaseConst.DM.lower():KeyWork.dm_keywords,
-        DatabaseConst.OceanBase.lower():KeyWork.oceanbase_keywords
         }
     
     @staticmethod
@@ -32,17 +31,13 @@ class NamingHandler:
     @staticmethod
     def toTableName(entityName) -> str:
         name = NamingHandler.getNameTranslate().toTableName(entityName)
-        if name and NamingHandler.__is_key_word(name):
-            name = "`" + name + "`";
-        return name
+        return NamingHandler.transform_name_if_keyword(name)
 
     @staticmethod
     def toColumnName(fieldName) -> str:
         name = NamingHandler.getNameTranslate().toColumnName(fieldName)
         # if name and name.lower() in KeyWork.key_work:
-        if name and NamingHandler.__is_key_word(name):
-            name = "`" + name + "`";
-        return name
+        return NamingHandler.transform_name_if_keyword(name)
     
     @staticmethod
     def toEntityName(tableName) -> str:
@@ -52,3 +47,18 @@ class NamingHandler:
     def toFieldName(columnName) -> str:
         return NamingHandler.getNameTranslate().toFieldName(columnName)
 
+
+    @staticmethod
+    def transform_name_if_keyword(name):
+        if not NamingHandler.__is_key_word(name):
+            return name
+        
+        # warn_keyword(name)
+        
+        db_name = HoneyContext.get_dbname()
+        if db_name.lower() in [DatabaseConst.MYSQL.lower(), DatabaseConst.MariaDB.lower()]:
+            return f"`{name}`"
+        elif db_name.lower() == DatabaseConst.MsAccess.lower():
+            return f"[{name}]"
+        else:
+            return f'"{name}"'
