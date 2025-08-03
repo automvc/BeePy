@@ -4,12 +4,18 @@ from bee.osql.logger import Logger
 
 
 class String:
+    '''
+    String type.
+    '''
     
     def __init__(self, length):
         self.len = length
         
         
 class Array:
+    '''
+    Array type.
+    '''
     
     __array:None
     __size = 0
@@ -36,13 +42,17 @@ class Array:
     
 
 class LongArray:
+    '''
+    unsigned Long Array type.
+    unsigned long 64 bit.
+    '''
     
     __array:None
     __size = 0
     
     def __init__(self, size:int):
         self.__size = size
-        self.__array = array.array("Q", [0] * size)
+        self.__array = array.array("Q", [0] * size) #unsigned Long  64 bit
     
     def __setitem__(self, index:int, v):
         if index >= self.__size:
@@ -61,11 +71,15 @@ class LongArray:
     
     
 class Bitmap:
+    '''
+    Bitmap type base LongArray.
+    <br><B>since  1.6.2</B>
+    '''
 
     def __init__(self, num_bits: int):
         """
-        初始化一个位图，使用 LongArray 作为底层存储。
-        :param num_bits: 位图的总位数。
+        Initialize a bitmap, using LongArray as the underlying storage.
+        :param num_bits: The total number of bits in a bitmap.
         """
         self.__num_bits = num_bits
         self.__long_array = LongArray((num_bits + 63) // 64)  # 计算需要的 64 位整数个数
