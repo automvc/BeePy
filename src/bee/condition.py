@@ -4,6 +4,9 @@ from typing import Any
 from bee.bee_enum import FunctionType, Op, SuidType
 
 class Condition(ABC): 
+    """
+    Condition.条件构造器
+    """
 
     @abstractmethod  
     def op(self, field: str, Op: Op, value: Any) -> 'Condition': 

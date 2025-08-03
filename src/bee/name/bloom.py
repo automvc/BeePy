@@ -5,6 +5,10 @@ from bitarray import bitarray
 
 
 class BloomFilter:
+    """
+    Bloom Filter.布隆过滤器
+    <B>since  1.6.2</B>
+    """
     
     __size = 0
     
@@ -52,7 +56,8 @@ class BloomFilter:
     def size(self) -> int:
         return BloomFilter.__size
 
-    def _get_hashes(self, s: str) -> list[int]:
+    #-> list[int]里，list[int]  py3.8有报错
+    def _get_hashes(self, s: str):
         """
         生成哈希值数组（模拟Java的hashCode和MD5逻辑）
         :param s: 输入字符串

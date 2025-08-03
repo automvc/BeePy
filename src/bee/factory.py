@@ -4,6 +4,9 @@ from bee.name.naming import NameTranslate, UnderScoreAndCamelName, \
 
 
 class BeeFactory:
+    """
+    Bee Factory.
+    """
     
     __connection = None
     

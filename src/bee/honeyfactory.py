@@ -6,6 +6,9 @@ from bee.osql.condition_impl import ConditionImpl
 
 
 class HoneyFactory:
+    """
+    Honey Factory.
+    """
     
     __instance = None
     

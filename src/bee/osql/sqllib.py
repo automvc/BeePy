@@ -61,7 +61,7 @@ class BeeSql(AbstractBase):
                 CacheUtil.clear(sql)
             return a
         except Exception as e: 
-            Logger.error(f"Error in modify: {e}")  
+            Logger.warn(f"Error in modify: {e}")  
             conn.rollback()
             return 0
         finally: 
@@ -83,7 +83,7 @@ class BeeSql(AbstractBase):
                 
             return a
         except Exception as e: 
-            Logger.error(f"Error in batch: {e}")
+            Logger.warn(f"Error in batch: {e}")
             conn.rollback()
             return 0
         finally: 
