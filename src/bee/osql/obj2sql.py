@@ -259,7 +259,6 @@ class ObjToSQL:
             raise SqlBeeException("column list is empty!")
         
         columns = self.__toColumns(classField)
-        # columns="*"  #todo TEST
         # sql = f"SELECT * FROM {table_name}"
         # sql = f"SELECT {', '.join(classField)} FROM {table_name}"
         sql = f"{K.select()} {', '.join(columns)} {K.from_()} {table_name}"

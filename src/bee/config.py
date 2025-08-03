@@ -63,7 +63,6 @@ class HoneyConfig:
     __db_config_data = None
     __instance = None
     
-    # 将 PreConfig 作为参数，传入。
     def __new__(cls): 
         if cls.__instance is None: 
             # Logger.debug("HoneyConfig.__new__") 

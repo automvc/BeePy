@@ -1,10 +1,11 @@
 import re  
+
 from bee.exception import BeeErrorNameException
+from bee.osql.const import KeyWork
 from bee.osql.logger import Logger
 
+
 # NameCheckUtil.py
-
-
 def is_valid_name(name): 
     pattern = r'^[a-zA-Z]{1}[0-9a-zA-Z_.]*$'  
     return bool(re.match(pattern, name))  
@@ -29,6 +30,11 @@ def _check_one_name(name):
     
     if name.lower() == "count(*)": 
         return  
+    
+    if name.lower().startswith("count(*)"): 
+        name = name[8:]
+    if not name: 
+        return
 
     # Assuming it checks for keyword names.  
     if is_key_name(name): 
@@ -45,8 +51,10 @@ def _check_one_name(name):
 
 def is_key_name(name): 
     # Placeholder for keyword checking. Implement as needed.  
-    keyword_names = {"select", "from", "where", "insert", "update", "delete", "count(*)"}  
-    return name.lower() in keyword_names  
+    # keyword_names = {"select", "from", "where", "insert", "update", "delete", "count(*)"}  
+    keyword_names = KeyWork.key_work
+    # keyword_names.append("count(*)")
+    return name.lower() in keyword_names
 
 
 def is_illegal(field_name): 

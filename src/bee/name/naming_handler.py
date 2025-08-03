@@ -20,6 +20,9 @@ class NamingHandler:
     
     @staticmethod
     def __is_key_word(name):
+        
+        if not name:
+            return
         return name.lower() in KeyWork.key_work or name.lower() in NamingHandler.__db_key_word_dict.get(HoneyContext.get_dbname(), "")
     
     @staticmethod

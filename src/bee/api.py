@@ -91,6 +91,7 @@ class SuidRich(Suid):
     '''
     
     def __init__(self):
+        super().__init__()  # 初始化父类的 __suid
         self.__suidRich = ObjSQLRich()
     
     @overload

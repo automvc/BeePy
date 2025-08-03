@@ -91,7 +91,7 @@ class KeyWork:
         'having', 'in', 'index', 'insert', 'into', 'is', 'key', 'like', 'limit', 'not', 'null', 'or', 'order',
         'primary', 'select', 'set', 'table', 'then', 'union', 'unique', 'update', 'values', 'view', 'where',
         'collate', 'partition', 'fulltext', 'spatial', 'temporary', 'if', 'not', 'if', 'ignore', 'low_priority',
-        'high_priority', 'dual', 'explain','orders'
+        'high_priority', 'dual', 'explain'
     ]
     # 2. Oracle
     oracle_keywords = [
