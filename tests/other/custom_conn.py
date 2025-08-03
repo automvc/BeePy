@@ -5,7 +5,6 @@ import pymysql
 
 from entity.Orders import Orders
 
-
 if __name__ == '__main__':
     print("start")
     
@@ -25,11 +24,12 @@ if __name__ == '__main__':
     factory=BeeFactory()
     factory.set_connection(conn)
     
-    
-    orders=Orders()
-    # orders.name = "bee"
-    
     suidRich = SuidRich()
+    orders=Orders()
+    orders.name = "bee"
+    
+    suidRich.insert(orders)
+
     orderList = suidRich.select(orders)
     
     for one in orderList: 

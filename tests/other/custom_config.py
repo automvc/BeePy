@@ -23,10 +23,13 @@ if __name__ == '__main__':
     # config.set_dbname('SQLite')
     # config.database ='E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc\\bee.db'
     
-    orders=Orders()
-    # orders.name = "bee"
-    
     suidRich = SuidRich()
+    
+    orders=Orders()
+    orders.name = "bee"
+    
+    suidRich.insert(orders)
+    
     one = suidRich.select(orders)
     
     print(one)
