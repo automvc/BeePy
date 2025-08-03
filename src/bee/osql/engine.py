@@ -1,6 +1,6 @@
 from typing import overload
 
-from bee.condition import Condition, ConditionImpl
+from bee.condition import Condition
 from bee.context import HoneyContext
 from bee.exception import BeeException, ParamBeeException
 from bee.osql import SqlUtil
@@ -10,6 +10,7 @@ from bee.osql.sqllib import BeeSql
 from bee.osql.struct import CacheSuidStruct
 
 from bee.bee_enum import SuidType, LocalType, FunctionType
+from bee.osql.condition_impl import ConditionImpl
 
 
 class ObjSQL(AbstractCommOperate):
@@ -188,6 +189,9 @@ class ObjSQL(AbstractCommOperate):
         
 
 class ObjSQLRich(ObjSQL):
+    
+    def __init__(self):
+        super().__init__()
     
     @overload
     def select_paging(self, entity, start, size): 

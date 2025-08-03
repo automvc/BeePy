@@ -1,4 +1,4 @@
-from bee.condition import ConditionImpl
+from bee.osql.condition_impl import ConditionImpl
 from bee.bee_enum import Op
 
 
