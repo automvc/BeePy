@@ -1,7 +1,6 @@
 import hashlib
 import math
-
-from bitarray import bitarray
+from bee.osql.logger import Logger
 
 
 class BloomFilter:
@@ -19,11 +18,21 @@ class BloomFilter:
         :param false_positive_rate: 最大误判率
         :param hash_count: 哈希函数个数
         """
-        # 计算位数组长度（公式与Java一致）
         self.bit_size = int(-expected_size * math.log(false_positive_rate) / (math.log(2) ** 2))
         self.hash_count = hash_count
-        self.bit_set = bitarray(self.bit_size)
-        self.bit_set.setall(0)  # 初始化为全0
+        
+        needInterBitMap = False
+        try:
+            from bitarray import bitarray
+            self.bit_set = bitarray(self.bit_size)
+            self.bit_set.setall(0)  # 初始化为全0
+        except ImportError:
+            Logger.info("If you want to use bitarray in BloomFilter, can install it first!")
+            needInterBitMap = True
+        
+        if needInterBitMap:
+            from bee.typing import Bitmap
+            self.bit_set = Bitmap(self.bit_size)
 
     def add(self, s: str) -> None:
         """
@@ -56,7 +65,7 @@ class BloomFilter:
     def size(self) -> int:
         return BloomFilter.__size
 
-    #-> list[int]里，list[int]  py3.8有报错
+    # -> list[int]里，list[int]  py3.8有报错
     def _get_hashes(self, s: str):
         """
         生成哈希值数组（模拟Java的hashCode和MD5逻辑）
@@ -103,16 +112,3 @@ class BloomFilter:
             result |= bytes_data[start + i] & 0xFF
         return result
 
-# # 测试代码
-# if __name__ == "__main__":
-#     bf = BloomFilter(expected_size=1000, false_positive_rate=0.01, hash_count=3)
-#
-#     # 添加元素
-#     bf.add("hello")
-#     bf.add("world")
-#
-#     # 检查元素
-#     print(bf.contains("hello"))  # True
-#     print(bf.contains("world"))  # True
-#     print(bf.contains("python"))  # False（可能误判，但概率很低）
-    
