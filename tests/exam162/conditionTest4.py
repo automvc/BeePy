@@ -19,30 +19,9 @@ if __name__ == '__main__':
     stu=Student2()
     # stu.name='张三'
     
-    suid = BF.suid()
+    # suid = BF.suid()
         
-    # condition = BF.condition()
-    # condition.op("name", Op.ne, "bee1").between("age", 20, 28)
-    # orderList = suid.select(stu,condition)
-    # for one in orderList: 
-    #     print(one)
-    #
-    #
-    # condition = BF.condition()  
-    # condition.op("name", Op.ne, "bee1").or_()
-    # condition.l_parentheses().between("age", 20, 28).r_parentheses()
-    # orderList = suid.select(stu,condition)
-    # for one in orderList: 
-    #     print(one)
-    #
-    #
-    # condition = BF.condition()
-    # condition.opWithField("name", Op.eq, "remark")
-    # orderList = suid.select(stu,condition)
-    # for one in orderList: 
-    #     print(one)  
-    
-    # PreConfig.sql_key_word_case="upper"
+  
         
     condition = BF.condition()
     condition.selectField("name,count(*) as remark") #found one bug
@@ -52,17 +31,19 @@ if __name__ == '__main__':
     condition.having(FunctionType.MIN, "age", Op.ge, 21)
     condition.having(FunctionType.MAX, "age", Op.lt, 30)
     condition.orderBy("name")
-    # condition.orderBy2("age",OrderType.DESC)
-    orderList = suid.select(stu,condition)
-    for one in orderList: 
-        print(one)
-        
-        
-    # condition = BF.condition()
-    # condition.groupBy("name")
+    
     # orderList = suid.select(stu,condition)
     # for one in orderList: 
-    #     print(one)          
+    #     print(one)
+        
+    suidRich = BF.suidRich()    
+    # List = suidRich.select(Entity())
+    # List = suidRich.select(stu)
+    
+    List =suidRich.select_paging( stu, 0, 10, "name,age")
+    List =suidRich.select_paging( stu, 0, 10)
+    for one in List:
+        print(one)
        
     
     print("finished")

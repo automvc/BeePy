@@ -4,6 +4,22 @@ from bee.bee_enum import FunctionType
 
 
 class BaseMode:
+    '''
+    BaseMode for active record type.
+    e.g.
+    class Orders(BaseMode):
+    #__tablename__ = "orders"
+    id:int = None  
+    name:str = None 
+    remark:str = None
+
+    def __repr__(self): 
+        return  str(self.__dict__)
+        
+    if __name__ == '__main__':        
+        orders = Orders()
+        orderList=orders.select()
+    '''
     
     def __init__(self):
         self.__suid = Suid()

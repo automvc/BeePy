@@ -46,6 +46,7 @@ if __name__ == '__main__':
         
     condition = BF.condition()
     condition.selectField("name,count(*) as remark") #found one bug
+    # condition.selectField("userName,count(*) as remark") #found one bug
     condition.op("name", Op.ne, "bee1")
     condition.groupBy("name")
     # having(FunctionType.MIN, "field", Op.ge, 60)-->having min(field)>=60
@@ -57,12 +58,11 @@ if __name__ == '__main__':
     for one in orderList: 
         print(one)
         
-        
-    # condition = BF.condition()
-    # condition.groupBy("name")
-    # orderList = suid.select(stu,condition)
-    # for one in orderList: 
-    #     print(one)          
+    suidRich = BF.suidRich()    
+    # List = suidRich.select(Entity())
+    List = suidRich.select(stu)
+    for one in List:
+        print(one)
        
     
     print("finished")

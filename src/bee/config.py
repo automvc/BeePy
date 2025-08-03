@@ -18,6 +18,9 @@ class PreConfig:
     
 
 class HoneyConfig:
+    """
+    Config for Bee.
+    """
     
     dbname = None 
     host = None 
@@ -63,7 +66,6 @@ class HoneyConfig:
     __db_config_data = None
     __instance = None
     
-    # 将 PreConfig 作为参数，传入。
     def __new__(cls): 
         if cls.__instance is None: 
             # Logger.debug("HoneyConfig.__new__") 
@@ -97,7 +99,7 @@ class HoneyConfig:
             elif os.path.exists(default_path): 
                 config_file = default_path 
         except OSError as err: 
-            Logger.error(err)
+            Logger.warn(err)
             # raise ConfigBeeException(err)
         return config_file
 
@@ -128,7 +130,7 @@ class HoneyConfig:
                         key = key.strip()  
                         value = value.strip()
                     except ValueError as err: 
-                        Logger.error(err, line)
+                        Logger.warn(err, line)
                         continue  
         
                     # 检查键是否以 'bee.db.' 开头 

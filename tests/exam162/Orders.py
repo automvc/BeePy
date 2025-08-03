@@ -9,11 +9,14 @@ Created on 2024年10月19日
 '''
 
 class Orders:
-    #__tablename__="orders6"
+    # __tablename__="select"
     id = None  
     name = None 
-    # type = None
+    type = None
     remark = None
+    select = None
+    begin = None
+    
     
     # __pk__="id" 
     # __pk__ = "name"  

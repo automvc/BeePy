@@ -66,7 +66,7 @@ class HoneyContext:
         :param conn: connection
         :return: if connection is active return True, else return False.
         '''
-        dbName = HoneyConfig().get_dbname().lower()
+        dbName = HoneyConfig().get_dbname()
         
         if dbName is None:
             return False

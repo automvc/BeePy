@@ -87,7 +87,7 @@ def delete_by_id(self, entity_class, *ids)
     __unique_key__={"name","type"}  
     __not_null_filels__={"name","type"}  
     
-**1.6.2(2025·doing)**  
+**1.6.2(2025.08)**  
 1. support condition like/like_left/like_right,in/not in;  
 eg: condtion.op("num", Op.IN, [1,2]); can support list/set/tuple type  
 2. update cache config:cache_never,cache_forever,cache_modify_syn config  

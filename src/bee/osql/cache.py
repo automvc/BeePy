@@ -1,15 +1,14 @@
-import array   
 import copy
 import threading
 from typing import Any, Dict, List, Set
 
+from bee.bee_enum import LocalType
 from bee.config import HoneyConfig
 from bee.context import HoneyContext
 from bee.osql import Util
-from bee.osql.logger import Logger
-
-from bee.bee_enum import LocalType
 from bee.osql.index import CacheArrayIndex
+from bee.osql.logger import Logger
+from bee.typing import Array, LongArray
 
 
 class CacheUtil: 
@@ -324,57 +323,6 @@ class CacheUtil:
     #     print("cache map size: ", len(CacheUtil.__map))
     #     return CacheUtil.__map
 
-    
-class Array:
-    
-    __array:None
-    __size = 0
-    
-    def __init__(self, size:int):
-        self.__size = size
-        self.__array = [None] * size
-    
-    def __setitem__(self, index:int, v:str):
-        if index >= self.__size:
-            Logger.warn("Error index: " + str(index))
-            return
-        self.__array[index] = v
-     
-    def __getitem__(self, index):
-        if index >= self.__size:
-            Logger.warn("Error index: " + str(index))
-            return None
-        return self.__array[index] 
-    
-    def __str__(self):
-        # print(type(self.__array))   #<class 'list'>
-        return "array len:" + str(len(self.__array)) + ", value:" + str(self.__array)
-    
-
-class LongArray:
-    
-    __array:None
-    __size = 0
-    
-    def __init__(self, size:int):
-        self.__size = size
-        self.__array = array.array("Q", [0] * size)
-    
-    def __setitem__(self, index:int, v):
-        if index >= self.__size:
-            Logger.warn("Error index: " + str(index))
-            return
-        self.__array[index] = v
-     
-    def __getitem__(self, index):
-        if index >= self.__size:
-            Logger.warn("Error index: " + str(index))
-            return None
-        return self.__array[index] 
-    
-    def __str__(self):
-        return "array len:" + str(len(self.__array)) + ", value:" + str(self.__array)
-    
 # if __name__ == '__main__':
 #     print("start")
 #     sa = Array(10)

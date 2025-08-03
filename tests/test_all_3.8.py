@@ -37,7 +37,7 @@ if __name__ == '__main__':
         dbname = HoneyContext.get_dbname()
         print(dbname)
         
-        filename0= f'all_logs-V{version}-{now_str}-{dbname}.log'
+        filename0= f'all_logs-py3.8-V{version}-{now_str}-{dbname}.log'
         # 定义日志文件名  
         filename0 = os.path.join(log_directory, filename0) 
         print(filename0)

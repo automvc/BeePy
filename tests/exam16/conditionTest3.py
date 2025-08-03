@@ -57,12 +57,11 @@ if __name__ == '__main__':
     for one in orderList: 
         print(one)
         
-        
-    # condition = BF.condition()
-    # condition.groupBy("name")
-    # orderList = suid.select(stu,condition)
-    # for one in orderList: 
-    #     print(one)          
+    suidRich = BF.suidRich()    
+    # List = suidRich.select(Entity())
+    List = suidRich.select(stu)
+    for one in List:
+        print(one)
        
     
     print("finished")

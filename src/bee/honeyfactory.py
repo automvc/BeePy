@@ -1,11 +1,14 @@
 from bee.api import Suid, SuidRich, PreparedSql
-
-from bee.condition import ConditionImpl
 from bee.osql.obj2sql import ObjToSQL
 from bee.osql.sqllib import BeeSql
 
+from bee.osql.condition_impl import ConditionImpl
+
 
 class HoneyFactory:
+    """
+    Honey Factory.
+    """
     
     __instance = None
     
