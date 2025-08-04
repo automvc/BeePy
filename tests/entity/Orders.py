@@ -12,7 +12,7 @@ class Orders:
     #__tablename__="orders6"
     id = None  
     name = None 
-    # type = None
+    type = None
     remark = None
     
     # __pk__="id" 
