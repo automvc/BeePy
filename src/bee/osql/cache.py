@@ -143,7 +143,7 @@ class CacheUtil:
             # 上一句改为新线程运行才启用 todo
             # if CacheUtil.__cacheArrayIndex.get_used_rate() >= 90:
             #  if HoneyConfig.show_sql:
-            #     Logger.warn("[Bee] ==========Cache already used more than 90% !");
+            #     Logger.warn("[Bee] ==========Cache already used more than 90% !")
             #     return False  # 快满了,本次不放缓存,直接返回
 
         # 4. 一般缓存  

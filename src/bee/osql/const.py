@@ -108,7 +108,7 @@ class KeyWork:
         'where', 'with'
     ]
     # 4. MariaDB
-    mariadb_keywords = mysql_keywords;
+    mariadb_keywords = mysql_keywords
     
     # 5. H2
     h2_keywords = [
@@ -178,7 +178,7 @@ class KeyWork:
     ]
     
     # 9. 金仓 (Kingbase)
-    kingbase_keywords = postgresql_keywords;
+    kingbase_keywords = postgresql_keywords
     
     # 10. 达梦 (DM)
     dm_keywords = [
