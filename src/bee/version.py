@@ -2,8 +2,8 @@ from bee.osql.const import StrConst
 
 
 class Version:
-    __version = "1.6.2"
-    vid = 1006002
+    __version = "1.6.8"
+    vid = 1006008
     
     @staticmethod
     def getVersion():
