@@ -5,9 +5,9 @@ class Assist:
     '''
     API for assisting ORM.
     '''
-    
-    __genBean = GenBean() 
-    
+
+    __genBean = GenBean()
+
     def gen_bean(self, table_name:str, file_path: str, file_name:str = None):
         '''
         generate bean file via table name.
