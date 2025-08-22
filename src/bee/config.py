@@ -1,7 +1,6 @@
 import json
 import os
 
-from bee.version import Version
 from bee.exception import ConfigBeeException
 from bee.osql.const import DatabaseConst
 from bee.osql.logger import Logger
@@ -69,7 +68,7 @@ class HoneyConfig:
     def __new__(cls): 
         if cls.__instance is None: 
             # Logger.debug("HoneyConfig.__new__") 
-            Version.printversion()
+            # Version.printversion()
             Logger.info("HoneyConfig instance...") 
             cls.__instance = super().__new__(cls)
             cls.__loadConfigInProperties(cls)
