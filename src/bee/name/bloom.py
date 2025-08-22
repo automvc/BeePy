@@ -8,9 +8,9 @@ class BloomFilter:
     Bloom Filter.布隆过滤器
     <B>since  1.6.2</B>
     """
-    
+
     __size = 0
-    
+
     def __init__(self, expected_size: int, false_positive_rate: float, hash_count: int):
         """
         初始化布隆过滤器
@@ -20,7 +20,7 @@ class BloomFilter:
         """
         self.bit_size = int(-expected_size * math.log(false_positive_rate) / (math.log(2) ** 2))
         self.hash_count = hash_count
-        
+
         needInterBitMap = False
         try:
             from bitarray import bitarray
@@ -29,7 +29,7 @@ class BloomFilter:
         except ImportError:
             Logger.info("If you want to use bitarray in BloomFilter, can install it first!")
             needInterBitMap = True
-        
+
         if needInterBitMap:
             from bee.typing import Bitmap
             self.bit_set = Bitmap(self.bit_size)
@@ -61,7 +61,7 @@ class BloomFilter:
             if not self.bit_set[index]:
                 return False
         return True
-    
+
     def size(self) -> int:
         return BloomFilter.__size
 

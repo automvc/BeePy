@@ -1,13 +1,13 @@
 
-    
+
 class CacheSuidStruct:
     sql:str  # 不带值的
-    tableNames:str 
+    tableNames:str
     params = None
     returnType:str  # 返回值类型用于过滤缓存的查询结果,防止同一查询sql的不同类型的结果;  但更改的操作可不需要用这个值
     suidType:str  # 操作类型
     entityClass = None
-    
+
     def __init__(self, sql, params, tableNames, returnType, entityClass, suidType = None):
         self.sql = sql
         self.params = params
@@ -15,10 +15,10 @@ class CacheSuidStruct:
         self.returnType = returnType
         self.entityClass = entityClass
         self.suidType = suidType
-    
+
     def __str__(self):
         return str(self)
-    
+
 
 class TableMeta:
     col = None
@@ -33,6 +33,6 @@ class TableMeta:
     scale:int = None
     # tablecomment = None
     # tablename = None
-    
-    def __repr__(self): 
-        return  str(self.__dict__) 
+
+    def __repr__(self):
+        return  str(self.__dict__)

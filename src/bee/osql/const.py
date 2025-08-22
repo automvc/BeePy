@@ -14,7 +14,7 @@ class DatabaseConst:
 
     Cubrid = "Cubrid"
     DB2400 = "DB2 UDB for AS/400"
-    DB2 = "DB2" 
+    DB2 = "DB2"
     Derby = "Apache Derby"
     Firebird = "Firebird"
     FrontBase = "FrontBase"
@@ -48,7 +48,7 @@ class DatabaseConst:
     MongoDB = "MongoDB"
     CouchDB = "CouchDB"
 
-    
+
 class StrConst:
     LOG_PREFIX = "[Bee]========"
     LOG_SQL_PREFIX = "[Bee] sql>>> "
@@ -61,12 +61,12 @@ class SysConst:
     id = "id"
     unique_key = "__unique_key__"  # unique_key set
     not_null_filels = "__not_null_filels__"  # not null filels set
-    
+
     dbModuleName = "dbModuleName"
     dbname = "dbname"
-    
+
     upper = "upper"
-    
+
     # move to PreConfig
     # configPropertiesFileName = "bee.properties"
     # configJsonFileName = "bee.json"
@@ -83,7 +83,7 @@ class KeyWork:
         'savepoint', 'begin', 'transaction', 'grant', 'revoke', 'deny', 'with', 'cascade', 'constraint',
         'varchar'
     ]
-    
+
     # 1. MySQL
     mysql_keywords = [
         'add', 'all', 'alter', 'and', 'as', 'asc', 'between', 'by', 'case',
@@ -109,7 +109,7 @@ class KeyWork:
     ]
     # 4. MariaDB
     mariadb_keywords = mysql_keywords
-    
+
     # 5. H2
     h2_keywords = [
         'all', 'and', 'any', 'array', 'as', 'asymmetric', 'authorization',
@@ -138,7 +138,7 @@ class KeyWork:
         'set', 'table', 'temp', 'temporary', 'then', 'to', 'transaction', 'trigger', 'union', 'unique', 'update',
         'using', 'vacuum', 'values', 'view', 'virtual', 'when', 'where', 'with', 'without'
     ]
-    
+
     # 7. PostgreSQL
     postgresql_keywords = [
         'all', 'analyse', 'analyze', 'and', 'any', 'array', 'as', 'asc',
@@ -152,7 +152,7 @@ class KeyWork:
         'select', 'session_user', 'similar', 'some', 'symmetric', 'table', 'then', 'to', 'trailing', 'true', 'union',
         'unique', 'user', 'using', 'variadic', 'when', 'where', 'window', 'with'
     ]
-    
+
     # 8. MS Access
     msaccess_keywords = [
         'add', 'all', 'alphanumeric', 'alter', 'and', 'any', 'as', 'asc',
@@ -176,10 +176,10 @@ class KeyWork:
         'update', 'user', 'value', 'var', 'varp', 'varbinary', 'varchar', 'where', 'with', 'workspace', 'xor', 'year',
         'yes', 'yesno'
     ]
-    
+
     # 9. 金仓 (Kingbase)
     kingbase_keywords = postgresql_keywords
-    
+
     # 10. 达梦 (DM)
     dm_keywords = [
         'add', 'all', 'alter', 'and', 'any', 'as', 'asc', 'audit', 'between',
@@ -194,4 +194,4 @@ class KeyWork:
         'unique', 'update', 'user', 'validate', 'values', 'varchar', 'varchar2', 'view', 'whenever', 'where',
         'with'
     ]
-    
+
