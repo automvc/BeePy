@@ -130,7 +130,7 @@ class HoneyConfig:
                         value = value.strip()
                     except ValueError as err:
                         # Logger.warn(err, line)
-                        Logger.warn(f"Error: {err} | Detail: {line}")
+                        Logger.warn(f"Error: {err} \nDetail: {line}")
                         continue
 
                     # 检查键是否以 'bee.db.' 开头
@@ -191,8 +191,6 @@ class HoneyConfig:
         except OSError as err:
             Logger.info(err)
             # raise ConfigBeeException(err)
-
-    # bool_map = {'True': True, 'False': False}
 
     @staticmethod
     def __loadConfigInJson(cls):
