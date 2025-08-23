@@ -170,7 +170,7 @@ class SuidRich(Suid):
         '''
         return self.__suidRich.exist(entity)
 
-    def updateBy(self, entity, condition: Condition = None, *whereFields):
+    def updateBy(self, entity, condition: Condition, *whereFields):
         '''
         Update record according to whereFields.
         :param entity: table's entity(do not allow null).
@@ -267,7 +267,7 @@ class PreparedSql:
         It is not recommended because the framework does not know what table has been changed,
         <br>which will affect the correctness of the cache and cause the risk of inaccurate cache data.
         :param sql: SQL statement which use placeholder.
-        :param params: list type params for placeholder
+        :param params: list type params for placeholder.
         :return: the number of affected successfully records.
         '''
         return self.__preparedSql.modify(sql, params)

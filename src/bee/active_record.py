@@ -130,7 +130,7 @@ class BaseMode:
         '''
         return self.__suidRich.exist(self)
 
-    def updateBy(self, condition: Condition = None, *whereFields):
+    def updateBy(self, condition: Condition, *whereFields):
         '''
         Update record according to whereFields.
         :param condition: Condition as filter the record.

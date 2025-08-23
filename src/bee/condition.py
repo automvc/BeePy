@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
-from bee.bee_enum import FunctionType, Op, SuidType
+from bee.bee_enum import FunctionType, Op, SuidType, OrderType
 
 
 class Condition(ABC):
@@ -10,7 +10,7 @@ class Condition(ABC):
     """
 
     @abstractmethod
-    def op(self, field: str, Op: Op, value: Any) -> 'Condition':
+    def op(self, field: str, op: Op, value: Any) -> 'Condition':
         pass
 
     @abstractmethod
@@ -54,16 +54,14 @@ class Condition(ABC):
         pass
 
     @abstractmethod
-    def orderBy2(self, field:str) -> 'Condition':
+    def orderBy2(self, field:str, orderType:OrderType) -> 'Condition':
         pass
 
     @abstractmethod
-    def orderBy3(self, field:str) -> 'Condition':
+    def orderBy3(self, functionType:FunctionType, field:str, orderType:OrderType) -> 'Condition':
         """
         eg: orderBy3(FunctionType.MAX, "total", OrderType.DESC)-->order by max(total) desc
         """
-        pass
-
     @abstractmethod
     def selectField(self, *field:str) -> 'Condition':
         pass
