@@ -17,11 +17,11 @@ class AbstractCommOperate:
         # HoneyConfig() # how to call first time
         self.local = threading.local()  # 初始化线程本地存储
 
-    def doBeforePasreEntity(self, entity, SuidType:SuidType):
+    def doBeforePasreEntity(self, entity, suidType:SuidType):
         # 子类在调用此方法时，记录当前的时间，_bee_base_t1
         self.__reg_start_spent_time()
 
-    def doBeforePasreListEntity(self, entityArray, SuidType:SuidType):
+    def doBeforePasreListEntity(self, entityArray, suidType:SuidType):
         self.__reg_start_spent_time()
 
     def doBeforeReturn(self, list_param:list):

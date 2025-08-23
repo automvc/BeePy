@@ -59,8 +59,6 @@ class OriginalName(NameTranslate):
         return NameUtil.firstLetterToLower(entityName)
 
     def toColumnName(self, fieldName):
-        if not fieldName:
-            return fieldName
         return fieldName
 
     def toEntityName(self, tableName):
@@ -69,8 +67,6 @@ class OriginalName(NameTranslate):
         return NameUtil.firstLetterToUpper(tableName)
 
     def toFieldName(self, columnName):
-        if not columnName:
-            return columnName
         return columnName
 
 
@@ -104,10 +100,10 @@ class UpperUnderScoreAndCamelName(UnderScoreAndCamelName):
     '''
 
     def toTableName(self, entityName):
-        return super.toTableName(entityName).upper()
+        return super().toTableName(entityName).upper()
 
     def toColumnName(self, fieldName):
-        return super.toColumnName(fieldName).upper()
+        return super().toColumnName(fieldName).upper()
 
     def toEntityName(self, tableName):
         # need lower first if the name has upper

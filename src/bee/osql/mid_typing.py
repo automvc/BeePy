@@ -44,7 +44,7 @@ class String:
 
     def __repr__(self):
         # return f"String({self.length})"
-        return f"String"
+        return "String"
 
 
 class Text:

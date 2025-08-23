@@ -43,10 +43,15 @@ class BeeSql(AbstractBase):
             self.__close(cursor, conn)
         return rs_list
 
-    """ 执行 UPDATE/INSERT/DELETE 操作 """
-
+    # 执行 UPDATE/INSERT/DELETE 操作
     # def modify(self, sql: str, params=None) -> int:
     def modify(self, sql, params = None):
+        '''
+        modify: UPDATE/INSERT/DELETE
+        :param sql: SQL statement which use placeholder.
+        :param params: list type params for placeholder.
+        :return: the number of affected successfully records.
+        '''
         conn = self.__getConn()
         a = 0
         try:

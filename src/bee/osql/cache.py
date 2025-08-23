@@ -290,10 +290,7 @@ class CacheUtil:
             # 情况1：正常顺序（low <= high）
             for i in range(low, know + 1):  # 包含 know
                 _delete_cache_by_index(i)
-            CacheUtil.__cacheArrayIndex.low = (know + 1) % max_size  # 处理循环
-
-            msg = f"delete cache from {low} to {know}, new low: {CacheUtil.__cacheArrayIndex.low}"
-            Logger.debug(msg)
+            CacheUtil.__cacheArrayIndex.low = know + 1
         else:
             # 情况2：循环缓存（low > high）  //all:0-99;  low 80    know:90   99, 0  20:high
             if low < know:
@@ -301,9 +298,6 @@ class CacheUtil:
                 for i in range(low, know + 1):
                     _delete_cache_by_index(i)
                 CacheUtil.__cacheArrayIndex.low = (know + 1) % max_size
-
-                msg = f"delete cache from {low} to {know}, new low: {CacheUtil.__cacheArrayIndex.low}"
-                Logger.debug(msg)
 
             elif know < high:  # all:0-99; low 80    90   99, 0   know:10  20:high
                 # 子情况2.2：know 在 high 之前（跨循环点）
@@ -313,10 +307,7 @@ class CacheUtil:
                 # 删除从开头到 know 的部分
                 for i in range(0, know + 1):
                     _delete_cache_by_index(i)
-                CacheUtil.__cacheArrayIndex.low = know + 1  # 自动处理循环（因为 know < high < low）
-
-                CacheUtil.__cacheArrayIndex.low = (know + 1) % max_size
-                msg = f"delete cache from {low} to {max_size},{know}, new low: {CacheUtil.__cacheArrayIndex.low}"
+                CacheUtil.__cacheArrayIndex.low = know + 1
 
     # @staticmethod
     # def _getMap():  # TEST for test todo

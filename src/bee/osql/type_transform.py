@@ -193,8 +193,6 @@ class Py2Sql:
 
         }
 
-        """将 Python 类型映射到 SQL 类型，支持字符串长度和时间字段"""
-
 
 class Sql2Py:
     __instance = None
@@ -223,7 +221,6 @@ class Sql2Py:
     def _init_sql_type(self):
 
         common_sql_type_mappings: Dict[str, str] = {
-            "VARCHAR":"str",
             "TEXT":"str",
             "JSON":"str",
             "VARCHAR":"str",
@@ -245,7 +242,7 @@ class Sql2Py:
             DatabaseConst.MYSQL.lower(): {
                 **common_sql_type_mappings,  # 引用公共类型映射
                 "TINYINT":"bool",
-                "DATETIME":"date",
+                # "DATETIME":"date",
                 "TIME":"time",
                 "DATETIME":"datetime",
                 "BIT":"bytes",  # 要判断长度 ？
@@ -254,7 +251,7 @@ class Sql2Py:
             DatabaseConst.MariaDB.lower(): {
                 **common_sql_type_mappings,  # 引用公共类型映射
                 "TINYINT":"bool",
-                "DATETIME":"date",
+                # "DATETIME":"date",
                 "TIME":"time",
                 "DATETIME":"datetime",
                 "BIT":"bytes",  # 要判断长度 ？

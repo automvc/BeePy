@@ -1,5 +1,4 @@
 from bee.api import PreparedSql
-from bee.context import HoneyContext
 from bee.name.naming_handler import NamingHandler
 from bee.osql.mid_typing import *
 from bee.osql.obj2sql import ObjToSQL
@@ -67,14 +66,14 @@ class MidSQL:
     def Column(self, *args, **kwargs):
         return Column(*args, **kwargs)
 
-    def __default_type(self):
-        try:
-            if HoneyContext.isOracle():
-                return "VARCHAR2"
-            else:
-                return "VARCHAR"
-        except Exception:
-            return "VARCHAR"
+    # def __default_type(self):
+    #     try:
+    #         if HoneyContext.isOracle():
+    #             return "VARCHAR2"
+    #         else:
+    #             return "VARCHAR"
+    #     except Exception:
+    #         return "VARCHAR"
 
     def to_create_all_sql(self, entity = None):
 

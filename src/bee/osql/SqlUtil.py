@@ -16,7 +16,8 @@ def add_paging(sql, start, size):
         start = 0
 
     if not size:
-        size = 100  # todo get from config?
+        # todo get from config?
+        size = 100
 
     paging = Paging()
     sql = paging.to_page_sql(sql, start, size)

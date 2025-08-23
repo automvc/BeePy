@@ -71,11 +71,11 @@ class HoneyFactory:
         return self.condition
 
     def setCondition(self, condition):
-        if condition is not None:
-            # self.condition = condition.clone()
-            self.condition = condition
-        else:
-            self.condition = condition
+        # if condition is not None:
+        #     # self.condition = condition.clone()
+        #     self.condition = condition
+        # else:
+        self.condition = condition
 
 
 class BF:

@@ -26,7 +26,7 @@ class HoneyConfig:
     user = None
     password = None
     database = None
-    port:int = None
+    port:int = 0
 
     # value is:lower,upper
     sql_key_word_case = "lower"
@@ -80,7 +80,7 @@ class HoneyConfig:
         return cls.__instance
 
     @staticmethod
-    def __adjust_config_file(cls, config_file):
+    def __adjust_config_file(config_file):
 
         root_dir0 = PreConfig.config_folder_root_path
         root_dir = PreConfig.config_path
@@ -110,11 +110,11 @@ class HoneyConfig:
         old_config_file = config_file
 
         try:
-            config_file = cls.__adjust_config_file(cls, config_file)
+            config_file = cls.__adjust_config_file(config_file)
             if not os.path.isfile(config_file):
                 Logger.info(f"Not found the file {old_config_file}!")
                 return
-            with open(config_file, 'r') as file:
+            with open(config_file, 'r', encoding='utf-8') as file:
                 cls._loaded = True  # 设置为已加载
                 Logger.info("Loading config file: " + config_file)
                 annotations = cls.__annotations__
@@ -129,7 +129,8 @@ class HoneyConfig:
                         key = key.strip()
                         value = value.strip()
                     except ValueError as err:
-                        Logger.warn(err, line)
+                        # Logger.warn(err, line)
+                        Logger.warn(f"Error: {err} | Detail: {line}")
                         continue
 
                     # 检查键是否以 'bee.db.' 开头
@@ -202,14 +203,14 @@ class HoneyConfig:
         old_config_file = config_file
 
         try:
-            config_file = cls.__adjust_config_file(cls, config_file)
+            config_file = cls.__adjust_config_file(config_file)
 
             if not os.path.isfile(config_file):
                 Logger.warn(f"Not found the file {old_config_file}!")
                 return
 
             Logger.info("Loading config file: " + config_file)
-            with open(config_file, 'r') as file:
+            with open(config_file, 'r', encoding='utf-8') as file:
                 cls._loaded = True  # 设置为已加载
                 cls.__db_config_data = json.load(file)
 
@@ -273,7 +274,7 @@ class HoneyConfig:
         Logger.info("Reset db_config_data")
         cls = type(self)
         if cls.__db_config_data:
-                cls.__db_config_data = {}
+            cls.__db_config_data = {}
         cls.__db_config_data = config
 
         if config.get("dbname"):

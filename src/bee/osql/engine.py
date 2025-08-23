@@ -16,6 +16,7 @@ from bee.osql.condition_impl import ConditionImpl
 class ObjSQL(AbstractCommOperate):
 
     def __init__(self):
+        # print("in ObjSQL init......")
         super().__init__()
         self._beeSql = None
         self._objToSQL = None
@@ -23,10 +24,6 @@ class ObjSQL(AbstractCommOperate):
     @overload
     def select(self, entity):
         ...
-
-    # @overload
-    # def select(self, entity, condition: Condition):
-    #     ...
 
     def __select(self, entity):
         list_r = None
@@ -190,16 +187,13 @@ class ObjSQL(AbstractCommOperate):
 
 class ObjSQLRich(ObjSQL):
 
-    def __init__(self):
-        super().__init__()
+    # def __init__(self):
+    #     print("in ObjSQLRich init......")
+    #     super().__init__()
 
     @overload
     def select_paging(self, entity, start, size):
         ...
-
-    # @overload
-    # def select_paging(self, entity, start, size, *selectFields):
-    #     ...
 
     def select_paging(self, entity, start, size, *selectFields):
 
@@ -356,7 +350,7 @@ class ObjSQLRich(ObjSQL):
     # * @return the numbers of update record(s) successfully,if fails, return integer less than 0.
     # * @since 1.6.0
     # */
-    def updateBy(self, entity, condition: Condition = None, *whereFields):
+    def updateBy(self, entity, condition: Condition, *whereFields):
         if not entity:
             return None
         # the op method in condition can as whereFields
@@ -443,27 +437,26 @@ class PreparedSqlLib(AbstractCommOperate):
         except Exception as e:
             raise BeeException(e)
 
-    """
-    eg:
-      preparedSql=PreparedSql()
-      entity_list =preparedSql.select_dict("SELECT * FROM orders WHERE name=#{name} and id=#{id} and name=#{name}", Orders, params_dict ={"name":"bee1","id":4})
-    """
 
     def select_dict(self, sql, return_type_class, params_dict = None, start = None, size = None):
+        """
+        eg:
+          preparedSql=PreparedSql()
+          entity_list =preparedSql.select_dict("SELECT * FROM orders WHERE name=#{name} and id=#{id} and name=#{name}", Orders, params_dict ={"name":"bee1","id":4})
+        """
         params = None
         if params_dict:
             sql, params = SqlUtil.transform_sql(sql, params_dict)
         return self.select(sql, return_type_class, params, start, size)
 
-    """
-    eg:
-        sql = "update orders set name = ?, remark = ? where id = ?"
-        params = ('bee130', 'test-update', 1)
-        updateNum = preparedSql.modify(sql, params)
-    """
-
     # def modify(self, sql: str, params=None) -> int:
     def modify(self, sql, params = None):
+        """
+        eg:
+            sql = "update orders set name = ?, remark = ? where id = ?"
+            params = ('bee130', 'test-update', 1)
+            updateNum = preparedSql.modify(sql, params)
+        """
         try:
             sql = self.__adjust_placeholder(sql)
             super().logsql("modify SQL(PreparedSql):", sql)
@@ -478,14 +471,15 @@ class PreparedSqlLib(AbstractCommOperate):
         sql = sql.replace("?", placeholder)
         return sql
 
-    """
-    eg:
-        sql = "update orders set name = #{name}, remark = #{remark} where id = #{id}"
-        params_dict={"id":1, "name":"newName","remark":"remark2"}
-        updateNum = preparedSql.modify_dict(sql, params_dict)
-    """
+
 
     def modify_dict(self, sql, params_dict = None):
+        """
+        eg:
+            sql = "update orders set name = #{name}, remark = #{remark} where id = #{id}"
+            params_dict={"id":1, "name":"newName","remark":"remark2"}
+            updateNum = preparedSql.modify_dict(sql, params_dict)
+        """
         params = None
         if params_dict:
             sql, params = SqlUtil.transform_sql(sql, params_dict)

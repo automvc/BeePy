@@ -10,16 +10,21 @@ class BeeException(Exception):
         return super().__str__()
 
 
-class ConfigBeeException(BeeException): ...
+class ConfigBeeException(BeeException):
+    pass
 
 
-class SqlBeeException(BeeException): ...
+class SqlBeeException(BeeException):
+    pass
 
 
-class ParamBeeException(BeeException): ...
+class ParamBeeException(BeeException):
+    pass
 
 
-class BeeErrorNameException(BeeException): ...
+class BeeErrorNameException(BeeException):
+    pass
 
 
-class BeeErrorGrammarException(BeeException): ...
+class BeeErrorGrammarException(BeeException):
+    pass

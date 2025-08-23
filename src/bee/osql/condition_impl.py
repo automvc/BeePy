@@ -74,6 +74,7 @@ class ConditionUpdateSetStruct:
 class ConditionImpl(Condition):
 
     def __init__(self):
+        self.COMMA = ","
         self.expressions = []  # List of Expression objects
         self.where_fields = set()  # Fields used in WHERE clause
 
@@ -88,9 +89,9 @@ class ConditionImpl(Condition):
     def __check_one_field(self, field):
         NameCheckUtil._check_one_name(field)
 
-    def op(self, field: str, Op: Op, value: Any) -> 'ConditionImpl':
+    def op(self, field: str, op: Op, value: Any) -> 'ConditionImpl':
         self.__check_one_field(field)
-        exp = Expression(field_name = field, Op = Op, value = value, op_num = 2)
+        exp = Expression(field_name = field, Op = op, value = value, op_num = 2)
         self.expressions.append(exp)
         self.where_fields.add(field)
         return self
@@ -106,7 +107,7 @@ class ConditionImpl(Condition):
         return self
 
     def not_(self) -> 'ConditionImpl':
-        exp = Expression(op = Op.eq, op_type = K.not_(), op_num = 1)
+        exp = Expression(op_type = K.not_(), op_num = 1)
         self.expressions.append(exp)
         return self
 

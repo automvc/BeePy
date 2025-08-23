@@ -273,6 +273,9 @@ class ObjToSQL:
 
     def __build_select_sql2(self, table_name, classField, entityFilter = None, condition = None):
 
+        conditionStruct = None
+        selectFields = None
+        
         if condition:
             conditionStruct = condition.parseCondition()
             selectFields = conditionStruct.selectFields
@@ -538,7 +541,8 @@ class ObjToSQL:
 
         NameCheckUtil.check_fields(fields)
         table_name = HoneyUtil.get_table_name_by_class(entity_class)
-        columns = self.transfer_field(fields, entity_class)
+        # columns = self.transfer_field(fields, entity_class)
+        columns = self.transfer_field(fields)
 
         if not index_name:
             index_name = f"{prefix}{table_name}_{columns.replace(',', '_')}"
@@ -548,7 +552,8 @@ class ObjToSQL:
         index_sql = f"CREATE {index_type}INDEX {index_name} ON {table_name} ({columns})"
         return index_sql
 
-    def transfer_field(self, fields, entity_class):
+    # def transfer_field(self, fields, entity_class):
+    def transfer_field(self, fields):
         return NamingHandler.toColumnName(fields)
 
     def to_drop_index_sql(self, entity_class, index_name):
