@@ -24,11 +24,13 @@ class ResultUtil:
             field_type = field_and_type[fieldName]
             v = row[i]
             if field_type is bool:
-                # v = bool(v)  # 将值转换为bool类型
-                # print(type(v))
+                if v is None:
+                    pass
                 # if type(v) == int:
-                if isinstance(v, int):
+                elif isinstance(v, int):
                     v = bool(v)
+                elif isinstance(v, bytes):
+                    v = (v == b'\x01')
                 else:
                     v = (v == '1') or (v.lower() == 'true')
             elif field_type in (dict, list, Dict, List):
