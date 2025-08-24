@@ -83,7 +83,7 @@ class CacheUtil:
         if cacheSuidStruct:
             return cacheSuidStruct.tableNames
         else:
-            return None
+            return ""
 
     @staticmethod
     def __genKey(sql: str) -> str:

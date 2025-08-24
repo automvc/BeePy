@@ -524,7 +524,8 @@ class ObjToSQL:
         return sql_statement
 
     def toDropTableSQL(self, entityClass):
-        if type(entityClass) == str:
+        # if type(entityClass) == str:
+        if isinstance(entityClass, str):
             table_name = entityClass
         else:
             table_name = HoneyUtil.get_table_name_by_class(entityClass)

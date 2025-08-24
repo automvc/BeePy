@@ -11,7 +11,6 @@ class BeeFactory:
     __connection = None
 
     __instance = None
-    __honeyFactory = None
 
     def __new__(cls):
         if cls.__instance is None:

@@ -26,7 +26,8 @@ class ResultUtil:
             if field_type is bool:
                 # v = bool(v)  # 将值转换为bool类型
                 # print(type(v))
-                if type(v) == int:
+                # if type(v) == int:
+                if isinstance(v, int):
                     v = bool(v)
                 else:
                     v = (v == '1') or (v.lower() == 'true')
