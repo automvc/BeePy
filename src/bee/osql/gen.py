@@ -40,13 +40,13 @@ class GenBean:
         Util.write_to_file(file_path, file_name, code)
 
     def __init_db_sql(self):
-        sql_mysql = "SELECT COLUMN_NAME col, DATA_TYPE type, CASE IS_NULLABLE WHEN 'YES' THEN 1  ELSE 0  END AS ynNull, CASE COLUMN_KEY WHEN 'PRI' THEN 1  ELSE 0  END AS ynKey, COLUMN_COMMENT label,COLUMN_DEFAULT defaultValue,CHARACTER_MAXIMUM_LENGTH strLen, NUMERIC_PRECISION precision,NUMERIC_SCALE scale FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '{database}' AND TABLE_NAME = '{table_name}' ORDER BY ORDINAL_POSITION"
+        sql_mysql = "SELECT COLUMN_NAME col, DATA_TYPE type, CASE IS_NULLABLE WHEN 'YES' THEN 1  ELSE 0  END AS ynNull, CASE COLUMN_KEY WHEN 'PRI' THEN 1  ELSE 0  END AS ynKey, COLUMN_COMMENT label,COLUMN_DEFAULT defaultValue,CHARACTER_MAXIMUM_LENGTH strLen, NUMERIC_PRECISION precisions,NUMERIC_SCALE scale FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '{database}' AND TABLE_NAME = '{table_name}' ORDER BY ORDINAL_POSITION"
         sql_sqlite = "select name col,type,[notnull] ynNull,pk ynKey,dflt_value defaultValue from pragma_table_info('{table_name}')"
 
         GenBean.__db_sql[DatabaseConst.MYSQL.lower()] = sql_mysql
         GenBean.__db_sql[DatabaseConst.SQLite.lower()] = sql_sqlite
 
-        sql_oralce = "SELECT column_name col, data_type type, nullable ynNull, data_default defaultValue, data_length strLen, data_precision precision, data_scale scale FROM user_tab_columns  WHERE table_name = UPPER('{table_name}') ORDER BY column_id"
+        sql_oralce = "SELECT column_name col, data_type type, nullable ynNull, data_default defaultValue, data_length strLen, data_precision precisions, data_scale scale FROM user_tab_columns  WHERE table_name = UPPER('{table_name}') ORDER BY column_id"
         GenBean.add_fetch_bean_sql(DatabaseConst.ORACLE, sql_oralce)
 
     def _get_fetch_bean_sql(self, table_name):
@@ -100,9 +100,8 @@ class GenBean:
             fieldName = NamingHandler.toFieldName(tableMeta.col)
             fieldType = HoneyUtil.sql_type_to_python_type(tableMeta.type)
 
-            if tableMeta.ynKey:
-                if fieldName != SysConst.id:
-                    class_lines.insert(2, f"    {SysConst.pk} = \"{fieldName}\"")
+            if tableMeta.ynKey and fieldName != SysConst.id:
+                class_lines.insert(2, f"    {SysConst.pk} = \"{fieldName}\"")
 
             if fieldType in ['datetime', 'date', 'time']:
                 dt_set.add(fieldType)

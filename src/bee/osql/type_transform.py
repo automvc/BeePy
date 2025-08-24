@@ -223,6 +223,7 @@ class Sql2Py:
         common_sql_type_mappings: Dict[str, str] = {
             "TEXT":"str",
             "JSON":"str",
+            "CHAR":"str",
             "VARCHAR":"str",
             "VARCHAR(255)":"str",
             "int":"int",

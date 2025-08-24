@@ -29,7 +29,7 @@ class TableMeta:
     defaultValue = None
     strLen:int = None
     unique:bool = None
-    precision:int = None
+    precisions:int = None
     scale:int = None
     # tablecomment = None
     # tablename = None
