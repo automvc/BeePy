@@ -74,7 +74,7 @@ class ConditionUpdateSetStruct:
 class ConditionImpl(Condition):
 
     def __init__(self):
-        self.COMMA = ","
+        self.__COMMA = ","
         self.expressions = []  # List of Expression objects
         self.where_fields = set()  # Fields used in WHERE clause
 
@@ -146,12 +146,15 @@ class ConditionImpl(Condition):
             self.__isStartGroupBy = False
             exp.value = K.group_by()
         else:
-            exp.value = self.COMMA
+            exp.value = self.__COMMA
         self.expressions.append(exp)
         return self
 
-    # having(FunctionType.MIN, "field", Op.ge, 60)-->having min(field)>=60
     def having(self, functionType:FunctionType, field: str, op: Op, value: Any) -> 'ConditionImpl':
+        '''
+        e.g.
+        having(FunctionType.MIN, "field", Op.ge, 60)-->having min(field)>=60
+        '''
         self.__check_one_field(field)
         exp = Expression(field_name = field, Op = op, value = value, op_num = 5)
         exp.value2 = functionType
@@ -167,8 +170,6 @@ class ConditionImpl(Condition):
         self.expressions.append(exp)
         self.where_fields.add(field)
         return self
-
-    __COMMA = ","
 
     def orderBy(self, field:str) -> 'ConditionImpl':
         self.__check_one_field(field)
@@ -249,7 +250,7 @@ class ConditionImpl(Condition):
 
     # ## ###########-------just use in update set-------------start-
     # salary = salary + 1000
-    def setAdd(self, field: str, value: Any) -> 'ConditionImpl':
+    def setAdd(self, field: str, value: int) -> 'ConditionImpl':
         self.__check_one_field(field)
         exp = Expression(field_name = field, value = value, op_num = 52, op_type = "+")
         self.update_set_exp.append(exp)
@@ -257,7 +258,7 @@ class ConditionImpl(Condition):
         return self
 
     # salary = salary * 1.1
-    def setMultiply(self, field: str, value: Any) -> 'ConditionImpl':
+    def setMultiply(self, field: str, value: int) -> 'ConditionImpl':
         self.__check_one_field(field)
         exp = Expression(field_name = field, value = value, op_num = 53, op_type = "*")
         self.update_set_exp.append(exp)

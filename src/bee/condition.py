@@ -62,6 +62,7 @@ class Condition(ABC):
         """
         eg: orderBy3(FunctionType.MAX, "total", OrderType.DESC)-->order by max(total) desc
         """
+
     @abstractmethod
     def selectField(self, *field:str) -> 'Condition':
         pass
@@ -88,11 +89,11 @@ class Condition(ABC):
 
     # ## ###########-------just use in update-------------start-
     @abstractmethod
-    def setAdd(self, field: str, value: Any) -> 'Condition':
+    def setAdd(self, field: str, value: int) -> 'Condition':
         pass
 
     @abstractmethod
-    def setMultiply(self, field: str, value: Any) -> 'Condition':
+    def setMultiply(self, field: str, value: int) -> 'Condition':
         pass
 
     @abstractmethod
