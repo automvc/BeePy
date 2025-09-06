@@ -15,6 +15,7 @@ class Orders2:
     id: int = field(default=None)  
     name: str = field(default=None)  
     remark: str = field(default=None)  
+    type: str = field(default=None)  
     
     # def __init__(self, id=None, name=None):  
     #     self.id = id  

@@ -1,10 +1,8 @@
-# from org.teasoft.exam.entity.Orders import Orders
-# from bee.api import Suid
 
-from bee.osql.bee_enum import Op
+from bee.bee_enum import Op
+from bee.honeyfactory import BF
 
 import MyConfig
-from bee.honeyfactory import BF
 from entity.Orders import Orders
 
 

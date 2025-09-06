@@ -10,6 +10,7 @@ Created on 2024年10月19日
 class Orders:
     __id = None  
     __name = None 
+    __type = None
     __remark = "init __remark"
     
     # def __init__(self, **kwargs):  
