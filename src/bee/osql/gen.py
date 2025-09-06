@@ -51,12 +51,12 @@ class GenBean:
 
     def _get_fetch_bean_sql(self, table_name):
 
-        dbName = HoneyContext.get_dbname()
+        dbname = HoneyContext.get_dbname()
         database = HoneyConfig().get_db_config_dict().get('database')
 
-        sql = GenBean.__db_sql.get(dbName, None)
+        sql = GenBean.__db_sql.get(dbname, None)
         if sql is None:
-            sql = Custom.custom_get_fetch_bean_sql(dbName)
+            sql = Custom.custom_get_fetch_bean_sql(dbname)
 
         sql = sql.replace('{table_name}', table_name)
         if database:

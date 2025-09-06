@@ -2,12 +2,11 @@
 # import pymysql
 import threading
 
+from bee.bee_enum import LocalType
 from bee.config import HoneyConfig
 from bee.conn_builder import ConnectionBuilder
 from bee.factory import BeeFactory
 from bee.osql.const import DatabaseConst, SysConst
-
-from bee.bee_enum import LocalType
 
 
 class HoneyContext:
@@ -45,15 +44,15 @@ class HoneyContext:
         get placeholder for current database.
         '''
 
-        dbName = HoneyConfig().get_dbname()
+        dbname = HoneyConfig().get_dbname()
 
-        if not dbName:
+        if not dbname:
             return "?"
-        elif dbName == DatabaseConst.MYSQL.lower() or dbName == DatabaseConst.PostgreSQL.lower():
+        elif dbname == DatabaseConst.MYSQL.lower() or dbname == DatabaseConst.PostgreSQL.lower():
             return "%s"
-        elif dbName == DatabaseConst.SQLite.lower():
+        elif dbname == DatabaseConst.SQLite.lower():
             return "?"
-        elif dbName == DatabaseConst.ORACLE.lower():
+        elif dbname == DatabaseConst.ORACLE.lower():
             # query = "SELECT * FROM users WHERE username = :username AND age = :age"
             return ":"
         else:
@@ -66,31 +65,31 @@ class HoneyContext:
         :param conn: connection
         :return: if connection is active return True, else return False.
         '''
-        dbName = HoneyConfig().get_dbname()
+        dbname = HoneyConfig().get_dbname()
 
-        if dbName is None:
+        if dbname is None:
             return False
-        elif dbName == DatabaseConst.MYSQL.lower():
+        elif dbname == DatabaseConst.MYSQL.lower():
             try:
                 conn.ping(reconnect = True)
                 return True
             except Exception:
                 return False
-        # elif dbName == DatabaseConst.SQLite.lower():
+        # elif dbname == DatabaseConst.SQLite.lower():
         #     try:
         #         # SQLite doesn't have a direct way to ping, but we can execute a simple query to check connectivity
         #         conn.execute('SELECT 1')
         #         return True
         #     except Exception:
         #         return False
-        elif dbName == DatabaseConst.ORACLE.lower():
+        elif dbname == DatabaseConst.ORACLE.lower():
             try:
                 # For Oracle, we can use the `ping` method if using cx_Oracle
                 conn.ping()
                 return True
             except Exception:
                 return False
-        # elif dbName == DatabaseConst.PostgreSQL.lower():
+        # elif dbname == DatabaseConst.PostgreSQL.lower():
         #     try:
         #         # PostgreSQL can be checked with a simple query as well
         #         conn.execute('SELECT 1')
@@ -161,18 +160,18 @@ class HoneyContext:
 
     @staticmethod
     def isMySql():
-        dbName = HoneyConfig().get_dbname()
-        return dbName == DatabaseConst.MYSQL.lower()
+        dbname = HoneyConfig().get_dbname()
+        return dbname == DatabaseConst.MYSQL.lower()
 
     @staticmethod
     def isSQLite():
-        dbName = HoneyConfig().get_dbname()
-        return dbName == DatabaseConst.SQLite.lower()
+        dbname = HoneyConfig().get_dbname()
+        return dbname == DatabaseConst.SQLite.lower()
 
     @staticmethod
     def isOracle():
-        dbName = HoneyConfig().get_dbname()
-        return dbName == DatabaseConst.ORACLE.lower()
+        dbname = HoneyConfig().get_dbname()
+        return dbname == DatabaseConst.ORACLE.lower()
 
     @staticmethod
     def get_dbname():

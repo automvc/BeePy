@@ -32,7 +32,7 @@ class ConnectionBuilder:
         }
 
         # Check if the dbname is supported
-        # if dbName not in db_modules:
+        # if dbname not in db_modules:
 
         if dbname is None:
             # raise ValueError("Need set the dbname in Config!")

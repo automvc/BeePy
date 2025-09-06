@@ -436,7 +436,7 @@ class ObjToSQL:
         sql = f"{K.delete()} {K.from_()} {table_name}"
         return sql + where_condition_str
 
-    def __get_dbName(self):
+    def __get_dbname(self):
         return HoneyConfig().get_dbname()
 
     def __getPlaceholderType(self):
@@ -444,7 +444,7 @@ class ObjToSQL:
         # cursor.execute(sql, emp_id=emp_id)
         # sql = "INSERT INTO employees (employee_id, employee_name, salary) VALUES (:emp_id, :emp_name, :emp_salary)"
         # cursor.execute(sql, emp_id=emp_id, emp_name=emp_name, emp_salary=emp_salary)
-        if DatabaseConst.ORACLE.lower() == self.__get_dbName():
+        if DatabaseConst.ORACLE.lower() == self.__get_dbname():
             return 3
         else:
             return 0
@@ -529,8 +529,8 @@ class ObjToSQL:
             table_name = entityClass
         else:
             table_name = HoneyUtil.get_table_name_by_class(entityClass)
-        dbName = HoneyConfig().get_dbname()
-        if dbName == DatabaseConst.ORACLE.lower() or dbName == DatabaseConst.SQLSERVER.lower():
+        dbname = HoneyConfig().get_dbname()
+        if dbname == DatabaseConst.ORACLE.lower() or dbname == DatabaseConst.SQLSERVER.lower():
             sql0 = "DROP TABLE " + table_name
         else:
             sql0 = "DROP TABLE IF EXISTS " + table_name
@@ -559,14 +559,14 @@ class ObjToSQL:
 
     def to_drop_index_sql(self, entity_class, index_name):
         table_name = HoneyUtil.get_table_name_by_class(entity_class)
-        dbName = HoneyConfig().get_dbname()
+        dbname = HoneyConfig().get_dbname()
 
         if index_name:
-            if dbName == DatabaseConst.SQLSERVER.lower():
+            if dbname == DatabaseConst.SQLSERVER.lower():
                 drop_sql = "DROP INDEX table_name.index_name"
-            elif dbName == DatabaseConst.ORACLE.lower() or dbName == DatabaseConst.SQLite.lower() or dbName == DatabaseConst.DB2.lower():
+            elif dbname == DatabaseConst.ORACLE.lower() or dbname == DatabaseConst.SQLite.lower() or dbname == DatabaseConst.DB2.lower():
                 drop_sql = "DROP INDEX index_name"
-            elif dbName == DatabaseConst.MYSQL.lower() or dbName == DatabaseConst.MsAccess.lower():
+            elif dbname == DatabaseConst.MYSQL.lower() or dbname == DatabaseConst.MsAccess.lower():
                 drop_sql = "DROP INDEX index_name ON table_name"
             else:
                 drop_sql = "DROP INDEX index_name"

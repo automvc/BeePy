@@ -155,23 +155,23 @@ class HoneyUtil:
 
     @staticmethod
     def generate_pk_statement():
-        dbName = HoneyConfig().get_dbname()
-        if dbName == DatabaseConst.MYSQL.lower():
+        dbname = HoneyConfig().get_dbname()
+        if dbname == DatabaseConst.MYSQL.lower():
             return " INT PRIMARY KEY AUTO_INCREMENT NOT NULL"
-        elif dbName == DatabaseConst.SQLite.lower():
+        elif dbname == DatabaseConst.SQLite.lower():
             return " INTEGER PRIMARY KEY NOT NULL"  # 自动增长
-        elif dbName == DatabaseConst.ORACLE.lower():
+        elif dbname == DatabaseConst.ORACLE.lower():
             return " NUMBER PRIMARY KEY"
-        elif dbName == DatabaseConst.PostgreSQL.lower():
+        elif dbname == DatabaseConst.PostgreSQL.lower():
             return " SERIAL PRIMARY KEY"
         else:
-            # Logger.warn(f"Unsupported database type: {dbName}, when generate primary key!")
-            Logger.warn(f"There is not dedicated primary key statement for: {dbName}, will use normal!")
+            # Logger.warn(f"Unsupported database type: {dbname}, when generate primary key!")
+            Logger.warn(f"There is not dedicated primary key statement for: {dbname}, will use normal!")
             temp = " " + Custom.custom_pk_statement()
             # if column:
             #     temp += ",\n    PRIMARY KEY(" + column + ")"
             return temp
-            # raise ValueError(f"Unsupported database type: {dbName}")
+            # raise ValueError(f"Unsupported database type: {dbname}")
 
     @staticmethod
     def adjustUpperOrLower(value):
