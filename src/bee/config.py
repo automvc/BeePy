@@ -219,8 +219,8 @@ class HoneyConfig:
 
     def __adjust_db_path_for_sqllite(self):
         cls = type(self)
-        t_dbName = cls.__db_config_data['dbname']
-        if t_dbName.lower() == DatabaseConst.SQLite.lower():
+        t_dbname = cls.__db_config_data['dbname']
+        if t_dbname.lower() == DatabaseConst.SQLite.lower():
 
             t_database = cls.__db_config_data['database']
             if os.path.isfile(t_database):
@@ -277,7 +277,7 @@ class HoneyConfig:
 
         if config.get("dbname"):
             cls.__db_config_data["dbname"] = config.get("dbname")
-            HoneyConfig.dbName = config.get("dbname")
+            HoneyConfig.dbname = config.get("dbname")
 
     def get_dbname(self):
         '''
