@@ -103,21 +103,21 @@ class HoneyConfig:
         return config_file
 
     @staticmethod
-    def __loadConfigInProperties(cls):
-        if cls._loaded:
+    def __loadConfigInProperties(clazz):
+        if clazz._loaded:
             return
         config_file = PreConfig.config_properties_file_name  # 文件路径
         old_config_file = config_file
 
         try:
-            config_file = cls.__adjust_config_file(config_file)
+            config_file = clazz.__adjust_config_file(config_file)
             if not os.path.isfile(config_file):
                 Logger.info(f"Not found the file {old_config_file}!")
                 return
             with open(config_file, 'r', encoding='utf-8') as file:
-                cls._loaded = True  # 设置为已加载
+                clazz._loaded = True  # 设置为已加载
                 Logger.info("Loading config file: " + config_file)
-                annotations = cls.__annotations__
+                annotations = clazz.__annotations__
                 for line in file:
                     line = line.strip()
                     # 跳过空行和注释
@@ -138,20 +138,20 @@ class HoneyConfig:
                         # 获取属性名称
                         attr_name = key[len('bee.db.'):]
                         # 将值赋给对应的属性
-                        if hasattr(cls, attr_name):
-                            setattr(cls, attr_name, value)
+                        if hasattr(clazz, attr_name):
+                            setattr(clazz, attr_name, value)
 
                     # 检查键是否以 'bee.' 开头
                     elif key.startswith('bee.'):
                         # 获取属性名称
                         attr_name = key[len('bee.'):]
                         # 将值赋给对应的属性
-                        if hasattr(cls, attr_name):
-                            # setattr(cls, attr_name, value) # 数据是否要转换类型？ 要，在以下转换
+                        if hasattr(clazz, attr_name):
+                            # setattr(clazz, attr_name, value) # 数据是否要转换类型？ 要，在以下转换
 
                             # 获取类型提示（Python 3.5+）
                             type_hint = annotations.get(attr_name)
-                            init_value = getattr(cls, attr_name)
+                            init_value = getattr(clazz, attr_name)
 
                             # print(" value:",init_value, "attr_name:",attr_name)
 
@@ -164,7 +164,6 @@ class HoneyConfig:
                                 target_type = None
 
                             # print("target_type： ",target_type," value:",init_value, "attr_name:",attr_name)
-
                             # 在 Python 中，将字符串 'False' 转换为布尔型变量时，直接使用 bool() 函数会得到 True，因为非空字符串在 Python 中会被视为 True
 
                             try:
@@ -183,25 +182,24 @@ class HoneyConfig:
                                     converted_value = target_type(init_value)
 
                                 # print("target_type： ",target_type," converted_value:",converted_value, "attr_name:",attr_name)
-                                setattr(cls, attr_name, converted_value)
+                                setattr(clazz, attr_name, converted_value)
                             except (ValueError, TypeError) as e:
                                 raise ValueError(f"Can not transform {value} to {target_type} (attr_name: {attr_name})") from e
 
-            cls.__db_config_data = cls.__instance.get_db_config_dict()
+            clazz.__db_config_data = clazz.__instance.get_db_config_dict()
         except OSError as err:
             Logger.info(err)
-            # raise ConfigBeeException(err)
 
     @staticmethod
-    def __loadConfigInJson(cls):
-        if cls._loaded:
+    def __loadConfigInJson(clazz):
+        if clazz._loaded:
             return
 
         config_file = PreConfig.config_json_file_name
         old_config_file = config_file
 
         try:
-            config_file = cls.__adjust_config_file(config_file)
+            config_file = clazz.__adjust_config_file(config_file)
 
             if not os.path.isfile(config_file):
                 Logger.warn(f"Not found the file {old_config_file}!")
@@ -209,10 +207,10 @@ class HoneyConfig:
 
             Logger.info("Loading config file: " + config_file)
             with open(config_file, 'r', encoding='utf-8') as file:
-                cls._loaded = True  # 设置为已加载
-                cls.__db_config_data = json.load(file)
+                clazz._loaded = True  # 设置为已加载
+                clazz.__db_config_data = json.load(file)
 
-                cls.dbname = cls.__db_config_data.get("dbname")
+                clazz.dbname = clazz.__db_config_data.get("dbname")
 
         except OSError as err:
             Logger.info(err)
