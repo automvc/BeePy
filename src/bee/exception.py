@@ -1,4 +1,7 @@
 class BeeException(Exception):
+    '''
+    BeeException is Bee framework Base Exception.
+    '''
 
     def __init__(self, message_or_exception = None, code = None):
         super().__init__(message_or_exception)

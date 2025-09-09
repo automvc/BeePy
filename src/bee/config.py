@@ -7,6 +7,9 @@ from bee.osql.logger import Logger
 
 
 class PreConfig:
+    """
+    Pre-set Config for Bee.
+    """
 
     # suggest set project root path for it
     config_folder_root_path = None  # replace with config_path since 1.6.0
@@ -114,7 +117,7 @@ class HoneyConfig:
             if not os.path.isfile(config_file):
                 Logger.info(f"Not found the file {old_config_file}!")
                 return
-            with open(config_file, 'r', encoding='utf-8') as file:
+            with open(config_file, 'r', encoding = 'utf-8') as file:
                 clazz._loaded = True  # 设置为已加载
                 Logger.info("Loading config file: " + config_file)
                 annotations = clazz.__annotations__
@@ -206,7 +209,7 @@ class HoneyConfig:
                 return
 
             Logger.info("Loading config file: " + config_file)
-            with open(config_file, 'r', encoding='utf-8') as file:
+            with open(config_file, 'r', encoding = 'utf-8') as file:
                 clazz._loaded = True  # 设置为已加载
                 clazz.__db_config_data = json.load(file)
 
@@ -293,10 +296,3 @@ class HoneyConfig:
         '''
         Logger.info("set database name:" + dbname)
         HoneyConfig.dbname = dbname
-
-# if __name__ == '__main__':
-#     print("start")
-#     c1=HoneyConfig()
-#     print(c1)
-#     c2=HoneyConfig()
-#     print(c2)

@@ -22,7 +22,7 @@ class Suid:
     def update(self, entity):
         '''
         According to entity object update record(update record by id).This method just has id field to SQL where expression.
-        table's entity(do not allow null);id is where condition,do not allow null.<br>
+        table's entity(do not allow null). id is where condition,do not allow null.<br>
         The entity corresponding to table and can not be null. <br>
         The ID field of entity cannot be null and as filter condition. <br>
         The not null and not empty field will update to database except ID.
@@ -82,7 +82,7 @@ class SuidRich(Suid):
     <br>Convert to the set part of SQL UPDATE statement (null and empty strings are filtered by default).
     <br>If the value of an attribute of the same entity is used in the where part, it is meaningless to use it
     <br>in the update set part (because their values are the same at this time)
-    <br>However, it can be set by using the set(String fieldName, Number num) and other methods;
+    <br>However, it can be set by using the set(String fieldName, Number num) and other methods.
     <br>The method set,setMultiply,setAdd,setWithField of condition is processed before processing the where field,
     <br>so it is not affected by the specified where condition field
 
@@ -166,7 +166,7 @@ class SuidRich(Suid):
         '''
         Check whether the entity corresponding record exist
         :param entity: table's entity(do not allow null).
-        :return: true,if have the record;or return false.
+        :return: true,if have the record, or return false.
         '''
         return self.__suidRich.exist(entity)
 

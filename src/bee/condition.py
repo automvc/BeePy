@@ -6,7 +6,7 @@ from bee.bee_enum import FunctionType, Op, SuidType, OrderType
 
 class Condition(ABC):
     """
-    Condition.条件构造器
+    Condition: used to construct complex WHERE, UPDATE statements and so on.
     """
 
     @abstractmethod

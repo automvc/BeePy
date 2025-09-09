@@ -292,14 +292,14 @@ class CacheUtil:
                 _delete_cache_by_index(i)
             CacheUtil.__cacheArrayIndex.low = know + 1
         else:
-            # 情况2：循环缓存（low > high）  //all:0-99;  low 80    know:90   99, 0  20:high
+            # 情况2：循环缓存（low > high）  //all:0-99  low 80    know:90   99, 0  20:high
             if low < know:
                 # 子情况2.1：know 在 low 之后（未跨循环点）
                 for i in range(low, know + 1):
                     _delete_cache_by_index(i)
                 CacheUtil.__cacheArrayIndex.low = (know + 1) % max_size
 
-            elif know < high:  # all:0-99; low 80    90   99, 0   know:10  20:high
+            elif know < high:  # all:0-99 low 80    90   99, 0   know:10  20:high
                 # 子情况2.2：know 在 high 之前（跨循环点）
                 # 删除从 low 到末尾的部分
                 for i in range(low, max_size):

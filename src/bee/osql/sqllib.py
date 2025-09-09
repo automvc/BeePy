@@ -8,6 +8,9 @@ from bee.osql.transform import ParamUtil, ResultUtil
 
 
 class BeeSql(AbstractBase):
+    '''
+    BeeSql is a lib for operation database.
+    '''
 
     def select(self, sql, entityClass, params = None):
     # def select(self, sql: str, entityClass: type, params=None) -> list:

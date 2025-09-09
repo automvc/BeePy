@@ -7,6 +7,9 @@ from bee.osql.logger import Logger
 
 
 class ConnectionBuilder:
+    '''
+    Connection Builder.
+    '''
 
     _already_print = False
 
@@ -46,7 +49,8 @@ class ConnectionBuilder:
             dbModuleName = tempConfig.pop(SysConst.dbModuleName, None)
         elif dbname not in db_modules:
             # raise ValueError(f"Database type '{dbname}' is not supported, need config dbModuleName.")
-            Logger.warn(f"Database type '{dbname}' is not supported, need config dbModuleName.")  # todo
+            # todo
+            Logger.warn(f"Database type '{dbname}' is not supported, need config dbModuleName.")
             return None
         else:
             dbModuleName = db_modules[dbname]

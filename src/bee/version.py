@@ -2,6 +2,9 @@ from bee.osql.const import StrConst
 
 
 class Version:
+    '''
+    Bee Version.
+    '''
     __version = "1.6.8"
     vid = 1006008
 

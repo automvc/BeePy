@@ -353,7 +353,7 @@ class ParseCondition:
                 prepared_values.append(PreparedValue(type(exp.value), exp.value))
                 values.append(exp.value)
 
-            # SET salary = salary + bonus;
+            # SET salary = salary + bonus
             elif exp.op_num == 54 or exp.op_num == 55:
                 clause = f"{column_name} = {column_name} {exp.op_type} {exp.value}"
                 update_set_sql.append(clause)
@@ -381,7 +381,7 @@ class ParseCondition:
 
         # UPDATE employees
         # SET salary = 60000, department = 'HR'
-        # WHERE employee_id = 101;
+        # WHERE employee_id = 101
 
         # UPDATE employees
         # SET salary = CASE
@@ -393,7 +393,7 @@ class ParseCondition:
         # UPDATE employees e
         # JOIN departments d ON e.department_id = d.department_id
         # SET e.salary = e.salary * 1.1
-        # WHERE d.department_name = 'Engineering';
+        # WHERE d.department_name = 'Engineering'
 
         # UPDATE employees
         # SET salary = (
@@ -401,7 +401,7 @@ class ParseCondition:
         #     FROM employees
         #     WHERE department = 'HR'
         # )
-        # WHERE employee_id = 102;
+        # WHERE employee_id = 102
 
         # 6. 使用ORDER BY和LIMIT：限制更新数量
         # 按特定顺序更新前N行（适用于MySQL等支持的数据库）。
@@ -410,7 +410,7 @@ class ParseCondition:
         # UPDATE scores
         # SET score = 100
         # ORDER BY submission_time DESC
-        # LIMIT 5;
+        # LIMIT 5
 
         # Join all where clauses into a single string
         updateSet_str = "".join(update_set_sql)

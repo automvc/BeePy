@@ -10,6 +10,9 @@ from bee.osql.const import DatabaseConst, SysConst
 
 
 class HoneyContext:
+    '''
+    Context for Bee framework.
+    '''
 
     dbname = None
 

@@ -14,6 +14,9 @@ from bee.osql.condition_impl import ConditionImpl
 
 
 class ObjSQL(AbstractCommOperate):
+    '''
+    ObjSQL is Suid implementation. 
+    '''
 
     def __init__(self):
         # print("in ObjSQL init......")
@@ -186,6 +189,9 @@ class ObjSQL(AbstractCommOperate):
 
 
 class ObjSQLRich(ObjSQL):
+    '''
+    ObjSQLRich is SuidRich implementation.
+    '''
 
     # def __init__(self):
     #     print("in ObjSQLRich init......")
@@ -415,10 +421,9 @@ class ObjSQLRich(ObjSQL):
 # for custom SQL
 # custom SQL do not support cache
 class PreparedSqlLib(AbstractCommOperate):
-
-    """
-    eg:
-    """
+    '''
+    PreparedSqlLib is PreparedSql implementation.
+    '''
 
     def select(self, sql, return_type_class, params = None, start = None, size = None):
         if not sql:

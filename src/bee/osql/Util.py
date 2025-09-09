@@ -36,12 +36,3 @@ def write_to_file(file_path: str, file_name:str, content: str) -> None:
         Logger.info(f"write successful. {path_and_name}")
     except Exception as e:
         Logger.warn(f"write error: {e}")
-
-# # 使用示例
-# if __name__ == "__main__":
-#     # 指定文件路径和内容
-#     file_path = 'output.txt'
-#     content = 'Hello, this is a test string to be written to the file. 23232'
-#
-#     # 调用方法写入文件
-#     write_to_file("E:\\xxx\\tests", "entity.py", content)

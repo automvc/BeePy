@@ -1,6 +1,9 @@
 
 
 class Custom:
+    '''
+    Custom interface. User can define by self.
+    '''
 
     @staticmethod
     def custom_pk_statement():

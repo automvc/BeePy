@@ -9,6 +9,9 @@ from bee.osql.mid_typing import Column
 
 
 class HoneyUtil:
+    '''
+    Util for Bee framework.
+    '''
 
     @staticmethod
     def get_obj_field_value(obj):
@@ -57,7 +60,7 @@ class HoneyUtil:
     @staticmethod
     def get_class_field(cls):
         # 返回给定类的属性列表,但不包括系统的
-        # since 1.6.0 还考虑字段的类型;时间类型等
+        # since 1.6.0 还考虑字段的类型,时间类型等
         """
         Returns a list of properties for a given class, but does not include the system's.
         """
@@ -236,7 +239,7 @@ class HoneyUtil:
 
         B = {}
         try:
-            # 保留有类型的;包括复合类型; 低版本没有使用时，会报异常
+            # 保留有类型的, 包括复合类型, 低版本没有使用时，会报异常
             # 3.8.10 have exception if no use like: remark: str = None
             B = cls.__annotations__
         except Exception:
@@ -250,7 +253,7 @@ class HoneyUtil:
             else:
                 B.update(M)
 
-        # 保留有类型的;包括复合类型
+        # 保留有类型的, 包括复合类型
         # B = cls.__annotations__  #3.8.10 have exception if no use like: remark: str = None
         new_map = {}
 

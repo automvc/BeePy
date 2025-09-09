@@ -4,7 +4,7 @@ class CacheSuidStruct:
     sql:str  # 不带值的
     tableNames:str
     params = None
-    returnType:str  # 返回值类型用于过滤缓存的查询结果,防止同一查询sql的不同类型的结果;  但更改的操作可不需要用这个值
+    returnType:str  # 返回值类型用于过滤缓存的查询结果,防止同一查询sql的不同类型的结果  但更改的操作可不需要用这个值
     suidType:str  # 操作类型
     entityClass = None
 

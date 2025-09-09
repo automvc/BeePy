@@ -13,7 +13,7 @@ class Assist:
         generate bean file via table name.
         :param table_name: table name
         :param file_path: path of bean file
-        :param file_name: file name for bean file; default transform according to table_name.
+        :param file_name: file name for bean file, default transform according to table_name.
         '''
         return Assist.__genBean.gen_and_write_bean(table_name, file_path, file_name)
 
