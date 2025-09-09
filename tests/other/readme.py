@@ -45,6 +45,9 @@ if __name__ == "__main__":
     suid = Suid()
     orderList = suid.select(Orders())  # select all
     
+    suidRich = SuidRich()
+    suidRich.delete_by_id(Orders, 1)
+    
     # insert    
     orders = Orders()
     orders.id = 1
