@@ -109,14 +109,14 @@ class Orders(BaseMode):</p>
 
 <h1 id="__tablename__-orders">__tablename__ = "orders"</h1>
 
-<p>id:int = None<br />
-name:str = None 
+<p>id:int = None
+name:str = None
 remark:str = None</p>
 
-<p>def __repr__(self): 
+<p>def __repr__(self):
     return  str(self.__dict__)</p>
 
-<p>if __name__ == '__main__':<br />
+<p>if __name__ == '__main__':
     orders = Orders()
     orderList=orders.select()</p>
 </div>
@@ -157,7 +157,7 @@ The not null and not empty field will update to database except ID.</p>
     </div>
     <a class="headerlink" href="#BaseMode.insert"></a>
     
-            <div class="docstring"><p>According to entity object insert record. 
+            <div class="docstring"><p>According to entity object insert record.
 The entity corresponding to table and can not be null. <br>
 The not null and not empty field will insert to database.<br></p>
 
@@ -215,7 +215,7 @@ Other can define with condition. <br></li>
 <h6 id="parameters">Parameters</h6>
 
 <ul>
-<li><strong>condition</strong>:  If the field of entity is not null or empty, it will be translate to field=value.Other can define with condition. </li>
+<li><strong>condition</strong>:  If the field of entity is not null or empty, it will be translate to field=value.Other can define with condition.</li>
 </ul>
 
 <h6 id="returns">Returns</h6>
@@ -292,7 +292,7 @@ Other can define with condition. <br></li>
 <h6 id="parameters">Parameters</h6>
 
 <ul>
-<li><strong>id</strong>:  value of entity's id field. </li>
+<li><strong>id</strong>:  value of entity's id field.</li>
 </ul>
 
 <h6 id="returns">Returns</h6>
@@ -406,7 +406,7 @@ Other can define with condition. <br></li>
                                 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">updateBy</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">condition</span><span class="p">:</span> <span class="n"><a href="condition.html#Condition">bee.condition.Condition</a></span> <span class="o">=</span> <span class="kc">None</span>, </span><span class="param"><span class="o">*</span><span class="n">whereFields</span></span><span class="return-annotation">):</span></span>
+        <span class="name">updateBy</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">condition</span><span class="p">:</span> <span class="n"><a href="condition.html#Condition">bee.condition.Condition</a></span>, </span><span class="param"><span class="o">*</span><span class="n">whereFields</span></span><span class="return-annotation">):</span></span>
 
         
     </div>
@@ -418,7 +418,7 @@ Other can define with condition. <br></li>
 
 <ul>
 <li><strong>condition</strong>:  Condition as filter the record.</li>
-<li><strong>whereFields</strong>:  As a field list of where part in SQL, multiple fields can separated by commas in one 
+<li><strong>whereFields</strong>:  As a field list of where part in SQL, multiple fields can separated by commas in one
 <br>whereField parameter or use variable parameter (the fields in the list will be used as where filter)
 <br>But if id's value is null can not as filter.
 <br>Notice:the method op of condition also maybe converted to the where expression.</li>

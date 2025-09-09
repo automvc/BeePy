@@ -69,40 +69,40 @@
                     <h1 class="modulename">
 bee    </h1>
 
-                        <div class="docstring"><h3 id="v162"><strong>V1.6.2</strong></h3>
+                        <div class="docstring"><h3 id="v168"><strong>V1.6.8</strong></h3>
 
-<p><strong>ORM Bee</strong> in Python!  </p>
+<p><strong>ORM Bee</strong> in Python!</p>
 
-<p><strong>Bee</strong> in Python url:<br />
-<a href="https://github.com/automvc/BeePy">https://github.com/automvc/BeePy</a>  </p>
+<p><strong>Bee</strong> in Python url:
+<a href="https://github.com/automvc/BeePy">https://github.com/automvc/BeePy</a></p>
 
-<p><strong>Bee</strong> in Java url:<br />
-<a href="https://github.com/automvc/bee">https://github.com/automvc/bee</a>  </p>
+<p><strong>Bee</strong> in Java url:
+<a href="https://github.com/automvc/bee">https://github.com/automvc/bee</a></p>
 
 <h1 id="quick-start">Quick Start:</h1>
 
 <h2 id="installation">Installation</h2>
 
-<p>To install, type: </p>
+<p>To install, type:</p>
 
 <div class="pdoc-code codehilite">
 <pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>ormbee
 </code></pre>
 </div>
 
-<p><strong>ORM Bee</strong> pypi url:<br />
+<p><strong>ORM Bee</strong> pypi url:
 <a href="https://pypi.org/project/ormbee/">https://pypi.org/project/ormbee/</a></p>
 
 <h2 id="1-set-db-config">1. set db config</h2>
 
 <h4 id="11can-custom-your-db-module">1.1.can custom your db Module</h4>
 
-<p>in bee.json or bee.properties set dbModuleName  </p>
+<p>in bee.json or bee.properties set dbModuleName</p>
 
 <div class="pdoc-code codehilite">
 <pre><span></span><code><span class="w"> </span><span class="p">{</span>
-<span class="w"> </span><span class="nt">&quot;dbname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SQLite&quot;</span><span class="p">,</span><span class="w">  </span>
-<span class="w"> </span><span class="nt">&quot;database&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bee.db&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w"> </span><span class="nt">&quot;dbname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SQLite&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">&quot;database&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bee.db&quot;</span><span class="p">,</span>
 <span class="w"> </span><span class="c1">//default support: pymysql,sqlite3,cx_Oracle,psycopg2 (no need set)</span>
 <span class="w"> </span><span class="nt">&quot;dbModuleName&quot;</span><span class="p">:</span><span class="s2">&quot;sqlite3&quot;</span>
 <span class="w"> </span><span class="p">}</span>
@@ -127,11 +127,11 @@ bee    </h1>
 
 <h4 id="12if-do-not-want-to-use-the-default-config-filebeejson-or-beeproperties">1.2.if do not want to use the default config file(bee.json or bee.properties),</h4>
 
-<p>can set the db_config info yourself.  </p>
+<p>can set the db_config info yourself.</p>
 
 <div class="pdoc-code codehilite">
 <pre><span></span><code>        <span class="c1"># #mysql</span>
-        <span class="n">dict_config</span> <span class="o">=</span> <span class="p">{</span>  
+        <span class="n">dict_config</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;dbname&#39;</span><span class="p">:</span><span class="s1">&#39;MySQL&#39;</span><span class="p">,</span>
             <span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
             <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
@@ -148,7 +148,7 @@ bee    </h1>
 <h4 id="13set-connection-directly">1.3.set connection directly:</h4>
 
 <div class="pdoc-code codehilite">
-<pre><span></span><code>        <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>  
+<pre><span></span><code>        <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
             <span class="c1"># &#39;dbname&#39;:&#39;MySQL&#39;,</span>
             <span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
             <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
@@ -170,34 +170,34 @@ bee    </h1>
 
 <div class="pdoc-code codehilite">
 <pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Orders</span><span class="p">:</span>
-    <span class="nb">id</span> <span class="o">=</span> <span class="kc">None</span>  
-    <span class="n">name</span> <span class="o">=</span> <span class="kc">None</span> 
+    <span class="nb">id</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">remark</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># can ignore</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span>  <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
 
 
-<span class="c1"># also can use field type as :int        </span>
+<span class="c1"># also can use field type as :int</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Orders8</span><span class="p">:</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;orders&quot;</span>
-    <span class="nb">id</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>  
-    <span class="n">name</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span> 
+    <span class="nb">id</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">name</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">remark</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span>  <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Student2</span><span class="p">:</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="kc">None</span> 
-    <span class="n">age</span> <span class="o">=</span> <span class="kc">None</span>  
+    <span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">remark</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">addr</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span>  <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
 
 
@@ -215,7 +215,7 @@ bee    </h1>
     <span class="n">suid</span> <span class="o">=</span> <span class="n">Suid</span><span class="p">()</span>
     <span class="n">orderList</span> <span class="o">=</span> <span class="n">suid</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">Orders</span><span class="p">())</span>  <span class="c1"># select all</span>
 
-    <span class="c1"># insert    </span>
+    <span class="c1"># insert</span>
     <span class="n">orders</span> <span class="o">=</span> <span class="n">Orders</span><span class="p">()</span>
     <span class="n">orders</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">orders</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;bee&quot;</span>
@@ -229,7 +229,7 @@ bee    </h1>
     <span class="n">orders</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;bee130&quot;</span>
     <span class="c1"># For safety reasons</span>
     <span class="c1"># Fields that are not present in the entity will be ignored.</span>
-    <span class="n">orders</span><span class="o">.</span><span class="n">ext</span> <span class="o">=</span> <span class="s2">&quot;aaa&quot;</span>  
+    <span class="n">orders</span><span class="o">.</span><span class="n">ext</span> <span class="o">=</span> <span class="s2">&quot;aaa&quot;</span>
     <span class="n">orders</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="mi">1</span>
 
     <span class="n">suid</span> <span class="o">=</span> <span class="n">Suid</span><span class="p">()</span>

@@ -671,7 +671,7 @@
                                 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">op</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">self</span>,</span><span class="param">	<span class="n">field</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">Op</span><span class="p">:</span> <span class="n"><a href="../bee_enum.html#Op">bee.bee_enum.Op</a></span>,</span><span class="param">	<span class="n">value</span><span class="p">:</span> <span class="n">Any</span></span><span class="return-annotation">) -> <span class="n"><a href="#ConditionImpl">ConditionImpl</a></span>:</span></span>
+        <span class="name">op</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">self</span>,</span><span class="param">	<span class="n">field</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">op</span><span class="p">:</span> <span class="n"><a href="../bee_enum.html#Op">bee.bee_enum.Op</a></span>,</span><span class="param">	<span class="n">value</span><span class="p">:</span> <span class="n">Any</span></span><span class="return-annotation">) -> <span class="n"><a href="#ConditionImpl">ConditionImpl</a></span>:</span></span>
 
         
     </div>
@@ -794,7 +794,10 @@
     </div>
     <a class="headerlink" href="#ConditionImpl.having"></a>
     
-    
+            <div class="docstring"><p>e.g.
+having(FunctionType.MIN, "field", Op.ge, 60)-->having min(field)&gt;=60</p>
+</div>
+
 
                             </div>
                             <div id="ConditionImpl.orderBy" class="classattr">
@@ -920,7 +923,7 @@
                                 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">setAdd</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">field</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">value</span><span class="p">:</span> <span class="n">Any</span></span><span class="return-annotation">) -> <span class="n"><a href="#ConditionImpl">ConditionImpl</a></span>:</span></span>
+        <span class="name">setAdd</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">field</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">value</span><span class="p">:</span> <span class="nb">int</span></span><span class="return-annotation">) -> <span class="n"><a href="#ConditionImpl">ConditionImpl</a></span>:</span></span>
 
         
     </div>
@@ -933,7 +936,7 @@
                                 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">setMultiply</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">field</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">value</span><span class="p">:</span> <span class="n">Any</span></span><span class="return-annotation">) -> <span class="n"><a href="#ConditionImpl">ConditionImpl</a></span>:</span></span>
+        <span class="name">setMultiply</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">field</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">value</span><span class="p">:</span> <span class="nb">int</span></span><span class="return-annotation">) -> <span class="n"><a href="#ConditionImpl">ConditionImpl</a></span>:</span></span>
 
         
     </div>

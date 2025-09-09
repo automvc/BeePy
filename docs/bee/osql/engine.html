@@ -364,7 +364,7 @@
                                 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">updateBy</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">self</span>,</span><span class="param">	<span class="n">entity</span>,</span><span class="param">	<span class="n">condition</span><span class="p">:</span> <span class="n"><a href="../condition.html#Condition">bee.condition.Condition</a></span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="o">*</span><span class="n">whereFields</span></span><span class="return-annotation">):</span></span>
+        <span class="name">updateBy</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">entity</span>, </span><span class="param"><span class="n">condition</span><span class="p">:</span> <span class="n"><a href="../condition.html#Condition">bee.condition.Condition</a></span>, </span><span class="param"><span class="o">*</span><span class="n">whereFields</span></span><span class="return-annotation">):</span></span>
 
         
     </div>
@@ -488,7 +488,11 @@
     </div>
     <a class="headerlink" href="#PreparedSqlLib.select_dict"></a>
     
-    
+            <div class="docstring"><p>eg:
+  preparedSql=PreparedSql()
+  entity_list =preparedSql.select_dict("SELECT * FROM orders WHERE name=#{name} and id=#{id} and name=#{name}", Orders, params_dict ={"name":"bee1","id":4})</p>
+</div>
+
 
                             </div>
                             <div id="PreparedSqlLib.modify" class="classattr">
@@ -501,7 +505,12 @@
     </div>
     <a class="headerlink" href="#PreparedSqlLib.modify"></a>
     
-    
+            <div class="docstring"><p>eg:
+    sql = "update orders set name = ?, remark = ? where id = ?"
+    params = ('bee130', 'test-update', 1)
+    updateNum = preparedSql.modify(sql, params)</p>
+</div>
+
 
                             </div>
                             <div id="PreparedSqlLib.modify_dict" class="classattr">
@@ -514,7 +523,12 @@
     </div>
     <a class="headerlink" href="#PreparedSqlLib.modify_dict"></a>
     
-    
+            <div class="docstring"><p>eg:
+    sql = "update orders set name = #{name}, remark = #{remark} where id = #{id}"
+    params_dict={"id":1, "name":"newName","remark":"remark2"}
+    updateNum = preparedSql.modify_dict(sql, params_dict)</p>
+</div>
+
 
                             </div>
                             <div id="PreparedSqlLib.beeSql" class="classattr">
