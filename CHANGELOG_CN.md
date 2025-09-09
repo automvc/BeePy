@@ -77,4 +77,21 @@ def delete_by_id(self, entity_class, *ids)
 20. 面向对象方式，创建表时，支持在实体声明唯一约束的字段和不允许为空的字段:  
     __unique_key__={"name","type"}  
     __not_null_filels__={"name","type"}  
+    
+**1.6.2(2025.08)**  
+1. condition支持like/like_left/like_right,in/not in;  
+eg: condtion.op("num", Op.IN, [1,2]); in可以支持的类型有:list/set/tuple type  
+2. 更新cache的相关配置:cache_never,cache_forever,cache_modify_syn config  
+3. 增强分页(LimitOffset)  
+4. 更新默认的命名类型(默认改为：不转换OriginalName)  
+5. 更新condition Expression(delete value3,value4)  
+6. 支持active record风格操作数据库  
+7. 兼容字段名/表名使用SQL关键字  
+
+**1.6.8(2025.08)**  
+1. enhance the code  
+2. fixed bug  
+  SuidRich:updateBy,  
+  Condition:orderBy2,orderBy2,  
+  HoneyConfig.set_db_config_dict  
 
