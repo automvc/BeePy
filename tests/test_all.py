@@ -30,7 +30,7 @@ if __name__ == '__main__':
         version = Version.getVersion()
         
         dbname = HoneyContext.get_dbname()
-        print(dbname)
+        print("The current Database is: ", dbname)
         
         filename0= f'all_logs-V{version}-{now_str}-{dbname}.log'
         # 定义日志文件名  
@@ -86,7 +86,7 @@ if __name__ == '__main__':
                 if result.stderr:  
                     logging.error(f"脚本 {script} 错误:\n{result.stderr.strip()}")   
             except subprocess.CalledProcessError as e:  
-                logging.error(f"脚本 {script} 运行失败: {e}")  
+                logging.error(f"脚本 {script} 运行失败: {e}")
             except Exception as e:  
                 print(f"未知错误: {e}")
                 logging.error(f"未知错误: {e}")  

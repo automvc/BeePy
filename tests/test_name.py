@@ -1,4 +1,4 @@
-from datetime import datetime, time
+from datetime import datetime
 
 class Test_name:
     """ table test_name 's entity """
@@ -7,7 +7,7 @@ class Test_name:
     name2: str = None
     my_price: float = None
     created_at: datetime
-    updated_time: time
+    updated_time: str = None
     flag: bool = None
     set0: str = None
     map: str = None
@@ -25,7 +25,7 @@ class Test_name:
     map_two: str = None
     tuple_two: str = None
     list_two: str = None
-    ttt: bytes = None
+    ttt: str = None
 
     def __repr__(self):
         return str(self.__dict__)
