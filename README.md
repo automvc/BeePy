@@ -97,6 +97,13 @@ eg: condtion.op("num", Op.IN, [1,2]); can support list/set/tuple type
 6. support active record style  
 7. use SQL keywords for compatible field name or table name  
 
+**1.6.8(2025.08)**  
+1. enhance the code  
+2. fixed bug  
+  SuidRich:updateBy,  
+  Condition:orderBy2,orderBy2,  
+  HoneyConfig.set_db_config_dict  
+
 Quick Start:
 =========	
 ## Installation  
