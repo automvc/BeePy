@@ -5,8 +5,8 @@ class Version:
     '''
     Bee Version.
     '''
-    __version = "1.6.8"
-    vid = 1006008
+    __version = "1.9.0"
+    vid = 1009000
 
     @staticmethod
     def getVersion():

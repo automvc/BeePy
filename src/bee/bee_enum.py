@@ -3,20 +3,6 @@ from enum import Enum, auto
 from bee.config import HoneyConfig
 
 
-class FunctionType(Enum):
-    MAX = "max"
-    MIN = "min"
-    SUM = "sum"
-    AVG = "avg"
-    COUNT = "count"
-
-    def get_name(self):
-        if HoneyConfig.sql_key_word_case == "upper":
-            return self.value.upper()
-        else:
-            return self.value.lower()
-
-
 class SuidType(Enum):
     SELECT = "SELECT"
     UPDATE = "UPDATE"
@@ -31,6 +17,31 @@ class SuidType(Enum):
 
     def get_name(self):
         return self.value
+
+
+class JoinType(Enum):
+    '''
+    Join Type for More table.<br>
+    <B>since  1.9.0</B><br>
+    '''
+    JOIN = "JOIN"
+    LEFT_JOIN = "LEFT JOIN"
+    RIGHT_JOIN = "RIGHT JOIN"
+    FULL_JOIN = "FULL JOIN"
+
+
+class FunctionType(Enum):
+    MAX = "max"
+    MIN = "min"
+    SUM = "sum"
+    AVG = "avg"
+    COUNT = "count"
+
+    def get_name(self):
+        if HoneyConfig.sql_key_word_case == "upper":
+            return self.value.upper()
+        else:
+            return self.value.lower()
 
 
 class OrderType(Enum):

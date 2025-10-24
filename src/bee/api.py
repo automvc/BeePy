@@ -1,9 +1,8 @@
 from typing import overload
 
-from bee.condition import Condition
 from bee.bee_enum import FunctionType
-
-from bee.osql.engine import ObjSQL, ObjSQLRich, PreparedSqlLib
+from bee.condition import Condition
+from bee.osql.engine import ObjSQL, ObjSQLRich, PreparedSqlLib, MoreObjSQL
 
 
 class Suid:
@@ -221,6 +220,67 @@ class SuidRich(Suid):
         :param index_name: index name
         '''
         return self.__suidRich.drop_index(entity_class, index_name)
+    
+    
+class MoreTable:
+    '''
+    More table Select/Update/Insert/Delete.<br>
+    The null and empty string are not handled by default.<br>
+    <B>since  1.9.0</B><br>
+    '''
+
+    def __init__(self):
+        self.__moreTable = MoreObjSQL()
+
+    @overload
+    def select(self, entity):
+        ...
+
+    def update(self, entity):
+        '''
+        According to entity object update record(update record by id).This method just has id field to SQL where expression.
+        table's entity(do not allow null). id is where condition,do not allow null.<br>
+        The entity corresponding to table and can not be null. <br>
+        The ID field of entity cannot be null and as filter condition. <br>
+        The not null and not empty field will update to database except ID.
+        :param entity: table's entity(do not allow null).<br>
+        The ID field of entity cannot be null and as filter condition. <br>
+        :return: the numbers of update records successfully, if fails,return integer less than 0.
+        '''
+        return self.__moreTable.update(entity)
+
+    def insert(self, entity):
+        '''
+        According to entity object insert record.
+        :param entity: table's entity(do not allow null).<br>
+        The entity corresponding to table and can not be null. <br>
+        The not null and not empty field will insert to database.<br>
+        :return: the numbers of insert records successfully, if fails,return integer less than 0.
+        '''
+        return self.__moreTable.insert(entity)
+
+    @overload
+    def delete(self, entity):
+        ...
+
+    def select(self, entity, condition: Condition = None):
+        '''
+        Select the records according to entity and condition.<br>
+        :param entity: table's entity(do not allow null).<br>
+        :param condition: If the field of entity is not null or empty, it will be translate to field=value.<br>
+        Other can define with condition. <br>
+        :return: list which contains more than one entity.<br>
+        '''
+        return self.__moreTable.select(entity, condition)
+
+    def delete(self, entity, condition: Condition = None):
+        '''
+        Delete the records according to entity and condition.<br>
+        :param entity: table's entity(do not allow null).
+        :param condition: If the field of entity is not null or empty, it will be translate to field=value.Other can define with condition.
+        :return: the number of deleted record(s) successfully, if fails,return integer less than 0.
+        '''
+        return self.__moreTable.delete(entity, condition)
 
 
 class PreparedSql:

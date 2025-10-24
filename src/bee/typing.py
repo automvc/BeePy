@@ -1,5 +1,7 @@
 import array
+from typing import List
 
+from bee.bee_enum import JoinType
 from bee.osql.logger import Logger
 
 
@@ -10,6 +12,18 @@ class String:
 
     def __init__(self, length):
         self.len = length
+    
+class JoinMeta:
+    '''
+    Join Meta for join table.
+    <B>since  1.9.0</B><br>
+    '''
+
+    def __init__(self, sub_class, joinType:JoinType, main_fields: List[str], sub_fields: List[str]):
+        self.sub_class = sub_class
+        self.joinType = joinType
+        self.main_fields = main_fields
+        self.sub_fields = sub_fields
 
 
 class Array:

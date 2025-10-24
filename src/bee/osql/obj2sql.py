@@ -575,3 +575,5 @@ class ObjToSQL:
         else:
             return f"DROP INDEX ALL ON {table_name}"
 
+class MoreObjToSQL:
+    pass
