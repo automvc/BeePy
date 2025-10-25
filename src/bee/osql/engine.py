@@ -300,7 +300,7 @@ class MoreObjSQL(AbstractCommOperate):
 
             super().logsql("select MoreTable SQL:", sql)
             super().log_params(params)
-            list_r = self.beeSql.select(sql, entityClass, params)
+            list_r = self.beeSql.moreTableSelect(sql, entityClass, params)
             return list_r
         except Exception as e:
             raise BeeException(e)

@@ -125,6 +125,9 @@ class BeeSql(AbstractBase):
             self.__close(cursor, conn)
 
         return rs_fun
+    
+    def moreTableSelect(self, sql, entityClass, params = None):
+        pass
 
     def __getConn(self):
         try:
