@@ -24,18 +24,18 @@ class HoneyUtil:
             return None
 
     @staticmethod
-    def get_class_field_value(cls):
+    def get_class_field_value(clazz):
 
-        if hasattr(cls, '__dict__'):
+        if hasattr(clazz, '__dict__'):
             # 并去掉前缀__和_   只是__开头，会变化的。
-            class_name = cls.__name__
+            class_name = clazz.__name__
             prefix = "_" + class_name + "__"
             kv = { key[len(prefix):] if key.startswith(prefix) else key[1:] if key.startswith('_') else key: value
-                   for key, value in cls.__dict__.items() if not (key.startswith('__') and key.endswith('__'))}
+                   for key, value in clazz.__dict__.items() if not (key.startswith('__') and key.endswith('__'))}
             for key, value in kv.items():
                 if isinstance(value, property):
                     kv[key] = None  # 使用get/set,暂时不能获取到bean的类级别的值。
-                    # kv[key]=getattr(cls, key)
+                    # kv[key]=getattr(clazz, key)
                 elif isinstance(value, Column):
                     # print(value)
                     kv[key] = None
@@ -58,13 +58,13 @@ class HoneyUtil:
     # dict: {'id': <property object at 0x000001E2C878D350>, 'name': <property object at 0x000001E2C878D3A0>, 'remark': <property object at 0x000001E2C878D3F0>}
 
     @staticmethod
-    def get_class_field(cls):
+    def get_class_field(clazz):
         # 返回给定类的属性列表,但不包括系统的
         # since 1.6.0 还考虑字段的类型,时间类型等
         """
         Returns a list of properties for a given class, but does not include the system's.
         """
-        fieldname_and_type_dict = HoneyUtil.get_field_and_type(cls)
+        fieldname_and_type_dict = HoneyUtil.get_field_and_type(clazz)
         return fieldname_and_type_dict.keys()
 
     # 对象的不会改
@@ -113,13 +113,13 @@ class HoneyUtil:
         return HoneyUtil.get_table_name_by_class(cls)
 
     @staticmethod
-    def get_table_name_by_class(cls):
-        # cls = obj.__class__
-        temp_name = getattr(cls, '__tablename__', None)
+    def get_table_name_by_class(clazz):
+        # clazz = obj.__class__
+        temp_name = getattr(clazz, '__tablename__', None)
         # temp_name  
         if temp_name and not temp_name.isspace():
             return temp_name.strip()
-        class_name = cls.__name__
+        class_name = clazz.__name__
         return NamingHandler.toTableName(class_name)
 
     @staticmethod
@@ -128,27 +128,27 @@ class HoneyUtil:
         return HoneyUtil.get_pk_by_class(cls)
 
     @staticmethod
-    def get_pk_by_class(cls):
+    def get_pk_by_class(clazz):
         """ get pk from bean"""
-        temp_name = getattr(cls, SysConst.pk, None)
+        temp_name = getattr(clazz, SysConst.pk, None)
         if temp_name and not temp_name.isspace():
             return temp_name.strip()
         else:
-            temp_name = getattr(cls, SysConst.primary_key, None)
+            temp_name = getattr(clazz, SysConst.primary_key, None)
             if temp_name and not temp_name.isspace():
                 return temp_name.strip()
             else:
-                if hasattr(cls, SysConst.id):
+                if hasattr(clazz, SysConst.id):
                     return SysConst.id
         return None
 
     @staticmethod
-    def get_unique_key(cls):
-        return getattr(cls, SysConst.unique_key, None)
+    def get_unique_key(clazz):
+        return getattr(clazz, SysConst.unique_key, None)
 
     @staticmethod
-    def get_not_null_filels(cls):
-        return getattr(cls, SysConst.not_null_filels, None)
+    def get_not_null_filels(clazz):
+        return getattr(clazz, SysConst.not_null_filels, None)
 
     @staticmethod
     def is_sql_key_word_upper():
@@ -210,14 +210,14 @@ class HoneyUtil:
         return HoneyUtil.adjustUpperOrLower(type0)
 
     @staticmethod
-    def get_class_normal_field(cls):
-        if hasattr(cls, '__dict__'):
+    def get_class_normal_field(clazz):
+        if hasattr(clazz, '__dict__'):
             # 过滤掉以__开头和结尾的键，并去掉前缀__和_   只是__开头，会变化的。
-            class_name = cls.__name__
+            class_name = clazz.__name__
             prefix = "_" + class_name + "__"
             return [
                 key[len(prefix):] if key.startswith(prefix) else key[1:] if key.startswith('_') else key
-                for key in cls.__dict__.keys()
+                for key in clazz.__dict__.keys()
                 if not (key.startswith('__') and key.endswith('__'))
             ]
         else:
@@ -226,27 +226,27 @@ class HoneyUtil:
     __field_and_type_cache = {}  # V1.6.0
 
     @staticmethod
-    def get_field_and_type(cls):
-        field_and_type = HoneyUtil.__field_and_type_cache.get(cls, None)
+    def get_field_and_type(clazz):
+        field_and_type = HoneyUtil.__field_and_type_cache.get(clazz, None)
         if field_and_type is None:
-            field_and_type = HoneyUtil.__get_field_and_type(cls)
-            HoneyUtil.__field_and_type_cache[cls] = field_and_type
+            field_and_type = HoneyUtil.__get_field_and_type(clazz)
+            HoneyUtil.__field_and_type_cache[clazz] = field_and_type
         return field_and_type
 
     @staticmethod
-    def __get_field_and_type(cls):
+    def __get_field_and_type(clazz):
         # 声明基本类型和无声明类型的字段（保留定义顺序）
-        A = HoneyUtil.get_class_normal_field(cls)
+        A = HoneyUtil.get_class_normal_field(clazz)
 
         B = {}
         try:
             # 保留有类型的, 包括复合类型, 低版本没有使用时，会报异常
             # 3.8.10 have exception if no use like: remark: str = None
-            B = cls.__annotations__
+            B = clazz.__annotations__
         except Exception:
             pass
 
-        M = HoneyUtil.get_mid_field_and_type(cls)
+        M = HoneyUtil.get_mid_field_and_type(clazz)
         # print(M)
         if M:
             if not B:
@@ -255,7 +255,7 @@ class HoneyUtil:
                 B.update(M)
 
         # 保留有类型的, 包括复合类型
-        # B = cls.__annotations__  #3.8.10 have exception if no use like: remark: str = None
+        # B = clazz.__annotations__  #3.8.10 have exception if no use like: remark: str = None
         new_map = {}
 
         # none_type_set=set(A)-set(B)
@@ -316,9 +316,9 @@ class HoneyUtil:
         return new_map
 
     @staticmethod
-    def get_mid_field_and_type(cls):
+    def get_mid_field_and_type(clazz):
         m = {}
-        for name, obj in cls.__dict__.items():
+        for name, obj in clazz.__dict__.items():
             if isinstance(obj, Column):  # 确认是Column对象
                 field_type = obj.type
                 # print(f"字段名: {name}, 类型: {field_type}")
