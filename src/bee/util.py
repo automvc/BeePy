@@ -116,8 +116,9 @@ class HoneyUtil:
     def get_table_name_by_class(cls):
         # cls = obj.__class__
         temp_name = getattr(cls, '__tablename__', None)
+        # temp_name  
         if temp_name and not temp_name.isspace():
-            return temp_name
+            return temp_name.strip()
         class_name = cls.__name__
         return NamingHandler.toTableName(class_name)
 
@@ -131,11 +132,11 @@ class HoneyUtil:
         """ get pk from bean"""
         temp_name = getattr(cls, SysConst.pk, None)
         if temp_name and not temp_name.isspace():
-            return temp_name
+            return temp_name.strip()
         else:
             temp_name = getattr(cls, SysConst.primary_key, None)
             if temp_name and not temp_name.isspace():
-                return temp_name
+                return temp_name.strip()
             else:
                 if hasattr(cls, SysConst.id):
                     return SysConst.id
@@ -259,7 +260,7 @@ class HoneyUtil:
 
         # none_type_set=set(A)-set(B)
         # 复合类型  complex_type_set
-        ext = set(B) - set(A)
+        ext = set(B) - set(A)    #两个类型是一样的吗？
 
         if not ext:
             for f in A:
