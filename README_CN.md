@@ -12,7 +12,17 @@ https://github.com/automvc/bee
 ## 环境要求  
 #### Python 3.x(建议3.8.10+)   
 
-## 主要功能
+## 功能
+### **最新功能**
+**V1.9.0**  
+1. 多表查询 (一对一关联)  
+2. 更新cache以支持多表查询  
+3. 主表对象和子表对象的值可转到where  
+4. 多表查询支持Condition参数  
+5. 多表查询支持分页  
+6. 多表查询支持(一对多)  
+7. 多表查询支持(多对一)  
+
 ### **V1.0**
 1.框架使用统一的API操作DB；  
 2.单表查改增删(SUID)；   
@@ -103,6 +113,7 @@ eg: condtion.op("num", Op.IN, [1,2]); in可以支持的类型有:list/set/tuple 
   SuidRich:updateBy,  
   Condition:orderBy2,orderBy2,  
   HoneyConfig.set_db_config_dict  
+
 
 快速开始:
 =========	

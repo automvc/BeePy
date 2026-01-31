@@ -15,6 +15,17 @@ https://github.com/automvc/bee
 #### Python 3.x(suggest 3.8.10+)   
 
 ## Feature & Function:  
+
+### **Newest**
+**V1.9.0**  
+1. more table select (One to One)  
+2. update cache for supporting more table  
+3. value of main field & sub field transfer to where condition  
+4. more table select support condition  
+5. more table select support paging  
+6. more table select (One to Many)  
+7. more table select (One to Many)  
+
 ### **V1.0**  
 1.The framework uses a unified API to operate the database;  
 2.Single table query, modification, addition, and deletion (SUID);  
