@@ -1,8 +1,7 @@
-from bee.api import Suid, SuidRich, PreparedSql
+from bee.api import Suid, SuidRich, PreparedSql, MoreTable
+from bee.osql.condition_impl import ConditionImpl
 from bee.osql.obj2sql import ObjToSQL
 from bee.osql.sqllib import BeeSql
-
-from bee.osql.condition_impl import ConditionImpl
 
 
 class HoneyFactory:
@@ -20,6 +19,7 @@ class HoneyFactory:
     def __init__(self):
         self.suid = None
         self.suidRich = None
+        self.moreTable = None
         self.beeSql = None
         self.objToSQL = None
         self.preparedSql = None
@@ -40,6 +40,14 @@ class HoneyFactory:
 
     def setSuidRich(self, suidRich):
         self.suidRich = suidRich
+
+    def getMoreTable(self):
+        if self.moreTable is None:
+            return MoreTable()
+        return self.moreTable
+
+    def setMoreTable(self, moreTable):
+        self.moreTable = moreTable
 
     def getBeeSql(self):
         if self.beeSql is None:
@@ -99,8 +107,7 @@ class BF:
     @staticmethod
     def objToSQL():
         return HoneyFactory().getObjToSQL()
-    
 
     @staticmethod
     def moreTable():
-        pass
+        return HoneyFactory().getMoreTable()

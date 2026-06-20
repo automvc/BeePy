@@ -122,7 +122,7 @@ class HoneyContext:
 
         storage = HoneyContext._get_storage()
 
-        if not value or not key or not key.strip():
+        if not value or not key or (type(key) is str and not key.strip()):
             return
         if local_type not in storage:
             storage[local_type] = {}

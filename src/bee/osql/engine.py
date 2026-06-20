@@ -10,11 +10,12 @@ from bee.osql.condition_impl import ConditionImpl
 from bee.osql.obj2sql import ObjToSQL, MoreObjToSQL
 from bee.osql.sqllib import BeeSql
 from bee.osql.struct import CacheSuidStruct
+from bee.osql.logger import Logger
 
 
 class ObjSQL(AbstractCommOperate):
     '''
-    ObjSQL is Suid implementation. 
+    ObjSQL is Suid implementation.
     '''
 
     def __init__(self):
@@ -34,7 +35,7 @@ class ObjSQL(AbstractCommOperate):
             sql, params, table_name = self.objToSQL.toSelectSQL(entity)
 
             entityClass = self._to_class_t(entity)
-            self._reg_cache_in_context(sql, params, table_name, "list<T>", entityClass)
+            self._reg_cache_in_context(sql, params, "list<T>", entityClass, table_name)
 
             super().logsql("select SQL:", sql)
             super().log_params(params)
@@ -54,7 +55,7 @@ class ObjSQL(AbstractCommOperate):
             sql, params, table_name = self.objToSQL.toUpdateSQL(entity)
 
             entityClass = self._to_class_t(entity)
-            self._reg_cache_in_context2(sql, params, table_name, "int", entityClass, SuidType.UPDATE)
+            self._reg_cache_in_context2(sql, params, "int", entityClass, SuidType.UPDATE, table_name)
 
             super().logsql("update SQL:", sql)
             super().log_params(params)
@@ -73,7 +74,7 @@ class ObjSQL(AbstractCommOperate):
             sql, params, table_name = self.objToSQL.toInsertSQL(entity)
 
             entityClass = self._to_class_t(entity)
-            self._reg_cache_in_context2(sql, params, table_name, "int", entityClass, SuidType.INSERT)
+            self._reg_cache_in_context2(sql, params, "int", entityClass, SuidType.INSERT, table_name)
 
             super().logsql("insert SQL:", sql)
             super().log_params(params)
@@ -87,17 +88,13 @@ class ObjSQL(AbstractCommOperate):
     def delete(self, entity):
         ...
 
-    # @overload
-    # def delete(self, entity, condition: Condition):
-    #     ...
-
     def __delete(self, entity):
         try:
             super().doBeforePasreEntity(entity, SuidType.DELETE)
             sql, params, table_name = self.objToSQL.toDeleteSQL(entity)
 
             entityClass = self._to_class_t(entity)
-            self._reg_cache_in_context2(sql, params, table_name, "int", entityClass, SuidType.DELETE)
+            self._reg_cache_in_context2(sql, params, "int", entityClass, SuidType.DELETE, table_name)
 
             super().logsql("delete SQL:", sql)
             super().log_params(params)
@@ -121,7 +118,7 @@ class ObjSQL(AbstractCommOperate):
             sql, params, table_name = self.objToSQL.toSelectSQL2(entity, condition)
 
             entityClass = self._to_class_t(entity)
-            self._reg_cache_in_context(sql, params, table_name, "list<T>", entityClass)
+            self._reg_cache_in_context(sql, params, "list<T>", entityClass, table_name)
 
             super().logsql("select SQL:", sql)
             super().log_params(params)
@@ -145,7 +142,7 @@ class ObjSQL(AbstractCommOperate):
             sql, params, table_name = self.objToSQL.toDeleteSQL2(entity, condition)
 
             entityClass = self._to_class_t(entity)
-            self._reg_cache_in_context2(sql, params, table_name, "int", entityClass, SuidType.DELETE)
+            self._reg_cache_in_context2(sql, params, "int", entityClass, SuidType.DELETE, table_name)
 
             super().logsql("delete SQL:", sql)
             super().log_params(params)
@@ -158,13 +155,13 @@ class ObjSQL(AbstractCommOperate):
     def _to_class_t(self, entity):
         return type(entity)  # 返回实体的类型
 
-    def _reg_cache_in_context(self, sql, params, table_name, returnType, entityClass):
+    def _reg_cache_in_context(self, sql, params, returnType, entityClass, table_name):
 
-        HoneyContext._set_data(LocalType.CacheSuidStruct, sql, CacheSuidStruct(sql, params, table_name, returnType, entityClass, SuidType.SELECT))
+        HoneyContext._set_data(LocalType.CacheSuidStruct, sql, CacheSuidStruct(sql, params, returnType, entityClass, SuidType.SELECT, table_name))
 
-    def _reg_cache_in_context2(self, sql, params, table_name, returnType, entityClass, suidType):
+    def _reg_cache_in_context2(self, sql, params, returnType, entityClass, suidType, table_name):
 
-        HoneyContext._set_data(LocalType.CacheSuidStruct, sql, CacheSuidStruct(sql, params, table_name, returnType, entityClass, suidType))
+        HoneyContext._set_data(LocalType.CacheSuidStruct, sql, CacheSuidStruct(sql, params, returnType, entityClass, suidType, table_name))
 
     @property
     def beeSql(self):
@@ -185,180 +182,6 @@ class ObjSQL(AbstractCommOperate):
     @objToSQL.setter
     def objToSQL(self, objToSQL):
         self._objToSQL = objToSQL
-
-
-      
-class MoreObjSQL(AbstractCommOperate):
-    '''
-    MoreObjSQL is MoreTable implementation. 
-    <B>since  1.9.0</B><br>
-    '''
-
-    def __init__(self):
-        super().__init__()
-        self._beeSql = None
-        self._moreObjToSQL = None
-
-    @overload
-    def select(self, entity):
-        ...
-
-    def __select(self, entity):
-        list_r = None
-        try:
-            super().doBeforePasreEntity(entity, SuidType.SELECT)
-            sql, params, table_name = self.moreObjToSQL.toSelectSQL(entity)
-
-            entityClass = self._to_class_t(entity)
-            self._reg_cache_in_context(sql, params, table_name, "list<T>", entityClass)
-
-            super().logsql("select MoreTable SQL:", sql)
-            super().log_params(params)
-            list_r = self.beeSql.select(sql, entityClass, params)
-            return list_r
-        except Exception as e:
-            raise BeeException(e)
-        finally:
-            super().doBeforeReturn(list_r)
-
-    def update(self, entity):
-        if not entity:
-            return None
-
-        try:
-            super().doBeforePasreEntity(entity, SuidType.UPDATE)
-            sql, params, table_name = self.moreObjToSQL.toUpdateSQL(entity)
-
-            entityClass = self._to_class_t(entity)
-            self._reg_cache_in_context2(sql, params, table_name, "int", entityClass, SuidType.UPDATE)
-
-            super().logsql("update MoreTable SQL:", sql)
-            super().log_params(params)
-            return self.beeSql.modify(sql, params)
-        except Exception as e:
-            raise BeeException(e)
-        finally:
-            super().doBeforeReturnSimple()
-
-    def insert(self, entity):
-        if not entity:
-            return None
-
-        try:
-            super().doBeforePasreEntity(entity, SuidType.INSERT)
-            sql, params, table_name = self.moreObjToSQL.toInsertSQL(entity)
-
-            entityClass = self._to_class_t(entity)
-            self._reg_cache_in_context2(sql, params, table_name, "int", entityClass, SuidType.INSERT)
-
-            super().logsql("insert MoreTable SQL:", sql)
-            super().log_params(params)
-            return self.beeSql.modify(sql, params)
-        except Exception as e:
-            raise BeeException(e)
-        finally:
-            super().doBeforeReturnSimple()
-
-    @overload
-    def delete(self, entity):
-        ...
-
-    # @overload
-    # def delete(self, entity, condition: Condition):
-    #     ...
-
-    def __delete(self, entity):
-        try:
-            super().doBeforePasreEntity(entity, SuidType.DELETE)
-            sql, params, table_name = self.moreObjToSQL.toDeleteSQL(entity)
-
-            entityClass = self._to_class_t(entity)
-            self._reg_cache_in_context2(sql, params, table_name, "int", entityClass, SuidType.DELETE)
-
-            super().logsql("delete MoreTable SQL:", sql)
-            super().log_params(params)
-            return self.beeSql.modify(sql, params)
-        except Exception as e:
-            raise BeeException(e)
-        finally:
-            super().doBeforeReturnSimple()
-
-    def select(self, entity, condition: Condition = None):
-        if not entity:
-            return None
-
-        if not condition:
-            return self.__select(entity)
-
-        list_r = None
-        try:
-            super().doBeforePasreEntity(entity, SuidType.SELECT)
-            sql, params, table_name = self.moreObjToSQL.toSelectSQL2(entity, condition)
-
-            entityClass = self._to_class_t(entity)
-            self._reg_cache_in_context(sql, params, table_name, "list<T>", entityClass)
-
-            super().logsql("select MoreTable SQL:", sql)
-            super().log_params(params)
-            list_r = self.beeSql.moreTableSelect(sql, entityClass, params)
-            return list_r
-        except Exception as e:
-            raise BeeException(e)
-        finally:
-            super().doBeforeReturn(list_r)
-
-    def delete(self, entity, condition: Condition = None):
-        if not entity:
-            return None
-
-        if not condition:
-            return self.__delete(entity)
-
-        try:
-            super().doBeforePasreEntity(entity, SuidType.DELETE)
-            sql, params, table_name = self.moreObjToSQL.toDeleteSQL2(entity, condition)
-
-            entityClass = self._to_class_t(entity)
-            self._reg_cache_in_context2(sql, params, table_name, "int", entityClass, SuidType.DELETE)
-
-            super().logsql("delete MoreTable SQL:", sql)
-            super().log_params(params)
-            return self.beeSql.modify(sql, params)
-        except Exception as e:
-            raise BeeException(e)
-        finally:
-            super().doBeforeReturnSimple()
-
-    def _to_class_t(self, entity):
-        return type(entity)
-
-    def _reg_cache_in_context(self, sql, params, table_name, returnType, entityClass):
-
-        HoneyContext._set_data(LocalType.CacheSuidStruct, sql, CacheSuidStruct(sql, params, table_name, returnType, entityClass, SuidType.SELECT))
-
-    def _reg_cache_in_context2(self, sql, params, table_name, returnType, entityClass, suidType):
-
-        HoneyContext._set_data(LocalType.CacheSuidStruct, sql, CacheSuidStruct(sql, params, table_name, returnType, entityClass, suidType))
-
-    @property
-    def beeSql(self):
-        if self._beeSql is None:
-            self._beeSql = BeeSql()
-        return self._beeSql
-
-    @beeSql.setter
-    def beeSql(self, beeSql):
-        self._beeSql = beeSql
-
-    @property
-    def moreObjToSQL(self):
-        if self._moreObjToSQL is None:
-            self._moreObjToSQL = MoreObjToSQL()
-        return self._moreObjToSQL
-
-    @moreObjToSQL.setter
-    def moreObjToSQL(self, moreObjToSQL):
-        self._moreObjToSQL = moreObjToSQL
 
 
 class ObjSQLRich(ObjSQL):
@@ -393,7 +216,7 @@ class ObjSQLRich(ObjSQL):
             sql, params, table_name = self.objToSQL.toSelectSQLWithPaging(entity, start, size)
 
             entityClass = self._to_class_t(entity)
-            self._reg_cache_in_context(sql, params, table_name, "list<T>", entityClass)
+            self._reg_cache_in_context(sql, params, "list<T>", entityClass, table_name)
 
             super().logsql("select_paging SQL:", sql)
             super().log_params(params)
@@ -415,7 +238,7 @@ class ObjSQLRich(ObjSQL):
             sql, list_params, table_name = self.objToSQL.toInsertBatchSQL(entity_list)
 
             entityClass = self._to_class_t(entity_list[0])
-            self._reg_cache_in_context2(sql, list_params, table_name, "int", entityClass, SuidType.INSERT)
+            self._reg_cache_in_context2(sql, list_params, "int", entityClass, SuidType.INSERT, table_name)
 
             super().logsql("insert batch SQL:", sql)
             super().log_params_for_batch(list_params)
@@ -453,7 +276,7 @@ class ObjSQLRich(ObjSQL):
             super().doBeforePasreEntity(entity_class, SuidType.SELECT)
             sql, table_name = self.objToSQL.toSelectByIdSQL(entity_class, len(id_list))
 
-            self._reg_cache_in_context(sql, id_list, table_name, "<T>", entity_class)
+            self._reg_cache_in_context(sql, id_list, "<T>", entity_class, table_name)
 
             super().logsql("select by id SQL:", sql)
             super().log_params(id_list)
@@ -476,7 +299,7 @@ class ObjSQLRich(ObjSQL):
             super().doBeforePasreEntity(entity_class, SuidType.DELETE)
             sql, table_name = self.objToSQL.toDeleteById(entity_class, len(id_list))
 
-            self._reg_cache_in_context2(sql, id_list, table_name, "int", entity_class, SuidType.DELETE)
+            self._reg_cache_in_context2(sql, id_list, "int", entity_class, SuidType.DELETE, table_name)
 
             super().logsql("delete by id SQL:", sql)
             super().log_params(id_list)
@@ -495,7 +318,7 @@ class ObjSQLRich(ObjSQL):
             sql, params, table_name = self.objToSQL.toSelectFunSQL(entity, functionType, field_for_fun)
 
             entityClass = self._to_class_t(entity)
-            self._reg_cache_in_context(sql, params, table_name, "<T>", entityClass)
+            self._reg_cache_in_context(sql, params, "<T>", entityClass, table_name)
 
             super().logsql("select fun SQL:", sql)
             super().log_params(params)
@@ -541,7 +364,7 @@ class ObjSQLRich(ObjSQL):
             sql, params, table_name = self.objToSQL.toUpdateBySQL2(entity, condition, whereFields)
 
             entityClass = self._to_class_t(entity)
-            self._reg_cache_in_context2(sql, params, table_name, "int", entityClass, SuidType.UPDATE)
+            self._reg_cache_in_context2(sql, params, "int", entityClass, SuidType.UPDATE, table_name)
 
             super().logsql("updateBy SQL:", sql)
             super().log_params(params)
@@ -591,6 +414,147 @@ class ObjSQLRich(ObjSQL):
         self.beeSql.modify(sql)
 
 
+class MoreObjSQL(AbstractCommOperate):
+    '''
+    MoreObjSQL is MoreTable implementation.
+    <B>since  1.9.0</B><br>
+    '''
+
+    def __init__(self):
+        super().__init__()
+        self._beeSql = None
+        self._moreObjToSQL = None
+
+    @overload
+    def select(self, entity):
+        ...
+
+    def select(self, entity, condition: Condition = None):
+        # return: list which contains more than one entity.
+        
+        if not entity:
+            return None
+
+        list_r = None
+        try:
+            super().doBeforePasreEntity(entity, SuidType.SELECT)
+            sql, params, table_names = self.moreObjToSQL.toSelectSQL(entity, condition)
+
+            entityClass = self._to_class_t(entity)
+            self._reg_cache_in_context(sql, params, "list<T>", entityClass, table_names)
+
+            super().logsql("select MoreTable SQL:", sql)
+            super().log_params(params)
+            list_r = self.beeSql.moreTableSelect(sql, entityClass, params)
+            return list_r
+        except Exception as e:
+            raise BeeException(e)
+        finally:
+            super().doBeforeReturn(list_r)
+
+    def update(self, entity):
+        if not entity:
+            return None
+        Logger.warn("MoreTable update is developing...")
+        raise BeeException("Do not support update in MoreTable this version!")
+
+        # try:
+        #     super().doBeforePasreEntity(entity, SuidType.UPDATE)
+        #     sql, params, table_name = self.moreObjToSQL.toUpdateSQL(entity)
+        #
+        #     entityClass = self._to_class_t(entity)
+        #     self._reg_cache_in_context2(sql, params, "int", entityClass, SuidType.UPDATE, table_name)
+        #
+        #     super().logsql("update MoreTable SQL:", sql)
+        #     super().log_params(params)
+        #     return self.beeSql.modify(sql, params)
+        # except Exception as e:
+        #     raise BeeException(e)
+        # finally:
+        #     super().doBeforeReturnSimple()
+
+    def insert(self, entity):
+        if not entity:
+            return None
+        
+        Logger.warn("MoreTable insert is developing...")
+        raise BeeException("Do not support insert in MoreTable this version!")
+        
+        # try:
+        #     super().doBeforePasreEntity(entity, SuidType.INSERT)
+        #     sql, params, table_name = self.moreObjToSQL.toInsertSQL(entity)
+        #
+        #     entityClass = self._to_class_t(entity)
+        #     self._reg_cache_in_context2(sql, params, "int", entityClass, SuidType.INSERT, table_name)
+        #
+        #     super().logsql("insert MoreTable SQL:", sql)
+        #     super().log_params(params)
+        #     return self.beeSql.modify(sql, params)
+        # except Exception as e:
+        #     raise BeeException(e)
+        # finally:
+        #     super().doBeforeReturnSimple()
+
+    @overload
+    def delete(self, entity):
+        ...
+
+    def delete(self, entity, condition: Condition = None):
+        if not entity:
+            return None
+        Logger.warn("MoreTable delete are developing...")
+        raise BeeException("Do not support delete in MoreTable this version!")
+
+        # if not condition:
+        #     return self.__delete(entity)
+        #
+        # try:
+        #     super().doBeforePasreEntity(entity, SuidType.DELETE)
+        #     sql, params, table_name = self.moreObjToSQL.toDeleteSQL2(entity, condition)
+        #
+        #     entityClass = self._to_class_t(entity)
+        #     self._reg_cache_in_context2(sql, params, "int", entityClass, SuidType.DELETE, table_name)
+        #
+        #     super().logsql("delete MoreTable SQL:", sql)
+        #     super().log_params(params)
+        #     return self.beeSql.modify(sql, params)
+        # except Exception as e:
+        #     raise BeeException(e)
+        # finally:
+        #     super().doBeforeReturnSimple()
+
+    def _to_class_t(self, entity):
+        return type(entity)
+
+    def _reg_cache_in_context(self, sql, params, returnType, entityClass, table_name):
+
+        HoneyContext._set_data(LocalType.CacheSuidStruct, sql, CacheSuidStruct(sql, params, returnType, entityClass, SuidType.SELECT, table_name))
+
+    def _reg_cache_in_context2(self, sql, params, returnType, entityClass, suidType, table_name):
+
+        HoneyContext._set_data(LocalType.CacheSuidStruct, sql, CacheSuidStruct(sql, params, returnType, entityClass, suidType, table_name))
+
+    @property
+    def beeSql(self):
+        if self._beeSql is None:
+            self._beeSql = BeeSql()
+        return self._beeSql
+
+    @beeSql.setter
+    def beeSql(self, beeSql):
+        self._beeSql = beeSql
+
+    @property
+    def moreObjToSQL(self):
+        if self._moreObjToSQL is None:
+            self._moreObjToSQL = MoreObjToSQL()
+        return self._moreObjToSQL
+
+    @moreObjToSQL.setter
+    def moreObjToSQL(self, moreObjToSQL):
+        self._moreObjToSQL = moreObjToSQL
+
+
 # for custom SQL
 # custom SQL do not support cache
 class PreparedSqlLib(AbstractCommOperate):
@@ -614,7 +578,6 @@ class PreparedSqlLib(AbstractCommOperate):
             return self.beeSql.select(sql, return_type_class, params)
         except Exception as e:
             raise BeeException(e)
-
 
     def select_dict(self, sql, return_type_class, params_dict = None, start = None, size = None):
         """
@@ -648,8 +611,6 @@ class PreparedSqlLib(AbstractCommOperate):
         sql = sql.replace("%s", placeholder)
         sql = sql.replace("?", placeholder)
         return sql
-
-
 
     def modify_dict(self, sql, params_dict = None):
         """

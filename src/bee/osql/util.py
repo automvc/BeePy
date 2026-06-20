@@ -1,11 +1,10 @@
 from bee.config import HoneyConfig
+from bee.custom import Custom
 from bee.name.naming_handler import NamingHandler
 from bee.osql.const import SysConst, DatabaseConst
 from bee.osql.logger import Logger
-from bee.osql.type_transform import Py2Sql, Sql2Py, Mid
-
-from bee.custom import Custom
 from bee.osql.mid_typing import Column
+from bee.osql.type_transform import Py2Sql, Sql2Py, Mid
 
 
 class HoneyUtil:
@@ -65,7 +64,7 @@ class HoneyUtil:
         Returns a list of properties for a given class, but does not include the system's.
         """
         fieldname_and_type_dict = HoneyUtil.get_field_and_type(clazz)
-        return fieldname_and_type_dict.keys()
+        return list(fieldname_and_type_dict.keys())
 
     # 对象的不会改
     @staticmethod
@@ -312,8 +311,17 @@ class HoneyUtil:
             # modify_date DATE,
             # updated_at2 DATE,
             # descstr VARCHAR(255)
-
+        #print("-----1111------")
+        #print(new_map)
         return new_map
+
+    @staticmethod
+    def get_field_type(clazz, fieldname):
+        field_and_type = HoneyUtil.get_field_and_type(clazz)
+        if field_and_type:
+            return field_and_type.get(fieldname, None)
+        else:
+            return None
 
     @staticmethod
     def get_mid_field_and_type(clazz):
@@ -324,4 +332,19 @@ class HoneyUtil:
                 # print(f"字段名: {name}, 类型: {field_type}")
                 m[name] = Mid().mid_to_python_type(str(field_type))
         return m
+
+    @staticmethod
+    def get_type(param):
+        # 1. 传入的是类型（包括内建 type 子类）
+        if isinstance(param, type):
+            return param
+
+        # # 2. 传入的是 typing 泛型（Python3.8+ 的 typing 对象或 3.9+ 的内置泛型）
+        # #    get_origin 在非泛型对象上返回 None
+        # origin = get_origin(x)
+        # if origin is not None:
+        #     return origin
+
+        # 3. 否则认为是实例，返回其实例类型
+        return type(param)
 

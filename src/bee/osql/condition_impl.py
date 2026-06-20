@@ -43,7 +43,7 @@ class PreparedValue:
 
 class ConditionStruct:
 
-    def __init__(self, where: str, pv: List[PreparedValue], values: List, suidType:SuidType, whereFields:Set, selectFields:str, start:int, size:int, has_for_update:bool):
+    def __init__(self, where: str, pv: List[PreparedValue], values: List, suidType:SuidType, whereFields:Set, selectFields:str, start:int, size:int, has_for_update:bool, has_group:bool):
         self.where = where
         self.pv = pv
         self.values = values
@@ -53,6 +53,7 @@ class ConditionStruct:
         self.start = start
         self.size = size
         self.has_for_update = has_for_update
+        self.has_group = has_group
 
     def __repr__(self):
         return  str(self.__dict__)
@@ -85,6 +86,9 @@ class ConditionImpl(Condition):
         self.__isStartGroupBy = True
         self.__isStartHaving = True
         self.__suidType = SuidType.SELECT
+
+        self.__do_not_rewrite_paging_sql = False
+       # print("__do_not_rewrite_paging_sql",self.__do_not_rewrite_paging_sql)
 
     def __check_one_field(self, field):
         NameCheckUtil._check_one_name(field)
@@ -218,6 +222,10 @@ class ConditionImpl(Condition):
         exp = Expression(value = fields, op_num = 20)
         self.expressions.append(exp)
         return self
+    
+    def selectFun(self, functionType:FunctionType, fieldForFun:str, alias:str):
+        
+        pass
 
     def start(self, start:int) -> 'ConditionImpl':
         # 　if not 0:　is True
@@ -247,6 +255,15 @@ class ConditionImpl(Condition):
     # get
     def getSuidType(self) -> 'SuidType':
         return self.__suidType
+
+    # 1.9.5
+    def do_not_rewrite_paging_sql(self, do_not_rewrite:bool) -> 'Condition':
+        self.__do_not_rewrite_paging_sql = do_not_rewrite
+
+    # get
+    # 1.9.5
+    def isDoNotRewritePagingSql(self) -> bool:
+        return self.__do_not_rewrite_paging_sql
 
     # ## ###########-------just use in update set-------------start-
     # salary = salary + 1000
@@ -441,6 +458,7 @@ class ParseCondition:
         __selectFields = None
         __start = None
         __size = None
+        __has_group = None
         for exp in expressions:
             # column_name = NamingHandler.toColumnName(exp.field_name) # fixed bug
 
@@ -504,7 +522,7 @@ class ParseCondition:
             elif exp.op_num == -4:  # group by
                 if suidType != SuidType.SELECT:
                     raise BeeErrorGrammarException(suidType.get_name() + " do not support 'group by' !")
-
+                __has_group = True
                 column_name = NamingHandler.toColumnName(exp.field_name)
                 where_clause = f" {exp.value} {column_name}"
                 where_clauses.append(where_clause)
@@ -555,7 +573,7 @@ class ParseCondition:
         # Join all where clauses into a single string
         where_clause_str = "".join(where_clauses)
 
-        return ConditionStruct(where_clause_str, prepared_values, values, suidType, condition.where_fields, __selectFields, __start, __size, __has_for_update)
+        return ConditionStruct(where_clause_str, prepared_values, values, suidType, condition.where_fields, __selectFields, __start, __size, __has_for_update, __has_group)
 
     @staticmethod
     def __process_like(op, v):

@@ -1,3 +1,7 @@
+from typing import List
+
+from bee.bee_enum import SuidType, JoinType, LocalType
+from bee.condition import Condition
 from bee.config import HoneyConfig
 from bee.context import HoneyContext
 from bee.exception import SqlBeeException, ParamBeeException
@@ -7,11 +11,9 @@ from bee.osql import SqlUtil
 from bee.osql.const import DatabaseConst, SysConst
 from bee.osql.logger import Logger
 from bee.osql.sqlkeyword import K
-from bee.util import HoneyUtil
 
-from bee.condition import Condition
-from bee.bee_enum import SuidType
-
+from bee.osql.parsesql_helper import ParseSqlHelper
+from bee.osql.util import HoneyUtil
 
 class ObjToSQL:
 
@@ -143,43 +145,44 @@ class ObjToSQL:
 
     # __  or _只是用于范围保护，转成sql时，将这两种前缀统一去掉
     def __getKeyValue_classField(self, entity):
+        return ParseSqlHelper._getKeyValue_classField(entity)
 
-        cls = type(entity)
-        # already use cache
-        classField = HoneyUtil.get_class_field(cls)  # list
-        fieldAndValue = HoneyUtil.get_obj_field_value(entity)  # dict
-
-        classFieldAndValue = HoneyUtil.get_class_field_value(cls)
-
-        fieldAndValue = HoneyUtil.remove_prefix(fieldAndValue)
-
-        objKey = fieldAndValue.keys()
-
-        set1 = set(classField)
-        set2 = set(objKey)  # list转set 顺序会乱了
-        setExt = set2 - set1
-
-        # 默认删除动态加的属性
-        for k in setExt:
-            fieldAndValue.pop(k, None)
-
-        # 若对象的属性的值是None，则使用类级别的
-        for name, value in fieldAndValue.items():
-            if value is None:
-                fieldAndValue[name] = classFieldAndValue[name]
-
-        # 当对象的属性没有相应的值，而类的属性有，则使用类级的属性
-        for name, value in classFieldAndValue.items():
-            if value is not None and fieldAndValue.get(name, None) is None:
-                fieldAndValue[name] = value
-
-        # 排除value为None的项
-        fieldAndValue = {key: value for key, value in fieldAndValue.items() if value is not None}
-
-        return  fieldAndValue, classField
+        # cls = type(entity)
+        # # already use cache
+        # classField = HoneyUtil.get_class_field(cls)  # list
+        # fieldAndValue = HoneyUtil.get_obj_field_value(entity)  # dict
+        #
+        # classFieldAndValue = HoneyUtil.get_class_field_value(cls)
+        #
+        # fieldAndValue = HoneyUtil.remove_prefix(fieldAndValue)
+        #
+        # objKey = fieldAndValue.keys()
+        #
+        # set1 = set(classField)
+        # set2 = set(objKey)  # list转set 顺序会乱了
+        # setExt = set2 - set1
+        #
+        # # 默认删除动态加的属性
+        # for k in setExt:
+        #     fieldAndValue.pop(k, None)
+        #
+        # # 若对象的属性的值是None，则使用类级别的
+        # for name, value in fieldAndValue.items():
+        #     if value is None:
+        #         fieldAndValue[name] = classFieldAndValue[name]
+        #
+        # # 当对象的属性没有相应的值，而类的属性有，则使用类级的属性
+        # for name, value in classFieldAndValue.items():
+        #     if value is not None and fieldAndValue.get(name, None) is None:
+        #         fieldAndValue[name] = value
+        #
+        # # 排除value为None的项
+        # fieldAndValue = {key: value for key, value in fieldAndValue.items() if value is not None}
+        #
+        # return  fieldAndValue, classField
 
     def __getPlaceholder(self):
-        return HoneyContext.get_placeholder()
+        return ParseSqlHelper._getPlaceholder()
 
     # updateById
     def __build_update_sql(self, table_name, set_dict, entityFilter):
@@ -237,19 +240,22 @@ class ObjToSQL:
         return sql
 
     def __toColumns_with_dict(self, kv):
-        if not kv:
-            return None
-        return {NamingHandler.toColumnName(k):v for k, v in kv.items()}
+        # if not kv:
+        #     return None
+        # return {NamingHandler.toColumnName(k):v for k, v in kv.items()}
+        return ParseSqlHelper._toColumns_with_dict(kv)
 
-    def __build_where_condition(self, entityFilter):
-        entityFilter2 = self.__toColumns_with_dict(entityFilter)
+    def _build_where_filter(self, entityFilter):
+        return ParseSqlHelper._build_where_filter(entityFilter)
 
-        ph = self.__getPlaceholder()
-        if self.__getPlaceholderType() == 3:
-            condition_str = f" {K.and_()} ".join(f"{key} = {ph}{key}" for key in entityFilter2.keys())
-        else:
-            condition_str = f" {K.and_()} ".join(f"{key} = {ph}" for key in entityFilter2.keys())
-        return condition_str
+        # entityFilter2 = self.__toColumns_with_dict(entityFilter)
+        #
+        # ph = self.__getPlaceholder()
+        # if self.__getPlaceholderType() == 3:
+        #     condition_str = f" {K.and_()} ".join(f"{key} = {ph}{key}" for key in entityFilter2.keys())
+        # else:
+        #     condition_str = f" {K.and_()} ".join(f"{key} = {ph}" for key in entityFilter2.keys())
+        # return condition_str
 
     def __toColumns(self, classField):
         return [NamingHandler.toColumnName(field) for field in classField]
@@ -266,7 +272,7 @@ class ObjToSQL:
         # where part
         params = []
         if entityFilter:
-            condition_str = self.__build_where_condition(entityFilter)
+            condition_str = self._build_where_filter(entityFilter)
             sql += f" {K.where()} {condition_str}"
             params = list(entityFilter.values())
         return sql, params, table_name
@@ -275,7 +281,7 @@ class ObjToSQL:
 
         conditionStruct = None
         selectFields = None
-        
+
         if condition:
             conditionStruct = condition.parseCondition()
             selectFields = conditionStruct.selectFields
@@ -293,7 +299,7 @@ class ObjToSQL:
         # where part
         params = []
         if entityFilter:
-            condition_str = self.__build_where_condition(entityFilter)
+            condition_str = self._build_where_filter(entityFilter)
             sql += f" {K.where()} {condition_str}"
             params = list(entityFilter.values())
 
@@ -309,23 +315,25 @@ class ObjToSQL:
         return sql, params, table_name
 
     def __appendWhere(self, sql, params, entityFilter, conditionStruct):
-        if conditionStruct:
-            condition_where = conditionStruct.where
-            if condition_where:
-                values = conditionStruct.values
-                if entityFilter:
-                    sql += " " + K.and_()
-                else:
-                    sql += " " + K.where()
-                sql += " " + condition_where
-                params = params + values
-        return sql, params
+        return ParseSqlHelper._appendWhere(sql, params, entityFilter, conditionStruct)
+
+        # if conditionStruct:
+        #     condition_where = conditionStruct.where
+        #     if condition_where:
+        #         values = conditionStruct.values
+        #         if entityFilter:
+        #             sql += " " + K.and_()
+        #         else:
+        #             sql += " " + K.where()
+        #         sql += " " + condition_where
+        #         params = params + values
+        # return sql, params
 
     def __build_delete_sql2(self, table_name, entityFilter, condition = None):
         sql = f"{K.delete()} {K.from_()} {table_name}"
         params = []
         if entityFilter:
-            condition_str = self.__build_where_condition(entityFilter)
+            condition_str = self._build_where_filter(entityFilter)
             sql += f" {K.where()} {condition_str}"
             params = list(entityFilter.values())
 
@@ -440,14 +448,16 @@ class ObjToSQL:
         return HoneyConfig().get_dbname()
 
     def __getPlaceholderType(self):
-        # sql = "SELECT * FROM employees WHERE employee_id = :emp_id"
-        # cursor.execute(sql, emp_id=emp_id)
-        # sql = "INSERT INTO employees (employee_id, employee_name, salary) VALUES (:emp_id, :emp_name, :emp_salary)"
-        # cursor.execute(sql, emp_id=emp_id, emp_name=emp_name, emp_salary=emp_salary)
-        if DatabaseConst.ORACLE.lower() == self.__get_dbname():
-            return 3
-        else:
-            return 0
+        return ParseSqlHelper._getPlaceholderType()
+
+        # # sql = "SELECT * FROM employees WHERE employee_id = :emp_id"
+        # # cursor.execute(sql, emp_id=emp_id)
+        # # sql = "INSERT INTO employees (employee_id, employee_name, salary) VALUES (:emp_id, :emp_name, :emp_salary)"
+        # # cursor.execute(sql, emp_id=emp_id, emp_name=emp_name, emp_salary=emp_salary)
+        # if DatabaseConst.ORACLE.lower() == self.__get_dbname():
+        #     return 3
+        # else:
+        #     return 0
 
     def __build_select_fun_sql(self, table_name, functionType, field_for_fun, conditions = None):
         column_for_fun = NamingHandler.toColumnName(field_for_fun)
@@ -458,7 +468,7 @@ class ObjToSQL:
         # where part
         params = []
         if conditions:
-            condition_str = self.__build_where_condition(conditions)
+            condition_str = self._build_where_filter(conditions)
             sql += f" {K.where()} {condition_str}"
             params = list(conditions.values())
         return sql, params, table_name
@@ -575,5 +585,261 @@ class ObjToSQL:
         else:
             return f"DROP INDEX ALL ON {table_name}"
 
+
 class MoreObjToSQL:
-    pass
+
+    def __toColumns(self, classField):
+        return [NamingHandler.toColumnName(field) for field in classField]
+    
+    def __addAliasForColumns(self, columnName, main_table):
+        # 不是主表的字段，要加别名
+        cols = []
+        for f in columnName:
+            fld = f.strip()
+            prefix = main_table + '.'
+            if fld.startswith(prefix):
+                cols.append(fld)
+                continue
+            cols.append(f"{fld} '{fld}'")
+
+        return cols 
+
+    def __appendWhere(self, sql, params, entityFilter, conditionStruct):
+        return ParseSqlHelper._appendWhere(sql, params, entityFilter, conditionStruct)
+
+    def toSelectSQL(self, entity, condition: Condition = None):
+
+        moreTableStructDict = ParseSqlHelper.get_joins_struct(entity)
+
+        if moreTableStructDict is None or len(moreTableStructDict) == 0:
+            raise SqlBeeException("Entity for Moretable operate must have JoinMeta setting!")
+
+        # transform_result_for_moretable
+        HoneyContext._set_data(LocalType.MoreTableStruct, type(entity), moreTableStructDict)
+
+        fieldAndValue, classField = ParseSqlHelper._getKeyValue_classField_for_moretable(entity)
+        table_name = HoneyUtil.get_table_name(entity)
+
+        return self.__build_more_select_sql(table_name, classField, fieldAndValue, moreTableStructDict, condition)
+
+    def __build_more_select_sql(self, table_name, classField, entityFilter, moreTableStructDict = None, condition = None):
+        if not classField:
+            raise SqlBeeException("column list is empty!")
+
+        conditionStruct = None
+        selectFields = None
+
+        if condition:
+            conditionStruct = condition.parseCondition()
+            selectFields = conditionStruct.selectFields
+
+        if not selectFields and not classField:
+            raise SqlBeeException("column list is empty!")
+
+        main_alias = table_name
+
+        # 拿JoinMetea设置的main_alias
+        i = 0
+        moreTableStructOverall = None
+        for mtStruct in moreTableStructDict.values():
+            if i == 0 and mtStruct.main_alias:
+                main_alias = mtStruct.main_alias
+                moreTableStructOverall = mtStruct.overall
+            i = i + 1
+            break
+
+        isDefineColumns = False
+        if selectFields:
+            columns = self.__toColumns(selectFields)
+            columns = self.__addAliasForColumns(columns, main_alias)
+            isDefineColumns = True
+        else:
+            columns = self.__toColumns(classField)
+
+        need_rewrite_paging_sql = True
+        # 0.用户主动设置本次查询不需要分页改写
+        if condition and condition.isDoNotRewritePagingSql():
+            need_rewrite_paging_sql = False
+        elif conditionStruct:
+                # 1. 有分组
+                if conditionStruct.has_group:
+                    need_rewrite_paging_sql = False
+                # 2.有聚合查询; 不需要分页改写;
+
+                # 3. 无分页
+                # return (start != null && start > 1) || (size != null && size > 0);
+                elif  not ((conditionStruct.start and conditionStruct.start > 1)  or  (conditionStruct.size and conditionStruct.size > 0)):
+                    need_rewrite_paging_sql = False
+                # 4.没有一对多
+                elif moreTableStructOverall and not moreTableStructOverall.has_any_sublist_entity:
+                    need_rewrite_paging_sql = False
+        
+            # TODO
+            # 如果需要改写，则进一步优化;对于可以不改写也能准确分页的，则没必要改写，以提高查询效率。
+            # 以下为伪代码，需转成具体实现
+            # // 可以自动判断，决定是否进行准确分页改写；
+            # // 需要改写分页sql，进行以下判断，看是否是真的需要改写
+            # // 以下是必要非充分条件
+            # // 1. 有分页
+            # // 2. 有一对多
+            #
+            # // 以下有一条满足则不需要改写:
+            # // 1.主表所有的主键设置有值或主表某个唯一约束列，可以确定最多只能查到一条主表记录；
+
+        # process where filter
+        if entityFilter:
+            prefix = main_alias + "."
+            entityFilter = {prefix + key: value for key, value in entityFilter.items()}
+
+        if not isDefineColumns:
+            prefixed_columns = [f"{main_alias}.{col}" for col in columns]
+            full_columns = prefixed_columns
+        else:
+            full_columns = columns
+
+        columns_set = set(columns)
+
+        table_names = [table_name]
+
+        sub_table_num = len(moreTableStructDict)
+        join_clauses: List[str] = []
+        where_join: List[str] = []
+        where_join_table = ""
+
+        for mtStruct in moreTableStructDict.values():
+            sub_class = mtStruct.sub_class
+            sub_table = HoneyUtil.get_table_name_by_class(sub_class)
+            sub_alias = mtStruct.sub_alias
+
+            sub_tablename = HoneyUtil.get_table_name_by_class(sub_class)
+            table_names.append(sub_tablename)  # 用于缓存记录，要用真正的表名，不能用别名
+
+            sub_object = mtStruct.sub_object
+
+            # 加子表  子表名.字段 select列表
+            if sub_object is None or not sub_object:
+                subFieldAndValue, subClassField = ParseSqlHelper._getKeyValue_classField_ByClass_for_moretable(sub_class)
+            else:
+                subFieldAndValue, subClassField = ParseSqlHelper._getKeyValue_classField_for_moretable(sub_object)  # joins_struct要能获取子类的对象
+
+            if subFieldAndValue:
+                prefix = sub_alias + "."
+                subFieldAndValue = {prefix + key: value for key, value in subFieldAndValue.items()}
+                entityFilter.update(subFieldAndValue)
+
+            sub_columns = self.__toColumns(subClassField)  # 考虑多表的字段
+
+            if not isDefineColumns:
+                #没有定义字段，则将字段放入full_columns
+                for col in sub_columns:
+                    if sub_table_num == 1 and col not in columns_set:
+                        # full_columns.extend(pre_sub_columns)
+                        full_columns.append(sub_alias + "." + col)
+                    else:  # 超过1个子表,子表的列全部用别名
+                        full_columns.append(f"{sub_alias}.{col} '{sub_alias}.{col}'")  # TODO 确认其它DB是否支持这种格式。别名带引号。
+
+            join_type = mtStruct.joinType
+            main_fields = mtStruct.main_fields
+            sub_fields = mtStruct.sub_fields
+
+            if mtStruct.has_next_layer and mtStruct.main_alias:
+                first_alias = mtStruct.main_alias
+            else:
+                first_alias = main_alias
+
+            # 组装 ON 条件：m.main_field = alias.sub_field
+            on_parts: List[str] = []
+            for mf, sf in zip(main_fields, sub_fields):
+                on_parts.append(f"{first_alias}.{mf} = {sub_alias}.{sf}")
+
+            if join_type == JoinType.WHERE:
+                where_join_table += f", {sub_table} {sub_alias}"
+                where_join.extend(on_parts)
+            else:
+                on_sql = f" {K.and_()} ".join(on_parts)
+                clause = f"{join_type.get_name()} {sub_table} {sub_alias} {K.on()} {on_sql}"
+                join_clauses.append(clause)
+        joins_part = " ".join(join_clauses)
+
+        sql = f"{K.select()} {', '.join(full_columns)} {K.from_()} {table_name} {main_alias}"
+
+        tempTablePlaceholder = "#{temp-table-bee_paging}#"
+
+        if need_rewrite_paging_sql:
+            sql = sql + " " + tempTablePlaceholder
+
+        sql2 = ""
+
+        if where_join_table:
+            sql2 += where_join_table
+
+        where_join_sql = ""
+        if where_join:
+            where_join_sql = f" {K.and_()} ".join(where_join)
+
+        # add join
+        if joins_part:
+            sql2 += f" {joins_part}"
+
+        # where part
+        had_where = False
+        params = []
+        if entityFilter:
+            condition_str = ParseSqlHelper._build_where_filter(entityFilter)
+            if where_join_sql:
+                where_join_sql += f" {K.and_()} "
+            sql2 += f" {K.where()} {where_join_sql}{condition_str}"
+            had_where = True
+            params = list(entityFilter.values())
+        elif where_join:
+            sql2 += f" {K.where()} {where_join_sql}"
+            had_where = True
+
+        if conditionStruct:
+            sql2, params = self.__appendWhere(sql2, params, had_where, conditionStruct)
+
+        sql = sql + sql2
+
+        if need_rewrite_paging_sql:
+            pagingRewriteSql = []
+            pagingRewriteSql.append("select distinct ")
+            pagingRewriteSql.append(table_name)
+            pagingRewriteSql.append(".id")  # TODO 需要改为具体的主键；还要考虑多主键的情况   获取主键
+            pagingRewriteSql.append(" from ")
+            pagingRewriteSql.append(table_name)
+            pagingRewriteSql.append(sql2)
+
+            temp_sql = ''.join(pagingRewriteSql)
+
+            params.extend(params)
+            if conditionStruct:
+                start = conditionStruct.start
+                size = conditionStruct.size
+                if start or start == 0 or size:
+                    # paging
+                    temp_sql = SqlUtil.add_paging(temp_sql, start, size)
+
+            pagingRewriteSql = []  # reset pagingRewriteSql
+            pagingRewriteSql.append("join (")
+            pagingRewriteSql.append(temp_sql)
+            pagingRewriteSql.append(") bee_paging on ")
+            pagingRewriteSql.append(table_name)
+            pagingRewriteSql.append(".id = bee_paging.id")  # TODO 需要改为具体的主键；还要考虑多主键的情况
+
+            temp_paing_sql = ''.join(pagingRewriteSql)
+            # print(temp_paing_sql)
+            idx = sql.find(tempTablePlaceholder)
+            if idx > -1:
+                sql = sql[:idx] + temp_paing_sql + sql[idx + len(tempTablePlaceholder):]
+        else:
+            if conditionStruct:
+                start = conditionStruct.start
+                size = conditionStruct.size
+                if start or start == 0 or size:
+                    # paging
+                    sql = SqlUtil.add_paging(sql, start, size)
+                if conditionStruct.has_for_update:
+                    sql += " " + K.for_update()
+
+        return sql, params, table_names
+

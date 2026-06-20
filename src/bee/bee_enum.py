@@ -24,10 +24,19 @@ class JoinType(Enum):
     Join Type for More table.<br>
     <B>since  1.9.0</B><br>
     '''
-    JOIN = "JOIN"
-    LEFT_JOIN = "LEFT JOIN"
-    RIGHT_JOIN = "RIGHT JOIN"
-    FULL_JOIN = "FULL JOIN"
+    JOIN = "join"
+    LEFT_JOIN = "left join"
+    RIGHT_JOIN = "right join"
+    FULL_JOIN = "full join"
+
+    # the filter will put in where part or no join filter.
+    WHERE = ""
+
+    def get_name(self):
+        if HoneyConfig.sql_key_word_case == "upper":
+            return self.value.upper()
+        else:
+            return self.value.lower()
 
 
 class FunctionType(Enum):
@@ -91,4 +100,5 @@ class Op(Enum):
 class LocalType(Enum):
     # 数据类型标识枚举
     CacheSuidStruct = auto()  # 对应原来的 sqlPreValueLocal
+    MoreTableStruct = auto()
 

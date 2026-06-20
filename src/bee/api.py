@@ -2,7 +2,7 @@ from typing import overload
 
 from bee.bee_enum import FunctionType
 from bee.condition import Condition
-from bee.osql.engine import ObjSQL, ObjSQLRich, PreparedSqlLib, MoreObjSQL
+from bee.osql.engine import ObjSQL, ObjSQLRich, MoreObjSQL, PreparedSqlLib
 
 
 class Suid:
@@ -220,8 +220,8 @@ class SuidRich(Suid):
         :param index_name: index name
         '''
         return self.__suidRich.drop_index(entity_class, index_name)
-    
-    
+
+
 class MoreTable:
     '''
     More table Select/Update/Insert/Delete.<br>
@@ -235,6 +235,16 @@ class MoreTable:
     @overload
     def select(self, entity):
         ...
+
+    def select(self, entity, condition: Condition = None):
+        '''
+        Select the records according to entity and condition.<br>
+        :param entity: table's entity(do not allow null).<br>
+        :param condition: If the field of entity is not null or empty, it will be translate to field=value.<br>
+         Other can define with condition. <br>
+        :return: list which contains more than one entity.<br>
+        '''
+        return self.__moreTable.select(entity, condition)
 
     def update(self, entity):
         '''
@@ -263,21 +273,12 @@ class MoreTable:
     def delete(self, entity):
         ...
 
-    def select(self, entity, condition: Condition = None):
-        '''
-        Select the records according to entity and condition.<br>
-        :param entity: table's entity(do not allow null).<br>
-        :param condition: If the field of entity is not null or empty, it will be translate to field=value.<br>
-        Other can define with condition. <br>
-        :return: list which contains more than one entity.<br>
-        '''
-        return self.__moreTable.select(entity, condition)
-
     def delete(self, entity, condition: Condition = None):
         '''
         Delete the records according to entity and condition.<br>
         :param entity: table's entity(do not allow null).
-        :param condition: If the field of entity is not null or empty, it will be translate to field=value.Other can define with condition.
+        :param condition: If the field of entity is not null or empty, it will be translate to field=value.<br>
+         Other can define with condition.
         :return: the number of deleted record(s) successfully, if fails,return integer less than 0.
         '''
         return self.__moreTable.delete(entity, condition)

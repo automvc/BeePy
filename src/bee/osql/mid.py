@@ -3,7 +3,7 @@ from bee.name.naming_handler import NamingHandler
 from bee.osql.mid_typing import *
 from bee.osql.obj2sql import ObjToSQL
 from bee.osql.struct import TableMeta
-from bee.util import HoneyUtil
+from bee.osql.util import HoneyUtil
 
 
 class Model:
