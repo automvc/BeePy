@@ -24,7 +24,6 @@ https://github.com/automvc/bee
 4. more table select support condition  
 5. more table select support paging  
 6. more table select (One to Many)  
-7. more table select (One to Many)  
 
 ### **V1.0**  
 1.The framework uses a unified API to operate the database;  
