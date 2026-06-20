@@ -66,6 +66,10 @@ class Condition(ABC):
     @abstractmethod
     def selectField(self, *field:str) -> 'Condition':
         pass
+    
+    @abstractmethod
+    def selectFun(self, functionType:FunctionType, fieldForFun:str, alias:str) -> 'Condition':
+        pass
 
     @abstractmethod
     def start(self, start:int) -> 'Condition':
@@ -84,7 +88,15 @@ class Condition(ABC):
         pass
 
     @abstractmethod
-    def getSuidType(self) -> 'Condition':
+    def getSuidType(self) -> 'SuidType':
+        pass
+    
+    @abstractmethod
+    def do_not_rewrite_paging_sql(self,do_not_rewrite:bool) -> 'Condition':
+        pass
+    
+    @abstractmethod
+    def isDoNotRewritePagingSql(self) -> bool:
         pass
 
     # ## ###########-------just use in update-------------start-

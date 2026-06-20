@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Set
 from bee.bee_enum import LocalType
 from bee.config import HoneyConfig
 from bee.context import HoneyContext
-from bee.osql import Util
+from bee.osql import Tool
 from bee.osql.index import CacheArrayIndex
 from bee.osql.logger import Logger
 from bee.typing import Array, LongArray
@@ -76,9 +76,7 @@ class CacheUtil:
         return [item.strip() for item in s.split(',')]
 
     @staticmethod
-    def __get_table_name(sql: str) -> str:
-        # todo 可能有多个table 用逗号分隔？？
-
+    def __get_table_names(sql: str) -> str:
         cacheSuidStruct = HoneyContext.get_data(LocalType.CacheSuidStruct, sql)
         if cacheSuidStruct:
             return cacheSuidStruct.tableNames
@@ -97,9 +95,20 @@ class CacheUtil:
             k = sql
 
         if HoneyConfig.cache_key_use_md5 == True:
-            return Util.string_to_md5(k)
+            return Tool.string_to_md5(k)
         else:
             return k
+
+    @staticmethod
+    def __is_tablenames_in_set(table_names, target_set):
+        #当list的table_names的元素都在set时，才返回True
+        if table_names:
+            if isinstance(table_names, str):
+                return table_names in target_set
+            else:
+                return target_set.issuperset(table_names)
+        else:
+            return False
 
     @staticmethod
     def add(sql: str, rs: Any):
@@ -112,26 +121,29 @@ class CacheUtil:
         CacheUtil.__init0()
 
         key = CacheUtil.__genKey(sql)
-        table_name = CacheUtil.__get_table_name(sql)
+        table_names = CacheUtil.__get_table_names(sql) #TODO
 
         # 1. 检查是否在set1（从不缓存）
-        if table_name in CacheUtil.__set1:
+        # if table_name in CacheUtil.__set1:
+        if CacheUtil.__is_tablenames_in_set(table_names, CacheUtil.__set1):
             return False
 
         # 2. 检查是否在set2（永久缓存）
-        if table_name in CacheUtil.__set2:
+        # if table_name in CacheUtil.__set2:
+        if CacheUtil.__is_tablenames_in_set(table_names, CacheUtil.__set2):
             if key not in CacheUtil.__set2_exist:
                 CacheUtil.__set2_exist.add(key)
                 CacheUtil.__map2[key] = rs
             return True
 
         # 3. 检查是否在set3（长久缓存）
-        if table_name in CacheUtil.__set3:
+        # if table_name in CacheUtil.__set3:
+        if CacheUtil.__is_tablenames_in_set(table_names, CacheUtil.__set3):
             if key not in CacheUtil.__set3_exist:
                 CacheUtil.__set3_exist.add(key)
                 CacheUtil.__map3[key] = rs
 
-                CacheUtil.__reg_map3_table_keySet(table_name, key)
+                CacheUtil.__reg_map3_table_keySet(table_names, key) #TODO
             return True
 
         if(CacheUtil.__cacheArrayIndex.is_would_be_full()):
@@ -153,36 +165,40 @@ class CacheUtil:
             CacheUtil.__map[key] = index
             CacheUtil.__obj[index] = rs
             CacheUtil.__keys[index] = key
-            CacheUtil.__time[index] = Util.currentMilliseconds()
+            CacheUtil.__time[index] = Tool.currentMilliseconds()
 
-            CacheUtil.__key_tableNameList_map[key] = table_name
+            CacheUtil.__key_tableNameList_map[key] = table_names  #TODO
 
-            CacheUtil.__reg_table_indexSet_map(table_name, index)
+            CacheUtil.__reg_table_indexSet_map(table_names, index) #TODO
 
             return True
 
         return False
 
     # reg index set to table_dict    table关联它相关的缓存的下标。
+    #TODO
     @staticmethod
-    def  __reg_table_indexSet_map(table_name:str, index:int):
-        indexSet = CacheUtil.__table_indexSet_map.get(table_name, None)
-        if indexSet:
-            indexSet.add(index)
-        else:
-            indexSet = set()
-            indexSet.add(index)
-            CacheUtil.__table_indexSet_map[table_name] = indexSet
+    def  __reg_table_indexSet_map(table_names:str, index:int):
+        
+        for table_name in table_names:
+            indexSet = CacheUtil.__table_indexSet_map.get(table_name, None)
+            if indexSet:
+                indexSet.add(index)
+            else:
+                indexSet = set()
+                indexSet.add(index)
+                CacheUtil.__table_indexSet_map[table_name] = indexSet
 
     @staticmethod
-    def  __reg_map3_table_keySet(table_name:str, key:int):
-        keySet = CacheUtil.__map3_table_keySet.get(table_name, None)
-        if keySet:
-            keySet.add(key)
-        else:
-            keySet = set()
-            keySet.add(key)
-            CacheUtil.__map3_table_keySet[table_name] = keySet
+    def  __reg_map3_table_keySet(table_names:str, key:int):
+        for table_name in table_names:
+            keySet = CacheUtil.__map3_table_keySet.get(table_name, None)
+            if keySet:
+                keySet.add(key)
+            else:
+                keySet = set()
+                keySet.add(key)
+                CacheUtil.__map3_table_keySet[table_name] = keySet
 
     @staticmethod
     def get(sql: str) -> Any:
@@ -205,14 +221,21 @@ class CacheUtil:
                     CacheUtil.__del_one_cache(index)
 
                 return None
+            
+            # // 要是能返回缓存的结果集,说明不用上下文的缓存结构信息了. 可以删
+            # HoneyContext.deleteCacheInfo(sql); TODO
             return copy.deepcopy(CacheUtil.__obj[index])  # 返回深拷贝
 
         # 检查永久缓存
         if key in CacheUtil.__set2_exist:
+            # // 要是能返回缓存的结果集,说明不用上下文的缓存结构信息了. 可以删
+            # HoneyContext.deleteCacheInfo(sql); TODO
             return copy.deepcopy(CacheUtil.__map2.get(key))  # 返回深拷贝
 
         # 检查长久缓存
         if key in CacheUtil.__set3_exist:
+            # // 要是能返回缓存的结果集,说明不用上下文的缓存结构信息了. 可以删
+            # HoneyContext.deleteCacheInfo(sql); TODO
             return copy.deepcopy(CacheUtil.__map3.get(key))  # 返回深拷贝
 
         return None
@@ -220,7 +243,7 @@ class CacheUtil:
     @staticmethod
     def __is_timeout(index: int) -> bool:
         timeout = HoneyConfig.cache_timeout  # 缓存过期时间,以毫秒为单位
-        return  Util.currentMilliseconds() - CacheUtil.__time[index] >= timeout
+        return  Tool.currentMilliseconds() - CacheUtil.__time[index] >= timeout
 
     @staticmethod
     def __del_one_cache(index: int):
@@ -245,10 +268,11 @@ class CacheUtil:
     def __del_one_index(key: str, index: int):
         # 这里可以添加维护表相关索引的逻辑
 
-        table_name = CacheUtil.__key_tableNameList_map[key]
-        indexSet = CacheUtil.__table_indexSet_map.get(table_name, None)
-        if indexSet:
-            indexSet.remove(index)  # test
+        table_names = CacheUtil.__key_tableNameList_map[key]  # TODO 11
+        for table_name in table_names:
+            indexSet = CacheUtil.__table_indexSet_map.get(table_name, None)
+            if indexSet:
+                indexSet.remove(index)  # test
 
     @staticmethod
     def clear(sql: str):
@@ -256,19 +280,24 @@ class CacheUtil:
         clear result by sql.
         :param sql: SQL statement.
         '''
+        
+        #通过modify sql，更新了数据；所以与该modify sql相关表的缓存都要清除，避免有脏数据。
 
         CacheUtil.__init0()
+        
+        # HoneyContext.deleteCacheInfo(sql);// 要清除cacheStruct TODO
 
-        table_name = CacheUtil.__get_table_name(sql)
-        indexSet = CacheUtil.__table_indexSet_map.pop(table_name, None)
-        if indexSet:
-            for index in indexSet:
-                CacheUtil.__del_one_normal_cache(index)
-        else:  # __map3
-            keySet = CacheUtil.__map3_table_keySet.pop(table_name, None)
-            if keySet:
-                for key in keySet:
-                    del CacheUtil.__map3[key]
+        table_names = CacheUtil.__get_table_names(sql)  # TODO 11
+        for table_name in table_names:
+            indexSet = CacheUtil.__table_indexSet_map.pop(table_name, None)
+            if indexSet:
+                for index in indexSet:
+                    CacheUtil.__del_one_normal_cache(index)
+            else:  # __map3
+                keySet = CacheUtil.__map3_table_keySet.pop(table_name, None)
+                if keySet:
+                    for key in keySet:
+                        del CacheUtil.__map3[key]
 
     @staticmethod
     def _del_cache_in_between(know_index: int):
@@ -368,3 +397,25 @@ class CacheUtil:
 #     # 6. 再次获取永久缓存，验证是否被修改
 #     original_cached_result1_permanent = CacheUtil.get(sql1)
 #     print("Original permanent cached result for sql1:", original_cached_result1_permanent)
+
+
+# if __name__ == "__main__":
+#     # 测试场景1：所有表名都在集合中 → 返回 True
+#     print(CacheUtil._CacheUtil__is_tablenames_in_set(["user", "role"], {"user", "role", "dept"})) # True
+#
+#     # 测试场景2：有一个表名不在集合中 → 返回 False
+#     print(CacheUtil._CacheUtil__is_tablenames_in_set(["user", "emp"], {"user", "role", "dept"})) # False
+#
+#     # 测试场景3：空列表 → 返回 True
+#     print(CacheUtil._CacheUtil__is_tablenames_in_set([], {"user", "role"})) # True
+#
+#     # 测试场景4：单个表名存在 → 返回 True
+#     print(CacheUtil._CacheUtil__is_tablenames_in_set(["dept"], {"user", "role", "dept"})) # True
+#
+#     # 测试场景5：单个表名不存在 → 返回 False
+#     print(CacheUtil._CacheUtil__is_tablenames_in_set(["salary"], {"user", "role", "dept"})) # False
+#
+#
+#     print(CacheUtil._CacheUtil__is_tablenames_in_set("dept", {"user", "role", "dept"}))
+#
+#     print(CacheUtil._CacheUtil__is_tablenames_in_set("", {"user", "role", "dept"})) 

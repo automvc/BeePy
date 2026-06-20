@@ -1,4 +1,5 @@
-from bee.util import HoneyUtil
+from bee.config import HoneyConfig
+from bee.osql.const import SysConst
 
 
 class SqlKeyWord:
@@ -419,11 +420,19 @@ class LowerKey(SqlKeyWord):
 
 class K:
     __sql_keywords = None
+    
+    
+    @staticmethod
+    def __is_sql_key_word_upper():
+        if HoneyConfig.sql_key_word_case:
+            if HoneyConfig.sql_key_word_case == SysConst.upper:
+                return True
+        return False
 
     @classmethod
     def _get_sql_keywords(cls):
         try:
-            if HoneyUtil.is_sql_key_word_upper():  # 根据配置指定是用大写还是小写
+            if K.__is_sql_key_word_upper():  # 根据配置指定是用大写还是小写
                 return UpperKey()
         except Exception:
             pass

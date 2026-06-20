@@ -27,13 +27,18 @@ class AbstractCommOperate:
     def doBeforeReturn(self, list_param:list):
         self.__spent_time()
         self.__removeCacheSuidStruct()
+        self.__clearContext()
 
     def doBeforeReturnSimple(self):
         self.__spent_time()
         self.__removeCacheSuidStruct()
+        self.__clearContext()
 
     def __removeCacheSuidStruct(self):
         HoneyContext._remove_one_local_type(LocalType.CacheSuidStruct)
+
+    def __clearContext(self):
+        HoneyContext._remove_one_local_type(LocalType.MoreTableStruct)
 
     def __reg_start_spent_time(self):
         if HoneyConfig.show_sql_spent_time:
