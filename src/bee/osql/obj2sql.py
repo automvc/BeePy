@@ -620,9 +620,9 @@ class MoreObjToSQL:
         fieldAndValue, classField = ParseSqlHelper._getKeyValue_classField_for_moretable(entity)
         table_name = HoneyUtil.get_table_name(entity)
 
-        return self.__build_more_select_sql(table_name, classField, fieldAndValue, moreTableStructDict, condition)
+        return self.__build_more_select_sql(table_name, classField, fieldAndValue,entity, moreTableStructDict, condition)
 
-    def __build_more_select_sql(self, table_name, classField, entityFilter, moreTableStructDict = None, condition = None):
+    def __build_more_select_sql(self, table_name, classField, entityFilter, entity, moreTableStructDict = None, condition = None):
         if not classField:
             raise SqlBeeException("column list is empty!")
 
@@ -657,8 +657,11 @@ class MoreObjToSQL:
             columns = self.__toColumns(classField)
 
         need_rewrite_paging_sql = True
+        pk = None
         # 0.用户主动设置本次查询不需要分页改写
-        if condition and condition.isDoNotRewritePagingSql():
+        if condition is None:
+            need_rewrite_paging_sql = False
+        elif condition and condition.isDoNotRewritePagingSql():
             need_rewrite_paging_sql = False
         elif conditionStruct:
                 # 1. 有分组
@@ -670,11 +673,21 @@ class MoreObjToSQL:
                 # return (start != null && start > 1) || (size != null && size > 0);
                 elif  not ((conditionStruct.start and conditionStruct.start > 1)  or  (conditionStruct.size and conditionStruct.size > 0)):
                     need_rewrite_paging_sql = False
+
+        if need_rewrite_paging_sql:
                 # 4.没有一对多
-                elif moreTableStructOverall and not moreTableStructOverall.has_any_sublist_entity:
+                if moreTableStructOverall and not moreTableStructOverall.has_any_sublist_entity:
                     need_rewrite_paging_sql = False
+                    
+                else:
+                    # pk = HoneyUtil.get_pk_by_class(entity_class)
+                    pk = HoneyUtil.get_pk(entity)
+                    #no pk, no need to rewrite paging sql
+                    if not pk:
+                        # raise SqlBeeException("by id, bean should has id field or need set the pk field name with __pk__")
+                        Logger.warn(str(type(entity)) + " have not primary key.");
+                        need_rewrite_paging_sql = False
         
-            # TODO
             # 如果需要改写，则进一步优化;对于可以不改写也能准确分页的，则没必要改写，以提高查询效率。
             # 以下为伪代码，需转成具体实现
             # // 可以自动判断，决定是否进行准确分页改写；
@@ -804,7 +817,11 @@ class MoreObjToSQL:
             pagingRewriteSql = []
             pagingRewriteSql.append("select distinct ")
             pagingRewriteSql.append(table_name)
-            pagingRewriteSql.append(".id")  # TODO 需要改为具体的主键；还要考虑多主键的情况   获取主键
+            # pagingRewriteSql.append(".id")  # todo 需要改为具体的主键；还要考虑多主键的情况   获取主键
+            pk = NamingHandler.toColumnName(pk)
+            pagingRewriteSql.append(".")
+            pagingRewriteSql.append(pk)
+            
             pagingRewriteSql.append(" from ")
             pagingRewriteSql.append(table_name)
             pagingRewriteSql.append(sql2)
@@ -824,7 +841,11 @@ class MoreObjToSQL:
             pagingRewriteSql.append(temp_sql)
             pagingRewriteSql.append(") bee_paging on ")
             pagingRewriteSql.append(table_name)
-            pagingRewriteSql.append(".id = bee_paging.id")  # TODO 需要改为具体的主键；还要考虑多主键的情况
+            # pagingRewriteSql.append(".id = bee_paging.id")  # todo 需要改为具体的主键；还要考虑多主键的情况
+            pagingRewriteSql.append(".")
+            pagingRewriteSql.append(pk)
+            pagingRewriteSql.append(" = bee_paging.")
+            pagingRewriteSql.append(pk)
 
             temp_paing_sql = ''.join(pagingRewriteSql)
             # print(temp_paing_sql)

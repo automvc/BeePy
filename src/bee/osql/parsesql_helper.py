@@ -204,7 +204,7 @@ class ParseSqlHelper:
                     moreTableStruct2 = MoreTableStruct(meta2, fieldname2, sub_object_or_class, layer, current_ptree, True, current_moreTableStruct.sub_alias)
 
                     if moreTableStruct2.sub_alias in result:
-                        # 还要检测 自我查询的情况，是否可以。 TODO
+                        # 还要检测 自我查询的情况，是否可以。 todo
                         print(f"{moreTableStruct2.sub_alias} already exist, will change it to {moreTableStruct2.sub_alias}_1")
                         moreTableStruct2.sub_alias = moreTableStruct2.sub_alias + "_1"
 

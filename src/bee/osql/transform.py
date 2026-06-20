@@ -47,7 +47,7 @@ class ResultUtil:
             fieldName = NamingHandler.toFieldName(column_names[i])
 
             if fieldName not in field_and_type:
-                # 没找到应该是子类的。 TODO
+                # 没找到应该是子类的。 todo
                 split_result = fieldName.split('.', 1)
                 if len(split_result) == 1:  # 列不带表名
                     for struct in moreTableStructDict.values():
