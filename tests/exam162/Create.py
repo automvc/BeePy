@@ -5,7 +5,6 @@ from entity.Test import Test
 from exam162.Orders import Orders
 
 
-# from bee.util import HoneyUtil
 if __name__ == '__main__':
 
     # create_sql=HoneyUtil.get_create_sql(Entity)
