@@ -4,7 +4,7 @@ from bee.api import SuidRich
 from bee.bee_enum import JoinType
 from bee.honeyfactory import BF
 from bee.osql.gen import GenBean
-from bee.typing import JoinMeta
+from bee.anno import JoinTable
 
 import MyConfig
 
@@ -30,9 +30,9 @@ class B:
     __joins__ = {}
     def __repr__(self): return str(self.__dict__)
 
-# 假设 JoinMeta, JoinType 已定义在此之前
+# 假设 JoinTable, JoinType 已定义在此之前
 A.__joins__ = {
-    "y": JoinMeta(
+    "y": JoinTable(
         sub_class=B,
         joinType=JoinType.JOIN,
         main_fields=["id"],
@@ -43,7 +43,7 @@ A.__joins__ = {
 }
 
 B.__joins__ = { #select子句，要通过__joins__ {}的key，排除不要查的字段。 不写会有多余的字段。
-    "x": JoinMeta(
+    "x": JoinTable(
         sub_class=A,
         joinType=JoinType.JOIN,
         main_fields=["id"],

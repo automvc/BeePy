@@ -1,7 +1,7 @@
 from bee.bee_enum import JoinType
 from bee.honeyfactory import BF
 from bee.osql.gen import GenBean
-from bee.typing import JoinMeta
+from bee.anno import JoinTable
 
 import MyConfig
 
@@ -33,7 +33,7 @@ class Hobby:
     sub_hobby = None
     
     __joins__ = {
-        "sub_hobby": JoinMeta(
+        "sub_hobby": JoinTable(
             sub_class = Sub_hobby,
             joinType = JoinType.JOIN,
             main_fields = ["id"],
@@ -56,7 +56,7 @@ class Student:
     hobby=None
     
     __joins__ = {
-        "hobby": JoinMeta(
+        "hobby": JoinTable(
             sub_class = Hobby,
             joinType = JoinType.JOIN,
             main_fields = ["id"],
@@ -91,14 +91,14 @@ class Clazz:
         return str(self.__dict__)
     
     __joins__ = {
-        "student": JoinMeta(
+        "student": JoinTable(
             sub_class = Student,
             joinType = JoinType.JOIN,
             main_fields = ["id"],
             sub_fields = ["clazz_no"],
         )
         # ,
-        #   "clazz_place": JoinMeta(
+        #   "clazz_place": JoinTable(
         #     sub_class = Clazz_place,
         #     joinType = JoinType.JOIN,
         #     main_fields = ["clazz_place_id"],

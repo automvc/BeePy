@@ -3,7 +3,7 @@ from typing import List, Dict, Type, Any
 from bee.api import SuidRich
 from bee.bee_enum import JoinType
 from bee.honeyfactory import BF
-from bee.typing import JoinMeta
+from bee.anno import JoinTable
 
 import MyConfig
 from email._encoded_words import len_q
@@ -16,8 +16,8 @@ from email._encoded_words import len_q
 #     RIGHT_JOIN = "RIGHT JOIN"
 #
 #
-# # 说明：你给出的 JoinMeta 和模型定义保持不变
-# class JoinMeta:
+# # 说明：你给出的 JoinTable 和模型定义保持不变
+# class JoinTable:
 #
 #     def __init__(self, sub_class, joinType:JoinType, main_fields: List[str], sub_fields: List[str]):
 #         self.sub_class = sub_class
@@ -66,13 +66,13 @@ class Assignexam:
         return  str(self.__dict__)
 
     __joins__ = {
-        "assigncourse_aa": JoinMeta(
+        "assigncourse_aa": JoinTable(
             sub_class = Assigncourse,
             joinType = JoinType.JOIN,
             main_fields = ["classno", "term", "subjectno"],
             sub_fields = ["classno", "term", "subjectno"],
         ),
-        "teacher_bb": JoinMeta(
+        "teacher_bb": JoinTable(
             sub_class = Teacher,
             joinType = JoinType.LEFT_JOIN,
             main_fields = ["teacherno"],
@@ -98,7 +98,7 @@ def parse_joins(model_cls: Type) -> List[Dict[str, Any]]:
         return result
 
     for attr, meta in joins.items():
-        if isinstance(meta, JoinMeta):
+        if isinstance(meta, JoinTable):
             item = {
                 "attr": attr,
                 "sub_class": meta.sub_class,

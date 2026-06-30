@@ -22,7 +22,7 @@ from __future__ import annotations
 
 from bee.bee_enum import JoinType
 from bee.honeyfactory import BF
-from bee.typing import JoinMeta
+from bee.anno import JoinTable
 
 import MyConfig
 
@@ -42,7 +42,7 @@ class S:
         return str(self.__dict__)
 
 S.__joins__ = {
-    "x": JoinMeta(
+    "x": JoinTable(
         sub_class=S,            # 现在 S 已定义
         joinType=JoinType.WHERE,
         main_fields=["id"],

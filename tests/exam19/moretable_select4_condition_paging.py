@@ -1,6 +1,6 @@
 from bee.bee_enum import JoinType
 from bee.honeyfactory import BF
-from bee.typing import JoinMeta
+from bee.anno import JoinTable
 
 import MyConfig
 
@@ -52,13 +52,13 @@ class Assignexam:
         return  str(self.__dict__)
 
     __joins__ = {
-        "assigncourse_aa": JoinMeta(
+        "assigncourse_aa": JoinTable(
             sub_class = Assigncourse,
             joinType = JoinType.JOIN,
             main_fields = ["classno", "term", "subjectno"],
             sub_fields = ["classno", "term", "subjectno"],
         ),
-        "teacher_bb": JoinMeta(
+        "teacher_bb": JoinTable(
             sub_class = Teacher,
             joinType = JoinType.LEFT_JOIN,
             main_fields = ["teacherno"],
