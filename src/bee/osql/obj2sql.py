@@ -612,7 +612,7 @@ class MoreObjToSQL:
         moreTableStructDict = ParseSqlHelper.get_joins_struct(entity)
 
         if moreTableStructDict is None or len(moreTableStructDict) == 0:
-            raise SqlBeeException("Entity for Moretable operate must have JoinMeta setting!")
+            raise SqlBeeException("Entity for Moretable operate must have JoinTable setting!")
 
         # transform_result_for_moretable
         HoneyContext._set_data(LocalType.MoreTableStruct, type(entity), moreTableStructDict)

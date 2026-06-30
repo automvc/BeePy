@@ -1,7 +1,7 @@
 from typing import List, Optional, Any
 
 from bee.exception import ConfigBeeException
-from bee.typing import JoinMeta
+from bee.anno import JoinTable
 
 from bee.osql.util import HoneyUtil
 
@@ -84,11 +84,11 @@ class MoreTableStruct:
     
     overall:MoreTableStructOverall = None  # just the first element have it.
 
-    def __init__(self, join_meta: JoinMeta, fieldname:str, entity, layer:int, ptree, has_next_layer:bool = None, main_alias:str = None, overall:MoreTableStructOverall = None):
+    def __init__(self, join_meta: JoinTable, fieldname:str, entity, layer:int, ptree, has_next_layer:bool = None, main_alias:str = None, overall:MoreTableStructOverall = None):
         self.__parse_join_meta(join_meta, fieldname, entity, layer, ptree, has_next_layer, main_alias, overall)
 
-    # ========== 核心专属方法：解析JoinMeta ==========
-    def __parse_join_meta(self, join_meta: JoinMeta, fieldname:str, entity, layer, ptree, has_next_layer:bool = None, main_alias:str = None, overall:MoreTableStructOverall = None):
+    # ========== 核心专属方法：解析JoinTable ==========
+    def __parse_join_meta(self, join_meta: JoinTable, fieldname:str, entity, layer, ptree, has_next_layer:bool = None, main_alias:str = None, overall:MoreTableStructOverall = None):
         self.sub_class = join_meta.sub_class
         # print(type(self.sub_class))
         self.joinType = join_meta.joinType
@@ -120,7 +120,7 @@ class MoreTableStruct:
             if sub_fieldtype in (list, List):
             # if sub_fieldtype is list:
                 if join_meta.is_list is False:
-                    raise ConfigBeeException(f"JoinMeta setting is inconsistent, is_list {join_meta.is_list}, but the attribute type is list or List")
+                    raise ConfigBeeException(f"JoinTable setting is inconsistent, is_list {join_meta.is_list}, but the attribute type is list or List")
                 self.current_is_list = True
                 if overall:
                     overall.has_any_sublist_entity=True
@@ -131,7 +131,7 @@ class MoreTableStruct:
         if has_next_layer:
             self.has_next_layer = has_next_layer
             if join_meta.main_alias:
-                # 有在JoinMeta声明的，就用
+                # 有在JoinTable声明的，就用
                 self.main_alias = join_meta.main_alias
             else:
                 self.main_alias = main_alias

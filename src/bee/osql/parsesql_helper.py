@@ -7,8 +7,8 @@ from bee.name.naming_handler import NamingHandler
 from bee.osql.const import DatabaseConst
 from bee.osql.sqlkeyword import K
 from bee.osql.struct import MoreTableStruct
-from bee.typing import JoinMeta
 
+from bee.anno import JoinTable
 from bee.osql.util import HoneyUtil
 
 
@@ -128,7 +128,7 @@ class ParseSqlHelper:
             return result
 
         for fieldname, meta in joins.items():
-            if isinstance(meta, JoinMeta):
+            if isinstance(meta, JoinTable):
                 layer = 2
                 ptree = []
                 type_tree = [HoneyUtil.get_type(entity)]
@@ -165,16 +165,16 @@ class ParseSqlHelper:
                 # # print(joins2)
                 # if joins2:
                 #     for fieldname2, meta2 in joins2.items():
-                #         if isinstance(meta2, JoinMeta):
+                #         if isinstance(meta2, JoinTable):
                 #             moreTableStruct2 = MoreTableStruct(meta2, fieldname2, sub_object_or_class, True, moreTableStruct.sub_alias)
                 #             result[moreTableStruct2.sub_alias] = moreTableStruct2
                 #         else:
                 #             sub_class = HoneyUtil.get_type(sub_object_or_class)
-                #             raise ConfigBeeException(f"have error join struct in {sub_class}, need use JoinMeta")
+                #             raise ConfigBeeException(f"have error join struct in {sub_class}, need use JoinTable")
             else:
                 # clazz = type(entity)
                 clazz = HoneyUtil.get_type(entity)
-                raise ConfigBeeException(f"have error join struct in {clazz}, need use JoinMeta")
+                raise ConfigBeeException(f"have error join struct in {clazz}, need use JoinTable")
 
         return result
 
@@ -194,7 +194,7 @@ class ParseSqlHelper:
                 return
 
             for fieldname2, meta2 in joins2.items():
-                if isinstance(meta2, JoinMeta):
+                if isinstance(meta2, JoinTable):
                     current_type = HoneyUtil.get_type(meta2.sub_class)
                     if current_type in current_moreTableStruct.type_tree:
                         continue
@@ -223,7 +223,7 @@ class ParseSqlHelper:
                     ParseSqlHelper._parse_one_has_one(moreTableStruct2, result, layer, current_ptree)
                 else:
                     sub_class = HoneyUtil.get_type(sub_object_or_class)
-                    raise ConfigBeeException(f"have error join struct in {sub_class}, need use JoinMeta")
+                    raise ConfigBeeException(f"have error join struct in {sub_class}, need use JoinTable")
 
     @staticmethod
     def _getPlaceholder():
