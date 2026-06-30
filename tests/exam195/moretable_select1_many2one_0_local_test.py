@@ -1,6 +1,6 @@
 from bee.bee_enum import JoinType
 from bee.honeyfactory import BF
-from bee.typing import JoinMeta
+from bee.anno import JoinTable
 
 import MyConfig
 
@@ -29,7 +29,7 @@ class City:
     province:Province = None
 
     __joins__ = {
-        "province": JoinMeta(
+        "province": JoinTable(
             sub_class = Province,
             joinType = JoinType.JOIN,
             main_fields = ["province_id"],
@@ -50,7 +50,7 @@ class City:
 #     city:City=None
 #
 #     __joins__ = {
-#         "province": JoinMeta(
+#         "province": JoinTable(
 #             sub_class = City,
 #             joinType = JoinType.JOIN,
 #             main_fields = ["id"],

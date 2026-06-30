@@ -1,6 +1,6 @@
 from bee.bee_enum import JoinType
 from bee.honeyfactory import BF
-from bee.typing import JoinMeta
+from bee.anno import JoinTable
 
 import MyConfig
 
@@ -19,7 +19,7 @@ class Town:
     # village_list:Village = None
 
     # __joins__ = {
-    #     "village_list": JoinMeta(
+    #     "village_list": JoinTable(
     #         sub_class = Village,
     #         joinType = JoinType.JOIN,
     #         main_fields = ["id"],
@@ -42,7 +42,7 @@ class City:
     town_list = None
 
     __joins__ = {
-        "town_list": JoinMeta(
+        "town_list": JoinTable(
             sub_class = Town,
             joinType = JoinType.JOIN,
             main_fields = ["id"],
@@ -65,7 +65,7 @@ class Province:
     city_list = None
 
     __joins__ = {
-        "city_list": JoinMeta(
+        "city_list": JoinTable(
             sub_class = City,
             joinType = JoinType.JOIN,
             main_fields = ["id"],
