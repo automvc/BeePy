@@ -88,7 +88,7 @@ class ConditionImpl(Condition):
         self.__suidType = SuidType.SELECT
 
         self.__do_not_rewrite_paging_sql = False
-       # print("__do_not_rewrite_paging_sql",self.__do_not_rewrite_paging_sql)
+        # print("__do_not_rewrite_paging_sql",self.__do_not_rewrite_paging_sql)
 
     def __check_one_field(self, field):
         NameCheckUtil._check_one_name(field)
@@ -219,8 +219,8 @@ class ConditionImpl(Condition):
             else:
                 for field in fields:
                     self.__check_one_field(field)
-        exp = Expression(value = fields, op_num = 20)
-        self.expressions.append(exp)
+            exp = Expression(value = fields, op_num = 20)
+            self.expressions.append(exp)
         return self
     
     def selectFun(self, functionType:FunctionType, fieldForFun:str, alias:str):

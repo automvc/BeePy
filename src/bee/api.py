@@ -17,6 +17,17 @@ class Suid:
     @overload
     def select(self, entity):
         ...
+        
+    def select(self, entity, condition: Condition = None):
+        '''
+        Select the records according to entity and condition.<br>
+        <B>since  1.6.0</B><br>
+        :param entity: table's entity(do not allow null).<br>
+        :param condition: If the field of entity is not null or empty, it will be translate to field=value.<br>
+        Other can define with condition. <br>
+        :return: list which contains more than one entity.<br>
+        '''
+        return self.__suid.select(entity, condition)
 
     def update(self, entity):
         '''
@@ -44,17 +55,6 @@ class Suid:
     @overload
     def delete(self, entity):
         ...
-
-    def select(self, entity, condition: Condition = None):
-        '''
-        Select the records according to entity and condition.<br>
-        <B>since  1.6.0</B><br>
-        :param entity: table's entity(do not allow null).<br>
-        :param condition: If the field of entity is not null or empty, it will be translate to field=value.<br>
-        Other can define with condition. <br>
-        :return: list which contains more than one entity.<br>
-        '''
-        return self.__suid.select(entity, condition)
 
     def delete(self, entity, condition: Condition = None):
         '''
@@ -245,6 +245,21 @@ class MoreTable:
         :return: list which contains more than one entity.<br>
         '''
         return self.__moreTable.select(entity, condition)
+    
+    @overload
+    def select_paging(self, entity, start, size):
+        ...
+
+    def select_paging(self, entity, start, size, *selectFields):
+        '''
+        Just select some fields,and can specify page information.
+        :param entity: table's entity(do not allow null).
+        :param start: start index,min value is 0 or 1(eg:MySQL is 0,Oracle is 1).
+        :param size: fetch result size (>0).
+        :param selectFields: select fields, if more than one,separate with comma in one selectField parameter or use variable parameter.
+        :return: list which contains more than one entity.
+        '''
+        return self.__moreTable.select_paging(entity, start, size, *selectFields)
 
     def update(self, entity):
         '''

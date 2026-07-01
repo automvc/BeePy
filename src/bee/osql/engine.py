@@ -451,6 +451,20 @@ class MoreObjSQL(AbstractCommOperate):
             raise BeeException(e)
         finally:
             super().doBeforeReturn(list_r)
+            
+    @overload
+    def select_paging(self, entity, start, size):
+        ...
+
+    def select_paging(self, entity, start, size, *selectFields):
+
+        # if not selectFields:
+        #     return self.__select_paging(entity, start, size)
+
+        condition = ConditionImpl()
+        condition.selectField(*selectFields)
+        condition.start(start).size(size)
+        return self.select(entity, condition)
 
     def update(self, entity):
         if not entity:
