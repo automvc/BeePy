@@ -96,7 +96,8 @@ if __name__ == '__main__':
 
     province = Province()
     moreTable = BF.moreTable()
-    mylist = moreTable.select(province)
+    # mylist = moreTable.select_paging(province, 0, 1)
+    mylist = moreTable.select_paging(province, 0, 1,"province.name")
 
     print(len(mylist))
 
