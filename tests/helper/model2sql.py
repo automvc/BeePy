@@ -41,7 +41,7 @@ class Users(db.Model):
 if __name__=='__main__':
     
     print("start")
-    PreConfig.config_path="E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc\\tests\\resources"
+    PreConfig.config_path="E:\\JavaWeb\\workspace2026-2\\BeePy-automvc\\tests\\resources"
     
     try:
         db.create_all(True)
