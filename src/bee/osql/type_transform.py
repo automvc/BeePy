@@ -49,6 +49,7 @@ class Py2Sql:
 
         # 获取复合类型的基本类型。
         if Py2Sql.__ANNOTATED_SUPPORTED:
+            # pylint: disable=possibly-used-before-assignment
             if get_origin(python_type) is Annotated:
                 base_type, *annotations = get_args(python_type)
                 if base_type is str:

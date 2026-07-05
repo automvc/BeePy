@@ -17,7 +17,7 @@ class CacheArrayIndex:
                     # 初始化实例变量
                     cls._instance._low = 0  # 低水位线（较旧的数据）
                     cls._instance._high = 0  # 高水位线
-                    cls._instance._know = 0  # 已知超时点
+                    # cls._instance._know = 0  # 已知超时点
                     cls._instance._size = None
                     cls._instance._start_delete_cache_rate = 0.6
                     cls._instance._full_used_rate = 0.9
@@ -55,9 +55,9 @@ class CacheArrayIndex:
     def high(self) -> int:
         return self._high
 
-    @property
-    def know(self) -> int:
-        return self._know
+    # @property
+    # def know(self) -> int:
+    #     return self._know
 
     def get_used_size(self) -> int:
         t = self.high - self.low
@@ -71,6 +71,7 @@ class CacheArrayIndex:
 
     def get_next(self) -> int:
         with self._lock:
+            # pylint: disable=access-member-before-definition
             if self._high >= self._size:
                 self._high = 1
                 return 0

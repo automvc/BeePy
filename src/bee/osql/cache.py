@@ -10,7 +10,8 @@ from bee.osql.index import CacheArrayIndex
 from bee.osql.logger import Logger
 from bee.typing import Array, LongArray
 
-
+# pylint: disable=unsubscriptable-object
+# pylint: disable=unsupported-assignment-operation
 class CacheUtil:
 
     # 一般缓存
