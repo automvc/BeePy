@@ -1,5 +1,6 @@
 import json
 import os
+from typing import Dict
 
 from bee.exception import ConfigBeeException
 from bee.osql.const import DatabaseConst
@@ -65,7 +66,7 @@ class HoneyConfig:
     cache_modify_syn:str = ""
 
     _loaded = False  # 标记是否已加载配置
-    __db_config_data = None
+    __db_config_data:Dict = {}
     __instance = None
 
     def __new__(cls):
@@ -78,8 +79,8 @@ class HoneyConfig:
             cls.__loadConfigInJson(cls)
             if cls.port:
                 cls.port = int(cls.port)
-            if cls.__db_config_data is None:
-                Logger.info("Default loading and init configuration file failed!")
+            if cls.__db_config_data is None or not cls.__db_config_data:
+                Logger.warn("Default loading and init configuration file failed!")
         return cls.__instance
 
     @staticmethod
