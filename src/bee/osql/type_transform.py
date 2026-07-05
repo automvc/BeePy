@@ -44,7 +44,7 @@ class Py2Sql:
                 Py2Sql.__import_check = False
                 Py2Sql.__ANNOTATED_SUPPORTED = False
                 if not hasattr(Py2Sql, '_error_printed'):
-                    print("\033[31m[ERROR] Note: Python's version<=3.8.10 do not support Annotated,get_origin and get_args! \033[0m ")
+                    print("\033[31m[WARN] Note: Python's version<=3.8.10 do not support Annotated, get_origin and get_args! \033[0m ")
                     Py2Sql._error_printed = True  # 设置类变量，标记错误消息已打印
 
         # 获取复合类型的基本类型。
