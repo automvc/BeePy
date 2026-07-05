@@ -5,6 +5,7 @@ from bee.context import HoneyContext
 from bee.exception import ConfigBeeException
 from bee.name.naming_handler import NamingHandler
 from bee.osql.const import DatabaseConst
+from bee.osql.logger import Logger
 from bee.osql.sqlkeyword import K
 from bee.osql.struct import MoreTableStruct
 
@@ -126,6 +127,8 @@ class ParseSqlHelper:
         joins = getattr(entity, "__joins__", None)
         if not isinstance(joins, dict):
             return result
+        
+        Logger.debug(f"The layer is: 1 {HoneyUtil.get_type(entity)}")
 
         for fieldname, meta in joins.items():
             if isinstance(meta, JoinTable):
@@ -142,20 +145,20 @@ class ParseSqlHelper:
                 # print(type_tree)
 
                 
-                sub_type = ", class is: ";
+                sub_type = ", class is: "
                 if moreTableStruct.current_is_list:
-                    sub_type = ", class is List, element type is:";
+                    sub_type = ", class is List, element type is:"
 
-                print(f"The layer is: {layer}{sub_type} {HoneyUtil.get_type(moreTableStruct.sub_class)}, alias is: {moreTableStruct.sub_alias}")
+                Logger.debug(f"The layer is: {layer}{sub_type} {HoneyUtil.get_type(moreTableStruct.sub_class)}, alias is: {moreTableStruct.sub_alias}")
                 
                 old_size = len(result)
-                print(moreTableStruct.has_next_layer)
+                # print(moreTableStruct.has_next_layer)
                 # check One has One
                 ParseSqlHelper._parse_one_has_one(moreTableStruct, result, layer, ptree)
                 new_size = len(result)
                 if new_size > old_size:
                     moreTableStruct.has_next_layer = True  # set for layer 2
-                print(moreTableStruct.has_next_layer)
+                # print(moreTableStruct.has_next_layer)
 
                 # #check One has One
                 # sub_object_or_class=moreTableStruct.sub_object
@@ -190,7 +193,7 @@ class ParseSqlHelper:
             layer = layer + 1
 
             if layer >= 10:
-                print(f"MoreTable do not support the join layer more than {layer}! It will be ignored!")
+                Logger.warn(f"MoreTable do not support the join layer more than {layer}! It will be ignored!")
                 return
 
             for fieldname2, meta2 in joins2.items():
@@ -205,7 +208,7 @@ class ParseSqlHelper:
 
                     if moreTableStruct2.sub_alias in result:
                         # 还要检测 自我查询的情况，是否可以。 todo
-                        print(f"{moreTableStruct2.sub_alias} already exist, will change it to {moreTableStruct2.sub_alias}_1")
+                        Logger.info(f"{moreTableStruct2.sub_alias} already exist, will change it to {moreTableStruct2.sub_alias}_1")
                         moreTableStruct2.sub_alias = moreTableStruct2.sub_alias + "_1"
 
                     current_type_tree = list(current_moreTableStruct.type_tree)
@@ -215,10 +218,10 @@ class ParseSqlHelper:
                     # print(current_type_tree)
 
                     current_ptree.append(moreTableStruct2.sub_alias)
-                    sub_type = ", class is: ";
+                    sub_type = ", class is: "
                     if moreTableStruct2.current_is_list:
-                        sub_type = ", class is List, element type is:";
-                    print(f"The layer is: {layer}{sub_type} {HoneyUtil.get_type(moreTableStruct2.sub_class)}, alias is: {moreTableStruct2.sub_alias}")
+                        sub_type = ", class is List, element type is:"
+                    Logger.debug(f"The layer is: {layer}{sub_type} {HoneyUtil.get_type(moreTableStruct2.sub_class)}, alias is: {moreTableStruct2.sub_alias}")
                     
                     ParseSqlHelper._parse_one_has_one(moreTableStruct2, result, layer, current_ptree)
                 else:
@@ -227,7 +230,7 @@ class ParseSqlHelper:
 
     @staticmethod
     def _getPlaceholder():
-        return HoneyContext.get_placeholder()  # TODO
+        return HoneyContext.get_placeholder()
 
     @staticmethod
     def _getPlaceholderType():
@@ -270,4 +273,11 @@ class ParseSqlHelper:
                 sql += " " + condition_where
                 params = params + values
         return sql, params
+    
+    @staticmethod
+    def _get_joins_fields(entityClass):
+        joins = getattr(entityClass, "__joins__", None)
+        if joins and isinstance(joins, dict):
+            return joins.keys()
+        return None
 

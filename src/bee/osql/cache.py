@@ -121,7 +121,7 @@ class CacheUtil:
         CacheUtil.__init0()
 
         key = CacheUtil.__genKey(sql)
-        table_names = CacheUtil.__get_table_names(sql) #TODO
+        table_names = CacheUtil.__get_table_names(sql) #todo
 
         # 1. 检查是否在set1（从不缓存）
         # if table_name in CacheUtil.__set1:
@@ -176,7 +176,7 @@ class CacheUtil:
         return False
 
     # reg index set to table_dict    table关联它相关的缓存的下标。
-    #TODO
+    #todo
     @staticmethod
     def  __reg_table_indexSet_map(table_names:str, index:int):
         
@@ -223,19 +223,19 @@ class CacheUtil:
                 return None
             
             # // 要是能返回缓存的结果集,说明不用上下文的缓存结构信息了. 可以删
-            # HoneyContext.deleteCacheInfo(sql); TODO
+            # HoneyContext.deleteCacheInfo(sql) todo
             return copy.deepcopy(CacheUtil.__obj[index])  # 返回深拷贝
 
         # 检查永久缓存
         if key in CacheUtil.__set2_exist:
             # // 要是能返回缓存的结果集,说明不用上下文的缓存结构信息了. 可以删
-            # HoneyContext.deleteCacheInfo(sql); TODO
+            # HoneyContext.deleteCacheInfo(sql) todo
             return copy.deepcopy(CacheUtil.__map2.get(key))  # 返回深拷贝
 
         # 检查长久缓存
         if key in CacheUtil.__set3_exist:
             # // 要是能返回缓存的结果集,说明不用上下文的缓存结构信息了. 可以删
-            # HoneyContext.deleteCacheInfo(sql); TODO
+            # HoneyContext.deleteCacheInfo(sql) todo
             return copy.deepcopy(CacheUtil.__map3.get(key))  # 返回深拷贝
 
         return None
@@ -268,7 +268,7 @@ class CacheUtil:
     def __del_one_index(key: str, index: int):
         # 这里可以添加维护表相关索引的逻辑
 
-        table_names = CacheUtil.__key_tableNameList_map[key]  # TODO 11
+        table_names = CacheUtil.__key_tableNameList_map[key]  # todo 11
         for table_name in table_names:
             indexSet = CacheUtil.__table_indexSet_map.get(table_name, None)
             if indexSet:
@@ -285,7 +285,7 @@ class CacheUtil:
 
         CacheUtil.__init0()
         
-        # HoneyContext.deleteCacheInfo(sql);// 要清除cacheStruct TODO
+        # HoneyContext.deleteCacheInfo(sql)// 要清除cacheStruct TODO
 
         table_names = CacheUtil.__get_table_names(sql)  # TODO 11
         for table_name in table_names:

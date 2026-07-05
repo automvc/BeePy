@@ -405,7 +405,7 @@ class ParseCondition:
         #     WHEN department = 'Sales' THEN salary * 1.2
         #     WHEN department = 'HR' THEN salary * 1.1
         #     ELSE salary
-        # END;
+        # END
 
         # UPDATE employees e
         # JOIN departments d ON e.department_id = d.department_id

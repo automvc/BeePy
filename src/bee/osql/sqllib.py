@@ -181,7 +181,7 @@ class BeeSql(AbstractBase):
                             print(mtStruct.has_next_layer)
                             if mtStruct.has_next_layer and mtStruct.sub_alias not in no_obj_layer_set:
                                 no_obj_layer_set.add(mtStruct.sub_alias)
-                                print(f"Not found the value in object {mtStruct.sub_alias}, will ignore it and its sub layers!")
+                                Logger.info(f"Not found the value in object {mtStruct.sub_alias}, will ignore it and its sub layers!")
                             if no_obj_layer is None:
                                 no_obj_layer = mtStruct.layer  # 第一次出现
                                 continue
@@ -224,10 +224,10 @@ class BeeSql(AbstractBase):
                             sub_obj = subObj_cache_dict[mtStruct.sub_alias]
 
                         except KeyError:
-                            print(mtStruct.has_next_layer)
+                            # print(mtStruct.has_next_layer)
                             if mtStruct.has_next_layer and mtStruct.sub_alias not in no_obj_layer_set:
                                 no_obj_layer_set.add(mtStruct.sub_alias)
-                                print(f"Not found the value in object {mtStruct.sub_alias}, will ignore it and its sub layers!")
+                                Logger.info(f"Not found the value in object {mtStruct.sub_alias}, will ignore it and its sub layers!")
                             if no_obj_layer is None:
                                 no_obj_layer = mtStruct.layer  # 第一次出现
                                 continue
@@ -238,7 +238,7 @@ class BeeSql(AbstractBase):
                         current_key1 = "#".join(sub_field_value_str)
                         key1 = key0 + ".." + ptree[0] + "##" + current_key1
 
-                        # ptree不存root,长度会比层数少1; key1只计算到ptree倒数第二层.
+                        # ptree不存root,长度会比层数少1, key1只计算到ptree倒数第二层.
                         loop_n = mtStruct.layer - 2 - 1
                         if loop_n >= 1:
                             for i in range(1, loop_n + 1):
@@ -275,7 +275,6 @@ class BeeSql(AbstractBase):
             current_single_subObject_cache_dict.clear()
             one_to_one_for_two_layer_set.clear()
 
-            # print(rs_list)
             super().loginfo(" | <--  select rows: " + str(len(rs_list)))
             super().addInCache(sql, rs_list, len(rs_list))
 
