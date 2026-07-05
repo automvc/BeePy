@@ -20,8 +20,8 @@ class NameTranslate:
 class UnderScoreAndCamelName(NameTranslate):
     '''
     Python Camel and Databse UnderScore transform.<br>
-    Python<-->DB,eg: orderNo<-->order_no. 
-    
+    Python<-->DB,eg: orderNo<-->order_no.
+
     '''
 
     def toTableName(self, entityName):
@@ -39,18 +39,18 @@ class UnderScoreAndCamelName(NameTranslate):
             return tableName
         naming_to_lower_before = HoneyConfig.naming_to_lower_before
         if naming_to_lower_before:
-            tableName = tableName.lower() 
-        return NameUtil.firstLetterToUpper(NameUtil.toCamelNaming(tableName))  
-    
+            tableName = tableName.lower()
+        return NameUtil.firstLetterToUpper(NameUtil.toCamelNaming(tableName))
+
     def toFieldName(self, columnName):
         if not columnName:
             return columnName
         naming_to_lower_before = HoneyConfig.naming_to_lower_before
         if naming_to_lower_before:
-            columnName = columnName.lower()  
+            columnName = columnName.lower()
         return NameUtil.toCamelNaming(columnName)
-    
-    
+
+
 class OriginalName(NameTranslate):
 
     def toTableName(self, entityName):
@@ -59,8 +59,6 @@ class OriginalName(NameTranslate):
         return NameUtil.firstLetterToLower(entityName)
 
     def toColumnName(self, fieldName):
-        if not fieldName:
-            return fieldName
         return fieldName
 
     def toEntityName(self, tableName):
@@ -69,8 +67,6 @@ class OriginalName(NameTranslate):
         return NameUtil.firstLetterToUpper(tableName)
 
     def toFieldName(self, columnName):
-        if not columnName:
-            return columnName
         return columnName
 
 
@@ -104,17 +100,17 @@ class UpperUnderScoreAndCamelName(UnderScoreAndCamelName):
     '''
 
     def toTableName(self, entityName):
-        return super.toTableName(entityName).upper()
+        return super().toTableName(entityName).upper()
 
     def toColumnName(self, fieldName):
-        return super.toColumnName(fieldName).upper()
-    
+        return super().toColumnName(fieldName).upper()
+
     def toEntityName(self, tableName):
-        # need lower first if the name has upper 
+        # need lower first if the name has upper
         tableName = tableName.lower()
         return NameUtil.firstLetterToUpper(NameUtil.toCamelNaming(tableName))
 
     def toFieldName(self, columnName):
-        # need lower first if the name has upper 
+        # need lower first if the name has upper
         columnName = columnName.lower()  # if not , BEE_NAME->BEENAME  -> ??
         return NameUtil.toCamelNaming(columnName)

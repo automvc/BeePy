@@ -1,8 +1,21 @@
 from bee.name.bloom import BloomFilter
-from bee.typing import Bitmap, LongArray
+from bee.typing import Bitmap, LongArray, Array
 
 
 if __name__ == '__main__':
+    
+    print("------test Array-------start")
+    keys=Array(10)
+    
+    keys[1]="select * from orders"
+    keys[5]="select * from orders5"
+    print(keys[1])
+    print(keys[5])
+    print(keys)
+    
+    print("------test Array-------end")
+    
+    
     print("------test LongArray-------start")
     long_array = LongArray(10)
     long_array[6] = 9223372036854775807

@@ -1,22 +1,22 @@
 # NameUtil.py
 
 
-def getClassName(obj): 
-    return obj.__class__.__name__  
+def getClassName(obj):
+    return obj.__class__.__name__
 
 
-def toUnderscoreNaming(name): 
+def toUnderscoreNaming(name):
     if not name:
         return name
-    result = []  
-    for i, char in enumerate(name): 
-        if char.isupper() and i != 0: 
-            result.append('_')  
-        result.append(char.lower())  
-    return ''.join(result)  
+    result = []
+    for i, char in enumerate(name):
+        if char.isupper() and i != 0:
+            result.append('_')
+        result.append(char.lower())
+    return ''.join(result)
 
 
-def toCamelNaming(name): 
+def toCamelNaming(name):
     if not name:
         return name
     name = name.strip()
@@ -24,21 +24,21 @@ def toCamelNaming(name):
     if  len(parts[0]) == 0:
         parts = parts[1:]
     # print(parts)
-    return parts[0] + ''.join(word.capitalize() for word in parts[1:])  
+    return parts[0] + ''.join(word.capitalize() for word in parts[1:])
 
 
-def firstLetterToUpper(name): 
-    if not name: 
-        return name  
+def firstLetterToUpper(name):
+    if not name:
+        return name
     return name[0].upper() + name[1:]
     # bug testName->Testname
     # return name.capitalize()
 
 
-def firstLetterToLower(name): 
-    if not name: 
-        return name  
-    return name[0].lower() + name[1:]  
+def firstLetterToLower(name):
+    if not name:
+        return name
+    return name[0].lower() + name[1:]
 
 # if __name__=="__main__":
 # #

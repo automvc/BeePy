@@ -1,0 +1,113 @@
+from bee.bee_enum import JoinType
+from bee.honeyfactory import BF
+from bee.anno import JoinTable
+
+import MyConfig
+
+
+# 多对1
+# 3层表
+class Province:
+    """ table province 's entity """
+    id: int = None
+    name: str = None
+    level: int = None
+    remark: str = None
+
+    def __repr__(self):
+        return str(self.__dict__)
+
+
+class City:
+    """ table city 's entity """
+    id: int = None
+    name: str = None
+    level: int = None
+    remark: str = None
+    province_id: int = None
+
+    province:Province = None
+
+    __joins__ = {
+        "province": JoinTable(
+            sub_class = Province,
+            joinType = JoinType.JOIN,
+            main_fields = ["province_id"],
+            sub_fields = ["id"],
+        )
+    }
+
+    def __repr__(self):
+        return str(self.__dict__)
+
+# class Town:
+#     """ table town 's entity """
+#     id: int = None
+#     name: str = None
+#     level: int = None
+#     remark: str = None
+#     city_id: int = None
+#     city:City=None
+#
+#     __joins__ = {
+#         "province": JoinTable(
+#             sub_class = City,
+#             joinType = JoinType.JOIN,
+#             main_fields = ["id"],
+#             sub_fields = ["city_id"],
+#         )
+#     }
+#
+#     def __repr__(self):
+#         return str(self.__dict__)
+#
+# class Village:
+#     """ table village 's entity """
+#     id: int = None
+#     name: str = None
+#     level: int = None
+#     remark: str = None
+#     town_id: int = None
+#
+#     def __repr__(self):
+#         return str(self.__dict__)
+#
+# class Road:
+#     """ table road 's entity """
+#     id: int = None
+#     name: str = None
+#     level: int = None
+#     remark: str = None
+#     village_id: int = None
+#
+#     def __repr__(self):
+#         return str(self.__dict__)
+
+
+if __name__ == '__main__':
+    print("start")
+
+    MyConfig.init()
+
+    # gen = GenBean()
+    # code=gen.get_bean_code("province")
+    # print(code)
+    # code=gen.get_bean_code("city")
+    # print(code)
+    # code=gen.get_bean_code("town")
+    # print(code)
+    # code=gen.get_bean_code("village")
+    # print(code)
+    # code=gen.get_bean_code("road")
+    # print(code)
+
+    city = City()
+    moreTable = BF.moreTable()
+    teaList = moreTable.select(city)  # 查城市信息，每个城市关联它的省份
+
+    print(len(teaList))
+
+    if teaList:
+        for one in teaList:
+            print(one)
+

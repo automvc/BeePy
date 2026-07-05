@@ -15,6 +15,16 @@ https://github.com/automvc/bee
 #### Python 3.x(suggest 3.8.10+)   
 
 ## Feature & Function:  
+
+### **Newest**
+**V1.9.0**  
+1. more table select (One to One)  
+2. update cache for supporting more table  
+3. value of main field & sub field transfer to where condition  
+4. more table select support condition  
+5. more table select support paging  
+6. more table select (One to Many)  
+
 ### **V1.0**  
 1.The framework uses a unified API to operate the database;  
 2.Single table query, modification, addition, and deletion (SUID);  
@@ -96,6 +106,13 @@ eg: condtion.op("num", Op.IN, [1,2]); can support list/set/tuple type
 5. update condition Expression  
 6. support active record style  
 7. use SQL keywords for compatible field name or table name  
+
+**1.6.8(2025.08)**  
+1. enhance the code  
+2. fixed bug  
+  SuidRich:updateBy,  
+  Condition:orderBy2,orderBy2,  
+  HoneyConfig.set_db_config_dict  
 
 Quick Start:
 =========	
@@ -294,5 +311,6 @@ Suid: simple API for Select/Update/Insert/Delete
 SuidRich : select_paging, insert_batch, updateBy, select_first,select_by_id,
 delete_by_id,select_fun,count,exist,create_table,index_normal,unique
 PreparedSql: select, select_dict, modify, modify_dict
+Condition: used to construct complex WHERE, UPDATE statements and so on.
 
 ```

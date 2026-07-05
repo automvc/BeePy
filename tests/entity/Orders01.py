@@ -12,6 +12,7 @@ class Orders:
     _id = None  
     _name = None 
     _remark = None
+    _type = None
     
 
     def __repr__(self):  

@@ -4,9 +4,9 @@ from bee.bee_enum import Op
 
 if __name__ == '__main__':
     # print(type(None))
-    # dbName=None
-    # dbName=""
-    # if not dbName:
+    # dbname=None
+    # dbname=""
+    # if not dbname:
     #     print("not")
     # else:
     #     print("else")

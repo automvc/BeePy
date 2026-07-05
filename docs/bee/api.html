@@ -188,7 +188,7 @@ Other can define with condition. <br></li>
     <a class="headerlink" href="#Suid.update"></a>
     
             <div class="docstring"><p>According to entity object update record(update record by id).This method just has id field to SQL where expression.
-table's entity(do not allow null);id is where condition,do not allow null.<br>
+table's entity(do not allow null). id is where condition,do not allow null.<br>
 The entity corresponding to table and can not be null. <br>
 The ID field of entity cannot be null and as filter condition. <br>
 The not null and not empty field will update to database except ID.</p>
@@ -219,7 +219,7 @@ The ID field of entity cannot be null and as filter condition. <br></li>
     </div>
     <a class="headerlink" href="#Suid.insert"></a>
     
-            <div class="docstring"><p>According to entity object insert record. </p>
+            <div class="docstring"><p>According to entity object insert record.</p>
 
 <h6 id="parameters">Parameters</h6>
 
@@ -255,7 +255,7 @@ The not null and not empty field will insert to database.<br></li>
 
 <ul>
 <li><strong>entity</strong>:  table's entity(do not allow null).</li>
-<li><strong>condition</strong>:  If the field of entity is not null or empty, it will be translate to field=value.Other can define with condition. </li>
+<li><strong>condition</strong>:  If the field of entity is not null or empty, it will be translate to field=value.Other can define with condition.</li>
 </ul>
 
 <h6 id="returns">Returns</h6>
@@ -281,20 +281,20 @@ The not null and not empty field will insert to database.<br></li>
             <div class="docstring"><p>Database operation: Suid (select,update,insert,delete),
 it supports more parameters than Suid.</p>
 
-<p>The SQL UPDATE statement consists of two parts: set and where. SuidRich specifies one of them 
-<br>and tries to use the default implementation method for the other. 
+<p>The SQL UPDATE statement consists of two parts: set and where. SuidRich specifies one of them
+<br>and tries to use the default implementation method for the other.
 <br>Therefore, the update method is divided into two parts:</p>
 
 <p>in the <B>updateBy</B> method, string whereFields (if has) can indicate the field used for WHERE in SQL.
 <br>When whereFields is specified, fields that are not in whereFields will default.
 <br>Convert to the set part of SQL UPDATE statement (null and empty strings are filtered by default).
-<br>If the value of an attribute of the same entity is used in the where part, it is meaningless to use it 
+<br>If the value of an attribute of the same entity is used in the where part, it is meaningless to use it
 <br>in the update set part (because their values are the same at this time)
-<br>However, it can be set by using the set(String fieldName, Number num) and other methods; 
-<br>The method set,setMultiply,setAdd,setWithField of condition is processed before processing the where field, 
+<br>However, it can be set by using the set(String fieldName, Number num) and other methods.
+<br>The method set,setMultiply,setAdd,setWithField of condition is processed before processing the where field,
 <br>so it is not affected by the specified where condition field</p>
 
-<p>The fields set by the Condition of the updateBy methods will be parsed, which is not affected by the updateFields 
+<p>The fields set by the Condition of the updateBy methods will be parsed, which is not affected by the updateFields
 <br>parameter and the whereFields parameter.</p>
 </div>
 
@@ -399,7 +399,7 @@ it supports more parameters than Suid.</p>
 
 <ul>
 <li><strong>entity_class</strong>:  table's entity class(do not allow null).</li>
-<li><strong>id</strong>:  value of entity's id field. </li>
+<li><strong>id</strong>:  value of entity's id field.</li>
 </ul>
 
 <h6 id="returns">Returns</h6>
@@ -517,7 +517,7 @@ it supports more parameters than Suid.</p>
 <h6 id="returns">Returns</h6>
 
 <blockquote>
-  <p>true,if have the record;or return false.</p>
+  <p>true,if have the record, or return false.</p>
 </blockquote>
 </div>
 
@@ -527,7 +527,7 @@ it supports more parameters than Suid.</p>
                                 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">updateBy</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">self</span>,</span><span class="param">	<span class="n">entity</span>,</span><span class="param">	<span class="n">condition</span><span class="p">:</span> <span class="n"><a href="condition.html#Condition">bee.condition.Condition</a></span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="o">*</span><span class="n">whereFields</span></span><span class="return-annotation">):</span></span>
+        <span class="name">updateBy</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">entity</span>, </span><span class="param"><span class="n">condition</span><span class="p">:</span> <span class="n"><a href="condition.html#Condition">bee.condition.Condition</a></span>, </span><span class="param"><span class="o">*</span><span class="n">whereFields</span></span><span class="return-annotation">):</span></span>
 
         
     </div>
@@ -539,10 +539,10 @@ it supports more parameters than Suid.</p>
 
 <ul>
 <li><strong>entity</strong>:  table's entity(do not allow null).
-<br>Fields that are not specified as whereFields, as part of the set(only non empty and non null fields 
+<br>Fields that are not specified as whereFields, as part of the set(only non empty and non null fields
 <br>are processed by default).</li>
 <li><strong>condition</strong>:  Condition as filter the record.</li>
-<li><strong>whereFields</strong>:  As a field list of where part in SQL, multiple fields can separated by commas in one 
+<li><strong>whereFields</strong>:  As a field list of where part in SQL, multiple fields can separated by commas in one
 <br>whereField parameter or use variable parameter (the fields in the list will be used as where filter)
 <br>But if id's value is null can not as filter.
 <br>Notice:the method op of condition also maybe converted to the where expression.</li>
@@ -567,8 +567,8 @@ it supports more parameters than Suid.</p>
     </div>
     <a class="headerlink" href="#SuidRich.create_table"></a>
     
-            <div class="docstring"><p>According to the database table generated by Bean, Bean does not need to configure 
-<br>too much field information. This method only considers the general situation, and is not 
+            <div class="docstring"><p>According to the database table generated by Bean, Bean does not need to configure
+<br>too much field information. This method only considers the general situation, and is not
 <br>recommended if there are detailed requirements.</p>
 
 <h6 id="parameters">Parameters</h6>
@@ -620,7 +620,7 @@ it supports more parameters than Suid.</p>
     </div>
     <a class="headerlink" href="#SuidRich.unique"></a>
     
-            <div class="docstring"><p>create unique index </p>
+            <div class="docstring"><p>create unique index</p>
 
 <h6 id="parameters">Parameters</h6>
 
@@ -681,7 +681,7 @@ it supports more parameters than Suid.</p>
             <div class="docstring"><p>Support sql string with placeholder.The sql statement is really DB's grammar,not object oriented type.
 <br>Support placeholder or #{para} or #{para%} or #{%para} or #{%para%},
 <br>can prevent SQL injection attacks through Preparedstatement
-<p>If possible, it is recommended to use object-oriented operation methods, such as Suid and SuidRich. 
+<p>If possible, it is recommended to use object-oriented operation methods, such as Suid and SuidRich.
 <br>It can use Bee cache to achieve higher query efficiency.</p>
 </div>
 
@@ -706,7 +706,7 @@ it supports more parameters than Suid.</p>
 <li><strong>return_type_class</strong>:  class type for return</li>
 <li><strong>params</strong>:  list type params for placeholder</li>
 <li><strong>start: Start index,min value is 0 or 1(eg</strong>: MySQL is 0,Oracle is 1).</li>
-<li><strong>size</strong>:  Fetch result size (&gt;0).  </li>
+<li><strong>size</strong>:  Fetch result size (&gt;0).</li>
 </ul>
 
 <h6 id="returns">Returns</h6>
@@ -738,7 +738,7 @@ it supports more parameters than Suid.</p>
 <li><strong>return_type_class</strong>:  class type for return</li>
 <li><strong>params_dict</strong>:  dict type params for placeholder</li>
 <li><strong>start: start index, min value is 0 or 1(eg</strong>: MySQL is 0,Oracle is 1).</li>
-<li><strong>size</strong>:  fetch result size (&gt;0).  </li>
+<li><strong>size</strong>:  fetch result size (&gt;0).</li>
 </ul>
 
 <h6 id="returns">Returns</h6>
@@ -761,14 +761,14 @@ it supports more parameters than Suid.</p>
     <a class="headerlink" href="#PreparedSql.modify"></a>
     
             <div class="docstring"><p>Modify database records with update, insert or delete statement.
-It is not recommended because the framework does not know what table has been changed, 
+It is not recommended because the framework does not know what table has been changed,
 <br>which will affect the correctness of the cache and cause the risk of inaccurate cache data.</p>
 
 <h6 id="parameters">Parameters</h6>
 
 <ul>
 <li><strong>sql</strong>:  SQL statement which use placeholder.</li>
-<li><strong>params</strong>:  list type params for placeholder</li>
+<li><strong>params</strong>:  list type params for placeholder.</li>
 </ul>
 
 <h6 id="returns">Returns</h6>
@@ -791,7 +791,7 @@ It is not recommended because the framework does not know what table has been ch
     <a class="headerlink" href="#PreparedSql.modify_dict"></a>
     
             <div class="docstring"><p>Modify database records with update, insert or delete statement.
-It is not recommended because the framework does not know what table has been changed, 
+It is not recommended because the framework does not know what table has been changed,
 <br>which will affect the correctness of the cache and cause the risk of inaccurate cache data.</p>
 
 <h6 id="parameters">Parameters</h6>

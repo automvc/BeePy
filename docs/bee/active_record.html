@@ -103,22 +103,25 @@
     </div>
     <a class="headerlink" href="#BaseMode"></a>
     
-            <div class="docstring"><p>BaseMode for active record type.
-e.g.
-class Orders(BaseMode):</p>
+            <div class="docstring"><p>BaseMode for active record type.</p>
 
-<h1 id="__tablename__-orders">__tablename__ = "orders"</h1>
+<p>eg:</p>
 
-<p>id:int = None<br />
-name:str = None 
-remark:str = None</p>
+<div class="pdoc-code codehilite">
+<pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Orders</span><span class="p">(</span><span class="n">BaseMode</span><span class="p">):</span>
+<span class="c1">#__tablename__ = &quot;orders&quot;</span>
+<span class="nb">id</span><span class="p">:</span><span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">name</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">remark</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
 
-<p>def __repr__(self): 
-    return  str(self.__dict__)</p>
+<span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span>  <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
 
-<p>if __name__ == '__main__':<br />
-    orders = Orders()
-    orderList=orders.select()</p>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">orders</span> <span class="o">=</span> <span class="n">Orders</span><span class="p">()</span>
+    <span class="n">orderList</span><span class="o">=</span><span class="n">orders</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+</code></pre>
+</div>
 </div>
 
 
@@ -133,7 +136,7 @@ remark:str = None</p>
     <a class="headerlink" href="#BaseMode.update"></a>
     
             <div class="docstring"><p>According to entity object update record(update record by id).This method just has id field to SQL where expression.
-table's entity(do not allow null);id is where condition,do not allow null.<br>
+table's entity(do not allow null). id is where condition,do not allow null.<br>
 The entity corresponding to table and can not be null. <br>
 The ID field of entity cannot be null and as filter condition. <br>
 The not null and not empty field will update to database except ID.</p>
@@ -157,7 +160,7 @@ The not null and not empty field will update to database except ID.</p>
     </div>
     <a class="headerlink" href="#BaseMode.insert"></a>
     
-            <div class="docstring"><p>According to entity object insert record. 
+            <div class="docstring"><p>According to entity object insert record.
 The entity corresponding to table and can not be null. <br>
 The not null and not empty field will insert to database.<br></p>
 
@@ -215,7 +218,7 @@ Other can define with condition. <br></li>
 <h6 id="parameters">Parameters</h6>
 
 <ul>
-<li><strong>condition</strong>:  If the field of entity is not null or empty, it will be translate to field=value.Other can define with condition. </li>
+<li><strong>condition</strong>:  If the field of entity is not null or empty, it will be translate to field=value.Other can define with condition.</li>
 </ul>
 
 <h6 id="returns">Returns</h6>
@@ -292,7 +295,7 @@ Other can define with condition. <br></li>
 <h6 id="parameters">Parameters</h6>
 
 <ul>
-<li><strong>id</strong>:  value of entity's id field. </li>
+<li><strong>id</strong>:  value of entity's id field.</li>
 </ul>
 
 <h6 id="returns">Returns</h6>
@@ -396,7 +399,7 @@ Other can define with condition. <br></li>
 <h6 id="returns">Returns</h6>
 
 <blockquote>
-  <p>true,if have the record;or return false.</p>
+  <p>true,if have the record, or return false.</p>
 </blockquote>
 </div>
 
@@ -406,7 +409,7 @@ Other can define with condition. <br></li>
                                 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">updateBy</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">condition</span><span class="p">:</span> <span class="n"><a href="condition.html#Condition">bee.condition.Condition</a></span> <span class="o">=</span> <span class="kc">None</span>, </span><span class="param"><span class="o">*</span><span class="n">whereFields</span></span><span class="return-annotation">):</span></span>
+        <span class="name">updateBy</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">condition</span><span class="p">:</span> <span class="n"><a href="condition.html#Condition">bee.condition.Condition</a></span>, </span><span class="param"><span class="o">*</span><span class="n">whereFields</span></span><span class="return-annotation">):</span></span>
 
         
     </div>
@@ -418,7 +421,7 @@ Other can define with condition. <br></li>
 
 <ul>
 <li><strong>condition</strong>:  Condition as filter the record.</li>
-<li><strong>whereFields</strong>:  As a field list of where part in SQL, multiple fields can separated by commas in one 
+<li><strong>whereFields</strong>:  As a field list of where part in SQL, multiple fields can separated by commas in one
 <br>whereField parameter or use variable parameter (the fields in the list will be used as where filter)
 <br>But if id's value is null can not as filter.
 <br>Notice:the method op of condition also maybe converted to the where expression.</li>

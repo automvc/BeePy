@@ -11,7 +11,6 @@ from entity.Test import Test
 from entity.full import Entity
 
 
-# from bee.util import HoneyUtil
 if __name__ == '__main__':
 
     # create_sql=HoneyUtil.get_create_sql(Entity)

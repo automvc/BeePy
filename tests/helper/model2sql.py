@@ -7,11 +7,13 @@ class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)  
     type_id = db.Column(db.Integer)  
     type_id2 = db.Column(db.SMALLINT)
+    type = db.Column(db.Text)
     name = db.Column(db.String(64), unique=True)  
     name2 = db.Column(db.String(), unique=True)  
     remark = db.Column(db.Text)  
-    price = db.Column(db.Numeric(10, 2), nullable = False)  # 非空  
-    price2 = db.Column(db.DECIMAL(10, 3), nullable = False)  # 非空  
+    price = db.Column(db.Numeric(10, 2), nullable = True)  # 非空  
+    # price2 = db.Column(db.DECIMAL(10, 3), nullable = False)  # 非空  
+    price2 = db.Column(db.DECIMAL(10, 3), nullable = True)
     order_number = db.Column(db.BigInteger, unique = True)  # 唯一值  
     flage = db.Column(db.Boolean)
     
@@ -39,7 +41,7 @@ class Users(db.Model):
 if __name__=='__main__':
     
     print("start")
-    PreConfig.config_path="E:\\BeePy\\tests\\resources"
+    PreConfig.config_path="E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc\\tests\\resources"
     
     try:
         db.create_all(True)

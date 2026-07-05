@@ -13,6 +13,7 @@ class Orders8:
     id:int = None  
     name:str = None 
     remark:str = None
+    type:str = None
 
     def __repr__(self): 
         return  str(self.__dict__)

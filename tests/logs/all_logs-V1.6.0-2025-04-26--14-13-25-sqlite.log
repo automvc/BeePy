@@ -8,7 +8,7 @@ INFO - 脚本 exam\BatchInsertTest.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> drop table SQL: DROP TABLE IF EXISTS student2
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
 [INFO]  [Bee]========  | <--  Affected rows: -1
@@ -30,7 +30,7 @@ INFO - 脚本 exam\BatchInsertTest2.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> drop table SQL: DROP TABLE IF EXISTS orders
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
 [INFO]  [Bee]========  | <--  Affected rows: -1
@@ -51,7 +51,7 @@ INFO - 脚本 exam\BatchInsertTest3.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, type, remark from orders
 [INFO]  [Bee] sql>>> params: []
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -73,7 +73,7 @@ INFO - 脚本 exam\BatchInsertTest4.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> insert batch SQL: insert into student3 (id, name, age, remark, addr) values (?, ?, ?, ?, ?)
 [INFO]  [Bee] sql>>> params: [(None, 'bee', 20, 'bee', None), (None, 'bee1', 22, 'bee1', ''), (None, '黄二', 21, None, ''), (None, '张三', 21, None, '')]
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -85,7 +85,7 @@ INFO - 脚本 exam\SuidTest1.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, type, remark from orders where name = ?
 [INFO]  [Bee] sql>>> params: ['bee']
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -104,7 +104,7 @@ INFO - 脚本 exam\SuidTest10.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, age, remark, addr from student2
 [INFO]  [Bee] sql>>> params: []
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -123,7 +123,7 @@ INFO - 脚本 exam\SuidTest11Page.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select_paging SQL: select id, name from test where name = ? limit 10 offset 0
 [INFO]  [Bee] sql>>> params: ['bee']
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -139,7 +139,7 @@ INFO - 脚本 exam\SuidTest12_insert.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> insert SQL: insert into test (name) values (?)
 [INFO]  [Bee] sql>>> params: ['bee12']
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -155,7 +155,7 @@ INFO - 脚本 exam\SuidTest13_insert.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> insert SQL: insert into orders (name, remark) values (?, ?)
 [INFO]  [Bee] sql>>> params: ['bee13', 'test']
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -171,7 +171,7 @@ INFO - 脚本 exam\SuidTest32_update_delete.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> update SQL: update orders set name = ?, remark = ? where id = ?
 [INFO]  [Bee] sql>>> params: ['bee130', 'test', 10002]
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -190,7 +190,7 @@ INFO - 开始运行脚本: exam\SuidTest4.py
 INFO - 脚本 exam\SuidTest4.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 {'_id': None, '_name': 'bee', '_remark': None}
 start
 [INFO]  [Bee] sql>>> select SQL: select name, remark, id from orders where name = ?
@@ -203,7 +203,7 @@ INFO - 开始运行脚本: exam\SuidTest42.py
 INFO - 脚本 exam\SuidTest42.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 start
 [INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders
 [INFO]  [Bee] sql>>> params: []
@@ -219,7 +219,7 @@ INFO - 脚本 exam\SuidTest6.py 输出:
 {'id': 100001, 'name': 'Bee(ORM Framework)', 'price': 29.99, 'quantity': 5, 'customer_id': 123, 'order_date': '2023-10-01', 'status': 'Shipped', 'shipping_address': '123 Main St', 'payment_method': 'Credit Card', 'note': 'Leave at the front door'}
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 {'name': 'bee', 'remark': 'test'}
 {'name': 'bee', 'remark': 'test'}
 [INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders where name = ? and remark = ?
@@ -232,7 +232,7 @@ INFO - 脚本 exam15\BatchInsertTest2.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> drop table SQL: DROP TABLE IF EXISTS orders
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
 [INFO]  [Bee]========  | <--  Affected rows: -1
@@ -253,7 +253,7 @@ INFO - 脚本 exam15\ByIdTest.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select by id SQL: select id, name, type, remark from orders where id = ?
 [INFO]  [Bee] sql>>> params: [1]
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -269,7 +269,7 @@ INFO - 脚本 exam15\DdlTest.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, type, remark from orders
 [INFO]  [Bee] sql>>> params: []
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -280,13 +280,13 @@ INFO - 脚本 exam15\DdlTest2.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 INFO - 开始运行脚本: exam15\DdlTest3.py
 INFO - 脚本 exam15\DdlTest3.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> drop table SQL: DROP TABLE IF EXISTS orders_202501
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
 [INFO]  [Bee]========  | <--  Affected rows: -1
@@ -306,7 +306,7 @@ INFO - 脚本 exam15\DdlTest4.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> drop table SQL: DROP TABLE IF EXISTS orders_202501
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
 [INFO]  [Bee]========  | <--  Affected rows: -1
@@ -334,7 +334,7 @@ INFO - 脚本 exam15\DdlTest5.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> drop table SQL: DROP TABLE IF EXISTS orders_202501
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
 [INFO]  [Bee]========  | <--  Affected rows: -1
@@ -363,7 +363,7 @@ INFO - 开始运行脚本: exam15\PreTest.py
 INFO - 脚本 exam15\PreTest.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 -------------------
 [INFO]  [Bee] sql>>> select SQL(PreparedSql): select * from orders
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -381,7 +381,7 @@ INFO - 开始运行脚本: exam15\PreTest2.py
 INFO - 脚本 exam15\PreTest2.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 -------------------
 [INFO]  [Bee] sql>>> select SQL(PreparedSql): SELECT * FROM orders WHERE name=? and id=? and name=?
 [INFO]  [Bee] sql>>> params: ['bee1', 4, 'bee1']
@@ -394,7 +394,7 @@ INFO - 开始运行脚本: exam15\PreTest3.py
 INFO - 脚本 exam15\PreTest3.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 -------------------
 [INFO]  [Bee] sql>>> select SQL(PreparedSql): SELECT * FROM orders WHERE name=? and id=? and name=?
 [INFO]  [Bee] sql>>> params: ['bee1', 4, 'bee1']
@@ -425,7 +425,7 @@ INFO - 开始运行脚本: exam15\PreTest4_test_placeholder.py
 INFO - 脚本 exam15\PreTest4_test_placeholder.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 -------------------
 [INFO]  [Bee] sql>>> modify SQL(PreparedSql): update orders set name = ?, remark = ? where id = ?
 [INFO]  [Bee] sql>>> params: ['bee130', 'test-update', 1]
@@ -442,7 +442,7 @@ INFO - 脚本 exam15\SelectFun.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, type, remark from orders
 [INFO]  [Bee] sql>>> params: []
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -475,7 +475,7 @@ INFO - 脚本 exam15\SuidTest1.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select_paging SQL: select id, name, type, remark from orders where name = ? limit 1 offset 0
 [INFO]  [Bee] sql>>> params: ['bee']
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -487,7 +487,7 @@ INFO - 脚本 exam16\bugTest.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 empty result
 empty result
 INFO - 开始运行脚本: exam16\cacheTest.py
@@ -495,7 +495,7 @@ INFO - 脚本 exam16\cacheTest.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, type, remark from orders where id = ? and name = ?
 [INFO]  [Bee] sql>>> params: [1, 'bee']
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -516,7 +516,7 @@ INFO - 脚本 exam16\cacheTest2.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, type, remark from orders where id = ? and name = ?
 [INFO]  [Bee] sql>>> params: [1, 'bee']
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -532,7 +532,7 @@ INFO - 脚本 exam16\cacheTest3.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, type, remark from orders where id = ? and name = ?
 [INFO]  [Bee] sql>>> params: [1, 'bee']
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -551,7 +551,7 @@ INFO - 脚本 exam16\cacheTest4.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, type, remark from orders where id = ? and name = ?
 [INFO]  [Bee] sql>>> params: [0, 'bee']
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -602,7 +602,7 @@ INFO - 脚本 exam16\conditionTest.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [DEBUG]  [Bee]======== The name is 'count(*)asremark' , does not conform to naming conventions!
 [INFO]  [Bee] sql>>> select SQL: select name,count(*) as remark from student2 where name != ? group by name having min(age) >= ? and max(age) < ? order by name
 [INFO]  [Bee] sql>>> params: ['bee1', 21, 30]
@@ -614,7 +614,7 @@ INFO - 脚本 exam16\conditionTest2.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, age, remark, addr from student2
 [INFO]  [Bee] sql>>> params: []
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -633,7 +633,7 @@ INFO - 脚本 exam16\conditionTest3_paging.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, age, remark, addr from student2 where addr is null limit 10 offset 10
 [INFO]  [Bee] sql>>> params: []
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -656,7 +656,7 @@ INFO - 脚本 exam16\conditionTest4_delete.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, age, remark, addr from student2 where addr is null
 [INFO]  [Bee] sql>>> params: []
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -680,7 +680,7 @@ INFO - 脚本 exam16\conditionTest5_update.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, age, remark, addr from student2 where addr is null
 [INFO]  [Bee] sql>>> params: []
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -698,7 +698,7 @@ INFO - 脚本 exam16\conditionTest5_update1.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, age, remark, addr from student2 where age = ? and addr is null
 [INFO]  [Bee] sql>>> params: [11]
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -716,7 +716,7 @@ INFO - 脚本 exam16\conditionTest5_update2.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, age, remark, addr from student2 where remark = ? and addr is null
 [INFO]  [Bee] sql>>> params: ['']
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -736,7 +736,7 @@ INFO - 脚本 exam16\conditionTest5_update3.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, age, remark, addr from student2 where age = ? and remark = ? and addr is null
 [INFO]  [Bee] sql>>> params: [12, '']
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -754,7 +754,7 @@ INFO - 脚本 exam16\conditionTest5_update4.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, age, remark, addr from student2 where addr = ? and age between ? and ?
 [INFO]  [Bee] sql>>> params: ['use new addr', 10, 15]
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -772,7 +772,7 @@ INFO - 脚本 exam16\conditionTest5_update4_3.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, age, remark, addr from student3 where addr = ? and age between ? and ?
 [INFO]  [Bee] sql>>> params: ['', 20, 21]
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -803,7 +803,7 @@ INFO - 脚本 exam16\conditionTest5_update5.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, age, remark, addr from student2
 [INFO]  [Bee] sql>>> params: []
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -826,7 +826,7 @@ INFO - 脚本 exam16\conditionTest5_update6.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, age, remark, addr from student2 where age = ? and addr = ?
 [INFO]  [Bee] sql>>> params: [10, 'use new addr']
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -845,7 +845,7 @@ INFO - 脚本 exam16\conditionTest5_update7.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, age, remark, addr from student2 where age = ? and addr = ? and remark = ?
 [INFO]  [Bee] sql>>> params: [10, 'use new addr', '']
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -863,7 +863,7 @@ INFO - 脚本 exam16\conditionTest5_update8.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> updateBy SQL: update student2 set addr = ? where age = ? and name is null
 [INFO]  [Bee] sql>>> params: ['use new addr', 10]
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -878,7 +878,7 @@ INFO - 脚本 exam16\config_test.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 -----------------
 1000
 end
@@ -886,7 +886,7 @@ INFO - 开始运行脚本: exam16\Create.py
 INFO - 脚本 exam16\Create.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> drop table SQL: DROP TABLE IF EXISTS orders
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
 [INFO]  [Bee]========  | <--  Affected rows: -1
@@ -909,7 +909,7 @@ INFO - 脚本 exam16\full_type.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 <class 'dict'>
 {'name': 'full-type-test', 'name2': 'name2', 'flag': True, 'price': 3.12, 'descstr': 'desc', 'remark': 'remark', 'modify_date': datetime.datetime(2025, 4, 26, 14, 13, 53, 888463), 'updated_time': datetime.time(12, 34, 59), 'created_at': datetime.datetime(2025, 4, 26, 14, 13, 53, 888463), 'map': {'name': 'John', 'age': 12}, 'list0': [1, 2, 3, 'a', 4, 5], 'tuple0': (1, 2, 3, 'b', 4, '5'), 'set0': '', 'map1': {'name': 'John', 'age': 12}, 'list1': [1, 2, 3, 'a', 4, 5], 'tuple1': (1, 2, 3, 'b', 4, '5'), 'set1': {1, 2, 3, 4, 'c', '5'}, 'ext': 'ext'}
 {'__module__': 'entity.full', '__annotations__': {'id': <class 'int'>, 'name': <class 'str'>, 'name4': <bee.typing.String object at 0x000002940EBB5700>, 'name5': <class 'bee.typing.String'>, 'price': <class 'float'>, 'created_at': <class 'datetime.datetime'>, 'updated_time': <class 'datetime.time'>, 'flag': <class 'bool'>, 'set0': <class 'set'>, 'map': <class 'dict'>, 'list0': <class 'list'>, 'list1': typing.List, 'tuple0': <class 'tuple'>, 'descstr': <class 'str'>, 'modify_date': <class 'datetime.date'>, 'updated_at2': <class 'datetime.date'>, 'set1': typing.Set, 'map1': typing.Dict, 'tuple1': typing.Tuple, 'ttt': <class 'bytes'>}, 'id': None, 'name': None, 'price': None, 'flag': None, 'set0': None, 'map': None, 'list0': None, 'list1': None, 'remark': None, 'tuple0': None, 'descstr': None, 'set1': None, 'map1': None, 'tuple1': None, 'ttt': None, '__repr__': <function Entity.__repr__ at 0x000002940EBCA340>, '__dict__': <attribute '__dict__' of 'Entity' objects>, '__weakref__': <attribute '__weakref__' of 'Entity' objects>, '__doc__': None}
@@ -926,7 +926,7 @@ INFO - 脚本 exam16\full_type2.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 <class 'dict'>
 [INFO]  [Bee] sql>>> insert SQL: insert into entity (name, flag, price, descstr, remark, modify_date, updated_time, created_at, map) values (?, ?, ?, ?, ?, ?, ?, ?, ?)
 [INFO]  [Bee] sql>>> params: ['full-type-test', True, 3.12, 'desc', 'remark', datetime.datetime(2025, 4, 26, 14, 13, 54, 65844), '12:34:59', datetime.datetime(2025, 4, 26, 14, 13, 54, 65844), '{"name": "John", "age": 12}']
@@ -945,7 +945,7 @@ INFO - 脚本 exam16\full_type3.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> insert batch SQL: insert into entity (id, name, name4, name5, price, created_at, updated_time, flag, set0, map, list0, list1, remark, tuple0, descstr, modify_date, updated_at2, set1, map1, tuple1, ttt) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 [INFO]  [Bee] sql>>> params: [(None, 'full-type-test', None, None, 3.12, datetime.datetime(2025, 4, 26, 14, 13, 54, 233944), '12:34:59', True, None, None, None, None, 'remark', None, 'desc', datetime.datetime(2025, 4, 26, 14, 13, 54, 233944), None, None, None, None, None), (None, 'full-type-test', None, None, 3.12, datetime.datetime(2025, 4, 26, 14, 13, 54, 233944), '12:34:59', True, None, None, None, None, 'remark', None, 'desc', datetime.datetime(2025, 4, 26, 14, 13, 54, 233944), None, None, None, None, None)]
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -962,7 +962,7 @@ INFO - 脚本 exam16\full_type4.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> insert batch SQL: insert into entity (id, name, name4, name5, price, created_at, updated_time, flag, set0, map, list0, list1, remark, tuple0, descstr, modify_date, updated_at2, set1, map1, tuple1, ttt) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 [INFO]  [Bee] sql>>> params: [(None, 'full-type-test', None, None, 3.12, datetime.datetime(2025, 4, 26, 14, 13, 54, 432293), '12:34:59', False, '', '{"name": "John", "age": 12}', '[1, 2, 3, "a", 4, 5]', '[1, 2, 3, "a", 4, 5]', 'remark', '[1, 2, 3, "b", 4, "5"]', 'desc', datetime.datetime(2025, 4, 26, 14, 13, 54, 432293), None, '[1, 2, 3, 4, "c", "5"]', '{"name": "John", "age": 12}', '[1, 2, 3, "b", 4, "5"]', None), (None, 'full-type-test', None, None, 3.12, datetime.datetime(2025, 4, 26, 14, 13, 54, 432293), '12:34:59', True, None, None, None, None, 'remark', None, 'desc', datetime.datetime(2025, 4, 26, 14, 13, 54, 432293), None, None, None, None, None)]
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -984,14 +984,14 @@ INFO - 脚本 exam16\genBeanTest.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 finished
 INFO - 开始运行脚本: exam16\namingTest.py
 INFO - 脚本 exam16\namingTest.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> drop table SQL: DROP TABLE IF EXISTS testName
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
 [INFO]  [Bee]========  | <--  Affected rows: -1
@@ -1048,7 +1048,7 @@ INFO - 脚本 exam16\select_someFields_paging.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name from orders where name = ? limit 2 offset 0
 [INFO]  [Bee] sql>>> params: ['bee']
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -1059,7 +1059,7 @@ INFO - 脚本 exam16\SuidTest1.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, type, remark from orders where name = ?
 [INFO]  [Bee] sql>>> params: ['bee']
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -1073,7 +1073,7 @@ INFO - 脚本 exam16\SuidTest2.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, age, remark, addr from student2 where name != ? and age between ? and ?
 [INFO]  [Bee] sql>>> params: ['bee1', 20, 28]
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -1109,7 +1109,7 @@ INFO - 脚本 exam16\SuidTest6.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders where name = ?
 [INFO]  [Bee] sql>>> params: ['bee']
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
@@ -1127,7 +1127,7 @@ INFO - 脚本 helper\model2sql.py 输出:
 [INFO]  [Bee]======== Bee Version is: 1.6.0
 start
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee] sql>>> modify SQL(PreparedSql): DROP TABLE IF EXISTS Orders2
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
 [INFO]  [Bee]========  | <--  Affected rows: -1
@@ -1215,7 +1215,7 @@ INFO - 脚本 other\readme.py 输出:
 [INFO]  [Bee] sql>>> select SQL: select id, name, remark from orders
 [INFO]  [Bee] sql>>> params: []
 [DEBUG]  [Bee]======== HoneyConfig instance...
-[INFO]  [Bee]======== Loading config file: E:\JavaWeb\eclipse-workspace202312\BeePy-automvc\tests\resources\bee.properties
+[INFO]  [Bee]======== Loading config file: E:\BeePy\tests\resources\bee.properties
 [INFO]  [Bee]======== Database driver use sqlite3 for SQLite
 [INFO]  [Bee]========  | <--  select rows: 0
 [INFO]  [Bee] sql>>> insert SQL: insert into orders (id, name, remark) values (?, ?, ?)

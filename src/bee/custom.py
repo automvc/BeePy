@@ -1,15 +1,18 @@
 
 
 class Custom:
+    '''
+    Custom interface. User can define by self.
+    '''
 
-    @staticmethod 
+    @staticmethod
     def custom_pk_statement():
         '''
         return custom primary key statement.
         '''
         return "int(11)"
         # raise NotImplementedError
-    
+
     @staticmethod
     def custom_to_page_sql(sql, start, size):
         '''
@@ -19,7 +22,7 @@ class Custom:
         :param size: fetch result size (>0).
         '''
         raise NotImplementedError
-    
+
     @staticmethod
     def custom_get_fetch_bean_sql(dbname):
         '''

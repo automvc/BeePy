@@ -8,8 +8,8 @@ from entity.Orders import Orders
 if __name__ == '__main__':
     print("start")
     
-    config = {  
-        # 'dbName':'MySQL',
+    config = {
+        # 'dbname':'MySQL',
         'host': 'localhost',  # 数据库主机  
         'user': 'root',  # 替换为您的 MySQL 用户名  
         'password': '',  # 替换为您的 MySQL 密码  

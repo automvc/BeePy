@@ -12,7 +12,8 @@ class Orders3:
     __tablename__="orders"
     id = None  
     name = None
-    remark="test" 
+    remark="test"
+    # type = None 
     
     # __pk__="name"
     # __pk__="id"

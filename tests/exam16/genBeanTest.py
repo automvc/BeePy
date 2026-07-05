@@ -13,10 +13,11 @@ if __name__ == '__main__':
     MyConfig.init()
     
     gen = GenBean()
-    # gen.gen_bean("test_name") 
+    # code=gen.get_bean_code("test_name") 
+    # print(code)
     
-    path="E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc\\tests"
-    # gen.gen_and_write_bean("test_name", path)
+    path="E:\\BeePy\\tests"
+    gen.gen_and_write_bean("test_name", path)
     
     # #test custom add fetch_bean_sql
     # sql="SELECT column_name col, data_type type, nullable ynNull, data_default defaultValue, data_length strLen  FROM user_tab_columns  WHERE table_name = UPPER('{table_name}') ORDER BY column_id"
