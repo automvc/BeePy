@@ -689,7 +689,7 @@ class MoreObjToSQL:
                     # no pk, no need to rewrite paging sql
                     if not pk:
                         # raise SqlBeeException("by id, bean should has id field or need set the pk field name with __pk__")
-                        Logger.warn(str(type(entity)) + " have not primary key.")
+                        Logger.warn(str(type(entity)) + " no primary key.")
                         need_rewrite_paging_sql = False
 
             # 如果需要改写，则进一步优化, 对于可以不改写也能准确分页的，则没必要改写，以提高查询效率。
