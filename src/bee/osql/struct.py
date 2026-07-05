@@ -81,7 +81,7 @@ class MoreTableStruct:
     layer:int = 0
     ptree = None
     type_tree = None
-    
+
     overall:MoreTableStructOverall = None  # just the first element have it.
 
     def __init__(self, join_meta: JoinTable, fieldname:str, entity, layer:int, ptree, has_next_layer:bool = None, main_alias:str = None, overall:MoreTableStructOverall = None):
@@ -109,7 +109,7 @@ class MoreTableStruct:
         if join_meta.is_list:
             self.current_is_list = join_meta.is_list
             if overall:
-                overall.has_any_sublist_entity=True
+                overall.has_any_sublist_entity = True
             # 若是空list,改为None
             if not self.sub_object:
                 self.sub_object = None
@@ -123,7 +123,7 @@ class MoreTableStruct:
                     raise ConfigBeeException(f"JoinTable setting is inconsistent, is_list {join_meta.is_list}, but the attribute type is list or List")
                 self.current_is_list = True
                 if overall:
-                    overall.has_any_sublist_entity=True
+                    overall.has_any_sublist_entity = True
 
         if not join_meta.sub_alias:
             self.sub_alias = HoneyUtil.get_table_name_by_class(join_meta.sub_class)

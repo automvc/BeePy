@@ -431,7 +431,7 @@ class MoreObjSQL(AbstractCommOperate):
 
     def select(self, entity, condition: Condition = None):
         # return: list which contains more than one entity.
-        
+
         if not entity:
             return None
 
@@ -451,7 +451,7 @@ class MoreObjSQL(AbstractCommOperate):
             raise BeeException(e)
         finally:
             super().doBeforeReturn(list_r)
-            
+
     @overload
     def select_paging(self, entity, start, size):
         ...
@@ -490,10 +490,10 @@ class MoreObjSQL(AbstractCommOperate):
     def insert(self, entity):
         if not entity:
             return None
-        
+
         Logger.warn("MoreTable insert is developing...")
         raise BeeException("Do not support insert in MoreTable this version!")
-        
+
         # try:
         #     super().doBeforePasreEntity(entity, SuidType.INSERT)
         #     sql, params, table_name = self.moreObjToSQL.toInsertSQL(entity)

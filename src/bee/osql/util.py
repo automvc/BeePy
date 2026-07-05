@@ -115,7 +115,7 @@ class HoneyUtil:
     def get_table_name_by_class(clazz):
         # clazz = obj.__class__
         temp_name = getattr(clazz, '__tablename__', None)
-        # temp_name  
+        # temp_name
         if temp_name and not temp_name.isspace():
             return temp_name.strip()
         class_name = clazz.__name__
@@ -259,7 +259,7 @@ class HoneyUtil:
 
         # none_type_set=set(A)-set(B)
         # 复合类型  complex_type_set
-        ext = set(B) - set(A)    #两个类型是一样的吗？
+        ext = set(B) - set(A)  # 两个类型是一样的吗？
 
         if not ext:
             for f in A:
@@ -311,8 +311,8 @@ class HoneyUtil:
             # modify_date DATE,
             # updated_at2 DATE,
             # descstr VARCHAR(255)
-        #print("-----1111------")
-        #print(new_map)
+        # print("-----1111------")
+        # print(new_map)
         return new_map
 
     @staticmethod

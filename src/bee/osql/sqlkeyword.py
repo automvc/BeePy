@@ -420,8 +420,7 @@ class LowerKey(SqlKeyWord):
 
 class K:
     __sql_keywords = None
-    
-    
+
     @staticmethod
     def __is_sql_key_word_upper():
         if HoneyConfig.sql_key_word_case:

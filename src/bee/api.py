@@ -17,7 +17,7 @@ class Suid:
     @overload
     def select(self, entity):
         ...
-        
+
     def select(self, entity, condition: Condition = None):
         '''
         Select the records according to entity and condition.<br>
@@ -245,7 +245,7 @@ class MoreTable:
         :return: list which contains more than one entity.<br>
         '''
         return self.__moreTable.select(entity, condition)
-    
+
     @overload
     def select_paging(self, entity, start, size):
         ...

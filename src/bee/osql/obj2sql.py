@@ -15,6 +15,7 @@ from bee.osql.sqlkeyword import K
 from bee.osql.parsesql_helper import ParseSqlHelper
 from bee.osql.util import HoneyUtil
 
+
 class ObjToSQL:
 
     def toSelectSQL(self, entity):
@@ -519,7 +520,7 @@ class ObjToSQL:
 
         for field_name, field_type in field_and_type.items():
             column_name = NamingHandler.toColumnName(field_name)
-            if join_fields_set and column_name in join_fields_set: #1.9.0
+            if join_fields_set and column_name in join_fields_set:  # 1.9.0
                 continue
             sql_type = HoneyUtil.python_type_to_sql_type(field_type)
             temp_sql = f"{column_name} {sql_type}"
@@ -593,7 +594,7 @@ class MoreObjToSQL:
 
     def __toColumns(self, classField):
         return [NamingHandler.toColumnName(field) for field in classField]
-    
+
     def __addAliasForColumns(self, columnName, main_table):
         # 不是主表的字段，要加别名
         cols = []
@@ -605,7 +606,7 @@ class MoreObjToSQL:
                 continue
             cols.append(f"{fld} '{fld}'")
 
-        return cols 
+        return cols
 
     def __appendWhere(self, sql, params, entityFilter, conditionStruct):
         return ParseSqlHelper._appendWhere(sql, params, entityFilter, conditionStruct)
@@ -623,7 +624,7 @@ class MoreObjToSQL:
         fieldAndValue, classField = ParseSqlHelper._getKeyValue_classField_for_moretable(entity)
         table_name = HoneyUtil.get_table_name(entity)
 
-        return self.__build_more_select_sql(table_name, classField, fieldAndValue,entity, moreTableStructDict, condition)
+        return self.__build_more_select_sql(table_name, classField, fieldAndValue, entity, moreTableStructDict, condition)
 
     def __build_more_select_sql(self, table_name, classField, entityFilter, entity, moreTableStructDict = None, condition = None):
         if not classField:
@@ -681,16 +682,16 @@ class MoreObjToSQL:
                 # 4.没有一对多
                 if moreTableStructOverall and not moreTableStructOverall.has_any_sublist_entity:
                     need_rewrite_paging_sql = False
-                    
+
                 else:
                     # pk = HoneyUtil.get_pk_by_class(entity_class)
                     pk = HoneyUtil.get_pk(entity)
-                    #no pk, no need to rewrite paging sql
+                    # no pk, no need to rewrite paging sql
                     if not pk:
                         # raise SqlBeeException("by id, bean should has id field or need set the pk field name with __pk__")
                         Logger.warn(str(type(entity)) + " have not primary key.")
                         need_rewrite_paging_sql = False
-        
+
             # 如果需要改写，则进一步优化, 对于可以不改写也能准确分页的，则没必要改写，以提高查询效率。
             # 以下为伪代码，需转成具体实现
             # // 可以自动判断，决定是否进行准确分页改写；
@@ -746,7 +747,7 @@ class MoreObjToSQL:
             sub_columns = self.__toColumns(subClassField)  # 考虑多表的字段
 
             if not isDefineColumns:
-                #没有定义字段，则将字段放入full_columns
+                # 没有定义字段，则将字段放入full_columns
                 for col in sub_columns:
                     if sub_table_num == 1 and col not in columns_set:
                         # full_columns.extend(pre_sub_columns)
@@ -824,7 +825,7 @@ class MoreObjToSQL:
             pk = NamingHandler.toColumnName(pk)
             pagingRewriteSql.append(".")
             pagingRewriteSql.append(pk)
-            
+
             pagingRewriteSql.append(" from ")
             pagingRewriteSql.append(table_name)
             pagingRewriteSql.append(sql2)

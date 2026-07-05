@@ -222,9 +222,9 @@ class ConditionImpl(Condition):
             exp = Expression(value = fields, op_num = 20)
             self.expressions.append(exp)
         return self
-    
+
     def selectFun(self, functionType:FunctionType, fieldForFun:str, alias:str):
-        
+
         pass
 
     def start(self, start:int) -> 'ConditionImpl':

@@ -127,7 +127,7 @@ class ParseSqlHelper:
         joins = getattr(entity, "__joins__", None)
         if not isinstance(joins, dict):
             return result
-        
+
         Logger.debug(f"The layer is: 1 {HoneyUtil.get_type(entity)}")
 
         for fieldname, meta in joins.items():
@@ -144,13 +144,12 @@ class ParseSqlHelper:
                 moreTableStruct.type_tree = type_tree
                 # print(type_tree)
 
-                
                 sub_type = ", class is: "
                 if moreTableStruct.current_is_list:
                     sub_type = ", class is List, element type is:"
 
                 Logger.debug(f"The layer is: {layer}{sub_type} {HoneyUtil.get_type(moreTableStruct.sub_class)}, alias is: {moreTableStruct.sub_alias}")
-                
+
                 old_size = len(result)
                 # print(moreTableStruct.has_next_layer)
                 # check One has One
@@ -222,7 +221,7 @@ class ParseSqlHelper:
                     if moreTableStruct2.current_is_list:
                         sub_type = ", class is List, element type is:"
                     Logger.debug(f"The layer is: {layer}{sub_type} {HoneyUtil.get_type(moreTableStruct2.sub_class)}, alias is: {moreTableStruct2.sub_alias}")
-                    
+
                     ParseSqlHelper._parse_one_has_one(moreTableStruct2, result, layer, current_ptree)
                 else:
                     sub_class = HoneyUtil.get_type(sub_object_or_class)
@@ -273,7 +272,7 @@ class ParseSqlHelper:
                 sql += " " + condition_where
                 params = params + values
         return sql, params
-    
+
     @staticmethod
     def _get_joins_fields(entityClass):
         joins = getattr(entityClass, "__joins__", None)

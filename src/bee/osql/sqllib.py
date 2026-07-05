@@ -150,17 +150,17 @@ class BeeSql(AbstractBase):
             current_subObject_list_cache_dict = {}  # main_key#sub_fieldname : [subObject]    # 对象list缓存
             current_single_subObject_cache_dict = {}  # main_key#sub_fieldname : subObject    #单个对象缓存
             one_to_one_for_two_layer_set = set()
-            no_obj_layer_set= set()
+            no_obj_layer_set = set()
 
             for row in results:
                 # 将行数据映射到新创建的实体对象
                 # str2_cache_dict sub_field_value_str_cache_dict
-                #subObj_cache_dict reutrn_subObject_cache_dict
+                # subObj_cache_dict reutrn_subObject_cache_dict
                 # transform_result3
                 main_obj, main_key, str2_cache_dict, subObj_cache_dict = \
                 ResultUtil.transform_result3(row, column_names, entityClass, moreTableStructDict)
                 no_obj_layer = None
-                
+
                 if not moreTableStructDict or not subObj_cache_dict:
                     rs_list.append(main_obj)
                     continue
@@ -174,7 +174,7 @@ class BeeSql(AbstractBase):
                         if sub_field_value_str:
                             current_key1 = "#".join(sub_field_value_str)
                         layer_key = key0 + ".." + ptree[0] + "##" + current_key1
-                        
+
                         try:
                             sub_obj = subObj_cache_dict[mtStruct.sub_alias]
                         except KeyError:
@@ -207,15 +207,15 @@ class BeeSql(AbstractBase):
                                     # pass #已经存在，则不用放。
                         else:  # not list
                             setattr(main_obj, mtStruct.fieldname, sub_obj)
-                            current_single_subObject_cache_dict[layer_key] = sub_obj #fixed
-                            
+                            current_single_subObject_cache_dict[layer_key] = sub_obj  # fixed
+
                             if key0 not in one_to_one_for_two_layer_set:
                                 rs_list.append(main_obj)  # 第二层为1时，每行只需要添加一次
                                 one_to_one_for_two_layer_set.add(key0)
                             # one has one时，第三层会找不到第二层的缓存；  因非list,第二层没放缓存。  是通过将三级子对象设置到二级子对象的属性完成对象关联的
 
                     elif mtStruct.layer >= 3:
-                        
+
                         if no_obj_layer is not None and mtStruct.layer > no_obj_layer:
                             continue  # 若该层没有数据返回，则直接不处理它的子类了，不能断层。
                         else:
@@ -265,7 +265,7 @@ class BeeSql(AbstractBase):
                                         current_subObject_list_cache_dict[key1].append(sub_obj)
                             else:
                                 setattr(subObj_cache_dict[mtStruct.main_alias], mtStruct.fieldname, sub_obj)
-                                current_single_subObject_cache_dict[layer_key] = sub_obj #fixed
+                                current_single_subObject_cache_dict[layer_key] = sub_obj  # fixed
                         else:
                             if not mtStruct.current_is_list:
                                 setattr(subObj_cache_dict[mtStruct.main_alias], mtStruct.fieldname, sub_obj)

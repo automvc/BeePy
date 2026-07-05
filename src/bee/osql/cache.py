@@ -101,7 +101,7 @@ class CacheUtil:
 
     @staticmethod
     def __is_tablenames_in_set(table_names, target_set):
-        #当list的table_names的元素都在set时，才返回True
+        # 当list的table_names的元素都在set时，才返回True
         if table_names:
             if isinstance(table_names, str):
                 return table_names in target_set
@@ -121,7 +121,7 @@ class CacheUtil:
         CacheUtil.__init0()
 
         key = CacheUtil.__genKey(sql)
-        table_names = CacheUtil.__get_table_names(sql) #todo
+        table_names = CacheUtil.__get_table_names(sql)  # todo
 
         # 1. 检查是否在set1（从不缓存）
         # if table_name in CacheUtil.__set1:
@@ -143,7 +143,7 @@ class CacheUtil:
                 CacheUtil.__set3_exist.add(key)
                 CacheUtil.__map3[key] = rs
 
-                CacheUtil.__reg_map3_table_keySet(table_names, key) #TODO
+                CacheUtil.__reg_map3_table_keySet(table_names, key)  # TODO
             return True
 
         if(CacheUtil.__cacheArrayIndex.is_would_be_full()):
@@ -167,19 +167,19 @@ class CacheUtil:
             CacheUtil.__keys[index] = key
             CacheUtil.__time[index] = Tool.currentMilliseconds()
 
-            CacheUtil.__key_tableNameList_map[key] = table_names  #TODO
+            CacheUtil.__key_tableNameList_map[key] = table_names  # TODO
 
-            CacheUtil.__reg_table_indexSet_map(table_names, index) #TODO
+            CacheUtil.__reg_table_indexSet_map(table_names, index)  # TODO
 
             return True
 
         return False
 
     # reg index set to table_dict    table关联它相关的缓存的下标。
-    #todo
+    # todo
     @staticmethod
     def  __reg_table_indexSet_map(table_names:str, index:int):
-        
+
         for table_name in table_names:
             indexSet = CacheUtil.__table_indexSet_map.get(table_name, None)
             if indexSet:
@@ -221,7 +221,7 @@ class CacheUtil:
                     CacheUtil.__del_one_cache(index)
 
                 return None
-            
+
             # // 要是能返回缓存的结果集,说明不用上下文的缓存结构信息了. 可以删
             # HoneyContext.deleteCacheInfo(sql) todo
             return copy.deepcopy(CacheUtil.__obj[index])  # 返回深拷贝
@@ -280,11 +280,11 @@ class CacheUtil:
         clear result by sql.
         :param sql: SQL statement.
         '''
-        
-        #通过modify sql，更新了数据；所以与该modify sql相关表的缓存都要清除，避免有脏数据。
+
+        # 通过modify sql，更新了数据；所以与该modify sql相关表的缓存都要清除，避免有脏数据。
 
         CacheUtil.__init0()
-        
+
         # HoneyContext.deleteCacheInfo(sql)// 要清除cacheStruct TODO
 
         table_names = CacheUtil.__get_table_names(sql)  # TODO 11
@@ -398,7 +398,6 @@ class CacheUtil:
 #     original_cached_result1_permanent = CacheUtil.get(sql1)
 #     print("Original permanent cached result for sql1:", original_cached_result1_permanent)
 
-
 # if __name__ == "__main__":
 #     # 测试场景1：所有表名都在集合中 → 返回 True
 #     print(CacheUtil._CacheUtil__is_tablenames_in_set(["user", "role"], {"user", "role", "dept"})) # True
@@ -418,4 +417,4 @@ class CacheUtil:
 #
 #     print(CacheUtil._CacheUtil__is_tablenames_in_set("dept", {"user", "role", "dept"}))
 #
-#     print(CacheUtil._CacheUtil__is_tablenames_in_set("", {"user", "role", "dept"})) 
+#     print(CacheUtil._CacheUtil__is_tablenames_in_set("", {"user", "role", "dept"}))
