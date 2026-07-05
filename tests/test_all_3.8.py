@@ -31,7 +31,7 @@ if __name__ == '__main__':
         
         now_str = datetime.now().strftime("%Y-%m-%d--%H-%M-%S")
         
-        # PreConfig.config_path="E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc\\tests\\resources"
+        # PreConfig.config_path="E:\\xxxx\\workspace2026-2\\BeePy-automvc\\tests\\resources"
         # HoneyConfig() # how to call first time
         
         dbname = HoneyContext.get_dbname()

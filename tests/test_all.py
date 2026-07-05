@@ -1,16 +1,19 @@
 from datetime import datetime
-import glob 
-import logging  
+import glob
+import logging
 import os
-import subprocess  
+import subprocess
 import sys  # 导入 sys 模块
 
-from bee.version import Version
 from bee.context import HoneyContext
+from bee.version import Version
+
+# import MyConfig
 
 
 # from pathlib import Path  
 if __name__ == '__main__':  
+    # MyConfig.init()
     try:  
         # 定义文件夹路径  
         log_directory = 'logs'  
