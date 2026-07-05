@@ -1,8 +1,10 @@
+from bee.api import SuidRich
 from bee.bee_enum import JoinType
 from bee.honeyfactory import BF
-from bee.anno import JoinTable
 
 import MyConfig
+from bee.anno import JoinTable
+
 
 # one to many, layer is 4.
 # 一对多，4层表
@@ -93,7 +95,7 @@ if __name__ == '__main__':
     print("start")
 
     MyConfig.init()
-
+    
     province = Province()
     moreTable = BF.moreTable()
     # mylist = moreTable.select_paging(province, 0, 1)

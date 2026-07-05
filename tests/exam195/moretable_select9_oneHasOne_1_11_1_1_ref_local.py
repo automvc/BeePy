@@ -120,7 +120,7 @@ if __name__ == '__main__':
     # code=gen.get_bean_code("clazz") 
     # print(code)
     
-    path="E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc\\tests\\exam195"
+    path="E:\\JavaWeb\\workspace2026-2\\BeePy-automvc\\tests\\exam195"
     
     # gen.gen_and_write_bean("province", path)
     # gen.gen_and_write_bean("city", path)

@@ -1,8 +1,10 @@
+from bee.api import SuidRich
 from bee.bee_enum import JoinType
 from bee.honeyfactory import BF
-from bee.anno import JoinTable
 
 import MyConfig
+from bee.anno import JoinTable
+
 
 # many to one, layer is 3.
 # 多对1
@@ -91,6 +93,13 @@ if __name__ == '__main__':
     print("start")
 
     MyConfig.init()
+    
+    # suidRich = SuidRich()
+    # suidRich.create_table(Province, True)
+    # suidRich.create_table(City, True)
+    # suidRich.create_table(Town, True)
+    # suidRich.create_table(Village, True)
+    # suidRich.create_table(Road, True)
 
     city = City()
     moreTable = BF.moreTable()
