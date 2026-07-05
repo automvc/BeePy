@@ -515,10 +515,13 @@ class ObjToSQL:
 
         unique_key_set = HoneyUtil.get_unique_key(cls)
         not_null_filels_set = HoneyUtil.get_not_null_filels(cls)
+        join_fields_set = ParseSqlHelper._get_joins_fields(cls)
 
         for field_name, field_type in field_and_type.items():
-            sql_type = HoneyUtil.python_type_to_sql_type(field_type)
             column_name = NamingHandler.toColumnName(field_name)
+            if join_fields_set and column_name in join_fields_set: #1.9.0
+                continue
+            sql_type = HoneyUtil.python_type_to_sql_type(field_type)
             temp_sql = f"{column_name} {sql_type}"
             if unique_key_set and field_name in unique_key_set:
                 temp_sql += UNIQUE_STR
@@ -667,10 +670,10 @@ class MoreObjToSQL:
                 # 1. 有分组
                 if conditionStruct.has_group:
                     need_rewrite_paging_sql = False
-                # 2.有聚合查询; 不需要分页改写;
+                # 2.有聚合查询 不需要分页改写
 
                 # 3. 无分页
-                # return (start != null && start > 1) || (size != null && size > 0);
+                # return (start != null && start > 1) || (size != null && size > 0)
                 elif  not ((conditionStruct.start and conditionStruct.start > 1)  or  (conditionStruct.size and conditionStruct.size > 0)):
                     need_rewrite_paging_sql = False
 
@@ -685,10 +688,10 @@ class MoreObjToSQL:
                     #no pk, no need to rewrite paging sql
                     if not pk:
                         # raise SqlBeeException("by id, bean should has id field or need set the pk field name with __pk__")
-                        Logger.warn(str(type(entity)) + " have not primary key.");
+                        Logger.warn(str(type(entity)) + " have not primary key.")
                         need_rewrite_paging_sql = False
         
-            # 如果需要改写，则进一步优化;对于可以不改写也能准确分页的，则没必要改写，以提高查询效率。
+            # 如果需要改写，则进一步优化, 对于可以不改写也能准确分页的，则没必要改写，以提高查询效率。
             # 以下为伪代码，需转成具体实现
             # // 可以自动判断，决定是否进行准确分页改写；
             # // 需要改写分页sql，进行以下判断，看是否是真的需要改写
