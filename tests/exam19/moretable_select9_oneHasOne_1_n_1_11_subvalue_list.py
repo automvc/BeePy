@@ -1,9 +1,11 @@
+from bee.api import SuidRich
 from bee.bee_enum import JoinType
 from bee.honeyfactory import BF
 from bee.osql.gen import GenBean
-from bee.anno import JoinTable
 
 import MyConfig
+from bee.anno import JoinTable
+
 
 #support join 4 layer.
 # --clazz
@@ -129,11 +131,18 @@ if __name__ == '__main__':
     # code=gen.get_bean_code("clazz") 
     # print(code)
     
-    path="E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc\\tests\\exam19"
+    path="E:\\JavaWeb\\workspace2026-2\\BeePy-automvc\\tests\\exam19"
     
     # gen.gen_and_write_bean("clazz", path)
     # gen.gen_and_write_bean("student", path)
     # gen.gen_and_write_bean("hobby", path)
+    
+    # suidRich = SuidRich()
+    # suidRich.create_table(Hobby, True)
+    # suidRich.create_table(Student, True)
+    # suidRich.create_table(Sub_hobby, True)
+    # suidRich.create_table(Clazz, True)
+    # suidRich.create_table(Clazz_place, True)
     
     clazz = Clazz()
     clazz.name = 'Class1'

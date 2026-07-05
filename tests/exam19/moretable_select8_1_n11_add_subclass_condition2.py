@@ -1,14 +1,15 @@
 from typing import List
 
+from bee.api import SuidRich
 from bee.bee_enum import JoinType
 from bee.honeyfactory import BF
 from bee.osql.gen import GenBean
-from bee.anno import JoinTable
 
 import MyConfig
+from bee.anno import JoinTable
+
 
 # test One to Many
-
 class Hobby:
     """ table hobby 's entity """
     id: int = None
@@ -118,13 +119,19 @@ if __name__ == '__main__':
     # code=gen.get_bean_code("clazz") 
     # print(code)
     
-    path="E:\\JavaWeb\\eclipse-workspace202312\\BeePy-automvc\\tests\\exam19"
+    path="E:\\JavaWeb\\workspace2026-2\\BeePy-automvc\\tests\\exam19"
     
     # gen.gen_and_write_bean("clazz", path)
     # gen.gen_and_write_bean("student", path)
     # gen.gen_and_write_bean("hobby", path)
     # gen.gen_and_write_bean("clazz_place", path)
     # gen.gen_and_write_bean("sch_district", path)
+    
+    # suidRich = SuidRich()
+    # suidRich.create_table(Sch_district, True)
+    # suidRich.create_table(Student, True)
+    # suidRich.create_table(Clazz, True)
+    # suidRich.create_table(Clazz_place, True)
     
     clazz = Clazz()
     clazz.name = 'Class1'

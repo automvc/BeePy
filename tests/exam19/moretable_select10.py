@@ -62,6 +62,9 @@ if __name__ == '__main__':
     # gen = GenBean()
     # code=gen.get_bean_code("s")
     # print(code)
+    
+    # suidRich = BF.suidRich()
+    # suidRich.create_table(S, True)
 
     s = S()
     s.sname = "WANG"
@@ -73,6 +76,7 @@ if __name__ == '__main__':
     teaList = moreTable.select(s)
 
     # suidRich = BF.suidRich()
+    # suidRich.create_table(S, True)
     # assigncourse = Assigncourse()
     # assigncourse.teacherno = 1
     # assigncourse.remark2 = "new remark2"

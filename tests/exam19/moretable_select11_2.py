@@ -59,6 +59,8 @@ if __name__ == '__main__':
     # code=gen.get_bean_code("s") 
     # print(code)
     
+    
+    
     s=A()
     s.sname="WANG"
 

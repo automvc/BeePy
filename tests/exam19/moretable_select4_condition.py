@@ -1,13 +1,14 @@
+from bee.api import SuidRich
 from bee.bee_enum import JoinType
 from bee.honeyfactory import BF
-from bee.anno import JoinTable
 
 import MyConfig
+from bee.anno import JoinTable
+
 
 #多表查询支持使用子表的条件
 #value of main field & sub field transfer to where condition
 #子表使用别名
-
 class Teacher:
     classno = None
     term = None
