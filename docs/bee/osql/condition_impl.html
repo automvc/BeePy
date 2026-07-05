@@ -105,6 +105,9 @@
                         <li>
                                 <a class="variable" href="#ConditionStruct.has_for_update">has_for_update</a>
                         </li>
+                        <li>
+                                <a class="variable" href="#ConditionStruct.has_group">has_group</a>
+                        </li>
                 </ul>
 
             </li>
@@ -190,6 +193,9 @@
                                 <a class="function" href="#ConditionImpl.selectField">selectField</a>
                         </li>
                         <li>
+                                <a class="function" href="#ConditionImpl.selectFun">selectFun</a>
+                        </li>
+                        <li>
                                 <a class="function" href="#ConditionImpl.start">start</a>
                         </li>
                         <li>
@@ -203,6 +209,12 @@
                         </li>
                         <li>
                                 <a class="function" href="#ConditionImpl.getSuidType">getSuidType</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#ConditionImpl.do_not_rewrite_paging_sql">do_not_rewrite_paging_sql</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#ConditionImpl.isDoNotRewritePagingSql">isDoNotRewritePagingSql</a>
                         </li>
                         <li>
                                 <a class="function" href="#ConditionImpl.setAdd">setAdd</a>
@@ -420,7 +432,7 @@
                             <div id="ConditionStruct.__init__" class="classattr">
                                 <div class="attr function">
             
-        <span class="name">ConditionStruct</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">where</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">pv</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n"><a href="#PreparedValue">PreparedValue</a></span><span class="p">]</span>,</span><span class="param">	<span class="n">values</span><span class="p">:</span> <span class="n">List</span>,</span><span class="param">	<span class="n">suidType</span><span class="p">:</span> <span class="n"><a href="../bee_enum.html#SuidType">bee.bee_enum.SuidType</a></span>,</span><span class="param">	<span class="n">whereFields</span><span class="p">:</span> <span class="n">Set</span>,</span><span class="param">	<span class="n">selectFields</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">start</span><span class="p">:</span> <span class="nb">int</span>,</span><span class="param">	<span class="n">size</span><span class="p">:</span> <span class="nb">int</span>,</span><span class="param">	<span class="n">has_for_update</span><span class="p">:</span> <span class="nb">bool</span></span>)</span>
+        <span class="name">ConditionStruct</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">where</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">pv</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n"><a href="#PreparedValue">PreparedValue</a></span><span class="p">]</span>,</span><span class="param">	<span class="n">values</span><span class="p">:</span> <span class="n">List</span>,</span><span class="param">	<span class="n">suidType</span><span class="p">:</span> <span class="n"><a href="../bee_enum.html#SuidType">bee.bee_enum.SuidType</a></span>,</span><span class="param">	<span class="n">whereFields</span><span class="p">:</span> <span class="n">Set</span>,</span><span class="param">	<span class="n">selectFields</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">start</span><span class="p">:</span> <span class="nb">int</span>,</span><span class="param">	<span class="n">size</span><span class="p">:</span> <span class="nb">int</span>,</span><span class="param">	<span class="n">has_for_update</span><span class="p">:</span> <span class="nb">bool</span>,</span><span class="param">	<span class="n">has_group</span><span class="p">:</span> <span class="nb">bool</span></span>)</span>
 
         
     </div>
@@ -524,6 +536,17 @@
         
     </div>
     <a class="headerlink" href="#ConditionStruct.has_for_update"></a>
+    
+    
+
+                            </div>
+                            <div id="ConditionStruct.has_group" class="classattr">
+                                <div class="attr variable">
+            <span class="name">has_group</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ConditionStruct.has_group"></a>
     
     
 
@@ -854,6 +877,19 @@ having(FunctionType.MIN, "field", Op.ge, 60)-->having min(field)&gt;=60</p>
     
 
                             </div>
+                            <div id="ConditionImpl.selectFun" class="classattr">
+                                <div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">selectFun</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">self</span>,</span><span class="param">	<span class="n">functionType</span><span class="p">:</span> <span class="n"><a href="../bee_enum.html#FunctionType">bee.bee_enum.FunctionType</a></span>,</span><span class="param">	<span class="n">fieldForFun</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">alias</span><span class="p">:</span> <span class="nb">str</span></span><span class="return-annotation">):</span></span>
+
+        
+    </div>
+    <a class="headerlink" href="#ConditionImpl.selectFun"></a>
+    
+    
+
+                            </div>
                             <div id="ConditionImpl.start" class="classattr">
                                 <div class="attr function">
             
@@ -915,6 +951,32 @@ having(FunctionType.MIN, "field", Op.ge, 60)-->having min(field)&gt;=60</p>
         
     </div>
     <a class="headerlink" href="#ConditionImpl.getSuidType"></a>
+    
+    
+
+                            </div>
+                            <div id="ConditionImpl.do_not_rewrite_paging_sql" class="classattr">
+                                <div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">do_not_rewrite_paging_sql</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">do_not_rewrite</span><span class="p">:</span> <span class="nb">bool</span></span><span class="return-annotation">) -> <span class="n"><a href="../condition.html#Condition">bee.condition.Condition</a></span>:</span></span>
+
+        
+    </div>
+    <a class="headerlink" href="#ConditionImpl.do_not_rewrite_paging_sql"></a>
+    
+    
+
+                            </div>
+                            <div id="ConditionImpl.isDoNotRewritePagingSql" class="classattr">
+                                <div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">isDoNotRewritePagingSql</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="nb">bool</span>:</span></span>
+
+        
+    </div>
+    <a class="headerlink" href="#ConditionImpl.isDoNotRewritePagingSql"></a>
     
     
 

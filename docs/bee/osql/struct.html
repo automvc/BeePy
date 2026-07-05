@@ -93,6 +93,69 @@
                 </ul>
 
             </li>
+            <li>
+                    <a class="class" href="#MoreTableStructOverall">MoreTableStructOverall</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#MoreTableStructOverall.__init__">MoreTableStructOverall</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MoreTableStructOverall.has_any_sublist_entity">has_any_sublist_entity</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#MoreTableStruct">MoreTableStruct</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#MoreTableStruct.__init__">MoreTableStruct</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MoreTableStruct.joinType">joinType</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MoreTableStruct.sub_class">sub_class</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MoreTableStruct.main_fields">main_fields</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MoreTableStruct.sub_fields">sub_fields</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MoreTableStruct.sub_alias">sub_alias</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MoreTableStruct.main_alias">main_alias</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MoreTableStruct.fieldname">fieldname</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MoreTableStruct.sub_object">sub_object</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MoreTableStruct.current_is_list">current_is_list</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MoreTableStruct.has_next_layer">has_next_layer</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MoreTableStruct.layer">layer</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MoreTableStruct.ptree">ptree</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MoreTableStruct.type_tree">type_tree</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MoreTableStruct.overall">overall</a>
+                        </li>
+                </ul>
+
+            </li>
     </ul>
 
 
@@ -129,7 +192,7 @@
                             <div id="CacheSuidStruct.__init__" class="classattr">
                                 <div class="attr function">
             
-        <span class="name">CacheSuidStruct</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">sql</span>, </span><span class="param"><span class="n">params</span>, </span><span class="param"><span class="n">tableNames</span>, </span><span class="param"><span class="n">returnType</span>, </span><span class="param"><span class="n">entityClass</span>, </span><span class="param"><span class="n">suidType</span><span class="o">=</span><span class="kc">None</span></span>)</span>
+        <span class="name">CacheSuidStruct</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">sql</span>, </span><span class="param"><span class="n">params</span>, </span><span class="param"><span class="n">returnType</span>, </span><span class="param"><span class="n">entityClass</span>, </span><span class="param"><span class="n">suidType</span>, </span><span class="param"><span class="n">tableNames</span></span>)</span>
 
         
     </div>
@@ -151,7 +214,7 @@
                             </div>
                             <div id="CacheSuidStruct.tableNames" class="classattr">
                                 <div class="attr variable">
-            <span class="name">tableNames</span><span class="annotation">: str</span>
+            <span class="name">tableNames</span><span class="annotation">: list[str]</span>
 
         
     </div>
@@ -335,6 +398,239 @@
         
     </div>
     <a class="headerlink" href="#TableMeta.scale"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="MoreTableStructOverall">
+                    <div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">MoreTableStructOverall</span>:
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStructOverall"></a>
+    
+    
+
+                            <div id="MoreTableStructOverall.__init__" class="classattr">
+                                <div class="attr function">
+            
+        <span class="name">MoreTableStructOverall</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">has_any_sublist_entity</span></span>)</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStructOverall.__init__"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreTableStructOverall.has_any_sublist_entity" class="classattr">
+                                <div class="attr variable">
+            <span class="name">has_any_sublist_entity</span>        =
+<span class="default_value">False</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStructOverall.has_any_sublist_entity"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="MoreTableStruct">
+                    <div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">MoreTableStruct</span>:
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStruct"></a>
+    
+            <div class="docstring"><p>More table struct for join table use in internal.
+<B>since  1.9.0</B><br></p>
+</div>
+
+
+                            <div id="MoreTableStruct.__init__" class="classattr">
+                                <div class="attr function">
+            
+        <span class="name">MoreTableStruct</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">join_meta</span><span class="p">:</span> <span class="n"><a href="../anno.html#JoinTable">bee.anno.JoinTable</a></span>,</span><span class="param">	<span class="n">fieldname</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">entity</span>,</span><span class="param">	<span class="n">layer</span><span class="p">:</span> <span class="nb">int</span>,</span><span class="param">	<span class="n">ptree</span>,</span><span class="param">	<span class="n">has_next_layer</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">main_alias</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">overall</span><span class="p">:</span> <span class="n"><a href="#MoreTableStructOverall">MoreTableStructOverall</a></span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStruct.__init__"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreTableStruct.joinType" class="classattr">
+                                <div class="attr variable">
+            <span class="name">joinType</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStruct.joinType"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreTableStruct.sub_class" class="classattr">
+                                <div class="attr variable">
+            <span class="name">sub_class</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStruct.sub_class"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreTableStruct.main_fields" class="classattr">
+                                <div class="attr variable">
+            <span class="name">main_fields</span><span class="annotation">: List[str]</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStruct.main_fields"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreTableStruct.sub_fields" class="classattr">
+                                <div class="attr variable">
+            <span class="name">sub_fields</span><span class="annotation">: List[str]</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStruct.sub_fields"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreTableStruct.sub_alias" class="classattr">
+                                <div class="attr variable">
+            <span class="name">sub_alias</span><span class="annotation">: str</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStruct.sub_alias"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreTableStruct.main_alias" class="classattr">
+                                <div class="attr variable">
+            <span class="name">main_alias</span><span class="annotation">: str</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStruct.main_alias"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreTableStruct.fieldname" class="classattr">
+                                <div class="attr variable">
+            <span class="name">fieldname</span><span class="annotation">: str</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStruct.fieldname"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreTableStruct.sub_object" class="classattr">
+                                <div class="attr variable">
+            <span class="name">sub_object</span><span class="annotation">: Optional[Any]</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStruct.sub_object"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreTableStruct.current_is_list" class="classattr">
+                                <div class="attr variable">
+            <span class="name">current_is_list</span><span class="annotation">: bool</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStruct.current_is_list"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreTableStruct.has_next_layer" class="classattr">
+                                <div class="attr variable">
+            <span class="name">has_next_layer</span><span class="annotation">: bool</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStruct.has_next_layer"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreTableStruct.layer" class="classattr">
+                                <div class="attr variable">
+            <span class="name">layer</span><span class="annotation">: int</span>        =
+<span class="default_value">0</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStruct.layer"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreTableStruct.ptree" class="classattr">
+                                <div class="attr variable">
+            <span class="name">ptree</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStruct.ptree"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreTableStruct.type_tree" class="classattr">
+                                <div class="attr variable">
+            <span class="name">type_tree</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStruct.type_tree"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreTableStruct.overall" class="classattr">
+                                <div class="attr variable">
+            <span class="name">overall</span><span class="annotation">: <a href="#MoreTableStructOverall">MoreTableStructOverall</a></span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreTableStruct.overall"></a>
     
     
 

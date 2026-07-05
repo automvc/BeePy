@@ -31,30 +31,6 @@
             <h2>API Documentation</h2>
                 <ul class="memberlist">
             <li>
-                    <a class="class" href="#FunctionType">FunctionType</a>
-                            <ul class="memberlist">
-                        <li>
-                                <a class="variable" href="#FunctionType.MAX">MAX</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#FunctionType.MIN">MIN</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#FunctionType.SUM">SUM</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#FunctionType.AVG">AVG</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#FunctionType.COUNT">COUNT</a>
-                        </li>
-                        <li>
-                                <a class="function" href="#FunctionType.get_name">get_name</a>
-                        </li>
-                </ul>
-
-            </li>
-            <li>
                     <a class="class" href="#SuidType">SuidType</a>
                             <ul class="memberlist">
                         <li>
@@ -83,6 +59,54 @@
                         </li>
                         <li>
                                 <a class="function" href="#SuidType.get_name">get_name</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#JoinType">JoinType</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#JoinType.JOIN">JOIN</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#JoinType.LEFT_JOIN">LEFT_JOIN</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#JoinType.RIGHT_JOIN">RIGHT_JOIN</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#JoinType.FULL_JOIN">FULL_JOIN</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#JoinType.WHERE">WHERE</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#JoinType.get_name">get_name</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#FunctionType">FunctionType</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#FunctionType.MAX">MAX</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#FunctionType.MIN">MIN</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#FunctionType.SUM">SUM</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#FunctionType.AVG">AVG</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#FunctionType.COUNT">COUNT</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#FunctionType.get_name">get_name</a>
                         </li>
                 </ul>
 
@@ -153,6 +177,9 @@
                         <li>
                                 <a class="variable" href="#LocalType.CacheSuidStruct">CacheSuidStruct</a>
                         </li>
+                        <li>
+                                <a class="variable" href="#LocalType.MoreTableStruct">MoreTableStruct</a>
+                        </li>
                 </ul>
 
             </li>
@@ -177,92 +204,6 @@
                 
                 
             </section>
-                <section id="FunctionType">
-                    <div class="attr class">
-            
-    <span class="def">class</span>
-    <span class="name">FunctionType</span><wbr>(<span class="base">enum.Enum</span>):
-
-        
-    </div>
-    <a class="headerlink" href="#FunctionType"></a>
-    
-    
-
-                            <div id="FunctionType.MAX" class="classattr">
-                                <div class="attr variable">
-            <span class="name">MAX</span>        =
-<span class="default_value">&lt;<a href="#FunctionType.MAX">FunctionType.MAX</a>: &#39;max&#39;&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#FunctionType.MAX"></a>
-    
-    
-
-                            </div>
-                            <div id="FunctionType.MIN" class="classattr">
-                                <div class="attr variable">
-            <span class="name">MIN</span>        =
-<span class="default_value">&lt;<a href="#FunctionType.MIN">FunctionType.MIN</a>: &#39;min&#39;&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#FunctionType.MIN"></a>
-    
-    
-
-                            </div>
-                            <div id="FunctionType.SUM" class="classattr">
-                                <div class="attr variable">
-            <span class="name">SUM</span>        =
-<span class="default_value">&lt;<a href="#FunctionType.SUM">FunctionType.SUM</a>: &#39;sum&#39;&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#FunctionType.SUM"></a>
-    
-    
-
-                            </div>
-                            <div id="FunctionType.AVG" class="classattr">
-                                <div class="attr variable">
-            <span class="name">AVG</span>        =
-<span class="default_value">&lt;<a href="#FunctionType.AVG">FunctionType.AVG</a>: &#39;avg&#39;&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#FunctionType.AVG"></a>
-    
-    
-
-                            </div>
-                            <div id="FunctionType.COUNT" class="classattr">
-                                <div class="attr variable">
-            <span class="name">COUNT</span>        =
-<span class="default_value">&lt;<a href="#FunctionType.COUNT">FunctionType.COUNT</a>: &#39;count&#39;&gt;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#FunctionType.COUNT"></a>
-    
-    
-
-                            </div>
-                            <div id="FunctionType.get_name" class="classattr">
-                                <div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">get_name</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
-
-        
-    </div>
-    <a class="headerlink" href="#FunctionType.get_name"></a>
-    
-    
-
-                            </div>
-                </section>
                 <section id="SuidType">
                     <div class="attr class">
             
@@ -379,6 +320,181 @@
         
     </div>
     <a class="headerlink" href="#SuidType.get_name"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="JoinType">
+                    <div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">JoinType</span><wbr>(<span class="base">enum.Enum</span>):
+
+        
+    </div>
+    <a class="headerlink" href="#JoinType"></a>
+    
+            <div class="docstring"><p>Join Type for More table.<br>
+<B>since  1.9.0</B><br></p>
+</div>
+
+
+                            <div id="JoinType.JOIN" class="classattr">
+                                <div class="attr variable">
+            <span class="name">JOIN</span>        =
+<span class="default_value">&lt;<a href="#JoinType.JOIN">JoinType.JOIN</a>: &#39;join&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#JoinType.JOIN"></a>
+    
+    
+
+                            </div>
+                            <div id="JoinType.LEFT_JOIN" class="classattr">
+                                <div class="attr variable">
+            <span class="name">LEFT_JOIN</span>        =
+<span class="default_value">&lt;<a href="#JoinType.LEFT_JOIN">JoinType.LEFT_JOIN</a>: &#39;left join&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#JoinType.LEFT_JOIN"></a>
+    
+    
+
+                            </div>
+                            <div id="JoinType.RIGHT_JOIN" class="classattr">
+                                <div class="attr variable">
+            <span class="name">RIGHT_JOIN</span>        =
+<span class="default_value">&lt;<a href="#JoinType.RIGHT_JOIN">JoinType.RIGHT_JOIN</a>: &#39;right join&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#JoinType.RIGHT_JOIN"></a>
+    
+    
+
+                            </div>
+                            <div id="JoinType.FULL_JOIN" class="classattr">
+                                <div class="attr variable">
+            <span class="name">FULL_JOIN</span>        =
+<span class="default_value">&lt;<a href="#JoinType.FULL_JOIN">JoinType.FULL_JOIN</a>: &#39;full join&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#JoinType.FULL_JOIN"></a>
+    
+    
+
+                            </div>
+                            <div id="JoinType.WHERE" class="classattr">
+                                <div class="attr variable">
+            <span class="name">WHERE</span>        =
+<span class="default_value">&lt;<a href="#JoinType.WHERE">JoinType.WHERE</a>: &#39;&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#JoinType.WHERE"></a>
+    
+    
+
+                            </div>
+                            <div id="JoinType.get_name" class="classattr">
+                                <div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">get_name</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
+
+        
+    </div>
+    <a class="headerlink" href="#JoinType.get_name"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="FunctionType">
+                    <div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">FunctionType</span><wbr>(<span class="base">enum.Enum</span>):
+
+        
+    </div>
+    <a class="headerlink" href="#FunctionType"></a>
+    
+    
+
+                            <div id="FunctionType.MAX" class="classattr">
+                                <div class="attr variable">
+            <span class="name">MAX</span>        =
+<span class="default_value">&lt;<a href="#FunctionType.MAX">FunctionType.MAX</a>: &#39;max&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#FunctionType.MAX"></a>
+    
+    
+
+                            </div>
+                            <div id="FunctionType.MIN" class="classattr">
+                                <div class="attr variable">
+            <span class="name">MIN</span>        =
+<span class="default_value">&lt;<a href="#FunctionType.MIN">FunctionType.MIN</a>: &#39;min&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#FunctionType.MIN"></a>
+    
+    
+
+                            </div>
+                            <div id="FunctionType.SUM" class="classattr">
+                                <div class="attr variable">
+            <span class="name">SUM</span>        =
+<span class="default_value">&lt;<a href="#FunctionType.SUM">FunctionType.SUM</a>: &#39;sum&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#FunctionType.SUM"></a>
+    
+    
+
+                            </div>
+                            <div id="FunctionType.AVG" class="classattr">
+                                <div class="attr variable">
+            <span class="name">AVG</span>        =
+<span class="default_value">&lt;<a href="#FunctionType.AVG">FunctionType.AVG</a>: &#39;avg&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#FunctionType.AVG"></a>
+    
+    
+
+                            </div>
+                            <div id="FunctionType.COUNT" class="classattr">
+                                <div class="attr variable">
+            <span class="name">COUNT</span>        =
+<span class="default_value">&lt;<a href="#FunctionType.COUNT">FunctionType.COUNT</a>: &#39;count&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#FunctionType.COUNT"></a>
+    
+    
+
+                            </div>
+                            <div id="FunctionType.get_name" class="classattr">
+                                <div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">get_name</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
+
+        
+    </div>
+    <a class="headerlink" href="#FunctionType.get_name"></a>
     
     
 
@@ -624,6 +740,18 @@
         
     </div>
     <a class="headerlink" href="#LocalType.CacheSuidStruct"></a>
+    
+    
+
+                            </div>
+                            <div id="LocalType.MoreTableStruct" class="classattr">
+                                <div class="attr variable">
+            <span class="name">MoreTableStruct</span>        =
+<span class="default_value">&lt;<a href="#LocalType.MoreTableStruct">LocalType.MoreTableStruct</a>: 2&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#LocalType.MoreTableStruct"></a>
     
     
 

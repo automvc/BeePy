@@ -28,7 +28,8 @@
     <li><a href="#installation">Installation</a></li>
     <li><a href="#1-set-db-config">1. set db config</a></li>
     <li><a href="#2-operate-db-with-bee">2. operate DB with Bee</a></li>
-    <li><a href="#3-others">3. Others</a></li>
+    <li><a href="#3-moretablemul-table-select">3. MoreTable(Mul-table) Select</a></li>
+    <li><a href="#4-others">4. Others</a></li>
   </ul></li>
 </ul>
 
@@ -36,6 +37,7 @@
             <h2>Submodules</h2>
             <ul>
                     <li><a href="bee/active_record.html">active_record</a></li>
+                    <li><a href="bee/anno.html">anno</a></li>
                     <li><a href="bee/api.html">api</a></li>
                     <li><a href="bee/assist_api.html">assist_api</a></li>
                     <li><a href="bee/bee_enum.html">bee_enum</a></li>
@@ -51,7 +53,6 @@
                     <li><a href="bee/name.html">name</a></li>
                     <li><a href="bee/osql.html">osql</a></li>
                     <li><a href="bee/typing.html">typing</a></li>
-                    <li><a href="bee/util.html">util</a></li>
                     <li><a href="bee/version.html">version</a></li>
             </ul>
 
@@ -69,7 +70,7 @@
                     <h1 class="modulename">
 bee    </h1>
 
-                        <div class="docstring"><h3 id="v168"><strong>V1.6.8</strong></h3>
+                        <div class="docstring"><h3 id="v190"><strong>V1.9.0</strong></h3>
 
 <p><strong>ORM Bee</strong> in Python!</p>
 
@@ -275,7 +276,115 @@ bee    </h1>
 </code></pre>
 </div>
 
-<h2 id="3-others">3. Others</h2>
+<h2 id="3-moretablemul-table-select">3. MoreTable(Mul-table) Select</h2>
+
+<div class="pdoc-code codehilite">
+<pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn"><a href="bee/bee_enum.html">bee.bee_enum</a></span><span class="w"> </span><span class="kn">import</span> <span class="n">JoinType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn"><a href="bee/honeyfactory.html">bee.honeyfactory</a></span><span class="w"> </span><span class="kn">import</span> <span class="n">BF</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn"><a href="bee/anno.html">bee.anno</a></span><span class="w"> </span><span class="kn">import</span> <span class="n">JoinTable</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">MyConfig</span>
+
+<span class="c1"># one to many, layer is 4.</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Village</span><span class="p">:</span>
+    <span class="c1"># table village &#39;s entity</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">remark</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">town_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Town</span><span class="p">:</span>
+    <span class="c1">#  table town &#39;s entity</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">remark</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">city_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">village_list</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">__joins__</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;village_list&quot;</span><span class="p">:</span> <span class="n">JoinTable</span><span class="p">(</span>
+            <span class="n">sub_class</span> <span class="o">=</span> <span class="n">Village</span><span class="p">,</span>
+            <span class="n">joinType</span> <span class="o">=</span> <span class="n">JoinType</span><span class="o">.</span><span class="n">JOIN</span><span class="p">,</span>
+            <span class="n">main_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+            <span class="n">sub_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;town_id&quot;</span><span class="p">],</span>
+            <span class="n">is_list</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">City</span><span class="p">:</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">remark</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">province_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">town_list</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">__joins__</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;town_list&quot;</span><span class="p">:</span> <span class="n">JoinTable</span><span class="p">(</span>
+            <span class="n">sub_class</span> <span class="o">=</span> <span class="n">Town</span><span class="p">,</span>
+            <span class="n">joinType</span> <span class="o">=</span> <span class="n">JoinType</span><span class="o">.</span><span class="n">JOIN</span><span class="p">,</span>
+            <span class="n">main_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+            <span class="n">sub_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;city_id&quot;</span><span class="p">],</span>
+            <span class="n">is_list</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Province</span><span class="p">:</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">remark</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">city_list</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">__joins__</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;city_list&quot;</span><span class="p">:</span> <span class="n">JoinTable</span><span class="p">(</span>
+            <span class="n">sub_class</span> <span class="o">=</span> <span class="n">City</span><span class="p">,</span>
+            <span class="n">joinType</span> <span class="o">=</span> <span class="n">JoinType</span><span class="o">.</span><span class="n">JOIN</span><span class="p">,</span>
+            <span class="n">main_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+            <span class="n">sub_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;province_id&quot;</span><span class="p">],</span>
+            <span class="n">is_list</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">MyConfig</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+
+    <span class="n">province</span> <span class="o">=</span> <span class="n">Province</span><span class="p">()</span>
+    <span class="n">moreTable</span> <span class="o">=</span> <span class="n">BF</span><span class="o">.</span><span class="n">moreTable</span><span class="p">()</span>
+    <span class="n">mylist</span> <span class="o">=</span> <span class="n">moreTable</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">province</span><span class="p">)</span>
+
+    <span class="c1"># # select top 2 records</span>
+    <span class="c1"># condition = BF.condition()</span>
+    <span class="c1"># condtion.start(0)</span>
+    <span class="c1"># condtion.size(2)</span>
+    <span class="c1"># teaList = moreTable.select(province, condition)</span>
+
+    <span class="c1"># print(len(mylist))</span>
+
+    <span class="k">if</span> <span class="n">mylist</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">one</span> <span class="ow">in</span> <span class="n">mylist</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h2 id="4-others">4. Others</h2>
 
 <div class="pdoc-code codehilite">
 <pre><span></span><code><span class="n">Main</span> <span class="n">API</span> <span class="ow">in</span> <span class="n">bee</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">py</span>
@@ -294,11 +403,11 @@ JAVA ORM Bee:</p>
    &lt;dependency&gt;
       &lt;groupId&gt;org.teasoft&lt;/groupId&gt;
       &lt;artifactId&gt;bee-all&lt;/artifactId&gt;
-      &lt;version&gt;2.4.2&lt;/version&gt;
+      &lt;version&gt;2.5.10&lt;/version&gt;
     &lt;/dependency&gt;
 
     Gradle(Short):
-    implementation 'org.teasoft:bee-all:2.4.2'
+    implementation 'org.teasoft:bee-all:2.5.10'
 
     note:the version can change to newest.
 </code></pre>

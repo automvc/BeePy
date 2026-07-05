@@ -100,6 +100,33 @@
 
             </li>
             <li>
+                    <a class="class" href="#MoreObjSQL">MoreObjSQL</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#MoreObjSQL.select">select</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#MoreObjSQL.select_paging">select_paging</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#MoreObjSQL.update">update</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#MoreObjSQL.insert">insert</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#MoreObjSQL.delete">delete</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MoreObjSQL.beeSql">beeSql</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#MoreObjSQL.moreObjToSQL">moreObjToSQL</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
                     <a class="class" href="#PreparedSqlLib">PreparedSqlLib</a>
                             <ul class="memberlist">
                         <li>
@@ -450,6 +477,125 @@
                 <dd id="ObjSQLRich.logsql" class="function"><a href="base.html#AbstractCommOperate.logsql">logsql</a></dd>
                 <dd id="ObjSQLRich.log_params" class="function"><a href="base.html#AbstractCommOperate.log_params">log_params</a></dd>
                 <dd id="ObjSQLRich.log_params_for_batch" class="function"><a href="base.html#AbstractCommOperate.log_params_for_batch">log_params_for_batch</a></dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
+                <section id="MoreObjSQL">
+                    <div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">MoreObjSQL</span><wbr>(<span class="base"><a href="base.html#AbstractCommOperate">bee.osql.base.AbstractCommOperate</a></span>):
+
+        
+    </div>
+    <a class="headerlink" href="#MoreObjSQL"></a>
+    
+            <div class="docstring"><p>MoreObjSQL is MoreTable implementation.
+<B>since  1.9.0</B><br></p>
+</div>
+
+
+                            <div id="MoreObjSQL.select" class="classattr">
+                                <div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">select</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">entity</span>, </span><span class="param"><span class="n">condition</span><span class="p">:</span> <span class="n"><a href="../condition.html#Condition">bee.condition.Condition</a></span> <span class="o">=</span> <span class="kc">None</span></span><span class="return-annotation">):</span></span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreObjSQL.select"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreObjSQL.select_paging" class="classattr">
+                                <div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">select_paging</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">entity</span>, </span><span class="param"><span class="n">start</span>, </span><span class="param"><span class="n">size</span>, </span><span class="param"><span class="o">*</span><span class="n">selectFields</span></span><span class="return-annotation">):</span></span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreObjSQL.select_paging"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreObjSQL.update" class="classattr">
+                                <div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">update</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">entity</span></span><span class="return-annotation">):</span></span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreObjSQL.update"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreObjSQL.insert" class="classattr">
+                                <div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">insert</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">entity</span></span><span class="return-annotation">):</span></span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreObjSQL.insert"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreObjSQL.delete" class="classattr">
+                                <div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">delete</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">entity</span>, </span><span class="param"><span class="n">condition</span><span class="p">:</span> <span class="n"><a href="../condition.html#Condition">bee.condition.Condition</a></span> <span class="o">=</span> <span class="kc">None</span></span><span class="return-annotation">):</span></span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreObjSQL.delete"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreObjSQL.beeSql" class="classattr">
+                                <div class="attr variable">
+            <span class="name">beeSql</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreObjSQL.beeSql"></a>
+    
+    
+
+                            </div>
+                            <div id="MoreObjSQL.moreObjToSQL" class="classattr">
+                                <div class="attr variable">
+            <span class="name">moreObjToSQL</span>
+
+        
+    </div>
+    <a class="headerlink" href="#MoreObjSQL.moreObjToSQL"></a>
+    
+    
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt><a href="base.html#AbstractCommOperate">bee.osql.base.AbstractCommOperate</a></dt>
+                                <dd id="MoreObjSQL.local" class="variable"><a href="base.html#AbstractCommOperate.local">local</a></dd>
+                <dd id="MoreObjSQL.doBeforePasreEntity" class="function"><a href="base.html#AbstractCommOperate.doBeforePasreEntity">doBeforePasreEntity</a></dd>
+                <dd id="MoreObjSQL.doBeforePasreListEntity" class="function"><a href="base.html#AbstractCommOperate.doBeforePasreListEntity">doBeforePasreListEntity</a></dd>
+                <dd id="MoreObjSQL.doBeforeReturn" class="function"><a href="base.html#AbstractCommOperate.doBeforeReturn">doBeforeReturn</a></dd>
+                <dd id="MoreObjSQL.doBeforeReturnSimple" class="function"><a href="base.html#AbstractCommOperate.doBeforeReturnSimple">doBeforeReturnSimple</a></dd>
+                <dd id="MoreObjSQL.logsql" class="function"><a href="base.html#AbstractCommOperate.logsql">logsql</a></dd>
+                <dd id="MoreObjSQL.log_params" class="function"><a href="base.html#AbstractCommOperate.log_params">log_params</a></dd>
+                <dd id="MoreObjSQL.log_params_for_batch" class="function"><a href="base.html#AbstractCommOperate.log_params_for_batch">log_params_for_batch</a></dd>
 
             </div>
                                 </dl>

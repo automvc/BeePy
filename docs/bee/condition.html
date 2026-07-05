@@ -76,6 +76,9 @@
                                 <a class="function" href="#Condition.selectField">selectField</a>
                         </li>
                         <li>
+                                <a class="function" href="#Condition.selectFun">selectFun</a>
+                        </li>
+                        <li>
                                 <a class="function" href="#Condition.start">start</a>
                         </li>
                         <li>
@@ -89,6 +92,12 @@
                         </li>
                         <li>
                                 <a class="function" href="#Condition.getSuidType">getSuidType</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Condition.do_not_rewrite_paging_sql">do_not_rewrite_paging_sql</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Condition.isDoNotRewritePagingSql">isDoNotRewritePagingSql</a>
                         </li>
                         <li>
                                 <a class="function" href="#Condition.setAdd">setAdd</a>
@@ -347,6 +356,20 @@
     
 
                             </div>
+                            <div id="Condition.selectFun" class="classattr">
+                                <div class="attr function">
+                    <div class="decorator decorator-abstractmethod">@abstractmethod</div>
+
+        <span class="def">def</span>
+        <span class="name">selectFun</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">self</span>,</span><span class="param">	<span class="n">functionType</span><span class="p">:</span> <span class="n"><a href="bee_enum.html#FunctionType">bee.bee_enum.FunctionType</a></span>,</span><span class="param">	<span class="n">fieldForFun</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">alias</span><span class="p">:</span> <span class="nb">str</span></span><span class="return-annotation">) -> <span class="n"><a href="#Condition">Condition</a></span>:</span></span>
+
+        
+    </div>
+    <a class="headerlink" href="#Condition.selectFun"></a>
+    
+    
+
+                            </div>
                             <div id="Condition.start" class="classattr">
                                 <div class="attr function">
                     <div class="decorator decorator-abstractmethod">@abstractmethod</div>
@@ -408,11 +431,39 @@
                     <div class="decorator decorator-abstractmethod">@abstractmethod</div>
 
         <span class="def">def</span>
-        <span class="name">getSuidType</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="n"><a href="#Condition">Condition</a></span>:</span></span>
+        <span class="name">getSuidType</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="n"><a href="bee_enum.html#SuidType">bee.bee_enum.SuidType</a></span>:</span></span>
 
         
     </div>
     <a class="headerlink" href="#Condition.getSuidType"></a>
+    
+    
+
+                            </div>
+                            <div id="Condition.do_not_rewrite_paging_sql" class="classattr">
+                                <div class="attr function">
+                    <div class="decorator decorator-abstractmethod">@abstractmethod</div>
+
+        <span class="def">def</span>
+        <span class="name">do_not_rewrite_paging_sql</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">do_not_rewrite</span><span class="p">:</span> <span class="nb">bool</span></span><span class="return-annotation">) -> <span class="n"><a href="#Condition">Condition</a></span>:</span></span>
+
+        
+    </div>
+    <a class="headerlink" href="#Condition.do_not_rewrite_paging_sql"></a>
+    
+    
+
+                            </div>
+                            <div id="Condition.isDoNotRewritePagingSql" class="classattr">
+                                <div class="attr function">
+                    <div class="decorator decorator-abstractmethod">@abstractmethod</div>
+
+        <span class="def">def</span>
+        <span class="name">isDoNotRewritePagingSql</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="nb">bool</span>:</span></span>
+
+        
+    </div>
+    <a class="headerlink" href="#Condition.isDoNotRewritePagingSql"></a>
     
     
 
