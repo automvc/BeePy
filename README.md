@@ -28,6 +28,7 @@ https://github.com/automvc/bee
 8. more table select support paging with params  
 9. create table support joins anno  
 
+### Function History
 ### **V1.0**  
 1.The framework uses a unified API to operate the database;  
 2.Single table query, modification, addition, and deletion (SUID);  
