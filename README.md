@@ -422,6 +422,7 @@ Main API in bee.api.py
 Suid: simple API for Select/Update/Insert/Delete
 SuidRich : select_paging, insert_batch, updateBy, select_first,select_by_id,
 delete_by_id,select_fun,count,exist,create_table,index_normal,unique
+MoreTable :Multi table join Select/Update/Insert/Delete
 PreparedSql: select, select_dict, modify, modify_dict
 Condition: used to construct complex WHERE, UPDATE statements and so on.
 
